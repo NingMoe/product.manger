@@ -88,7 +88,7 @@ function getEffectScatter(totalStatistic) {
         var p = geoCoordMap[province];
         var obj = {};
         obj.name = province;
-        obj.value = [p[0], p[1], number, 30];
+        obj.value = [p[0], p[1], number, 20];
         result.push(obj);
     }
     return result;
@@ -141,7 +141,7 @@ function refreshData() {
         }
     });
 }
-var topN = 10;
+var topN = 50;
 
 var mainOption = {
     backgroundColor: '#404a59',
