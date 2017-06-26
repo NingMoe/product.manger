@@ -1,0 +1,7 @@
+<toolbox>
+    <tool>
+        <key>velocityUtil</key>
+        <scope>application</scope>
+        <class>com.phicomm.product.manger.utils.VelocityUtil</class>
+    </tool>
+</toolbox>

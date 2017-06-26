@@ -1,0 +1,25 @@
+<html>
+    #set($baseUrl = $request.getScheme() + "://" + $request.getServerName() + ":" + $request.getServerPort() + $request.getContextPath())
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="phicomm-feedback">
+    <meta name="author" content="yufei.liu">
+    <link rel="shortcut icon" href="$baseUrl/resources/favicon.ico">
+    <title>斐讯体脂秤S7销售统计</title>
+</head>
+<body>
+<div id="main" style="height: 100%"></div>
+<input id="baseUrl" value="$baseUrl" class="hidden"/>
+</body>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/location/location.js"></script>
+</html>

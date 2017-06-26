@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permission-manager xmlns="http://www.phicomm.com/XMLSchema"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.phicomm.com/XMLSchema permission.xsd">
+
+    <!-- 公共权限 -->
+    <common-permission>
+        <permission>
+            <id>common</id>
+            <name>common</name>
+            <description>接口只要登录就可以访问的权限</description>
+        </permission>
+    </common-permission>
+
+    <!-- 特定权限 -->
+    <permissions>
+        <permission>
+            <id>permissionManger</id>
+            <name>权限管理</name>
+            <description>整个的权限控制，只允许admin用户拥有该权限</description>
+        </permission>
+        <permission>
+            <id>balanceManger</id>
+            <name>电子秤升级管理</name>
+            <description>包括电子秤mcu升级、wifi固件升级等操作等相关权限</description>
+        </permission>
+        <permission>
+            <id>feedbackManger</id>
+            <name>用户意见反馈管理</name>
+            <description>用户意见反馈管理等相关权限</description>
+        </permission>
+    </permissions>
+
+</permission-manager>

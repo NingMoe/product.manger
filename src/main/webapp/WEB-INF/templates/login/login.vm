@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+#set($baseUrl = $request.getScheme() + "://" + $request.getServerName() + ":" + $request.getServerPort() + $request.getContextPath())
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="phicomm-feedback">
+    <meta name="author" content="yufei.liu">
+    <link rel="shortcut icon" href="$baseUrl/resources/favicon.ico">
+    <title>phicomm-feedback</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="$baseUrl/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="$baseUrl/resources/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="$baseUrl/resources/sb-admin/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="$baseUrl/resources/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="$baseUrl/resources/ie/html5shiv.js"></script>
+        <script src="$baseUrl/resources/ie/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Username" name="username" type="text" id="username" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" id="password" value="">
+                                </div>
+                                <a class="btn btn-lg btn-block" style="color: #FFF;background-color: #3c8dbc;border-color: #3c8dbc;" onclick="login()">Login</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="baseUrl" value="$baseUrl" class="hidden"/>
+    <!-- jQuery -->
+    <script src="$baseUrl/resources/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="$baseUrl/resources/bootstrap/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="$baseUrl/resources/metisMenu/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="$baseUrl/resources/sb-admin/sb-admin-2.js"></script>
+    <script src="$baseUrl/resources/jquery/jquery.cookie.js"></script>
+    <script src="$baseUrl/resources/js/login/login.js"></script>
+</body>
+</html>

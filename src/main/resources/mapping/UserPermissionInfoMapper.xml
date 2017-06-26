@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.UserPermissionInfoMapper">
+
+    <select id="getUserPermission" resultType="java.lang.String">
+        SELECT DISTINCT
+            (permission)
+        FROM
+            user_permission_info
+        WHERE
+            phone_number = #{phoneNumber,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
