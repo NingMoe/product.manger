@@ -7,6 +7,7 @@
     <meta name="description" content="phicomm-feedback">
     <meta name="author" content="yufei.liu">
     <link rel="shortcut icon" href="$baseUrl/resources/favicon.ico">
+    <link rel="stylesheet" href="$baseUrl/resources/bootstrap/bootstrap.min.css">
     <title>斐讯体脂秤S7销售统计</title>
 </head>
 <body>

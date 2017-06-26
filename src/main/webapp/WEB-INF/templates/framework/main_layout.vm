@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Phicomm Feedback</title>
+    <title>ProductManger</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="phicomm-feedback">
+    <meta name="description" content="product-manger">
     <meta name="author" content="yufei.liu">
     <link rel="shortcut icon" href="$baseUrl/resources/favicon.ico">
     <!-- Bootstrap 3.3.6 -->
@@ -40,8 +40,8 @@
 <div class="wrapper">
     <header class="main-header">
         <a href="$baseUrl/homepage" class="logo">
-            <span class="logo-mini"><b>F</b>Sys</span>
-            <span class="logo-lg"><b>FeedBack</b>System</span>
+            <span class="logo-mini"><b>PM</b>Sys</span>
+            <span class="logo-lg"><b>ProductManger</b>System</span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
