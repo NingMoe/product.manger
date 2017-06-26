@@ -176,8 +176,8 @@ var mainOption = {
         {
             id: 'chinaMap',
             text: '体脂秤S7销售地区统计图',
-            subtext: '产品创新平台-智能硬件产品线-软件开发中心',
-            sublink: 'http://ihome.phicomm.com',
+            // subtext: '产品创新平台-智能硬件产品线-软件开发中心',
+            // sublink: 'http://ihome.phicomm.com',
             left: 'center',
             textStyle: {
                 color: '#fff'
