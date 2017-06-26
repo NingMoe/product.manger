@@ -1,8 +1,7 @@
 package com.phicomm.product.manger.controller.h5;
 
-import com.phicomm.product.manger.enumeration.SessionKeyEnum;
-import com.phicomm.product.manger.service.BalanceSalesLocationService;
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.table.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class BalanceSalesLocationController {
 
-    private BalanceSalesLocationService balanceSalesLocationService;
-
     private NavigationManger navigationManger;
 
     @Autowired
-    public BalanceSalesLocationController(BalanceSalesLocationService balanceSalesLocationService,
-                                          NavigationManger navigationManger) {
-        this.balanceSalesLocationService = balanceSalesLocationService;
+    public BalanceSalesLocationController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
-        Assert.notNull(this.balanceSalesLocationService);
         Assert.notNull(this.navigationManger);
     }
 
@@ -57,7 +51,7 @@ public class BalanceSalesLocationController {
     @ApiIgnore("电子秤销售地理位置统计")
     @FunctionPoint(value = "common")
     public ModelAndView publicSalesLocation() {
-        return new ModelAndView("projection/balance_location_statistic");
+        return new ModelAndView("statistic/balance_location_statistic_projection");
     }
 
 }
