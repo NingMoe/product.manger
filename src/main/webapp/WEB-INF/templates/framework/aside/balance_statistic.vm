@@ -8,9 +8,6 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="$baseUrl/statistic/sales/location"><i class="fa fa-cloud"></i> 激活地理统计</a></li>
-        <li><a href="$baseUrl/statistic/sales/location/projection"><i class="fa fa-cloud"></i> 激活地理统计(全屏)</a></li>
-        <li><a href="#"><i class="fa fa-cloud"></i> xxxxxxx</a></li>
-        <li><a href="#"><i class="fa fa-cloud"></i> xxxxxxx</a></li>
+        <li><a href="$baseUrl/statistic/sales/location/projection"><i class="fa fa-cloud"></i> 地理位置统计</a></li>
     </ul>
 </li>

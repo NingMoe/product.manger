@@ -30,21 +30,6 @@ public class BalanceSalesLocationController {
     }
 
     /**
-     * 获取电子秤销售地理位置统计
-     */
-    @RequestMapping(value = "statistic/sales/location", method = RequestMethod.GET)
-    @ApiIgnore("电子秤销售地理位置统计")
-    @FunctionPoint(value = "common")
-    public ModelAndView showSalesLocationPage(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
-        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "statistic/sales_location.vm");
-        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("salesLocationStatistic"));
-        return modelAndView;
-    }
-
-    /**
      * 获取电子秤销售地理位置统计（大屏显示）
      */
     @RequestMapping(value = "statistic/sales/location/projection", method = RequestMethod.GET)

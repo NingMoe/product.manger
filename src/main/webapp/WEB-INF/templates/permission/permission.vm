@@ -1,14 +1,14 @@
 <section class="content">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Menmber List</h3>
+            <h3 class="box-title">Member List</h3>
         </div>
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
                     <div style="height: 102px;background-color: #4b646f">
-                        <div style="width: 30%;height: 100%;background-color: red;float: left;">
-                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg" style="width: 92%;margin: auto;align-items: center;display: block" class="img-circle" alt="User Image">
+                        <div style="width: 30%;height: 100%;background-color: red;float: left;"">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg" style="width: 92%;margin: auto;align-items: center;display: block;top: 10px" class="img-circle" alt="User Image">
                         </div>
                         <div style="width: 70%;height: 100%;background-color: burlywood;float: left">
 
