@@ -141,7 +141,7 @@ function refreshData() {
         }
     });
 }
-var topN = 50;
+var topN = 20;
 
 var mainOption = {
     backgroundColor: '#404a59',
@@ -153,7 +153,7 @@ var mainOption = {
     title: [
         {
             id: 'totalStatistic',
-            text: '总销量地区分布',
+            text: '地区销量分布',
             right: '1%',
             top: '0%',
             width: 100,
@@ -164,7 +164,7 @@ var mainOption = {
         },
         {
             id: 'currentStatistic',
-            text: '今日销量地区分布',
+            text: '今日地区销量分布',
             right: '1%',
             top: '50%',
             width: 100,
@@ -175,9 +175,7 @@ var mainOption = {
         },
         {
             id: 'chinaMap',
-            text: '体脂秤S7销售地区统计图',
-            // subtext: '产品创新平台-智能硬件产品线-软件开发中心',
-            // sublink: 'http://ihome.phicomm.com',
+            text: '智能体脂秤S7销售地区统计图',
             left: 'center',
             textStyle: {
                 color: '#fff'
@@ -300,6 +298,38 @@ var mainOption = {
                     color: '#FF9933'
                 }
             },
+            label: {
+                normal: {
+                    show: true,
+                    position: 'right',
+                    offset: [0, 0],
+                    formatter: function(item) {
+                        return item['data'];
+                    },
+                    textStyle: {
+                        color: '#fff',
+                        fontStyle: 'normal',
+                        fontWeight: '400',
+                        fontFamily: 'consolas',
+                        fontSize: 14
+                    }
+                },
+                emphasis: {
+                    show: true,
+                    position: 'right',
+                    offset: [0, 0],
+                    formatter: function(item) {
+                        return item['data'];
+                    },
+                    textStyle: {
+                        color: '#fff',
+                        fontStyle: 'normal',
+                        fontWeight: '400',
+                        fontFamily: 'consolas',
+                        fontSize: 14
+                    }
+                }
+            },
             data: []
         }, {
             id: 'currentStatistic',
@@ -311,6 +341,38 @@ var mainOption = {
             itemStyle: {
                 normal: {
                     color: '#FF9933'
+                }
+            },
+            label: {
+                normal: {
+                    show: true,
+                    position: 'right',
+                    offset: [0, 0],
+                    formatter: function(item) {
+                        return item['data'];
+                    },
+                    textStyle: {
+                        color: '#fff',
+                        fontStyle: 'normal',
+                        fontWeight: '400',
+                        fontFamily: 'consolas',
+                        fontSize: 14
+                    }
+                },
+                emphasis: {
+                    show: true,
+                    position: 'right',
+                    offset: [0, 0],
+                    formatter: function(item) {
+                        return item['data'];
+                    },
+                    textStyle: {
+                        color: '#fff',
+                        fontStyle: 'normal',
+                        fontWeight: '400',
+                        fontFamily: 'consolas',
+                        fontSize: 14
+                    }
                 }
             },
             data: []
