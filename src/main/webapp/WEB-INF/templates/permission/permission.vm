@@ -1,87 +1,22 @@
+<link rel="stylesheet" href="$baseUrl/resources/css/permission.css">
 <section class="content">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Member List</h3>
+            <h3 class="box-title">Administrator</h3>
         </div>
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
-                    <div style="height: 102px;background-color: #4b646f">
-                        <div style="width: 30%;height: 100%;background-color: red;float: left;"">
-                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg" style="width: 92%;margin: auto;align-items: center;display: block;top: 10px" class="img-circle" alt="User Image">
+                    <div class="div_1">
+                        <div id="admin-div" class="div_2">
+                            <img id="admin-head-image"
+                                 src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle image_1 permissionHeadImage"
+                                 alt="User Image">
                         </div>
-                        <div style="width: 70%;height: 100%;background-color: burlywood;float: left">
+                        <div class="div_3">
 
                         </div>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
@@ -89,3 +24,133 @@
         </div>
     </div>
 </section>
+<section class="content section_1">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Member Information List</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="div_1">
+                        <div class="div_2">
+                            <img src="http://tx.haiqq.com/uploads/allimg/150321/110Q044B-7.jpg"
+                                 class="img-circle permissionHeadImage image_1"
+                                 alt="User Image">
+                        </div>
+                        <div class="div_3">
+
+                        </div>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+    </div>
+</section>
+<script type="application/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="application/javascript" src="$baseUrl/resources/js/perimission/perimission.js"></script>
