@@ -8,10 +8,17 @@
     <meta name="author" content="yufei.liu">
     <link rel="shortcut icon" href="$baseUrl/resources/favicon.ico">
     <link rel="stylesheet" href="$baseUrl/resources/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="$baseUrl/resources/css/statistic/location.css">
     <title>斐讯体脂秤S7销售统计</title>
 </head>
 <body>
-<div id="main" style="height: 100%"></div>
+<div class="count">
+    <span class="counter"></span>
+</div>
+<div id="main" class="echart_main"></div>
+<div class="count">
+    总销量：<span class="counter">1,498,547</span>
+</div>
 <input id="baseUrl" value="$baseUrl" class="hidden"/>
 </body>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
@@ -22,5 +29,7 @@
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/location/location.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/count/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/count/jquery.countup.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/location/location_2.js"></script>
 </html>

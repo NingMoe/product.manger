@@ -2,12 +2,12 @@
 <li class="treeview">
     <a href="#">
         <i class="fa fa-users"></i>
-        <span>电子秤销售统计</span>
+        <span>体脂秤销售统计</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="$baseUrl/statistic/sales/location/projection"><i class="fa fa-cloud"></i> 地理位置统计</a></li>
+        <li><a href="$baseUrl/statistic/sales/location/projection"><i class="fa fa-cloud"></i> 销售地区统计</a></li>
     </ul>
 </li>
