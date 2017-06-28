@@ -34,7 +34,13 @@ var geoCoordMap = {
     "香港": [114.1654600000, 22.2753400000],
     "澳门": [113.5491300000, 22.1987500000]
 };
-
+var options = {
+    useEasing : true,
+    useGrouping : true,
+    separator : ','
+};
+var countUp = new CountUp("ct", 0, 0, 0, 1.2, options);
+countUp.start();
 function getTotalStatisticForBarY(totalStatistic) {
     var yList = [];
     var length = totalStatistic.length;
@@ -121,7 +127,7 @@ function refreshData() {
             };
             myChart.setOption(dataOption);
             var totalNumber = getTotalNumber(totalStatistic);
-            // counter.update(totalNumber);
+            countUp.update(totalNumber);
         }
     });
 }
@@ -381,5 +387,4 @@ myChart.setOption(mainOption);
 refreshData();
 setInterval(function () {
     refreshData();
-}, 300000);
-$('.counter').countUp();
+}, 3000);
