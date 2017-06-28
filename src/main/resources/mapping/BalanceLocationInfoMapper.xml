@@ -24,4 +24,11 @@
             province
     </select>
 
+    <select id="getBalanceSaleNumber" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            balance_status_info
+    </select>
+
 </mapper>

@@ -131,6 +131,46 @@ function refreshData() {
         }
     });
 }
+function refreshSaleNumber() {
+    var url = $("#baseUrl").val() + "/balance/location/statistic";
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json",
+        dataType: "json",
+        error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            var totalStatistic = data.totalStatistic;
+            totalStatistic.sort(function (a, b) {
+                return b.number - a.number;
+            });
+            var dataOption = {
+                yAxis: [
+                    {
+                        id: 'totalStatistic',
+                        data: getTotalStatisticForBarY(totalStatistic)
+                    }
+                ],
+                series: [
+                    {
+                        id: 'totalStatistic',
+                        data: getTotalStatisticForBarX(totalStatistic)
+                    }, {
+                        id: 'scatter',
+                        data: getScatterData(totalStatistic)
+                    }, {
+                        id: 'effectScatter',
+                        data: getEffectScatter(totalStatistic)
+                    }
+                ]
+            };
+            myChart.setOption(dataOption);
+            var totalNumber = getTotalNumber(totalStatistic);
+            countUp.update(totalNumber);
+        }
+    });
+}
 var topN = 15;
 
 var mainOption = {
@@ -387,4 +427,5 @@ myChart.setOption(mainOption);
 refreshData();
 setInterval(function () {
     refreshData();
+    refreshSaleNumber();
 }, 300000);

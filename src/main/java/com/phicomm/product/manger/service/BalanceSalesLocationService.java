@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.phicomm.product.manger.dao.BalanceLocationMapper;
 import com.phicomm.product.manger.model.statistic.BalanceLocation;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
+import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
@@ -60,6 +61,18 @@ public class BalanceSalesLocationService {
             }
         });
         return balanceLocations;
+    }
+
+    /**
+     * 获取电子秤销售数量
+     */
+    public BalanceSaleNumber getBalanceSaleNumber() {
+        CustomerContextHolder.selectProdDataSource();
+        int balanceSaleNumber =  balanceLocationMapper.getBalanceSaleNumber();
+        CustomerContextHolder.clearDataSource();
+        BalanceSaleNumber result = new BalanceSaleNumber();
+        result.setSaleNumber(balanceSaleNumber);
+        return result;
     }
 
 }

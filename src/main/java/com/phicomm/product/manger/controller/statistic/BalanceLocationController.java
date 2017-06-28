@@ -3,6 +3,7 @@ package com.phicomm.product.manger.controller.statistic;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
+import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
 import com.phicomm.product.manger.service.BalanceSalesLocationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,4 +47,19 @@ public class BalanceLocationController {
         return balanceSalesLocationService.getBalanceLocationStatistic();
     }
 
+    /**
+     * 获取电子秤销售数量
+     */
+    @RequestMapping(value = "balance/sales/number", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("用户反馈信息")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 3, message = "用户不存在", response = CommonResponse.class)
+    })
+    @FunctionPoint("common")
+    public BalanceSaleNumber getBalanceSaleNumber() {
+        return balanceSalesLocationService.getBalanceSaleNumber();
+    }
 }

@@ -24,4 +24,9 @@ public interface BalanceLocationMapper {
      */
     List<BalanceLocation> getCurrentDateBalanceLocation(@Param("currentDate") String currentDate);
 
+    /**
+     * 获取电子秤销售数量
+     */
+    int getBalanceSaleNumber();
+
 }
