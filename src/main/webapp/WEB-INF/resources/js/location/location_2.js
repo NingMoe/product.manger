@@ -84,13 +84,6 @@ function getEffectScatter(totalStatistic) {
     }
     return result;
 }
-function getTotalNumber(totalStatistic) {
-    var result = 0;
-    for (var i = 0; i < totalStatistic.length; i++) {
-        result += totalStatistic[i].number;
-    }
-    return result;
-}
 function refreshData() {
     var url = $("#baseUrl").val() + "/balance/location/statistic";
     $.ajax({
@@ -126,13 +119,11 @@ function refreshData() {
                 ]
             };
             myChart.setOption(dataOption);
-            var totalNumber = getTotalNumber(totalStatistic);
-            countUp.update(totalNumber);
         }
     });
 }
 function refreshSaleNumber() {
-    var url = $("#baseUrl").val() + "/balance/location/statistic";
+    var url = $("#baseUrl").val() + "/balance/sales/number";
     $.ajax({
         type: "POST",
         url: url,
@@ -141,33 +132,7 @@ function refreshSaleNumber() {
         error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
-            var totalStatistic = data.totalStatistic;
-            totalStatistic.sort(function (a, b) {
-                return b.number - a.number;
-            });
-            var dataOption = {
-                yAxis: [
-                    {
-                        id: 'totalStatistic',
-                        data: getTotalStatisticForBarY(totalStatistic)
-                    }
-                ],
-                series: [
-                    {
-                        id: 'totalStatistic',
-                        data: getTotalStatisticForBarX(totalStatistic)
-                    }, {
-                        id: 'scatter',
-                        data: getScatterData(totalStatistic)
-                    }, {
-                        id: 'effectScatter',
-                        data: getEffectScatter(totalStatistic)
-                    }
-                ]
-            };
-            myChart.setOption(dataOption);
-            var totalNumber = getTotalNumber(totalStatistic);
-            countUp.update(totalNumber);
+            countUp.update(data.saleNumber);
         }
     });
 }
@@ -425,6 +390,7 @@ var mainOption = {
 var myChart = echarts.init(document.getElementById('main'));
 myChart.setOption(mainOption);
 refreshData();
+refreshSaleNumber();
 setInterval(function () {
     refreshData();
     refreshSaleNumber();

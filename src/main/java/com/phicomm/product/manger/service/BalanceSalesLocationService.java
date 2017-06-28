@@ -56,8 +56,6 @@ public class BalanceSalesLocationService {
             BalanceLocation balanceLocation = location.format();
             if(balanceLocation != null) {
                 balanceLocations.add(balanceLocation);
-            } else {
-                logger.error(location);
             }
         });
         return balanceLocations;
