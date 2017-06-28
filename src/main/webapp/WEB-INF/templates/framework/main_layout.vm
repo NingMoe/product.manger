@@ -55,8 +55,9 @@
             #parse("framework/user_info/user_info_left.vm")
             <ul class="sidebar-menu">
                 #parse("framework/aside/balance_manger_aside.vm")
+                #parse("framework/aside/firmware_upgrade_aside.vm")
                 #parse("framework/aside/feedback_manger_aside.vm")
-                #parse("framework/aside/balance_statistic.vm")
+                #parse("framework/aside/balance_statistic_aside.vm")
                 #parse("framework/aside/balance_mac_manger_aside.vm")
                 #parse("framework/aside/hermes_helper_aside.vm")
                 #parse("framework/aside/permession_manger_aside.vm")
