@@ -387,4 +387,4 @@ myChart.setOption(mainOption);
 refreshData();
 setInterval(function () {
     refreshData();
-}, 3000);
+}, 300000);
