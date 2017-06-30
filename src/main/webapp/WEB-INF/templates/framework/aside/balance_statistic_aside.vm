@@ -8,6 +8,16 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="$baseUrl/statistic/sales/location/projection"><i class="fa fa-cloud"></i> 销售地区统计</a></li>
+        <li><a href="#"><i class="fa fa-tint"></i> K码激活统计</a></li>
+        <li><a href="#"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
+        <li><a href="#"><i class="fa fa-globe"></i> 体脂秤数量统计</a></li>
+        <li>
+            <a href="$baseUrl/statistic/sales/location/projection">
+                <i class="fa fa-line-chart"></i> 统计全屏显示
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-yellow-active">Big</small>
+                </span>
+            </a>
+        </li>
     </ul>
 </li>

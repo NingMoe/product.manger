@@ -14,13 +14,22 @@
     background-color: burlywood;
     float: left
 }
-
 .image_1 {
     width: 92%;
     margin: auto;
     align-items: center;
     display: block;
 }
+.section_0 {
+    padding-bottom: 0;
+    min-height: 200px;
+}
 .section_1 {
     padding-top: 0;
+}
+.box-border-phicomm {
+    border-top-color:#3c8dbc;
+}
+.small-box-footer-phicomm {
+    background-color:#3c8dbc;
 }
