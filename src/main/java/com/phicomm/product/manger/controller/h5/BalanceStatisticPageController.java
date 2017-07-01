@@ -15,28 +15,34 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpSession;
 
 /**
- * 电子秤销售
- * Created by yufei.liu on 2017/6/23.
+ * 体脂秤统计页面接口
+ * <p>
+ * Created by yufei.liu on 2017/7/1.
  */
 @Controller
-public class BalanceSalesLocationController {
+public class BalanceStatisticPageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public BalanceSalesLocationController(NavigationManger navigationManger) {
+    public BalanceStatisticPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
 
     /**
-     * 获取电子秤销售地理位置统计（大屏显示）
+     * 返回首页
      */
-    @RequestMapping(value = "statistic/sales/location/projection", method = RequestMethod.GET)
-    @ApiIgnore("电子秤销售地理位置统计")
+    @RequestMapping(value = "balance/statistic/page/k/code/active", method = RequestMethod.GET)
+    @ApiIgnore("首页展示")
     @FunctionPoint(value = "common")
-    public ModelAndView publicSalesLocation() {
-        return new ModelAndView("statistic/balance_location_statistic_projection");
+    public ModelAndView showBalanceStatisticKCode(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "statistic/balance_k_code_active.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticKCodeActive"));
+        return modelAndView;
     }
 
 }

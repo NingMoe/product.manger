@@ -51,5 +51,20 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceStatisticKCodeActive</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤K码激活统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/page/k/code/active</url>
+            <sub-directories>
+                <name>BalanceStatisticKCodeActive</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 
 </navigations>
