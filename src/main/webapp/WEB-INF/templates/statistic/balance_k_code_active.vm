@@ -33,7 +33,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="activeHalfMonthChart"></canvas>
+                            <canvas id="activeMonthChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="activeLocationHalfMonthChart"></canvas>
+                            <canvas id="activeLocationMonthChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="locationHalfMonthChart"></canvas>
+                            <canvas id="locationMonthChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="macHalfMonthChart"></canvas>
+                            <canvas id="macMonthChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                         dates.push(data[key]);
                     }
                 }
-                var barChartCavas = $("#activeHalfMonthChart").get(0).getContext("2d");
+                var barChartCavas = $("#activeMonthChart").get(0).getContext("2d");
                 var barChart = new Chart(barChartCavas);
                 drawBarChart(labels, dates, barChart);
             }
@@ -228,7 +228,7 @@
     $(function obtainLocationInfoByDay() {
         $.ajax({
             type: "POST",
-            url: "$baseUrl/balance/location/day/v2",
+            url: "$baseUrl/balance/location/day",
             dataType: "json",
             data: {
                 "day": 30,
@@ -246,7 +246,7 @@
                         dates.push(data[key]);
                     }
                 }
-                var barChartCavas = $("#locationHalfMonthChart").get(0).getContext("2d");
+                var barChartCavas = $("#locationMonthChart").get(0).getContext("2d");
                 var barChart = new Chart(barChartCavas);
                 drawBarChart(labels, dates, barChart);
             }
@@ -256,7 +256,7 @@
     $(function obtainLocationYearData() {
         $.ajax({
             type: "POST",
-            url: "$baseUrl/balance/location/month/v2",
+            url: "$baseUrl/balance/location/month",
             dataType: "json",
             data: {
                 "month": 12,
@@ -302,7 +302,7 @@
                         dates.push(data[key]);
                     }
                 }
-                var barChartCavas = $("#macHalfMonthChart").get(0).getContext("2d");
+                var barChartCavas = $("#macMonthChart").get(0).getContext("2d");
                 var barChart = new Chart(barChartCavas);
                 drawBarChart(labels, dates, barChart);
             }
@@ -340,7 +340,7 @@
     $(function obtainActiveLocationInfoByDay() {
         $.ajax({
             type: "POST",
-            url: "$baseUrl/balance/location/day/v2",
+            url: "$baseUrl/balance/location/day",
             dataType: "json",
             data: {
                 "day": 30,
@@ -358,7 +358,7 @@
                         dates.push(data[key]);
                     }
                 }
-                var barChartCavas = $("#activeLocationHalfMonthChart").get(0).getContext("2d");
+                var barChartCavas = $("#activeLocationMonthChart").get(0).getContext("2d");
                 var barChart = new Chart(barChartCavas);
                 drawBarChart(labels, dates, barChart);
             }
@@ -368,7 +368,7 @@
     $(function obtainActiveLocationYearData() {
         $.ajax({
             type: "POST",
-            url: "$baseUrl/balance/location/month/v2",
+            url: "$baseUrl/balance/location/month",
             dataType: "json",
             data: {
                 "month": 12,

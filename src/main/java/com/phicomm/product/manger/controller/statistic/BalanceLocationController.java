@@ -72,7 +72,7 @@ public class BalanceLocationController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "balance/location/month/v2")
+    @RequestMapping(value = "balance/location/month")
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
@@ -89,7 +89,7 @@ public class BalanceLocationController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "balance/location/day/v2")
+    @RequestMapping(value = "balance/location/day")
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
