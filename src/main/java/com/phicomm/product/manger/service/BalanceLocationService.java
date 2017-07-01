@@ -2,9 +2,11 @@ package com.phicomm.product.manger.service;
 
 import com.google.common.collect.Lists;
 import com.phicomm.product.manger.dao.BalanceLocationMapper;
+import com.phicomm.product.manger.dao.LianbiActiveMapper;
 import com.phicomm.product.manger.model.statistic.BalanceLocation;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
+import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
@@ -12,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 电子秤销售统计服务
@@ -20,16 +25,21 @@ import java.util.List;
  * Created by yufei.liu on 2017/6/23.
  */
 @Service
-public class BalanceSalesLocationService {
+public class BalanceLocationService {
 
-    private static final Logger logger = Logger.getLogger(BalanceSalesLocationService.class);
+    private static final Logger logger = Logger.getLogger(BalanceLocationService.class);
 
     private final BalanceLocationMapper balanceLocationMapper;
 
+    private LianbiActiveMapper lianbiActiveMapper;
+
     @Autowired
-    public BalanceSalesLocationService(BalanceLocationMapper balanceLocationMapper) {
+    public BalanceLocationService(BalanceLocationMapper balanceLocationMapper,
+                                  LianbiActiveMapper lianbiActiveMapper) {
         this.balanceLocationMapper = balanceLocationMapper;
+        this.lianbiActiveMapper=lianbiActiveMapper;
         Assert.notNull(this.balanceLocationMapper);
+        Assert.notNull(this.lianbiActiveMapper);
     }
 
     /**
@@ -73,4 +83,51 @@ public class BalanceSalesLocationService {
         return result;
     }
 
+
+    /**
+     * 获取N个月的位置信息
+     */
+    public Map<String, Integer> obtainLocationCountByMonth(int month, String type) {
+        List<LocationCountBean> countBeans;
+        CustomerContextHolder.selectProdDataSource();
+        //联璧激活的位置信息
+        if ("lianbi".equals(type)) {
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month);
+        } else {
+            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month);
+        }
+        CustomerContextHolder.clearDataSource();
+        if (countBeans.isEmpty()) {
+            return new HashMap<>();
+        }
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (LocationCountBean countBean : countBeans) {
+            result.put(countBean.getProvince(), countBean.getGenerateCount());
+        }
+        return result;
+    }
+
+    /**
+     * 获取N天的位置信息
+     */
+    public Map<String, Integer> obtainLocationCountByDay(int day, String type) {
+        List<LocationCountBean> countBeans;
+        CustomerContextHolder.selectProdDataSource();
+        //联璧激活位置信息
+        if ("lianbi".equalsIgnoreCase(type)) {
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day);
+        } else {
+            //其它默认为电子秤位置信息
+            countBeans = balanceLocationMapper.obtainLocationCountByDay(day);
+        }
+        CustomerContextHolder.clearDataSource();
+        if (countBeans.isEmpty()) {
+            return new HashMap<>();
+        }
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (LocationCountBean countBean : countBeans) {
+            result.put(countBean.getProvince(), countBean.getGenerateCount());
+        }
+        return result;
+    }
 }

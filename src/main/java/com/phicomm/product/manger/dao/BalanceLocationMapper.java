@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.dao;
 
 import com.phicomm.product.manger.model.statistic.BalanceLocation;
+import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,20 @@ public interface BalanceLocationMapper {
     List<BalanceLocation> getTotalBalanceLocation();
 
     /**
+     * 上传数量
+     *
+     * @return 数量
+     */
+    List<LocationCountBean> obtainLocationCountByMonth(@Param("month") int month);
+
+    /**
+     * 上传数量
+     *
+     * @return 数量
+     */
+    List<LocationCountBean> obtainLocationCountByDay(@Param("day") int day);
+
+    /**
      * 获取当天电子秤激活地区分布
      */
     List<BalanceLocation> getCurrentDateBalanceLocation(@Param("currentDate") String currentDate);
@@ -28,5 +43,4 @@ public interface BalanceLocationMapper {
      * 获取电子秤销售数量
      */
     int getBalanceSaleNumber();
-
 }
