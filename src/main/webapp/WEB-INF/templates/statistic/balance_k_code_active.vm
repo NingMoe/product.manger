@@ -472,5 +472,3 @@
         chart.Bar(chartDataArea, barChartOptions);
     }
 </script>
-</body>
-</html>
