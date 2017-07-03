@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.utils;
 
+import com.google.common.base.Strings;
+
 import java.util.regex.Pattern;
 
 /**
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
 public class RegexUtil {
 
     private final static String PHONE_REGEX = "^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$";
+
+    private final static String MAC_REGEX = "^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2})$";
 
     /**
      * 构造函数私有
@@ -27,4 +31,13 @@ public class RegexUtil {
         return phoneNumber != null && Pattern.matches(PHONE_REGEX, phoneNumber);
     }
 
+    /**
+     * 校验mac地址的格式
+     *
+     * @param mac mac地址
+     * @return 格式是否正确
+     */
+    public static boolean checkMacFormat(String mac) {
+        return !Strings.isNullOrEmpty(mac) && Pattern.matches(MAC_REGEX, mac);
+    }
 }

@@ -34,7 +34,7 @@ public interface LianbiActiveMapper {
      * @return 数量
      */
     List<LocationCountBean> obtainActiveLocationCountByMonth(@Param("month") int month,
-                                                             @Param("pageSize")int pageSize);
+                                                             @Param("pageSize") int pageSize);
 
     /**
      * 上传数量
@@ -42,5 +42,13 @@ public interface LianbiActiveMapper {
      * @return 数量
      */
     List<LocationCountBean> obtainActiveLocationCountByDay(@Param("day") int day,
-                                                           @Param("pageSize")int pageSize);
+                                                           @Param("pageSize") int pageSize);
+
+    /**
+     * 根据mac地址获取电子秤的激活地点
+     *
+     * @param mac mac地址
+     * @return 激活地址
+     */
+    String obtainActiveCity(@Param("mac") String mac);
 }

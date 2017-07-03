@@ -58,4 +58,55 @@
         ]]>
     </select>
 
+    <select id="obtainBalanceMacInfo" parameterType="java.lang.String"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceMacStatus">
+        SELECT
+            t.createTime AS createTime,
+            t.memberCount AS memberCount,
+            t.activeCity AS activeCity
+        FROM
+            (
+                SELECT
+                    (
+                        SELECT
+                            DATE_FORMAT(create_time,'%Y-%m-%d %H-%i-%s')
+                        FROM
+                            balance_status_info
+                        WHERE
+                            mac = #{mac,jdbcType=VARCHAR}
+                    ) AS createTime,
+                    (
+                        SELECT
+                            COUNT(member_id) AS memberCount
+                        FROM
+                            balance_user_manger_info
+                        WHERE
+                            user_id IN (
+                                SELECT
+                                    user_id
+                                FROM
+                                    balance_mac_manger_info
+                                WHERE
+                                    mac = #{mac,jdbcType=VARCHAR}
+                            )
+                    ) AS memberCount,
+                    (
+                        SELECT
+                            city
+                        FROM
+                            `balance_lianbi_active_info`
+                        WHERE
+                            mac = #{mac,jdbcType=VARCHAR}
+                    ) AS activeCity
+            ) t
+    </select>
+
+    <select id="obtainStatusCreateTime" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+         DATE_FORMAT(create_time,'%Y-%m-%d %H-%i-%s') AS createTime
+    FROM
+         balance_status_info
+    WHERE
+         mac = #{mac,jdbcType=VARCHAR}
+    </select>
 </mapper>
