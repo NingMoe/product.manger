@@ -1,37 +1,39 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">电子秤MAC地址新增数量: 按月统计</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                            class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                            class="fa fa-times"></i></button>
+<div>
+    <div class="row" style="padding-top: 1%">
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">电子秤MAC地址新增数量: 按月统计</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                    </div>
                 </div>
-            </div>
-            <div class="box-body">
-                <div class="chart">
-                    <canvas id="macYearChart"></canvas>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="macYearChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-6">
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">电子秤MAC地址新增数量: 按天统计</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                            class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                            class="fa fa-times"></i></button>
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">电子秤MAC地址新增数量: 按天统计</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                    </div>
                 </div>
-            </div>
-            <div class="box-body">
-                <div class="chart">
-                    <canvas id="macMonthChart"></canvas>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="macMonthChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
