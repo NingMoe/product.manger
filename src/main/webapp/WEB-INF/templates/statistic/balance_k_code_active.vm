@@ -11,11 +11,14 @@
                                 class="fa fa-times"></i></button>
                     </div>
                 </div>
+                <br>
                 <div class="box-body" style="padding-left: 10%;padding-right: 10%">
                     <div class="chart">
-                        <canvas id="activeYearChart" height="130px"></canvas>
+                        <canvas id="activeYearChart" height="145px"></canvas>
                     </div>
                 </div>
+                <br>
+                <br>
             </div>
         </div>
 
@@ -30,9 +33,10 @@
                                 class="fa fa-times"></i></button>
                     </div>
                 </div>
+                <br>
                 <div class="box-body" style="padding-left: 10%;padding-right: 10%">
                     <div class="chart">
-                        <canvas id="activeMonthChart" height="130px"></canvas>
+                        <canvas id="activeMonthChart" height="145px"></canvas>
                     </div>
                 </div>
             </div>
