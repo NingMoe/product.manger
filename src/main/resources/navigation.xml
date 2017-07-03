@@ -67,4 +67,35 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceStatisticCount</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤数量统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/count</url>
+            <sub-directories>
+                <name>BalanceStatisticCount</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceStatisticLocation</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤位置信息统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/balance/sales/location</url>
+            <sub-directories>
+                <name>BalanceStatisticLocation</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
