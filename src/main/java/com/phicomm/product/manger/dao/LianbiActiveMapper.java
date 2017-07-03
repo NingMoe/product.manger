@@ -33,12 +33,14 @@ public interface LianbiActiveMapper {
      *
      * @return 数量
      */
-    List<LocationCountBean> obtainActiveLocationCountByMonth(@Param("month") int month);
+    List<LocationCountBean> obtainActiveLocationCountByMonth(@Param("month") int month,
+                                                             @Param("pageSize")int pageSize);
 
     /**
      * 上传数量
      *
      * @return 数量
      */
-    List<LocationCountBean> obtainActiveLocationCountByDay(@Param("day") int day);
+    List<LocationCountBean> obtainActiveLocationCountByDay(@Param("day") int day,
+                                                           @Param("pageSize")int pageSize);
 }

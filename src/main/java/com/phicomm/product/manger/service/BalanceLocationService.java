@@ -29,6 +29,8 @@ public class BalanceLocationService {
 
     private static final Logger logger = Logger.getLogger(BalanceLocationService.class);
 
+    private static final int LOCATION_PAGE_SIZE = 15;
+
     private final BalanceLocationMapper balanceLocationMapper;
 
     private LianbiActiveMapper lianbiActiveMapper;
@@ -37,7 +39,7 @@ public class BalanceLocationService {
     public BalanceLocationService(BalanceLocationMapper balanceLocationMapper,
                                   LianbiActiveMapper lianbiActiveMapper) {
         this.balanceLocationMapper = balanceLocationMapper;
-        this.lianbiActiveMapper=lianbiActiveMapper;
+        this.lianbiActiveMapper = lianbiActiveMapper;
         Assert.notNull(this.balanceLocationMapper);
         Assert.notNull(this.lianbiActiveMapper);
     }
@@ -64,7 +66,7 @@ public class BalanceLocationService {
         List<BalanceLocation> balanceLocations = Lists.newArrayList();
         balanceLocationList.forEach((location) -> {
             BalanceLocation balanceLocation = location.format();
-            if(balanceLocation != null) {
+            if (balanceLocation != null) {
                 balanceLocations.add(balanceLocation);
             }
         });
@@ -76,7 +78,7 @@ public class BalanceLocationService {
      */
     public BalanceSaleNumber getBalanceSaleNumber() {
         CustomerContextHolder.selectProdDataSource();
-        int balanceSaleNumber =  balanceLocationMapper.getBalanceSaleNumber();
+        int balanceSaleNumber = balanceLocationMapper.getBalanceSaleNumber();
         CustomerContextHolder.clearDataSource();
         BalanceSaleNumber result = new BalanceSaleNumber();
         result.setSaleNumber(balanceSaleNumber);
@@ -92,9 +94,9 @@ public class BalanceLocationService {
         CustomerContextHolder.selectProdDataSource();
         //联璧激活的位置信息
         if ("lianbi".equals(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, LOCATION_PAGE_SIZE);
         } else {
-            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month);
+            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, LOCATION_PAGE_SIZE);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {
@@ -115,10 +117,10 @@ public class BalanceLocationService {
         CustomerContextHolder.selectProdDataSource();
         //联璧激活位置信息
         if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, LOCATION_PAGE_SIZE);
         } else {
             //其它默认为电子秤位置信息
-            countBeans = balanceLocationMapper.obtainLocationCountByDay(day);
+            countBeans = balanceLocationMapper.obtainLocationCountByDay(day, LOCATION_PAGE_SIZE);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {

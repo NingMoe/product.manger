@@ -77,7 +77,7 @@
             province
         ORDER BY
             generateCount DESC
-        LIMIT 15
+        LIMIT #{pageSize,jdbcType=INTEGER}
 
         ]]>
     </select>
@@ -111,7 +111,7 @@
                 province
             ORDER BY
                 generateCount DESC
-            LIMIT 15
+            LIMIT #{pageSize,jdbcType=INTEGER}
 
         ]]>
     </select>

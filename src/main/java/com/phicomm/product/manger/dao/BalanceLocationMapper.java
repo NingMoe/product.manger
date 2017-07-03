@@ -25,14 +25,16 @@ public interface BalanceLocationMapper {
      *
      * @return 数量
      */
-    List<LocationCountBean> obtainLocationCountByMonth(@Param("month") int month);
+    List<LocationCountBean> obtainLocationCountByMonth(@Param("month") int month,
+                                                       @Param("pageSize") int pageSize);
 
     /**
      * 上传数量
      *
      * @return 数量
      */
-    List<LocationCountBean> obtainLocationCountByDay(@Param("day") int day);
+    List<LocationCountBean> obtainLocationCountByDay(@Param("day") int day,
+                                                     @Param("pageSize") int pageSize);
 
     /**
      * 获取当天电子秤激活地区分布
