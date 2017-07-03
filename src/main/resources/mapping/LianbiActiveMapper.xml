@@ -68,6 +68,7 @@
         AND DATE_FORMAT(create_time, '%Y-%m-%d') < DATE_FORMAT(NOW(), '%Y-%m-%d')
         AND LENGTH(province) > 0
         AND province <> 'no_location'
+        AND province <> 'Reserved Address'
         GROUP BY
             province
         ORDER BY
@@ -100,6 +101,7 @@
             WHERE
                 LENGTH(province) > 0
             AND province <> 'no_location'
+            AND province <> 'Reserved Address'
             GROUP BY
                 province
             ORDER BY
