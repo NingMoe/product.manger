@@ -1,36 +1,38 @@
-<div class="col-md-12">
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">联璧激活: 按月统计</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                        class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                        class="fa fa-times"></i></button>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">联璧激活: 按月统计</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                            class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                            class="fa fa-times"></i></button>
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            <div class="chart">
-                <canvas id="activeYearChart"></canvas>
+            <div class="box-body" style="padding-left: 10%;padding-right: 10%">
+                <div class="chart">
+                    <canvas id="activeYearChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-12">
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">联璧激活: 按天统计</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                        class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                        class="fa fa-times"></i></button>
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">联璧激活: 按天统计</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                            class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                            class="fa fa-times"></i></button>
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            <div class="chart">
-                <canvas id="activeMonthChart"></canvas>
+            <div class="box-body" style="padding-left: 10%;padding-right: 10%">
+                <div class="chart">
+                    <canvas id="activeMonthChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
