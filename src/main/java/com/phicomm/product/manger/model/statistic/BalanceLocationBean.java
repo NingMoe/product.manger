@@ -14,6 +14,8 @@ public class BalanceLocationBean {
 
     private String activeCounty;
 
+    private boolean activated;
+
     public String getActiveCountry() {
         return activeCountry;
     }
@@ -46,6 +48,14 @@ public class BalanceLocationBean {
         this.activeCounty = activeCounty;
     }
 
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
     @Override
     public String toString() {
         return "BalanceLocationBean{" +
@@ -53,6 +63,7 @@ public class BalanceLocationBean {
                 ", activeProvince='" + activeProvince + '\'' +
                 ", activeCity='" + activeCity + '\'' +
                 ", activeCounty='" + activeCounty + '\'' +
+                ", activated=" + activated +
                 '}';
     }
 }

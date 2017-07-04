@@ -116,7 +116,8 @@
             country AS activeCountry,
             province AS activeProvince,
             city AS activeCity,
-            county AS activeCounty
+            county AS activeCounty,
+            COUNT(1) AS activated
         FROM
             `balance_lianbi_active_info`
         WHERE

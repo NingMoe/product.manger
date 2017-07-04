@@ -169,30 +169,35 @@ public class BalanceStatisticService {
      */
     private String formatLocation(BalanceLocationBean locationBean) {
         if (locationBean == null) {
-            return "信息为空";
+            return "无激活信息";
         }
         StringBuilder builder = new StringBuilder();
         String country = locationBean.getActiveCountry();
         String province = locationBean.getActiveProvince();
         String city = locationBean.getActiveCity();
         String county = locationBean.getActiveCounty();
-        if (!Strings.isNullOrEmpty(country)) {
-            if (country.equalsIgnoreCase("Reserved Address")) {
-                return "保留地址";
-            }
-            builder.append(country);
-            if (!Strings.isNullOrEmpty(province)) {
-                builder.append("、").append(province);
+        if (locationBean.isActivated()){
+            if (!Strings.isNullOrEmpty(country)) {
+                if (country.equalsIgnoreCase("Reserved Address")) {
+                    return "保留地址";
+                }
+                builder.append(country);
+                if (!Strings.isNullOrEmpty(province)) {
+                    builder.append("、").append(province);
+                }
                 if (!Strings.isNullOrEmpty(city)) {
                     builder.append("、").append(city);
-                    if (!Strings.isNullOrEmpty(county)) {
-                        builder.append("、").append(county);
-                    }
                 }
+                if (!Strings.isNullOrEmpty(county)) {
+                    builder.append("、").append(county);
+                }
+                return builder.toString();
+            } else {
+                return "位置缺失";
             }
-            return builder.toString();
-        } else {
-            return "信息为空";
+        }else {
+            return "无激活信息";
         }
+
     }
 }
