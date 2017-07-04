@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.dao;
 
+import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import com.phicomm.product.manger.model.statistic.CountBean;
 import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import org.apache.ibatis.annotations.Param;
@@ -50,5 +51,5 @@ public interface LianbiActiveMapper {
      * @param mac mac地址
      * @return 激活地址
      */
-    String obtainActiveCity(@Param("mac") String mac);
+    BalanceLocationBean obtainActiveCity(@Param("mac") String mac);
 }

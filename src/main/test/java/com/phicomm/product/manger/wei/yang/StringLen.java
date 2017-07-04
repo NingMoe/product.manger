@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.wei.yang;
 
+import com.google.common.base.Strings;
+import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import org.junit.Test;
 
 /**
@@ -33,5 +35,41 @@ public class StringLen {
             }
             return builder.toString().toLowerCase();
         }
+    }
+
+    @Test
+    public void test2(){
+        BalanceLocationBean locationBean=new BalanceLocationBean();
+        locationBean.setActiveCity("市");
+        locationBean.setActiveCountry("国家");
+        locationBean.setActiveCounty("县");
+        locationBean.setActiveProvince("省");
+        System.out.println(formatLocation(locationBean));
+    }
+
+    private String formatLocation(BalanceLocationBean locationBean) {
+        if (locationBean == null) {
+            return "未知地点";
+        }
+        StringBuilder builder = new StringBuilder();
+        String country = locationBean.getActiveCountry();
+        String province = locationBean.getActiveProvince();
+        String city = locationBean.getActiveCity();
+        String county = locationBean.getActiveCounty();
+        if (!Strings.isNullOrEmpty(country)) {
+            builder.append(country);
+            if (!Strings.isNullOrEmpty(province)) {
+                builder.append("、").append(province);
+                if (!Strings.isNullOrEmpty(city)) {
+                    builder.append("、").append(city);
+                    if (!Strings.isNullOrEmpty(county)) {
+                        builder.append("、").append(county);
+                    }
+                }
+            }
+        } else {
+            return "未知地点";
+        }
+        return builder.toString();
     }
 }

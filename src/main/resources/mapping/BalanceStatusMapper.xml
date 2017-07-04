@@ -63,7 +63,7 @@
         SELECT
             t.createTime AS createTime,
             t.memberCount AS memberCount,
-            t.activeCity AS activeCity
+            t.activeLocation AS activeLocation
         FROM
             (
                 SELECT
@@ -97,7 +97,7 @@
                             `balance_lianbi_active_info`
                         WHERE
                             mac = #{mac,jdbcType=VARCHAR}
-                    ) AS activeCity
+                    ) AS activeLocation
             ) t
     </select>
 

@@ -1,29 +1,32 @@
 <section class="content">
-    <div class="Absolute-Center is-Responsive">
-        <div class="input-group input-group-sm" style="width: 50%;margin-left: 25%;margin-right: 25%;margin-top: 10%">
-            <input type="text" class="form-control" id="inputMac">
-            <span class="input-group-btn">
+    <div class="input-group input-group-sm" style="width: 50%;margin-left: 25%;margin-right: 25%;margin-top: 10%">
+        <input type="text"
+               class="form-control"
+               id="inputMac"
+               placeholder="搜索MAC相关信息，如键入:A020A6351AD5或5c:cf:7f:90:fd:13"
+        >
+        <span class="input-group-btn">
                       <button type="button" class="btn btn-info btn-flat" onclick="obtainMacInfo()">Go!</button>
                     </span>
-        </div>
-        <div style="width: 50%;margin-left: 25%;margin-right: 25%;margin-top: 3%;visibility: hidden" id="result">
-            <br>
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        <th style="width:50%">首次使用时间</th>
-                        <td id="createTime"></td>
-                    </tr>
-                    <tr>
-                        <th>共绑定成员数</th>
-                        <td id="bindNumber"></td>
-                    </tr>
-                    <tr>
-                        <th>激活&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 地址</th>
-                        <td id="activeLocation"></td>
-                    </tr>
-                </table>
-            </div>
+    </div>
+
+    <div style="width: 50%;margin-left: 25%;margin-right: 25%;margin-top: 3%;visibility: hidden" id="result">
+        <br>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>激活&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 地址</th>
+                    <td id="activeLocation"></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">首次使用时间</th>
+                    <td id="createTime"></td>
+                </tr>
+                <tr>
+                    <th>共绑定成员数</th>
+                    <td id="bindNumber"></td>
+                </tr>
+            </table>
         </div>
     </div>
 </section>
@@ -46,11 +49,24 @@
                     alert('Data format error !');
                 } else {
                     var result = data.data;
-                    console.info(result)
                     document.getElementById("result").style.visibility = 'visible';
-                    $("#createTime").text(result.createTime);
-                    $("#bindNumber").text(result.memberCount)
-                    $("#activeLocation").text(result.activeCity)
+                    var createTime = result.createTime;
+                    var activeLocation = result.activeLocation;
+                    var memberCount = result.memberCount;
+                    if (createTime == null) {
+                        createTime = "尚未使用";
+                        memberCount = "尚未绑定";
+                        if (activeLocation == "信息为空") {
+                            activeLocation = "尚未激活";
+                        }
+                    } else {
+                        if (memberCount == 0) {
+                            memberCount = "尚未绑定";
+                        }
+                    }
+                    $("#createTime").text(createTime);
+                    $("#bindNumber").text(memberCount);
+                    $("#activeLocation").text(activeLocation);
                 }
 
             }

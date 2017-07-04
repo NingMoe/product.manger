@@ -6,18 +6,18 @@ package com.phicomm.product.manger.model.statistic;
  */
 public class BalanceMacStatus {
 
-    private String activeCity;
+    private String activeLocation;
 
     private int memberCount;
 
     private String createTime;
 
-    public String getActiveCity() {
-        return activeCity;
+    public String getActiveLocation() {
+        return activeLocation;
     }
 
-    public BalanceMacStatus setActiveCity(String activeCity) {
-        this.activeCity = activeCity;
+    public BalanceMacStatus setActiveLocation(String activeLocation) {
+        this.activeLocation = activeLocation;
         return this;
     }
 
@@ -42,7 +42,7 @@ public class BalanceMacStatus {
     @Override
     public String toString() {
         return "BalanceMacStatus{" +
-                "activeCity='" + activeCity + '\'' +
+                "activeLocation='" + activeLocation + '\'' +
                 ", memberCount=" + memberCount +
                 ", createTime=" + createTime +
                 '}';
