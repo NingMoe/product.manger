@@ -26,10 +26,8 @@
             </div>
         </div>
     </div>
-    <div>
-
-    </div>
 </section>
+
 <script>
     function obtainMacInfo() {
         $.ajax({
