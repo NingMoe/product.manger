@@ -24,8 +24,8 @@ public class BalanceShipmentController {
     private NavigationManger navigationManger;
 
     @Autowired
-    public BalanceShipmentController(NavigationManger navigationManger){
-        this.navigationManger=navigationManger;
+    public BalanceShipmentController(NavigationManger navigationManger) {
+        this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
 

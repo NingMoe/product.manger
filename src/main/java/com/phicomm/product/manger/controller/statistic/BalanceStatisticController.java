@@ -73,7 +73,7 @@ public class BalanceStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "balance/mac/info",method = RequestMethod.POST)
+    @RequestMapping(value = "balance/mac/info", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("mac地址信息")
     @ApiResponses(value = {
@@ -81,7 +81,7 @@ public class BalanceStatisticController {
     })
     @FunctionPoint("common")
     public Response<BalanceMacStatus> obtainBalanceMacInfo(@RequestParam String mac) throws DataFormatException {
-        BalanceMacStatus balanceMacStatus=balanceStatisticService.obtainMacInfo(mac);
+        BalanceMacStatus balanceMacStatus = balanceStatisticService.obtainMacInfo(mac);
         return new Response<BalanceMacStatus>().setData(balanceMacStatus);
     }
 }

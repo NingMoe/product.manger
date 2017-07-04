@@ -176,7 +176,7 @@ public class BalanceStatisticService {
         String province = locationBean.getActiveProvince();
         String city = locationBean.getActiveCity();
         String county = locationBean.getActiveCounty();
-        if (locationBean.isActivated()){
+        if (locationBean.isActivated()) {
             if (!Strings.isNullOrEmpty(country)) {
                 if (country.equalsIgnoreCase("Reserved Address")) {
                     return "保留地址";
@@ -195,7 +195,7 @@ public class BalanceStatisticService {
             } else {
                 return "位置缺失";
             }
-        }else {
+        } else {
             return "无激活信息";
         }
 
