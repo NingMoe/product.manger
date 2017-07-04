@@ -12,7 +12,9 @@ public class RegexUtil {
 
     private final static String PHONE_REGEX = "^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$";
 
-    private final static String MAC_REGEX = "^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2})$";
+    private final static String MAC_REGEX_SPLIT = "^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2})$";
+
+    private final static String MAC_REGEX = "^[0-9a-fA-F]{12}$";
 
     /**
      * 构造函数私有
@@ -38,6 +40,17 @@ public class RegexUtil {
      * @return 格式是否正确
      */
     public static boolean checkMacFormat(String mac) {
-        return !Strings.isNullOrEmpty(mac) && Pattern.matches(MAC_REGEX, mac);
+        if (Strings.isNullOrEmpty(mac)) {
+            return false;
+        } else {
+            int len = mac.getBytes().length;
+            if (len == 12) {
+                return Pattern.matches(MAC_REGEX, mac);
+            } else if (len == 17) {
+                return Pattern.matches(MAC_REGEX_SPLIT, mac);
+            }
+            return false;
+        }
+
     }
 }

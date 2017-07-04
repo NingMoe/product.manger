@@ -74,4 +74,19 @@ public class BalanceStatisticPageController {
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticLocation"));
         return modelAndView;
     }
+
+    /**
+     * 查询MAC信息：激活位置、首次使用时间、绑定的成员数量
+     */
+    @RequestMapping(value = "balance/statistic/balance/mac/status", method = RequestMethod.GET)
+    @ApiIgnore("首页展示")
+    @FunctionPoint(value = "common")
+    public ModelAndView showBalanceMacStatus(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "statistic/balance_mac_status.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMacStatus"));
+        return modelAndView;
+    }
 }

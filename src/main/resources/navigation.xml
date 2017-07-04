@@ -114,4 +114,20 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>balanceMacStatus</id>
+        <title>
+            <title-name>查询</title-name>
+            <title-description>电子秤MAC信息查询</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/balance/mac/status</url>
+            <sub-directories>
+                <name>balanceMacStatus</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
