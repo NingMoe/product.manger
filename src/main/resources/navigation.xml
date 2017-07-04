@@ -124,7 +124,7 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/statistic/balance/mac/status</url>
+            <url>$baseUrl/balance/shipment/mac/status</url>
             <sub-directories>
                 <name>balanceMacStatus</name>
             </sub-directories>

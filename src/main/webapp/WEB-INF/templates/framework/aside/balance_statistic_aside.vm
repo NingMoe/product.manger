@@ -12,7 +12,6 @@
         <li><a href="$baseUrl/balance/statistic/page/k/code/active"><i class="fa fa-tint"></i> K码激活统计</a></li>
         <li><a href="$baseUrl/balance/statistic/balance/sales/location"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
         <li><a href="$baseUrl/balance/statistic/count"><i class="fa fa-globe"></i> 体脂秤数量统计</a></li>
-        <li><a href="$baseUrl/balance/statistic/balance/mac/status"><i class="fa fa-globe"></i> 体脂秤MAC信息查询</a></li>
         <li>
             <a href="$baseUrl/statistic/sales/location/projection">
                 <i class="fa fa-line-chart"></i> 统计全屏显示
