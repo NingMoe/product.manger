@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-primary">
+            <div class="box-header with-border"></div>
+            <div class="box-body">
+                <div class="callout callout-success">
+                    <h4>选择文件</h4>
+                    <input type="file" class="input input-group" name="file" value="Choice File">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Hermes Upload Result</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-group" id="accordion">
+                    <div class="panel box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                    Base Information
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse in">
+                            <div class="box-body">
+                                <table class="table table-bordered col-md-4">
+                                    <tr>
+                                        <th style="width: 10px"></th>
+                                        <th style="width: 160px">Item</th>
+                                        <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1.</td>
+                                        <td>File Name</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>File Size</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.</td>
+                                        <td>Cost</td>
+                                        <td>xxxxxx(ms)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Hash
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="box-body">
+                                <table class="table table-bordered col-md-4">
+                                    <tr>
+                                        <th style="width: 10px"></th>
+                                        <th style="width: 160px">Hash Type</th>
+                                        <th>Hash Value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1.</td>
+                                        <td>MD5</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>SHA-256</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel box box-primary">
+                        <div class="box-header with-border">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                    Download URLs
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse in">
+                            <div class="box-body">
+                                <table class="table table-bordered col-md-4">
+                                    <tr>
+                                        <th style="width: 10px"></th>
+                                        <th style="width: 160px">Description</th>
+                                        <th>Download URLs</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1.</td>
+                                        <td>HTTPS</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>HTTP</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>Inner Net</td>
+                                        <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

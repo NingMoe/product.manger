@@ -98,4 +98,20 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>hermes</id>
+        <title>
+            <title-name>Hermes</title-name>
+            <title-description>文件上传</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/hermes/page</url>
+            <sub-directories>
+                <name>hermes</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
