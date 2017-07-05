@@ -38,7 +38,7 @@ public class BalanceShipmentController {
     public ModelAndView showBalanceMacStatus(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "statistic/balance_mac_status.vm");
+        modelAndView.getModel().put("context", "shipment/balance_mac_status.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMacStatus"));
         return modelAndView;
