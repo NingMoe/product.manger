@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 出货管理
+ * <p>
  * Created by wei.yang on 2017/7/4.
  */
 @Controller
@@ -33,7 +34,7 @@ public class BalanceShipmentController {
      * 查询MAC信息：激活位置、首次使用时间、绑定的成员数量
      */
     @RequestMapping(value = "balance/shipment/mac/status", method = RequestMethod.GET)
-    @ApiIgnore("首页展示")
+    @ApiIgnore("查询MAC信息：激活位置、首次使用时间、绑定的成员数量")
     @FunctionPoint(value = "common")
     public ModelAndView showBalanceMacStatus(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
