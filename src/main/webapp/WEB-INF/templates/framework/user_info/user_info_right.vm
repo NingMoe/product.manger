@@ -1,0 +1,28 @@
+<div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+        <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="$adminUserInfo.headPicture" class="user-image" alt="User Image">
+                <span class="hidden-xs">$adminUserInfo.username</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="user-header">
+                    <img src="$adminUserInfo.headPicture" class="img-circle" alt="User Image">
+                    <p>
+                        $adminUserInfo.username - $adminUserInfo.role
+                        <small>Member since ${velocityUtil.toSimpleDate($adminUserInfo.createTime)}</small>
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <div class="pull-left">
+                        <a href="#" class="btn btn-default btn-flat setting">Setting</a>
+                    </div>
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-default btn-flat sign-out">Sign out</a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.LianbiActiveMapper">
+
+    <select id="obtainActiveCountByMonth" resultType="com.phicomm.product.manger.model.statistic.CountBean"
+            parameterType="java.lang.Integer">
+    <![CDATA[
+      SELECT
+            DATE_FORMAT(dayTime, '%Y-%m') AS generateTime,
+            SUM(dayCount) AS generateCount
+        FROM
+            (
+                SELECT
+                    DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+                    COUNT(1) AS dayCount
+                FROM
+                    `balance_lianbi_active_info`
+                GROUP BY
+                    dayTime
+                HAVING
+                    dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+            ) b
+        GROUP BY
+            generateTime
+        HAVING
+            generateTime > DATE_FORMAT(
+                DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
+                '%Y-%m'
+            )
+        ORDER BY
+            generateTime DESC
+       ]]>
+    </select>
+
+    <select id="obtainActiveCountByDay" resultType="com.phicomm.product.manger.model.statistic.CountBean"
+            parameterType="java.lang.Integer">
+    <![CDATA[
+       SELECT
+            DATE_FORMAT(create_time, '%Y-%m-%d') AS generateTime,
+            COUNT(1) AS generateCount
+        FROM
+            `balance_lianbi_active_info`
+        GROUP BY
+            generateTime
+        HAVING
+            generateTime >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),'%Y-%m-%d')
+        AND
+            generateTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+        ORDER BY
+            generateTime DESC
+        ]]>
+    </select>
+
+    <select id="obtainActiveLocationCountByMonth"
+            resultType="com.phicomm.product.manger.model.statistic.LocationCountBean"
+            parameterType="java.lang.Integer">
+        <![CDATA[
+       SELECT
+            province AS province,
+            COUNT(1) AS generateCount
+        FROM
+            balance_lianbi_active_info
+        WHERE
+            DATE_FORMAT(create_time, '%Y-%m') > DATE_FORMAT(
+                DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
+                '%Y-%m'
+            )
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') < DATE_FORMAT(NOW(), '%Y-%m-%d')
+        AND LENGTH(province) > 0
+        AND province <> 'no_location'
+        AND province <> 'Reserved Address'
+        GROUP BY
+            province
+        ORDER BY
+            generateCount DESC
+        LIMIT #{pageSize,jdbcType=INTEGER}
+        ]]>
+    </select>
+
+    <select id="obtainActiveLocationCountByDay"
+            resultType="com.phicomm.product.manger.model.statistic.LocationCountBean"
+            parameterType="java.lang.Integer">
+        <![CDATA[
+            SELECT
+                province AS province,
+                COUNT(1) AS generateCount
+            FROM
+                (
+                    SELECT
+                        DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+                        province AS province
+                    FROM
+                        balance_lianbi_active_info
+                    HAVING
+                        dayTime >= DATE_FORMAT(
+                            DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
+                            '%Y-%m-%d'
+                        )
+                    AND dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+                ) b
+            WHERE
+                LENGTH(province) > 0
+            AND province <> 'no_location'
+            AND province <> 'Reserved Address'
+            GROUP BY
+                province
+            ORDER BY
+                generateCount DESC
+            LIMIT #{pageSize,jdbcType=INTEGER}
+        ]]>
+    </select>
+
+    <select id="obtainActiveCity" parameterType="java.lang.String"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceLocationBean">
+        SELECT
+            country AS activeCountry,
+            province AS activeProvince,
+            city AS activeCity,
+            county AS activeCounty,
+            COUNT(1) AS activated
+        FROM
+            `balance_lianbi_active_info`
+        WHERE
+            mac = #{mac,jdbcType=VARCHAR}
+    </select>
+</mapper>

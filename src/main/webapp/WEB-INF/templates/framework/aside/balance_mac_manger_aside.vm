@@ -1,0 +1,13 @@
+<li class="header">Balance MAC Manger</li>
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-users"></i>
+        <span>电子秤出货管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="$baseUrl/balance/shipment/mac/status"><i class="fa fa-globe"></i> 体脂秤MAC信息查询</a></li>
+    </ul>
+</li>

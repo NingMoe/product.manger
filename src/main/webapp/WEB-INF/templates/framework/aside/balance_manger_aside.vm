@@ -1,0 +1,35 @@
+<li class="header">Balance Upgrade Manger</li>
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-dashboard"></i>
+        <span>测试环境</span>
+        <span class="pull-right-container">
+            <small class="label pull-right bg-blue">test</small>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="#2"><i class="fa fa-circle-o"></i> 指定升级模式</a>
+        </li>
+        <li>
+            <a href="#3"><i class="fa fa-circle-o"></i> 火力全开模式</a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a href="pages/widgets.html">
+        <i class="fa fa-th"></i>
+        <span>生产环境</span>
+        <span class="pull-right-container">
+            <small class="label pull-right bg-green">prod</small>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="#2"><i class="fa fa-circle-o"></i> 指定升级模式</a>
+        </li>
+        <li>
+            <a href="#3"><i class="fa fa-circle-o"></i> 火力全开模式</a>
+        </li>
+    </ul>
+</li>

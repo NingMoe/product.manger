@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<navigations xmlns="http://www.phicomm.com/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.phicomm.com/XMLSchema navigation.xsd">
+
+    <navigation>
+        <id>homepage</id>
+        <title>
+            <title-name>首页</title-name>
+            <title-description>首页</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/homepage</url>
+            <sub-directories>
+                <name>homepage</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>permissionManger</id>
+        <title>
+            <title-name>权限管理</title-name>
+            <title-description>权限管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/permission</url>
+            <sub-directories>
+                <name>permission</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>salesLocationStatistic</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤激活地理位置统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/statistic/sales/location</url>
+            <sub-directories>
+                <name>salesLocationStatistic</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceStatisticKCodeActive</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤K码激活统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/page/k/code/active</url>
+            <sub-directories>
+                <name>BalanceStatisticKCodeActive</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceStatisticCount</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤数量统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/count</url>
+            <sub-directories>
+                <name>BalanceStatisticCount</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceStatisticLocation</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂秤位置信息统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/balance/sales/location</url>
+            <sub-directories>
+                <name>BalanceStatisticLocation</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>hermes</id>
+        <title>
+            <title-name>Hermes</title-name>
+            <title-description>文件上传</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/hermes/page</url>
+            <sub-directories>
+                <name>hermes</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMacStatus</id>
+        <title>
+            <title-name>查询</title-name>
+            <title-description>电子秤MAC信息查询</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/shipment/mac/status</url>
+            <sub-directories>
+                <name>balanceMacStatus</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+</navigations>

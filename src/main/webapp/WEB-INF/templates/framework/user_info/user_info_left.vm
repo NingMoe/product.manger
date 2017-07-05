@@ -1,0 +1,13 @@
+<div class="user-panel">
+    <div class="pull-left image">
+        <img src="$adminUserInfo.headPicture" class="img-circle" alt="User Image">
+    </div>
+    <div class="pull-left info">
+        <p>$adminUserInfo.username</p>
+        #if($adminUserInfo.sex == 1)
+            <a href="#"><i class="fa fa-circle text-success"></i> $adminUserInfo.role</a>
+        #else
+            <a href="#"><i class="fa fa-circle text-danger"></i> $adminUserInfo.role</a>
+        #end
+    </div>
+</div>
