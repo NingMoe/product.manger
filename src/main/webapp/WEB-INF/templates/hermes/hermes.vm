@@ -103,22 +103,22 @@
                                         </tr>
                                         <tr>
                                             <td>1.</td>
-                                            <td>HTTPS-File</td>
+                                            <td>Https-File</td>
                                             <td id="tableHttpsFile"></td>
                                         </tr>
                                         <tr>
                                             <td>2.</td>
-                                            <td>HTTPS-Image</td>
+                                            <td>Https-Image</td>
                                             <td id="tableHttpsImage"></td>
                                         </tr>
                                         <tr>
                                             <td>3.</td>
-                                            <td>HTTP-File</td>
+                                            <td>Http-File</td>
                                             <td id="tableHttpFile"></td>
                                         </tr>
                                         <tr>
                                             <td>3.</td>
-                                            <td>HTTP-File</td>
+                                            <td>Http-Image</td>
                                             <td id="tableHttpImage"></td>
                                         </tr>
                                         <tr>
