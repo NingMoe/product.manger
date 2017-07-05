@@ -110,9 +110,14 @@
         ]]>
     </select>
 
-    <select id="obtainActiveCity" parameterType="java.lang.String" resultType="java.lang.String">
+    <select id="obtainActiveCity" parameterType="java.lang.String"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceLocationBean">
         SELECT
-            city AS activeCity
+            country AS activeCountry,
+            province AS activeProvince,
+            city AS activeCity,
+            county AS activeCounty,
+            COUNT(1) AS activated
         FROM
             `balance_lianbi_active_info`
         WHERE

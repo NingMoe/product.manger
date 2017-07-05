@@ -1,9 +1,11 @@
 package com.phicomm.product.manger.service;
 
+import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceStatusMapper;
 import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.LianbiActiveMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.model.statistic.CountBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
@@ -14,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 主要统计一下balance_status_info新增的量
@@ -120,15 +125,79 @@ public class BalanceStatisticService {
      */
     public BalanceMacStatus obtainMacInfo(String mac) throws DataFormatException {
         boolean right = RegexUtil.checkMacFormat(mac);
-        BalanceMacStatus balanceMacStatus = new BalanceMacStatus();
         if (!right) {
             throw new DataFormatException();
         }
+        mac = formatMac(mac);
+        BalanceMacStatus balanceMacStatus = new BalanceMacStatus();
         CustomerContextHolder.selectProdDataSource();
-        balanceMacStatus.setActiveCity(lianbiActiveMapper.obtainActiveCity(mac))
+        BalanceLocationBean locationBean = lianbiActiveMapper.obtainActiveCity(mac);
+        balanceMacStatus.setActiveLocation(formatLocation(locationBean))
                 .setCreateTime(balanceStatusMapper.obtainStatusCreateTime(mac))
                 .setMemberCount(balanceUserManagerMapper.obtainMemberCount(mac));
         CustomerContextHolder.clearDataSource();
         return balanceMacStatus;
+    }
+
+    /**
+     * 格式化mac地址
+     *
+     * @param mac mac地址
+     * @return mac地址
+     */
+    private String formatMac(String mac) {
+        int len = mac.length();
+        StringBuilder builder = new StringBuilder();
+        if (mac.length() == 17) {
+            return mac.toLowerCase();
+        } else {
+            for (int i = 0; i < len / 2; i++) {
+                builder.append(mac.subSequence(2 * i, 2 * i + 2));
+                if (!(i == len / 2 - 1)) {
+                    builder.append(":");
+                }
+            }
+            return builder.toString().toLowerCase();
+        }
+    }
+
+    /**
+     * 格式化未知
+     *
+     * @param locationBean 位置
+     * @return 位置信息
+     */
+    private String formatLocation(BalanceLocationBean locationBean) {
+        if (locationBean == null) {
+            return "无激活信息";
+        }
+        StringBuilder builder = new StringBuilder();
+        String country = locationBean.getActiveCountry();
+        String province = locationBean.getActiveProvince();
+        String city = locationBean.getActiveCity();
+        String county = locationBean.getActiveCounty();
+        if (locationBean.isActivated()) {
+            if (!Strings.isNullOrEmpty(country)) {
+                if (country.equalsIgnoreCase("Reserved Address")) {
+                    return "保留地址";
+                }
+                builder.append(country);
+                if (!Strings.isNullOrEmpty(province)) {
+                    builder.append("、").append(province);
+                }
+                if (!Strings.isNullOrEmpty(city)) {
+                    builder.append("、").append(city);
+                }
+                if (!Strings.isNullOrEmpty(county)) {
+                    builder.append("、").append(county);
+                }
+                return builder.toString();
+            } else {
+                return "位置缺失";
+            }
+        } else {
+            return "无激活信息";
+        }
+
     }
 }
