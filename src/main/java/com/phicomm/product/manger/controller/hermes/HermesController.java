@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -36,11 +33,11 @@ public class HermesController {
     /**
      * 上传文件接口
      */
-    @RequestMapping(value = "hermes/upload/file", method = RequestMethod.GET)
+    @RequestMapping(value = "hermes/upload/file", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("上传文件到hermes")
     @FunctionPoint(value = "common")
-    public Response<Map<String, Object>> uploadFile(@RequestParam(name = "file") MultipartFile file) {
+    public Response<Map<String, Object>> uploadFile(@RequestPart("file") MultipartFile file) {
         Map<String, Object> map;
         try {
             map = hermesService.uploadFile(file);

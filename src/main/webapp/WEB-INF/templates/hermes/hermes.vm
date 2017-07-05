@@ -4,13 +4,15 @@
         <div class="col-lg-12">
             <div class="box box-solid upload-bg-color">
                 <div class="box-body phicomm-box-body">
-                    <input type="file" class="input input-group" name="file" value="Choice File">
-                    <input type="submit" class="input input-group phicomm-input-submit" name="submit" value="上传">
+                    <form id="file-form" enctype="multipart/form-data" method="post">
+                        <input type="file" class="input input-group" name="file" value="Choice File">
+                        <input type="button" id="file-upload-submit" class="input input-group phicomm-input-submit" name="submit" value="上传">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="upload-file-result-row row hidden">
         <div class="col-lg-12">
             <div class="box box-solid">
                 <div class="box-header with-border">
@@ -28,7 +30,7 @@
                             </div>
                             <div id="collapseThree" class="panel-collapse collapse in">
                                 <div class="box-body">
-                                    <table class="table table-bordered col-md-4">
+                                    <table class="upload-file-result-table table table-bordered col-md-4">
                                         <tr>
                                             <th class="phicomm-table-index"></th>
                                             <th class="phicomm-table-context">Item</th>
@@ -37,17 +39,17 @@
                                         <tr>
                                             <td>1.</td>
                                             <td>文件名</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td id="tableFileName"></td>
                                         </tr>
                                         <tr>
                                             <td>2.</td>
                                             <td>文件大小（字节）</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td id="tableFileSize"></td>
                                         </tr>
                                         <tr>
                                             <td>3.</td>
                                             <td>上传耗时（毫秒）</td>
-                                            <td>xxxxxx</td>
+                                            <td id="tableCostTime"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -72,12 +74,12 @@
                                         <tr>
                                             <td>1.</td>
                                             <td>MD5</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td id="tableMd5"></td>
                                         </tr>
                                         <tr>
                                             <td>2.</td>
                                             <td>SHA-256</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td id="tableSha256"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -101,18 +103,28 @@
                                         </tr>
                                         <tr>
                                             <td>1.</td>
-                                            <td>HTTPS</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td>HTTPS-File</td>
+                                            <td id="tableHttpsFile"></td>
                                         </tr>
                                         <tr>
                                             <td>2.</td>
-                                            <td>HTTP</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td>HTTPS-Image</td>
+                                            <td id="tableHttpsImage"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3.</td>
+                                            <td>HTTP-File</td>
+                                            <td id="tableHttpFile"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3.</td>
+                                            <td>HTTP-File</td>
+                                            <td id="tableHttpImage"></td>
                                         </tr>
                                         <tr>
                                             <td>2.</td>
                                             <td>内网使用链接</td>
-                                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                                            <td id="tableInnerFile"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -124,4 +136,5 @@
         </div>
     </div>
 </section>
+<script src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script src="$baseUrl/resources/js/hermes/hermes.js"></script>
