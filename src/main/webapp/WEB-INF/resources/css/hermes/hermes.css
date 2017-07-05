@@ -2,13 +2,16 @@
     background-color: #e1e1e1
 }
 .phicomm-box-body {
-    padding-top: 4%;
-    padding-bottom: 4%;
-    padding-left: 3%
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%
 }
 .phicomm-table-index {
     width: 10px
 }
 .phicomm-table-context {
     width: 160px
+}
+.phicomm-input-submit {
+    margin-top: 10px;
 }
