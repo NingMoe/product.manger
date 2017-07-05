@@ -1,20 +1,23 @@
+.Absolute-Center.is-Responsive {
+    width: 60%;
+    height: 20%;
+    min-width: 300px;
+    max-width: 700px;
+    padding: 10px;
+}
+
 .Center-Container {
     position: relative;
 }
 
 .Absolute-Center {
     width: 50%;
-    height: 50%;
+    height: 15%;
     overflow: auto;
     margin: auto;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-}
-
-.Absolute-Center.is-Responsive {
-    width: 60%;
-    height: 60%;
-    min-width: 200px;
-    max-width: 400px;
-    padding: 40px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }

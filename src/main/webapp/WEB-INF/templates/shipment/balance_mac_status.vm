@@ -1,23 +1,18 @@
+<link rel="stylesheet" href="$baseUrl/resources/css/statistic/layout.css">
+
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-solid" style="background-color: #e1e1e1">
-                <div class="box-body">
-                    <div class="input-group input-group-sm"
-                         style="width: 50%;
-                     margin-left: 25%;
-                     margin-right: 25%;
-                     margin-top: 5%;
-                     margin-bottom: 5%">
-                        <input type="text"
-                               class="form-control"
-                               id="inputMac"
-                               placeholder="搜索MAC相关信息，如键入:A020A6351AD5或5c:cf:7f:90:fd:13"
-                        >
-                        <span class="input-group-btn">
+            <div class="box box-solid Center-Container" style="background-color: #e1e1e1 ;height: 180px" >
+                <div class="input-group input-group-sm Absolute-Center">
+                    <input type="text"
+                           class="form-control"
+                           id="inputMac"
+                           placeholder="搜索MAC相关信息，如键入:A020A6351AD5或5c:cf:7f:90:fd:13"
+                    >
+                    <span class="input-group-btn">
                       <button type="button" class="btn btn-primary btn-flat" onclick="obtainMacInfo()">Go!</button>
                     </span>
-                    </div>
                 </div>
             </div>
         </div>
