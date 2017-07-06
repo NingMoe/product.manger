@@ -1,0 +1,132 @@
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/css/fresco/fresco.css"/>
+
+<section class="content">
+    <div class="box-solid">
+        <div class="box-body">
+            <ul class="products-list product-list-in-box" id="parentDiv">
+
+            </ul>
+        </div>
+        <div class="box-footer text-center" style="margin-left: 10px;margin-right: 10px">
+            <a href="javascript:void(0)" class="uppercase" onclick="fetchFeedback()">View More</a>
+        </div>
+    </div>
+</section>
+
+<script src="$baseUrl/resources/jquery/jquery-3.2.1.min.js"></script>
+<script src="$baseUrl/resources/js/fresco/fresco.js"></script>
+
+<script>
+
+    var startId = 1;
+
+    function fetchFeedback() {
+        $.ajax({
+            type: "POST",
+            url: "$baseUrl/balance/feedback/fetch",
+            dataType: "json",
+            data: {
+                "pageSize": "10",
+                "startId": startId
+            },
+            error: function (req, status, err) {
+                alert('Failed reason: ' + err);
+            }, success: function (data) {
+                var result = data.data;
+                if (result.length != 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        loadItem(result[i]);
+                    }
+                    startId = result[result.length - 1].id + 1;
+                    console.info(startId);
+                }
+            }
+        })
+    }
+
+    function loadItem(itemData) {
+        console.info(itemData);
+        var src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` + loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) +
+                loadAppType(itemData.appId) + loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
+        var imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
+        if (imgDiv != null) {
+            src = src + imgDiv;
+        }
+       /* src = src + loadCommonDiv() + loadTime(itemData.createTime);*/
+        src = src + loadTime(itemData.createTime);
+        const parser = new DOMParser();
+        const el = parser.parseFromString(src, "text/html");
+        const element = el.getElementById("childDiv");
+        const parentDiv = document.getElementById("parentDiv");
+        parentDiv.appendChild(element);
+    }
+
+    function loadUserHeader(headerUrl) {
+        console.info(headerUrl)
+        var src = `<div class="product-img"><img src=` + headerUrl + ` alt="Header"></div>`;
+        return src;
+    }
+
+    function loadUsername(username) {
+        var src = `<div class="product-info">
+                        <a href="javascript:void(0)" class="product-title">` + username;
+        return src;
+    }
+
+    function loadUserId(userId) {
+        var src = `<span class="product-description">` + userId + `</span>`;
+        return src;
+    }
+
+    function loadAppType(appId) {
+        var src;
+        if (appId == 'balance') {
+            src = `<span class="label label-success pull-right">` + 'Balance' + `</span></a>`;
+        } else if (appId == 'watch') {
+            src = `<span class="label label-info pull-right">` + 'Watch' + `</span></a>`;
+        } else {
+            src = `<span class="label label-default pull-right">` + 'Others' + `</span></a>`;
+        }
+        return src;
+    }
+
+    function loadFeedback(feedback) {
+        /*text-indent:2em;*/
+        var src = `<p style="margin-left: 40px">` + feedback + `</p>`;
+        return src;
+    }
+
+    function loadFeedbackImg(imageUrl, id) {
+        var images = [];
+        images = imageUrl;
+        if (images == null) {
+            return null;
+        }
+        var src = ` <div class="row" style="margin-left: 40px"><div id='page'><div class='demonstrations'>`;
+        for (var i = 0; i < images.length; i++) {
+            src = src + `<a href=` + images[i] + ` class='fresco' data-fresco-group=` + id + ` >
+                        <img src=` + images[i] + ` style="width: 80px;height: 80px " alt='img'/></a>`;
+        }
+        src = src + `</div></div></div>`;
+        return src;
+    }
+
+    function loadCommonDiv() {
+        var src = `<div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>`;
+        return src;
+    }
+
+    function loadTime(createTime) {
+        var src = `<div style="margin-left: 40px;margin-top: 10px">
+                        <span>提交于:</span><span>` + createTime + `</span>
+                    </div>`;
+        return src;
+    }
+
+    $(function init() {
+        fetchFeedback();
+    })
+</script>

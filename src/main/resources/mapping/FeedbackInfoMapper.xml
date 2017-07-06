@@ -2,32 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.FeedbackInfoMapper">
 
-    <select id="getLatestItemId" resultType="java.lang.Long">
+    <select id="fetchFeedback" resultType="com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs">
+        <![CDATA[
         SELECT
-            IFNULL(MAX(feedback_id),-1) AS id
+            feedback_info.id AS id,
+            feedback_info.user_id AS userId,
+            app_id AS appId,
+            feedback AS feedback,
+            picture AS picture,
+            DATE_FORMAT(
+                feedback_info.create_time,
+                '%Y-%m-%d %h:%i:%s'
+            ) AS createTime,
+            user_info.username AS username,
+            user_info.head_picture_url AS headerUrl
         FROM
-            `feedback_info`;
+            `feedback_info`
+        JOIN user_info ON feedback_info.user_id = user_info.user_id
+        WHERE
+            feedback_info.id >=  #{startId,jdbcType=INTEGER}
+        LIMIT #{pageSize,jdbcType=INTEGER};
+        ]]>
     </select>
-
-    <insert id="insertBatch" parameterType="java.util.List">
-        INSERT INTO
-        feedback_info(
-        feedback_id,
-        user_id,
-        app_id,
-        feedback,
-        picture,
-        create_time
-        )VALUES
-        <foreach collection="infoWithBLOBsList" item="item" index="index" separator=",">
-            (
-            #{item.id,jdbcType=BIGINT},
-            #{item.userId,jdbcType=VARCHAR},
-            #{item.appId,jdbcType=VARCHAR},
-            #{item.feedback,jdbcType=LONGVARCHAR},
-            #{item.picture,jdbcType=LONGVARCHAR},
-            #{item.createTime,jdbcType=TIMESTAMP}
-            )
-        </foreach>
-    </insert>
 </mapper>

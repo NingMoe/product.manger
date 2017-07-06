@@ -10,16 +10,12 @@ import java.util.List;
 public interface FeedbackInfoMapper {
 
     /**
-     * 获取最后一条的Id
+     * 获取pageSize条数据
      *
-     * @return id
+     * @param startId  获取的起点（包含）
+     * @param pageSize 条数
+     * @return 反馈意见
      */
-    long getLatestItemId();
-
-    /**
-     * 批量插入
-     *
-     * @param infoWithBLOBsList 反馈信息
-     */
-    void insertBatch(@Param("infoWithBLOBsList") List<FeedbackInfoWithBLOBs> infoWithBLOBsList);
+    List<FeedbackInfoWithBLOBs> fetchFeedback(@Param("pageSize") int pageSize,
+                                               @Param("startId") int startId);
 }
