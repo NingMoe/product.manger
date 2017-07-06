@@ -12,7 +12,7 @@
             picture AS picture,
             DATE_FORMAT(
                 feedback_info.create_time,
-                '%Y-%m-%d %h:%I:%s'
+                '%Y-%m-%d %H:%i:%s'
             ) AS createTime,
             user_info.username AS username,
             user_info.head_picture_url AS headerUrl
