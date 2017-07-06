@@ -2,6 +2,8 @@ package com.phicomm.product.manger.controller.feedback;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs;
 import com.phicomm.product.manger.service.BalanceFeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,7 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * 接收客户端发送的反馈信息
@@ -35,18 +40,16 @@ public class FeedbackController {
      *
      * @return 响应
      */
-    @RequestMapping(value = "balance/feedback", method = RequestMethod.POST,
-            consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "balance/feedback/fetch", method = RequestMethod.POST, produces = "application/json")
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
-            @ApiResponse(code = 3, message = "用户不存在", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
-    @FunctionPoint(value = "aaa")
-    public CommonResponse feedback() {
-        feedbackService.feedback();
-        return CommonResponse.ok();
+    @FunctionPoint(value = "common")
+    public Response<List<FeedbackInfoWithBLOBs>> fetchFeedback(@RequestParam int pageSize,
+                                                               @RequestParam int startId) {
+        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackService.fetchFeedback(pageSize, startId));
     }
 
 }

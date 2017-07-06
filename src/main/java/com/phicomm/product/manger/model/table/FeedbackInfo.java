@@ -1,15 +1,14 @@
 package com.phicomm.product.manger.model.table;
 
-import java.util.Date;
-
 public class FeedbackInfo {
+
     private Long id;
 
     private String userId;
 
     private String appId;
 
-    private Date createTime;
+    private String createTime;
 
     public Long getId() {
         return id;
@@ -35,11 +34,21 @@ public class FeedbackInfo {
         this.appId = appId == null ? null : appId.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "FeedbackInfo{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", appId='" + appId + '\'' +
+                ", createTime='" + createTime + '\'' +
+                '}';
     }
 }

@@ -130,4 +130,21 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>showBalanceFeedback</id>
+        <title>
+            <title-name>反馈信息</title-name>
+            <title-description>电子秤反馈信息展示</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/feedback/show</url>
+            <sub-directories>
+                <name>showBalanceFeedback</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>
