@@ -82,7 +82,6 @@ public class BalanceLocationService {
         return result;
     }
 
-
     /**
      * 获取N个月的位置信息
      */
