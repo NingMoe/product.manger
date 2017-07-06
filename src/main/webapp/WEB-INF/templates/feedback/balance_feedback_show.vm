@@ -4,7 +4,6 @@
     <div class="box-solid">
         <div class="box-body">
             <ul class="products-list product-list-in-box" id="parentDiv">
-
             </ul>
         </div>
         <div class="box-footer text-center" style="margin-left: 10px;margin-right: 10px">
@@ -82,17 +81,17 @@
         var src;
         if (appId == 'balance') {
             src = `<span class="label label-success pull-right">` + 'Balance' + `</span></a>`;
-        } else if (appId == 'watch') {
-            src = `<span class="label label-info pull-right">` + 'Watch' + `</span></a>`;
+        } else if (appId == 'Link') {
+            src = `<span class="label label-info pull-right">` + 'Link' + `</span></a>`;
         } else {
-            src = `<span class="label label-default pull-right">` + 'Others' + `</span></a>`;
+            src = `<span class="label label-default pull-right">` + 'Link' + `</span></a>`;
         }
         return src;
     }
 
     function loadFeedback(feedback) {
         /*text-indent:2em;*/
-        var src = `<p style="margin-left: 40px">` + feedback + `</p>`;
+        var src = `<p style="margin-left: 40px;word-wrap: break-word">` + feedback + `</p>`;
         return src;
     }
 
