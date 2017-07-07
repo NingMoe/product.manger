@@ -1,23 +1,126 @@
 <link rel="stylesheet" type="text/css" href="$baseUrl/resources/css/fresco/fresco.css"/>
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/plugins/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/plugins/select2/select2.min.css">
 
 <section class="content">
+
+    <div style="padding-right: 10px;padding-left: 10px">
+        <div class="box box-solid" style="height: auto;padding-top: 10px">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="form-group col-md-6">
+                        <label for="timeRange" class="col-sm-3 control-label">Time Range</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control pull-right" id="timeRange">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <label for="appType" class="col-sm-3 control-label">App Type</label>
+                        <div class="col-sm-9">
+                            <select class="form-control select2 col-sm-9" id="appType">
+                                <option selected="selected">balance</option>
+                                <option>Link</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right" style="margin-right: 18px"
+                            onclick="fetchWithRemove()">Go
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="box-solid">
         <div class="box-body">
             <ul class="products-list product-list-in-box" id="parentDiv">
             </ul>
         </div>
-        <div class="box-footer text-center" style="margin-left: 10px;margin-right: 10px">
-            <a href="javascript:void(0)" class="uppercase" onclick="fetchFeedback()">View More</a>
+        <div class="box-footer text-center" style="margin-left: 10px;margin-right: 10px" id="viewMore">
+            <a href="javascript:void(0)" class="uppercase" onclick="viewMore()">View More</a>
         </div>
     </div>
 </section>
 
 <script src="$baseUrl/resources/jquery/jquery-3.2.1.min.js"></script>
 <script src="$baseUrl/resources/js/fresco/fresco.js"></script>
+<script src="$baseUrl/resources/js/moment/moment.min.js"></script>
+<script src="$baseUrl/resources/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="$baseUrl/resources/plugins/select2/select2.full.min.js"></script>
 
 <script>
+    var firstLoad = true;
 
     var startId = 1;
+
+    $(function init() {
+        fetchFeedback();
+    })
+
+    $(function () {
+        $('#timeRange').daterangepicker();
+    });
+
+    function fetchWithRemove() {
+        firstLoad = 2;
+        removeDiv();
+        fetchCertainFeedback();
+    }
+
+    function viewMore() {
+        if (firstLoad == 1) {
+            fetchFeedback();
+        } else {
+            fetchCertainFeedback();
+        }
+    }
+
+    function fetchCertainFeedback() {
+        var timeRange = $("#timeRange").val();
+        var appType = $("#appType").find("option:selected").text();
+        startTime = timeRange.split('-')[0];
+        endTime = timeRange.split('-')[1];
+        fetch(moment(startTime, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                moment(endTime, "MM/DD/YYYY").format("YYYY-MM-DD"), appType);
+    }
+
+    function fetch(startTime, endTime, appType) {
+        $.ajax({
+            type: "POST",
+            url: "$baseUrl/balance/feedback/fetch/v2",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                "pageSize": 10,
+                "startId": startId,
+                "appType": appType,
+                "startTime": startTime,
+                "endTime": endTime
+            }),
+            error: function (req, status, err) {
+                alert('Failed reason: ' + err);
+            }, success: function (data) {
+                var result = data.data;
+                if (result.length != 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        loadItem(result[i]);
+                    }
+                    startId = result[result.length - 1].id + 1;
+                    console.info(startId);
+                }
+            }
+        })
+    }
+
+    function removeDiv() {
+        const parent = document.getElementById("parentDiv");
+        var childs = parent.childNodes;
+        for (var i = childs.length - 1; i >= 0; i--) {
+            parent.removeChild(childs[i]);
+        }
+        startId = 1;
+    }
 
     function fetchFeedback() {
         $.ajax({
@@ -37,21 +140,19 @@
                         loadItem(result[i]);
                     }
                     startId = result[result.length - 1].id + 1;
-                    console.info(startId);
                 }
             }
         })
     }
 
     function loadItem(itemData) {
-        console.info(itemData);
         var src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` + loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) +
                 loadAppType(itemData.appId) + loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
         var imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
         if (imgDiv != null) {
             src = src + imgDiv;
         }
-       /* src = src + loadCommonDiv() + loadTime(itemData.createTime);*/
+        /* src = src + loadCommonDiv() + loadTime(itemData.createTime);*/
         src = src + loadTime(itemData.createTime);
         const parser = new DOMParser();
         const el = parser.parseFromString(src, "text/html");
@@ -61,7 +162,6 @@
     }
 
     function loadUserHeader(headerUrl) {
-        console.info(headerUrl)
         var src = `<div class="product-img"><img src=` + headerUrl + ` alt="Header"></div>`;
         return src;
     }
@@ -124,8 +224,4 @@
                     </div>`;
         return src;
     }
-
-    $(function init() {
-        fetchFeedback();
-    })
 </script>

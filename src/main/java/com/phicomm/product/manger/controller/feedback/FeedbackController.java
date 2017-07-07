@@ -1,21 +1,21 @@
 package com.phicomm.product.manger.controller.feedback;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs;
+import com.phicomm.product.manger.model.table.FeedbackRequestBean;
 import com.phicomm.product.manger.service.BalanceFeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +26,8 @@ import java.util.List;
 @Controller
 @Api(value = "接收客户端发送的反馈信息", description = "接收客户端发送的反馈信息")
 public class FeedbackController {
+
+    private static final Logger logger = Logger.getLogger(FeedbackController.class);
 
     private BalanceFeedbackService feedbackService;
 
@@ -52,4 +54,22 @@ public class FeedbackController {
         return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackService.fetchFeedback(pageSize, startId));
     }
 
+    /**
+     * 接收用户的反馈数据，直接插到数据库
+     *
+     * @return 响应
+     */
+    @RequestMapping(value = "balance/feedback/fetch/v2", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("用户反馈信息")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public Response<List<FeedbackInfoWithBLOBs>> fetchFeedbackV2(@RequestBody FeedbackRequestBean feedbackRequestBean)
+            throws DataFormatException {
+        return new Response<List<FeedbackInfoWithBLOBs>>().
+                setData(feedbackService.fetchFeedbackV2(feedbackRequestBean));
+    }
 }
