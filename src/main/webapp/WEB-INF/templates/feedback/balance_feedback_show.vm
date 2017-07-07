@@ -24,7 +24,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-info pull-right" style="margin-right: 18px"
+                    <button type="button" class="btn btn-primary pull-right" style="margin-right: 18px"
                             onclick="fetchWithRemove()">Go
                     </button>
                 </div>
