@@ -12,7 +12,7 @@
             picture AS picture,
             DATE_FORMAT(
                 feedback_info.create_time,
-                '%Y-%m-%d %h:%I:%s'
+                '%Y-%m-%d %H:%i:%s'
             ) AS createTime,
             user_info.username AS username,
             user_info.head_picture_url AS headerUrl
@@ -22,6 +22,32 @@
         WHERE
             feedback_info.id >=  #{startId,jdbcType=INTEGER}
         LIMIT #{pageSize,jdbcType=INTEGER};
+        ]]>
+    </select>
+
+    <select id="fetchFeedbackV2" resultType="com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs">
+        <![CDATA[
+        SELECT
+            feedback_info.id AS id,
+            feedback_info.user_id AS userId,
+            app_id AS appId,
+            feedback AS feedback,
+            picture AS picture,
+            DATE_FORMAT(
+                feedback_info.create_time,
+                '%Y-%m-%d %H:%i:%s'
+            ) AS createTime,
+            user_info.username AS username,
+            user_info.head_picture_url AS headerUrl
+        FROM
+            `feedback_info`
+        JOIN user_info ON feedback_info.user_id = user_info.user_id
+        WHERE
+            feedback_info.id >=  #{requestBean.startId,jdbcType=INTEGER}
+            AND feedback_info.create_time >= #{requestBean.startTime,jdbcType=TIMESTAMP}
+            AND feedback_info.create_time< #{requestBean.endTime,jdbcType=TIMESTAMP}
+            AND app_id = #{requestBean.appType,jdbcType=VARCHAR}
+        LIMIT #{requestBean.pageSize,jdbcType=INTEGER};
         ]]>
     </select>
 </mapper>

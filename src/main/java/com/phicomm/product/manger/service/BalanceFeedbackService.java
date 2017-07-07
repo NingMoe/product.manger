@@ -1,13 +1,18 @@
 package com.phicomm.product.manger.service;
 
+import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.FeedbackInfoMapper;
+import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs;
+import com.phicomm.product.manger.model.table.FeedbackRequestBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -45,6 +50,56 @@ public class BalanceFeedbackService {
         List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBs = feedbackInfoMapper.fetchFeedback(pageSize, startId);
         CustomerContextHolder.clearDataSource();
         return formatFeedback(feedbackInfoWithBLOBs);
+    }
+
+    /**
+     * 根据请求条件来获取反馈意见
+     *
+     * @param requestBean 请求条件
+     * @return 反馈意见
+     * @throws DataFormatException 数据格式异常
+     */
+    public List<FeedbackInfoWithBLOBs> fetchFeedbackV2(FeedbackRequestBean requestBean) throws DataFormatException {
+        requestBean = checkParamFormat(requestBean);
+        CustomerContextHolder.selectProdDataSource();
+        List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBs = feedbackInfoMapper.fetchFeedbackV2(requestBean);
+        CustomerContextHolder.clearDataSource();
+        return formatFeedback(feedbackInfoWithBLOBs);
+    }
+
+    /**
+     * 核对请求参数的格式
+     * 只管两种情况：除过startId和pageSize全为空或全不为空，其余都当做格式错误
+     *
+     * @param requestBean 请求参数
+     * @return 类型
+     */
+    private FeedbackRequestBean checkParamFormat(FeedbackRequestBean requestBean) throws DataFormatException {
+        int pageSize = requestBean.getPageSize();
+        String appType = requestBean.getAppType();
+        Date startTime = requestBean.getStartTime();
+        Date endTime = requestBean.getEndTime();
+        if (pageSize <= 0) {
+            requestBean.setPageSize(DEFAULT_PAGE_SIZE);
+        }
+        //全为空，设置默认值
+        if (Strings.isNullOrEmpty(appType) && startTime == null && endTime == null) {
+            requestBean.setAppType("balance");
+            requestBean.setStartTime(new Date(0));
+            requestBean.setEndTime(new DateTime().toDate());
+        } else if (!Strings.isNullOrEmpty(appType) && startTime != null && endTime != null) {
+            //开始大于结束
+            if (startTime.getTime() > endTime.getTime()) {
+                throw new DataFormatException();
+            }
+            //两者相同，则endTime加一天
+            if (startTime.getTime() == endTime.getTime()) {
+                requestBean.setEndTime(new DateTime(endTime).plusDays(1).toDate());
+            }
+        } else {
+            throw new DataFormatException();
+        }
+        return requestBean;
     }
 
     /**
