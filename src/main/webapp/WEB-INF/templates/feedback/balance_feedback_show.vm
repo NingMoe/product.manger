@@ -59,7 +59,50 @@
     })
 
     $(function () {
-        $('#timeRange').daterangepicker();
+        $('#timeRange').daterangepicker({
+            "autoApply": true,
+            "yearOffset": 0,
+            "opens":'center',
+            "todayButton": true,
+            "locale": {
+                "format": "YYYY/MM/DD",
+                "separator": " - ",
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "周日",
+                    "周一",
+                    "周二",
+                    "周三",
+                    "周四",
+                    "周五",
+                    "周六"
+                ],
+                "monthNames": [
+                    "一月",
+                    "二月",
+                    "三月",
+                    "四月",
+                    "五月",
+                    "六月",
+                    "七月",
+                    "八月",
+                    "九月",
+                    "十月",
+                    "十一月",
+                    "十二月"
+                ],
+                "firstDay": 1
+            },
+            "minDate": "2016/08/16",
+            "maxDate": "2020/10/31",
+            "startDate": moment().add('days',-7),
+            "endDate": moment.now
+        });
     });
 
     function fetchWithRemove() {
@@ -81,8 +124,7 @@
         var appType = $("#appType").find("option:selected").text();
         startTime = timeRange.split('-')[0];
         endTime = timeRange.split('-')[1];
-        fetch(moment(startTime, "MM/DD/YYYY").format("YYYY-MM-DD"),
-                moment(endTime, "MM/DD/YYYY").format("YYYY-MM-DD"), appType);
+        fetch(startTime,endTime, appType);
     }
 
     function fetch(startTime, endTime, appType) {
@@ -183,8 +225,6 @@
             src = `<span class="label label-success pull-right">` + 'Balance' + `</span></a>`;
         } else if (appId == 'Link') {
             src = `<span class="label label-info pull-right">` + 'Link' + `</span></a>`;
-        } else {
-            src = `<span class="label label-default pull-right">` + 'Link' + `</span></a>`;
         }
         return src;
     }
