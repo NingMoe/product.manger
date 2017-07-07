@@ -1,12 +1,11 @@
 package com.phicomm.product.manger.service;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-import com.phicomm.product.manger.config.PropertiesConfig;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -31,16 +30,19 @@ public class HermesService {
     private File hermesTempDir;
 
     @Autowired
-    public HermesService(PropertiesConfig propertiesConfig) {
-        String hermesTempDirPath = propertiesConfig.getHermesTempDir();
+    public HermesService() {
+        String hermesTempDirPath = System.getenv().get("CATALINA_TMPDIR");
+        if (Strings.isNullOrEmpty(hermesTempDirPath)) {
+            throw new Error();
+        }
         hermesTempDir = new File(hermesTempDirPath);
-        if(!hermesTempDir.exists()) {
+        if (!hermesTempDir.exists()) {
             boolean success = hermesTempDir.mkdirs();
-            if(!success) {
+            if (!success) {
                 throw new Error();
             }
         }
-        if(!hermesTempDir.isDirectory()) {
+        if (!hermesTempDir.isDirectory()) {
             throw new Error();
         }
     }
@@ -54,7 +56,7 @@ public class HermesService {
      * @return 信息
      */
     public Map<String, Object> uploadFile(MultipartFile file) throws IOException {
-        if(file.isEmpty()) {
+        if (file.isEmpty()) {
             throw new IOException();
         }
         Map<String, Object> result = Maps.newHashMap();
@@ -85,7 +87,7 @@ public class HermesService {
         result.put("fileHttpInnerUrl", fileHttpInnerUrl);
         // 删除临时文件
         boolean delete = tempFile.delete();
-        if(!delete) {
+        if (!delete) {
             throw new IOException();
         }
         return result;
