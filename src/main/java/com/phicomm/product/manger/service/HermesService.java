@@ -25,11 +25,10 @@ public class HermesService {
     private static final String HERMES_IMAGE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/image/";
     private static final String HERMES_FILE_HTTPS_URL_PREFIX = "https://ihome.phicomm.com:2580/hermes/file/";
     private static final String HERMES_IMAGE_HTTPS_URL_PREFIX = "https://ihome.phicomm.com:2580/hermes/image/";
-    private static final String HERMES_FILE_HTTP_INNER_URL_PREFIX = "https://192.168.40.40:8080/hermes/file/";
+    private static final String HERMES_FILE_HTTP_INNER_URL_PREFIX = "http://192.168.40.40:8080/hermes/file/";
 
     private File hermesTempDir;
 
-    @Autowired
     public HermesService() {
         String hermesTempDirPath = System.getenv().get("CATALINA_TMPDIR");
         if (Strings.isNullOrEmpty(hermesTempDirPath)) {

@@ -1,14 +1,14 @@
-<li class="header">Firmware Upgrade</li>
+<li class="header">Card Manger</li>
 <li class="treeview">
     <a href="#">
         <i class="fa fa-users"></i>
-        <span>固件升级</span>
+        <span>卡片管理</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="#"><i class="fa fa-cloud"></i> 体脂秤固件升级</a></li>
-        <li><a href="#"><i class="fa fa-cloud"></i> 手环固件升级</a></li>
+        <li><a href="#"><i class="fa fa-cloud"></i> 健康卡片管理</a></li>
+        <li><a href="#"><i class="fa fa-cloud"></i> 运动卡片管理</a></li>
     </ul>
 </li>
