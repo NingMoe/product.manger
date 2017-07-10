@@ -17,9 +17,10 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#2"><i class="fa fa-toggle-up"></i> OTA文件上传</a></li>
-                <li><a href="#2"><i class="fa fa-list"></i> 固件列表</a></li>
-                <li><a href="#3"><i class="fa fa-file-archive-o"></i> 配置管理</a></li>
+                <li><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i> OTA文件上传</a></li>
+                <li><a href="#2"><i class="fa fa-circle-o"></i> 固件列表</a></li>
+                <li><a href="#3"><i class="fa fa-circle-o"></i> 配置管理</a></li>
+
             </ul>
         </li>
         <li><a href="#"><i class="fa fa-cloud"></i> 体脂秤固件升级</a></li>

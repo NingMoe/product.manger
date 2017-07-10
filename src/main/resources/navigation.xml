@@ -163,4 +163,19 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceOta</id>
+        <title>
+            <title-name>电子秤Ota升级</title-name>
+            <title-description>Ota升级</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota</url>
+            <sub-directories>
+                <name>balanceOta</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>

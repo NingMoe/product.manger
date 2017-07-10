@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BalanceOtaMapper">
+
+    <insert id="uploadOtaMessage" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaInfo">
+        INSERT INTO balance_ota_info (
+            software_version,
+            a_version_file_url,
+            a_version_crc,
+            b_version_file_url,
+            b_version_crc
+        )
+        VALUES(
+        #{balanceOtaInfo.softwareVersion,jdbcType=INTEGER},
+        #{balanceOtaInfo.aVersionFileUrl,jdbcType=VARCHAR},
+        #{balanceOtaInfo.aVersionCrc,jdbcType=INTEGER},
+        #{balanceOtaInfo.bVersionFileUrl,jdbcType=VARCHAR},
+        #{balanceOtaInfo.bVersionCrc,jdbcType=INTEGER}
+        )
+    </insert>
+</mapper>
