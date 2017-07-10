@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import java.util.List;
 
 /**
  * 触发Ota升级
+ * <p>
  * Created by wei.yang on 2017/6/8.
  */
 @Controller
@@ -28,6 +30,7 @@ public class UpdateTriggerController {
     @Autowired
     public UpdateTriggerController(OtaServerService otaServerService) {
         this.otaServerService = otaServerService;
+        Assert.notNull(this.otaServerService);
     }
 
     /**
