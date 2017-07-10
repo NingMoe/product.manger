@@ -8,7 +8,7 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="#"><i class="fa fa-cloud"></i> 健康卡片管理</a></li>
-        <li><a href="#"><i class="fa fa-cloud"></i> 运动卡片管理</a></li>
+        <li><a href="#"><i class="fa fa-keyboard-o"></i> 健康卡片管理</a></li>
+        <li><a href="#"><i class="fa fa-mobile"></i> 运动卡片管理</a></li>
     </ul>
 </li>
