@@ -3,7 +3,9 @@ package com.phicomm.product.manger.service;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.module.hermes.Hermes;
 import com.phicomm.product.manger.utils.FileUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,8 @@ import java.util.UUID;
 @Service
 public class HermesService {
 
+    private static final Logger logger = Logger.getLogger(Hermes.class);
+
     private static final String HERMES_FILE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/file/";
     private static final String HERMES_IMAGE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/image/";
     private static final String HERMES_FILE_HTTPS_URL_PREFIX = "https://ihome.phicomm.com:2580/hermes/file/";
@@ -30,6 +34,10 @@ public class HermesService {
     private File hermesTempDir;
 
     public HermesService() {
+        Map<String, String> env = System.getenv();
+        for (String key : env.keySet()) {
+            logger.info(String.format("%s - %s.", key, env.get(key)));
+        }
         String hermesTempDirPath = System.getenv().get("CATALINA_TMPDIR");
         if (Strings.isNullOrEmpty(hermesTempDirPath)) {
             throw new Error();
