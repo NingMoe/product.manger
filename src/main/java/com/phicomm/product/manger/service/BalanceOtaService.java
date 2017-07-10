@@ -6,10 +6,7 @@ import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.CRC16Util;
-<<<<<<< Updated upstream
 import org.apache.log4j.Logger;
-=======
->>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -24,19 +21,13 @@ import java.io.IOException;
 @Service
 public class BalanceOtaService {
 
-<<<<<<< Updated upstream
     private static final Logger logger = Logger.getLogger(BalanceOtaService.class);
 
-    private BalanceOtaMapper balanceOtaMapper;
-
-    private HermesService hermesService;
-
-=======
     private HermesService hermesService;
 
     private BalanceOtaMapper balanceOtaMapper;
 
->>>>>>> Stashed changes
+
     @Autowired
     public BalanceOtaService(BalanceOtaMapper balanceOtaMapper,
                              HermesService hermesService) {
@@ -63,15 +54,10 @@ public class BalanceOtaService {
      * @throws IOException         io异常
      * @throws DataFormatException 数据格式异常
      */
-<<<<<<< Updated upstream
     public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
             throws IOException,
             DataFormatException {
         logger.info(environment);
-=======
-    public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version) throws IOException,
-            DataFormatException {
->>>>>>> Stashed changes
         checkParamFormat(aFile, bFile, version);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
@@ -86,15 +72,12 @@ public class BalanceOtaService {
         balanceOtaInfo.setaVersionFileUrl(aFileUrl);
         balanceOtaInfo.setbVersionFileUrl(bFileUrl);
         balanceOtaInfo.setSoftwareVersion(version);
-<<<<<<< Updated upstream
         if (Strings.isNullOrEmpty(environment) || "prod".equalsIgnoreCase(environment)) {
             CustomerContextHolder.selectProdDataSource();
         } else {
             CustomerContextHolder.selectLocalDataSource();
         }
-=======
         CustomerContextHolder.selectProdDataSource();
->>>>>>> Stashed changes
         int effectLine = balanceOtaMapper.uploadOtaMessage(balanceOtaInfo);
         CustomerContextHolder.clearDataSource();
         if (effectLine != 0) {

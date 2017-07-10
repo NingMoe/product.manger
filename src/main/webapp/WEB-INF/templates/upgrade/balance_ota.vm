@@ -1,23 +1,15 @@
 <link rel="stylesheet" href="$baseUrl/resources/css/statistic/layout.css">
 
 <section class="content">
-<<<<<<< Updated upstream
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-=======
     <div class="col-md-12">
-        <div class="box box-info" >
+        <div class="box box-info">
             <div class="input-group input-group-sm col-md-12">
                 <div class="box-header">
->>>>>>> Stashed changes
                     <h3 class="box-title">电子秤Ota升级</h3>
                 </div>
                 <form role="form" enctype="multipart/form-data" id="uploadFile">
                     <div class="box-body">
                         <div class="form-group">
-<<<<<<< Updated upstream
                             <label for="version">固件版本号</label>
                             <input type="number" class="form-control" id="version" name="version" placeholder="version">
                         </div>
@@ -48,38 +40,6 @@
             </div>
         </div>
     </div>
-=======
-                            <label for="version">固件版本</label>
-                            <input type="number" class="form-control" id="version" name="version" placeholder="File Version">
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <label for="environment" class="control-label">环境(生产/测试)</label>
-                            <select class="form-control select" id="environment">
-                                <option selected="selected">prod</option>
-                                <option>test</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <label for="aFile">A类型文件</label>
-                            <input type="file" id="aFile" name="aFile">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="bFile">B类型文件</label>
-                            <input type="file" id="bFile" name="bFile">
-                        </div>
-                    </div>
-                </form>
-                <div class="box-footer">
-                    <button type="submit" class=" input-group" style="width: 70px" onclick="uploadFile()">提交</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
->>>>>>> Stashed changes
 </section>
 
 <script>
@@ -102,22 +62,12 @@
                     alert('Error !');
                 } else {
                     var result = data.data;
-<<<<<<< Updated upstream
                     console.info(result);
                     if (data.status == 0 && result != null) {
                         alert('success ');
                     } else {
                         alert('fail !');
                     }
-=======
-                    document.getElementById("result").style.visibility = 'visible';
-                    console.info(result);
-                    $("#aVersionFileUrl").text(result.aVersionFileUrl);
-                    $("#aVersionCrc").text(result.aVersionCrc);
-                    $("#bVersionFileUrl").text(result.bVersionFileUrl);
-                    $("#bVersionCrc").text(result.bVersionCrc);
-                    $("#softwareVersion").text(result.softwareVersion);
->>>>>>> Stashed changes
                 }
 
             }

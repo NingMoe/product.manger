@@ -32,7 +32,6 @@ public class BalanceOtaController {
         Assert.notNull(this.balanceOtaService);
     }
 
-<<<<<<< Updated upstream
     /**
      * 上传Ota版本信息
      *
@@ -44,23 +43,15 @@ public class BalanceOtaController {
      * @throws IOException         io异常（MultipartFile类型参数不存在或上传文件出错）
      * @throws DataFormatException 数据格式异常
      */
-=======
->>>>>>> Stashed changes
     @RequestMapping(value = "balance/ota/upload", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("上传Ota包信息")
     @FunctionPoint(value = "common")
     public Response<BalanceOtaInfo> uploadOtaMessage(@RequestParam int version,
                                                      @RequestParam MultipartFile aFile,
-<<<<<<< Updated upstream
                                                      @RequestParam MultipartFile bFile,
                                                      @RequestParam String environment)
             throws IOException, DataFormatException {
         return new Response<BalanceOtaInfo>().setData(balanceOtaService.uploadOtaMessage(aFile, bFile, version, environment));
-=======
-                                                     @RequestParam MultipartFile bFile)
-            throws IOException, DataFormatException {
-        return new Response<BalanceOtaInfo>().setData(balanceOtaService.uploadOtaMessage(aFile, bFile, version));
->>>>>>> Stashed changes
     }
 }
