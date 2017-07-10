@@ -5,11 +5,9 @@
     max-width: 700px;
     padding: 10px;
 }
-
 .Center-Container {
     position: relative;
 }
-
 .Absolute-Center {
     width: 50%;
     height: 15%;
@@ -20,4 +18,19 @@
     left: 0;
     bottom: 0;
     right: 0;
+}
+.phicomm-bg-color {
+    background-color: #e1e1e1;
+    height: 180px;
+}
+.phicomm_balance_mac_status_center {
+    text-align: center
+}
+.phicomm_collapseThree_div {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    visibility: hidden;
 }
