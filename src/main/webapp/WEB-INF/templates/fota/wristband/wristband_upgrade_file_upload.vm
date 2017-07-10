@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="$baseUrl/resources/select2/select2.css">
+<link rel="stylesheet" href="$baseUrl/resources/select2/select2.min.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -10,31 +10,38 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="firmwareType">固件类型</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">硬件版本号</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">固件版本号</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="environment">环境（测试/生产）</label>
-                            <select class="form-control select2" style="width: 100%;">
-                                <option value="test">test</option>
-                                <option value="prod">prod</option>
+                            <select id="firmwareType" class="form-control" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="wristband">手环</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
+                            <label for="hardwareVersion">硬件版本号</label>
+                            <select id="hardwareVersion" class="form-control" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="A0">A0</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="firmwareVersion">固件版本号</label>
+                            <input type="number" class="form-control" id="firmwareVersion" placeholder="固件版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <select id="environment" class="form-control" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="test">测试</option>
+                                <option value="prod">生产</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">固件上传</label>
                             <input type="file" id="exampleInputFile">
                             <p class="help-block">例如：W1_A0_V1.00_0615_WB.zip</p>
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">上传</button>
+                        <button type="button" class="btn btn-primary" id="submit">上传</button>
                     </div>
                 </form>
             </div>
@@ -42,5 +49,5 @@
     </div>
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/wristband_upgrade/wristband_upgrade_file_upload.js"></script>

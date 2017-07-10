@@ -1,5 +1,5 @@
 <li class="header">Firmware Upgrade</li>
-<li class="treeview">
+<li class="treeview" id="firmware-upgrade-node">
     <a href="#">
         <i class="fa fa-arrow-up"></i>
         <span>固件升级</span>
@@ -7,7 +7,7 @@
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
-    <ul class="treeview-menu">
+    <ul class="treeview-menu" id="firmware-upgrade-menu-node">
         <li>
             <a href="pages/widgets.html">
                 <i class="fa fa-th"></i>
@@ -23,7 +23,7 @@
             </ul>
         </li>
         <li><a href="#"><i class="fa fa-cloud"></i> 体脂秤固件升级</a></li>
-        <li>
+        <li id="firmware-upgrade-wristband-li-node">
             <a href="pages/widgets.html">
                 <i class="fa fa-soundcloud"></i>
                 <span>手环固件升级</span>
@@ -31,7 +31,7 @@
                     <small class="label pull-right bg-green">wristband</small>
                 </span>
             </a>
-            <ul class="treeview-menu">
+            <ul class="treeview-menu" id="firmware-upgrade-wristband-menu-node">
                 <li>
                     <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-toggle-up"></i> 固件上传</a>
                 </li>
