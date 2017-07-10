@@ -79,8 +79,6 @@
 </div>
 <input id="baseUrl" value="$baseUrl" class="hidden"/>
 <!-- jquery -->
-<script src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
 <script src="$baseUrl/resources/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
@@ -88,30 +86,17 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="$baseUrl/resources/bootstrap/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="$baseUrl/resources/morris/morris.min.js"></script>
 <!-- Sparkline -->
 <script src="$baseUrl/resources/sparkline/jquery.sparkline.min.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="$baseUrl/resources/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
-<script src="$baseUrl/resources/moment/moment.min.js"></script>
-<script src="$baseUrl/resources/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="$baseUrl/resources/datepicker/bootstrap-datepicker.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="$baseUrl/resources/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- Slimscroll -->
 <script src="$baseUrl/resources/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App -->
 <script src="$baseUrl/resources/admin-lte/app.min.js"></script>
 <!-- AdminLTE dashboard -->
 <script src="$baseUrl/resources/admin-lte/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="$baseUrl/resources/admin-lte/demo.js"></script>
-<!-- echart -->
-<script src="$baseUrl/resources/echart/echarts.min.js"></script>
 </body>
 </html>

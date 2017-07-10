@@ -1,7 +1,8 @@
 function obtainMacInfo() {
+    var baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: "$baseUrl/balance/mac/info",
+        url: baseUrl + "/balance/mac/info",
         dataType: "json",
         data: {
             "mac": $("#inputMac").val()
