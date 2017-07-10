@@ -1,7 +1,7 @@
 <li class="header">Balance Sales Stistic</li>
 <li class="treeview">
     <a href="#">
-        <i class="fa fa-users"></i>
+        <i class="fa fa-tasks"></i>
         <span>体脂秤销售统计</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>

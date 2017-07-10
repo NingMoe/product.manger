@@ -1,7 +1,7 @@
 <li class="header">Firmware Upgrade</li>
 <li class="treeview">
     <a href="#">
-        <i class="fa fa-users"></i>
+        <i class="fa fa-arrow-up"></i>
         <span>固件升级</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
