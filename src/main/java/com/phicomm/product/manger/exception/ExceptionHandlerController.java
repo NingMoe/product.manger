@@ -69,6 +69,12 @@ public class ExceptionHandlerController {
         exception6.put("description", "Server address not exist.");
     }
 
+    static {
+        exception7 = new JSONObject();
+        exception7.put("status", 7);
+        exception7.put("description", "File upload failure.");
+    }
+
     @ExceptionHandler(Exception.class)
     public ModelAndView processException(Exception e) {
         logger.info(ExceptionUtil.getErrorMessage(e));
@@ -121,5 +127,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ServerAddressNotExistException.class)
     public ModelAndView processServerAddressNotExistException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception6);
+    }
+
+    /**
+     * 文件上传失败
+     */
+    @ExceptionHandler(UploadFileException.class)
+    public ModelAndView processUploadFileException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception7);
     }
 }

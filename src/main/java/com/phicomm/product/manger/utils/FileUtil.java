@@ -2,10 +2,12 @@ package com.phicomm.product.manger.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.io.Resources;
+import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -23,6 +25,8 @@ public class FileUtil {
 
     private static final Logger logger = Logger.getLogger(FileUtil.class);
 
+    private static final String HERMES_FILE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/file/";
+
     /**
      * hermes文件上传的接口
      */
@@ -38,6 +42,8 @@ public class FileUtil {
         }
         logger.info(String.format("hermes upload address is %s.", HERMES_UPLOAD_URL));
     }
+
+    private static String hermesTempDirPath = System.getProperty("java.io.tmpdir");
 
     private FileUtil() {
     }
@@ -146,14 +152,36 @@ public class FileUtil {
             if (fileInputStream != null) {
                 fileInputStream.close();
             }
-            if(inputStream != null) {
+            if (inputStream != null) {
                 inputStream.close();
             }
-            if(httpURLConnection != null) {
+            if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
             }
         }
         return commonResponse;
     }
 
+    /**
+     * 上传文件到hermes
+     *
+     * @param file 文件
+     * @return 下载链接
+     * @throws UploadFileException 上传文件失败的链接
+     */
+    public static String uploadFileToHermes(MultipartFile file) throws UploadFileException {
+        File tempFile = new File(hermesTempDirPath, UUID.randomUUID().toString());
+        CommonResponse commonResponse = null;
+        try {
+            file.transferTo(tempFile);
+            commonResponse = uploadHermes(tempFile, file.getName());
+        } catch (IOException e) {
+            logger.info(ExceptionUtil.getErrorMessage(e));
+            throw new UploadFileException();
+        } finally {
+            //noinspection ResultOfMethodCallIgnored
+            tempFile.delete();
+        }
+        return HERMES_FILE_HTTP_URL_PREFIX + commonResponse.getDescription();
+    }
 }

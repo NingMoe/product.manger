@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.FirmwareInfoMapper" >
+
+  <insert id="insert" parameterType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+    INSERT INTO firmware_info (
+        firmware_type, version,
+        version_code, environment,
+        hardware_code, `enable`,
+        create_time, url,
+        test
+      )
+    VALUES (
+        #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
+        #{firmwareInfo.versionCode,jdbcType=INTEGER}, #{firmwareInfo.environment,jdbcType=VARCHAR},
+        #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
+        now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR},
+        #{firmwareInfo.test,jdbcType=INTEGER}
+      )
+  </insert>
+
+</mapper>
