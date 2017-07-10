@@ -6,7 +6,6 @@ import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.module.hermes.Hermes;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
