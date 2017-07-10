@@ -20,12 +20,12 @@ import javax.servlet.http.HttpSession;
  * Created by wei.yang on 2017/7/4.
  */
 @Controller
-public class BalanceShipmentController {
+public class BalanceShipmentPageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public BalanceShipmentController(NavigationManger navigationManger) {
+    public BalanceShipmentPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }

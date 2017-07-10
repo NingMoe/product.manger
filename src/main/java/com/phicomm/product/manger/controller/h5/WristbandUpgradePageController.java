@@ -20,12 +20,12 @@ import javax.servlet.http.HttpSession;
  * Created by yufei.liu on 2017/7/10.
  */
 @Controller
-public class WristbandUpgradeController {
+public class WristbandUpgradePageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public WristbandUpgradeController(NavigationManger navigationManger) {
+    public WristbandUpgradePageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
