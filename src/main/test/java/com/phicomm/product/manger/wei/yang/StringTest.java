@@ -8,7 +8,7 @@ import org.junit.Test;
  * test
  * Created by wei.yang on 2017/7/4.
  */
-public class StringLen {
+public class StringTest {
 
     @Test
     public void test(){

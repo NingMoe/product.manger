@@ -153,6 +153,9 @@ public class BalanceFeedbackService {
         }
         for (String anArray : array) {
             String path = anArray.subSequence(1, anArray.length() - 1).toString();
+            if (path.contains("<null>")){
+                continue;
+            }
             if (path.startsWith("group1")) {
                 array[count.incrementAndGet()] = URL_HEADER + path;
             } else if (path.startsWith("http")) {
