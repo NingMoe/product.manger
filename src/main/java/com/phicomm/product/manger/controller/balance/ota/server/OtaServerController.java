@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.controller.server;
+package com.phicomm.product.manger.controller.balance.ota.server;
 
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;

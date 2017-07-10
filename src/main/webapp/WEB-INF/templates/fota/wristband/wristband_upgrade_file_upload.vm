@@ -35,8 +35,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">固件上传</label>
-                            <input type="file" id="exampleInputFile">
+                            <label for="file">固件上传</label>
+                            <input type="file" id="file">
                             <p class="help-block">例如：W1_A0_V1.00_0615_WB.zip</p>
                         </div>
                     </div>

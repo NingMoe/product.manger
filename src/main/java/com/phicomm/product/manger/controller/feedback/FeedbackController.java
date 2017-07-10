@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,13 +20,12 @@ import java.util.List;
 
 /**
  * 接收客户端发送的反馈信息
+ * <p>
  * Created by yufei.liu on 2017/2/22.
  */
 @Controller
 @Api(value = "接收客户端发送的反馈信息", description = "接收客户端发送的反馈信息")
 public class FeedbackController {
-
-    private static final Logger logger = Logger.getLogger(FeedbackController.class);
 
     private BalanceFeedbackService feedbackService;
 
