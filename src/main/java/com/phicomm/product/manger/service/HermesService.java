@@ -34,11 +34,8 @@ public class HermesService {
     private File hermesTempDir;
 
     public HermesService() {
-        Map<String, String> env = System.getenv();
-        for (String key : env.keySet()) {
-            logger.info(String.format("%s - %s.", key, env.get(key)));
-        }
-        String hermesTempDirPath = System.getenv().get("CATALINA_TMPDIR");
+        String hermesTempDirPath = System.getProperty("java.io.tmpdir");
+        logger.info(String.format("hermesTempDirPath = %s", hermesTempDirPath));
         if (Strings.isNullOrEmpty(hermesTempDirPath)) {
             throw new Error();
         }
