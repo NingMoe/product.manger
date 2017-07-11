@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/fota/wristband_upgrade_test_list.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">

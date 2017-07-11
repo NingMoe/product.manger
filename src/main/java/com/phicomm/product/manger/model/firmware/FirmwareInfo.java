@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.model.firmware;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class FirmwareInfo {
@@ -18,6 +20,7 @@ public class FirmwareInfo {
 
     private Integer enable;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String url;

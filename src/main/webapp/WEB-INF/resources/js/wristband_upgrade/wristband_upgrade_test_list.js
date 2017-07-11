@@ -4,7 +4,7 @@ $(document).ready(function () {
     $("#firmware-upgrade-wristband-li-node").addClass("active");
     $("#firmware-upgrade-wristband-menu-node").addClass("active");
     var baseUrl = $("#baseUrl").val();
-    $("#wristbandTestList").DataTable({
+    var table = $("#wristbandTestList").DataTable({
         paging: true,
         searching: false,
         ordering: false,
@@ -26,40 +26,61 @@ $(document).ready(function () {
             }
         },
         ajax: {
-            url: baseUrl + "/firmware/upgrade/wristband/list?environment=test"
+            url: baseUrl + "/firmware/upgrade/list?environment=test"
         },
-        // columns: [
-        //     {
-        //         className: "details-control",
-        //         orderable: false,
-        //         data: null,
-        //         defaultContent: ""
-        //     },
-        //     {
-        //         data: "name"
-        //     },
-        //     {
-        //         data: "position"
-        //     },
-        //     {
-        //         data: "office"
-        //     },
-        //     {
-        //         data: "salary"
-        //     }
-        // ],
+        columns: [
+            {
+                className: "details-control",
+                orderable: false,
+                data: null,
+                defaultContent: ""
+            },
+            {data: "firmwareType"},
+            {data: "hardwareCode"},
+            {data: "version"},
+            {data: "versionCode"},
+            {data: "enable"}
+        ]
     });
-    // Add event listener for opening and closing details
+    function format(d) {
+        var result = null;
+        $.ajax({
+            type: "POST",
+            url: $("#baseUrl").val() + "/firmware/upgrade/detail",
+            dataType: "json",
+            async: false,
+            data: {
+                "firmwareType": d.firmwareType,
+                "hardwareCode": d.hardwareCode,
+                "versionCode": d.versionCode,
+                "environment": "test",
+            }, error: function (req, status, err) {
+                alert('Failed reason: ' + err);
+            }, success: function (data) {
+                result = data;
+            }
+        });
+        console.log(JSON.stringify(result));
+        return '<table class="table"><tr><td>ID:</td><td>#id#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td>#url#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td></tr></table>'
+            .replace("#id#", result.id)
+            .replace("#firmwareType#", result.firmwareType)
+            .replace("#hardwareCode#", result.hardwareCode)
+            .replace("#environment#", result.environment)
+            .replace("#version#", result.version)
+            .replace("#versionCode#", result.versionCode)
+            .replace("#description#", result.description)
+            .replace("#url#", result.url)
+            .replace("#createTime#", result.createTime)
+            .replace("#enable#", result.enable);
+    }
     $("#wristbandTestList tbody").on("click", "td.details-control", function () {
         var tr = $(this).closest("tr");
         var row = table.row(tr);
         if (row.child.isShown()) {
-            // This row is already open - close it
             row.child.hide();
             tr.removeClass('shown');
         }
         else {
-            // Open this row
             row.child(format(row.data())).show();
             tr.addClass('shown');
         }
