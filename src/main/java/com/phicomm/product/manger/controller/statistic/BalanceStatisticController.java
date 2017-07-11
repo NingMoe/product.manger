@@ -77,11 +77,11 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("mac地址信息")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<BalanceMacStatus> obtainBalanceMacInfo(@RequestParam String mac) throws DataFormatException {
-        BalanceMacStatus balanceMacStatus = balanceStatisticService.obtainMacInfo(mac);
+    public Response<BalanceMacStatus> obtainBalanceMacInfo(@RequestParam String searchParam) throws DataFormatException {
+        BalanceMacStatus balanceMacStatus = balanceStatisticService.obtainBalanceStatusInfo(searchParam);
         return new Response<BalanceMacStatus>().setData(balanceMacStatus);
     }
 }

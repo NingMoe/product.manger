@@ -8,6 +8,7 @@ import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.model.statistic.CountBean;
+import com.phicomm.product.manger.model.statistic.LianBiActiveBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.RegexUtil;
 import org.joda.time.DateTime;
@@ -117,22 +118,30 @@ public class BalanceStatisticService {
     }
 
     /**
-     * 根据mac地址获取关于这个mac地址的相关信息
+     * 根据mac地址/SN号获取关于这个mac地址/SN号的相关信息
      *
-     * @param mac mac地址
+     * @param param mac地址
      * @return mac的相关信息
      * @throws DataFormatException mac地址
      */
-    public BalanceMacStatus obtainMacInfo(String mac) throws DataFormatException {
-        boolean right = RegexUtil.checkMacFormat(mac);
-        if (!right) {
-            throw new DataFormatException();
-        }
-        mac = formatMac(mac);
-        BalanceMacStatus balanceMacStatus = new BalanceMacStatus();
+    public BalanceMacStatus obtainBalanceStatusInfo(String param) throws DataFormatException {
         CustomerContextHolder.selectProdDataSource();
-        BalanceLocationBean locationBean = lianbiActiveMapper.obtainActiveCity(mac);
-        balanceMacStatus.setActiveLocation(formatLocation(locationBean))
+        String location;
+        String mac;
+        if (param.length() == 15) {
+            LianBiActiveBean lianBiActiveBean = lianbiActiveMapper.obtainActiveInfo(param.toUpperCase());
+            location = formatLocation(lianBiActiveBean);
+            mac = lianBiActiveBean.getMac();
+        } else {
+            boolean right = RegexUtil.checkMacFormat(param);
+            if (!right) {
+                throw new DataFormatException();
+            }
+            mac = formatMac(param);
+            location = formatLocation(lianbiActiveMapper.obtainActiveCity(mac));
+        }
+        BalanceMacStatus balanceMacStatus = new BalanceMacStatus();
+        balanceMacStatus.setActiveLocation(location)
                 .setCreateTime(balanceStatusMapper.obtainStatusCreateTime(mac))
                 .setMemberCount(balanceUserManagerMapper.obtainMemberCount(mac));
         CustomerContextHolder.clearDataSource();
@@ -164,19 +173,35 @@ public class BalanceStatisticService {
     /**
      * 格式化未知
      *
-     * @param locationBean 位置
+     * @param object 相关信息
      * @return 位置信息
      */
-    private String formatLocation(BalanceLocationBean locationBean) {
-        if (locationBean == null) {
+    private String formatLocation(Object object) {
+        if (object == null) {
             return "无激活信息";
         }
         StringBuilder builder = new StringBuilder();
-        String country = locationBean.getActiveCountry();
-        String province = locationBean.getActiveProvince();
-        String city = locationBean.getActiveCity();
-        String county = locationBean.getActiveCounty();
-        if (locationBean.isActivated()) {
+        String country;
+        String province;
+        String city;
+        String county;
+        boolean activated;
+        if (object instanceof LianBiActiveBean) {
+            country = ((LianBiActiveBean) object).getActiveCountry();
+            province = ((LianBiActiveBean) object).getActiveProvince();
+            city = ((LianBiActiveBean) object).getActiveCity();
+            county = ((LianBiActiveBean) object).getActiveCounty();
+            activated = ((LianBiActiveBean) object).isActivated();
+        } else if (object instanceof BalanceLocationBean) {
+            country = ((BalanceLocationBean) object).getActiveCountry();
+            province = ((BalanceLocationBean) object).getActiveProvince();
+            city = ((BalanceLocationBean) object).getActiveCity();
+            county = ((BalanceLocationBean) object).getActiveCounty();
+            activated = ((BalanceLocationBean) object).isActivated();
+        } else {
+            return "无激活信息";
+        }
+        if (activated) {
             if (!Strings.isNullOrEmpty(country)) {
                 if (country.equalsIgnoreCase("Reserved Address")) {
                     return "保留地址";

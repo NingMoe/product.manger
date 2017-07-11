@@ -33,15 +33,15 @@ public class BalanceShipmentPageController {
     /**
      * 查询MAC信息：激活位置、首次使用时间、绑定的成员数量
      */
-    @RequestMapping(value = "balance/shipment/mac/status", method = RequestMethod.GET)
+    @RequestMapping(value = "balance/shipment/status", method = RequestMethod.GET)
     @ApiIgnore("查询MAC信息：激活位置、首次使用时间、绑定的成员数量")
     @FunctionPoint(value = "common")
     public ModelAndView showBalanceMacStatus(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "shipment/balance_mac_status.vm");
+        modelAndView.getModel().put("context", "shipment/balance_status.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMacStatus"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatus"));
         return modelAndView;
     }
 }

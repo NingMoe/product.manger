@@ -1,25 +1,25 @@
 function obtainMacInfo() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/mac/info",
         dataType: "json",
         data: {
-            "mac": $("#inputMac").val()
+            "searchParam": $("#inputParam").val()
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var status = data.status;
+            const status = data.status;
             if (status !== 0) {
-                alert('Data format error !');
+                alert('Error !');
             } else {
-                var result = data.data;
+                const result = data.data;
                 console.info(result);
                 document.getElementById("result").style.visibility = 'visible';
-                var createTime = result.createTime;
-                var activeLocation = result.activeLocation;
-                var memberCount = result.memberCount;
+                let createTime = result.createTime;
+                let activeLocation = result.activeLocation;
+                let memberCount = result.memberCount;
                 if (createTime === null) {
                     createTime = "尚未使用";
                     memberCount = "尚未绑定";
