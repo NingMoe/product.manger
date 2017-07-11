@@ -16,4 +16,8 @@ public enum FirmwareEnvironmentEnum {
     FirmwareEnvironmentEnum(String environment) {
         this.environment = environment;
     }
+
+    public String getEnvironment() {
+        return environment;
+    }
 }

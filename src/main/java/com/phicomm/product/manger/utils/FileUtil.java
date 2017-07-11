@@ -174,7 +174,7 @@ public class FileUtil {
         CommonResponse commonResponse = null;
         try {
             file.transferTo(tempFile);
-            commonResponse = uploadHermes(tempFile, file.getName());
+            commonResponse = uploadHermes(tempFile, file.getOriginalFilename());
         } catch (IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
             throw new UploadFileException();

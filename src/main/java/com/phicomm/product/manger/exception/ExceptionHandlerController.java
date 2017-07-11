@@ -26,6 +26,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception5;
     private static JSONObject exception6;
     private static JSONObject exception7;
+    private static JSONObject exception8;
 
     static {
         exception1001 = new JSONObject();
@@ -73,6 +74,12 @@ public class ExceptionHandlerController {
         exception7 = new JSONObject();
         exception7.put("status", 7);
         exception7.put("description", "File upload failure.");
+    }
+
+    static {
+        exception8 = new JSONObject();
+        exception8.put("status", 8);
+        exception8.put("description", "version has exist.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -135,5 +142,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(UploadFileException.class)
     public ModelAndView processUploadFileException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception7);
+    }
+
+    /**
+     * 版本已经存在的异常
+     */
+    @ExceptionHandler(VersionHasExistException.class)
+    public ModelAndView processVersionHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception8);
     }
 }

@@ -16,9 +16,27 @@ $(document).ready(function() {
         multiple: false
     });
     $("#submit").click(function() {
-        console.log($("#firmwareType").select2("val"));
-        console.log($("#hardwareVersion").select2("val"));
-        console.log($("#firmwareVersion").val());
-        console.log($("#environment").select2("val"));
+        var baseUrl  =$("#baseUrl").val();
+        var formData = new FormData($("#form")[0]);
+        $.ajax({
+            type   : "POST",
+            url    : baseUrl + "/firmware/upgrade/wristband/file/upload",
+            data: formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if(data.status === 0) {
+                    alert("上传成功");
+                } else if(data.status === 2) {
+                    alert("数据格式错误，请检查参数并重新上传！");
+                } else if(data.status === 7) {
+                    alert("文件上传失败，请重新上传！");
+                } else {
+                    alert("版本已经存在，请重新上传！");
+                }
+            }
+        });
     });
 });
