@@ -45,4 +45,33 @@ public class WristbandUpgradePageController {
         return modelAndView;
     }
 
+    /**
+     * 获得手环固件测试环境列表
+     */
+    @RequestMapping(value = "wristband/upgrade/page/test/list", method = RequestMethod.GET)
+    @ApiIgnore("获得手环固件测试环境列表")
+    @FunctionPoint(value = "common")
+    public ModelAndView showWristbandUpgradeForTestList(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "fota/wristband/wristband_upgrade_test_list.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForTestList"));
+        return modelAndView;
+    }
+
+    /**
+     * 获得手环固件生产环境列表
+     */
+    @RequestMapping(value = "wristband/upgrade/page/prod/list", method = RequestMethod.GET)
+    @ApiIgnore("获得手环固件生产环境列表")
+    @FunctionPoint(value = "common")
+    public ModelAndView showWristbandUpgradeForProdList(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "fota/wristband/wristband_upgrade_prod_list.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForProdList"));
+        return modelAndView;
+    }
 }

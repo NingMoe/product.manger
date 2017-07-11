@@ -93,4 +93,19 @@ public class FirmwareInfo {
     public void setTest(Integer test) {
         this.test = test;
     }
+
+    @Override
+    public String toString() {
+        return "FirmwareInfo{" +
+                "firmwareType='" + firmwareType + '\'' +
+                ", version='" + version + '\'' +
+                ", versionCode=" + versionCode +
+                ", environment='" + environment + '\'' +
+                ", hardwareCode='" + hardwareCode + '\'' +
+                ", enable=" + enable +
+                ", test=" + test +
+                ", createTime=" + createTime +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

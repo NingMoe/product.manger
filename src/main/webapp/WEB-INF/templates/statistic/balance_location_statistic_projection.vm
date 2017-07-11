@@ -22,13 +22,12 @@
 <input id="baseUrl" value="$baseUrl" class="hidden"/>
 </body>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/echarts-all-3.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/ecStat.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/dataTool.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/china.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/api.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/echart/bmap.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/count/countUp.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/location/location_2.js"></script>
 </html>

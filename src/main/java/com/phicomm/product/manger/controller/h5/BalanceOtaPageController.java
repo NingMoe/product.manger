@@ -61,7 +61,6 @@ public class BalanceOtaPageController {
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "upgrade/balance_ota_list.vm.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModel().put("balanceOtaInfoList",balanceOtaService.fetchOtaList("test"));
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;
     }
