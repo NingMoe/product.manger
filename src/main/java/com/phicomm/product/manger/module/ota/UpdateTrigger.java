@@ -1,7 +1,6 @@
 package com.phicomm.product.manger.module.ota;
 
 import com.phicomm.product.manger.utils.CRC16Util;
-import org.apache.log4j.Logger;
 import redis.clients.jedis.HostAndPort;
 
 import java.io.IOException;
@@ -22,8 +21,6 @@ public class UpdateTrigger {
     private static final byte[] CLOSE_RESPONSE = new byte[]{(byte) 0xC0, (byte) 0x52};
 
     private static final byte[] TRIGGER_DATA = new byte[]{(byte) 0xE0, 0};
-
-    private static final Logger logger=Logger.getLogger(UpdateTrigger.class);
 
     /**
      * socket trigger ,会返回无法连接的主机和能连接但是不能正确触发的主机；socket连接主机的超时时间设置成了3秒，
@@ -47,7 +44,6 @@ public class UpdateTrigger {
         }
         byte[] closeResponse = obtainResponse(inputStream, outputStream, obtainCloseData());
         if (!Arrays.equals(CLOSE_RESPONSE, closeResponse)) {
-            logger.info(Arrays.toString(closeResponse));
             throw new IOException();
         }
 

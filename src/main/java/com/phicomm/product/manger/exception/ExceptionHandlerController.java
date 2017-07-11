@@ -27,6 +27,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception6;
     private static JSONObject exception7;
     private static JSONObject exception8;
+    private static JSONObject exception9;
 
     static {
         exception1001 = new JSONObject();
@@ -80,6 +81,12 @@ public class ExceptionHandlerController {
         exception8 = new JSONObject();
         exception8.put("status", 8);
         exception8.put("description", "version has exist.");
+    }
+
+    static {
+        exception9 = new JSONObject();
+        exception9.put("status", 9);
+        exception9.put("description", "version not exist.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -145,10 +152,18 @@ public class ExceptionHandlerController {
     }
 
     /**
-     * 版本已经存在的异常
+     * 版本已经存在
      */
     @ExceptionHandler(VersionHasExistException.class)
     public ModelAndView processVersionHasExistException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception8);
+    }
+
+    /**
+     * 版本不存在
+     */
+    @ExceptionHandler(VersionNotExistException.class)
+    public ModelAndView processVersionNotExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception9);
     }
 }

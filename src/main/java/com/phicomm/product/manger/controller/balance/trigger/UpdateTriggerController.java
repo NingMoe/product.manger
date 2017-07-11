@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.controller.balance.ota.trigger;
+package com.phicomm.product.manger.controller.balance.trigger;
 
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.service.OtaServerService;

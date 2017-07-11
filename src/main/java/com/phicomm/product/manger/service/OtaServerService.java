@@ -1,11 +1,11 @@
 package com.phicomm.product.manger.service;
 
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.ServerAddressNotExistException;
-import com.phicomm.product.manger.module.ota.UpdateTrigger;
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
+import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
+import com.phicomm.product.manger.exception.ServerAddressNotExistException;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
+import com.phicomm.product.manger.module.ota.UpdateTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.HostAndPort;
@@ -30,7 +30,7 @@ public class OtaServerService {
     }
 
     /**
-     * 触发Ota升级
+     * 触发Ota升级:product-manager
      *
      * @return 触发失败的主机
      * @throws IOException IO异常

@@ -164,35 +164,34 @@
     </navigation>
 
     <navigation>
-        <id>wristbandUpgradeForTestList</id>
+        <id>balanceOta</id>
         <title>
-            <title-name>手环固件列表</title-name>
-            <title-description>测试环境</title-description>
+            <title-name>电子秤Ota升级</title-name>
+            <title-description>Ota升级</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/wristband/upgrade/page/test/list</url>
+            <url>$baseUrl/balance/ota</url>
             <sub-directories>
-                <name>wristbandUpgradeForTestList</name>
+                <name>balanceOta</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>wristbandUpgradeForProdList</id>
+        <id>balanceOtaList</id>
         <title>
-            <title-name>手环固件列表</title-name>
-            <title-description>生产环境</title-description>
+            <title-name>电子秤Ota固件列表</title-name>
+            <title-description>Ota固件列表</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/wristband/upgrade/page/prod/list</url>
+            <url>$baseUrl/balance/ota/list</url>
             <sub-directories>
-                <name>wristbandUpgradeForProdList</name>
+                <name>balanceOtaList</name>
             </sub-directories>
         </directory>
     </navigation>
-
 </navigations>
