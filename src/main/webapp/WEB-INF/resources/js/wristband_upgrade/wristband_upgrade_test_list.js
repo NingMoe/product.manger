@@ -1,4 +1,7 @@
 function upgradeFirmware(node) {
+    if(!confirm("确认是否将该固件作为最新固件？")) {
+        return;
+    }
 
     var firmwareType = node.parentNode.parentNode.childNodes[1].innerText;
     var hardwareCode = node.parentNode.parentNode.childNodes[2].innerText;
