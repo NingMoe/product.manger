@@ -80,7 +80,6 @@ public class ExceptionHandlerController {
     static {
         exception8 = new JSONObject();
         exception8.put("status", 8);
-        exception8.put("description", "Ota version not exist.");
         exception8.put("description", "version has exist.");
     }
 
@@ -153,17 +152,18 @@ public class ExceptionHandlerController {
     }
 
     /**
-     * Ota版本不存在
-     */
-    @ExceptionHandler(OtaVersionNotExistException.class)
-    public ModelAndView processOtaVersionNotExistException() {
-        return new ModelAndView(new MappingJackson2JsonView(), exception8);
-    }
-    /**
-     * 版本已经存在的异常
+     * 版本已经存在
      */
     @ExceptionHandler(VersionHasExistException.class)
     public ModelAndView processVersionHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception8);
+    }
+
+    /**
+     * 版本不存在
+     */
+    @ExceptionHandler(VersionNotExistException.class)
+    public ModelAndView processVersionNotExistException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception9);
     }
 }

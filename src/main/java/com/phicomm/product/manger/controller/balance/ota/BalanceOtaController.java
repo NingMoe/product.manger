@@ -1,8 +1,8 @@
-package com.phicomm.product.manger.controller.ota;
+package com.phicomm.product.manger.controller.balance.ota;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.OtaVersionNotExistException;
+import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
@@ -62,7 +62,7 @@ public class BalanceOtaController {
      *
      * @param balanceOtaStatus 版本状态
      * @return 触发升级失败的主机
-     * @throws OtaVersionNotExistException 版本已经存在
+     * @throws VersionNotExistException 版本已经存在
      * @throws IOException                 socket读写异常
      * @throws DataFormatException         数据格式异常
      */
@@ -72,7 +72,7 @@ public class BalanceOtaController {
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
     public Response<List<HostAndPort>> updateOtaStatusAndTrigger(@RequestBody BalanceOtaStatus balanceOtaStatus)
-            throws OtaVersionNotExistException, IOException, DataFormatException {
+            throws VersionNotExistException, IOException, DataFormatException {
         return new Response<List<HostAndPort>>().setData(balanceOtaService.updateStatusAndTrigger(balanceOtaStatus));
     }
 
@@ -81,7 +81,7 @@ public class BalanceOtaController {
      *
      * @param balanceOtaStatus 版本状态
      * @return 操作状态
-     * @throws OtaVersionNotExistException 版本已经存在
+     * @throws VersionNotExistException 版本已经存在
      * @throws DataFormatException         数据格式异常
      */
     @RequestMapping(value = "balance/ota/status/change", method = RequestMethod.POST,
@@ -90,7 +90,7 @@ public class BalanceOtaController {
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
     public CommonResponse updateOtaStatus(@RequestBody BalanceOtaStatus balanceOtaStatus)
-            throws OtaVersionNotExistException, IOException, DataFormatException {
+            throws VersionNotExistException, IOException, DataFormatException {
         balanceOtaService.updateBalanceOtaStatus(balanceOtaStatus);
         return CommonResponse.ok();
     }

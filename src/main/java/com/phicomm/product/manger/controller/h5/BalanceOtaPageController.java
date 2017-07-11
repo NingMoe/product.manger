@@ -59,7 +59,7 @@ public class BalanceOtaPageController {
     public ModelAndView showBalanceOtaStatusPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "upgrade/balance_ota_list.vm.vm");
+        modelAndView.getModel().put("context", "upgrade/balance_ota_list.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;

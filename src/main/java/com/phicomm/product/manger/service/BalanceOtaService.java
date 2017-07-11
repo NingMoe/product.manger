@@ -3,7 +3,7 @@ package com.phicomm.product.manger.service;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.OtaVersionNotExistException;
+import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
@@ -77,7 +77,7 @@ public class BalanceOtaService {
         if ("prod".equalsIgnoreCase(environment)) {
             CustomerContextHolder.selectProdDataSource();
         } else {
-            CustomerContextHolder.selectLocalDataSource();
+            CustomerContextHolder.selectTestDataSource();
         }
         int effectLine = balanceOtaMapper.uploadOtaMessage(balanceOtaInfo);
         CustomerContextHolder.clearDataSource();
@@ -92,26 +92,26 @@ public class BalanceOtaService {
      *
      * @param balanceOtaStatus 版本状态信息
      * @throws DataFormatException         数据格式异常
-     * @throws OtaVersionNotExistException 版本不存在
+     * @throws VersionNotExistException 版本不存在
      */
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
-            OtaVersionNotExistException {
+            VersionNotExistException {
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
         if ("prod".equalsIgnoreCase(environment)) {
             CustomerContextHolder.selectProdDataSource();
         } else {
-            CustomerContextHolder.selectLocalDataSource();
+            CustomerContextHolder.selectTestDataSource();
         }
         int effectLine = balanceOtaMapper.updateOtaStatus(balanceOtaStatus);
-        CustomerContextHolder.clearDataSource();
         if (effectLine <= 0) {
-            throw new OtaVersionNotExistException();
+            throw new VersionNotExistException();
         }
         if (balanceOtaStatus.getEnable() == 1) {
             balanceOtaStatus.setEnable(0);
             balanceOtaMapper.cleanOtaStatus(balanceOtaStatus);
         }
+        CustomerContextHolder.clearDataSource();
     }
 
     /**
@@ -120,11 +120,11 @@ public class BalanceOtaService {
      * @param balanceOtaStatus 版本状态
      * @return 触发失败的ip
      * @throws DataFormatException         数据格式异常
-     * @throws OtaVersionNotExistException 版本不存在
+     * @throws VersionNotExistException 版本不存在
      * @throws IOException                 读异常
      */
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
-            OtaVersionNotExistException, IOException {
+            VersionNotExistException, IOException {
         updateBalanceOtaStatus(balanceOtaStatus);
         return otaServerService.updateTrigger();
     }
@@ -140,7 +140,7 @@ public class BalanceOtaService {
         if ("prod".equalsIgnoreCase(environment)) {
             CustomerContextHolder.selectProdDataSource();
         } else {
-            CustomerContextHolder.selectLocalDataSource();
+            CustomerContextHolder.selectTestDataSource();
         }
         balanceOtaInfoList = balanceOtaMapper.fetchOtaList();
         CustomerContextHolder.clearDataSource();
