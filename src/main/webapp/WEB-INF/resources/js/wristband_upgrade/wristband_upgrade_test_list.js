@@ -27,6 +27,41 @@ $(document).ready(function () {
         },
         ajax: {
             url: baseUrl + "/firmware/upgrade/wristband/list?environment=test"
+        },
+        // columns: [
+        //     {
+        //         className: "details-control",
+        //         orderable: false,
+        //         data: null,
+        //         defaultContent: ""
+        //     },
+        //     {
+        //         data: "name"
+        //     },
+        //     {
+        //         data: "position"
+        //     },
+        //     {
+        //         data: "office"
+        //     },
+        //     {
+        //         data: "salary"
+        //     }
+        // ],
+    });
+    // Add event listener for opening and closing details
+    $("#wristbandTestList tbody").on("click", "td.details-control", function () {
+        var tr = $(this).closest("tr");
+        var row = table.row(tr);
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
         }
     });
 });
