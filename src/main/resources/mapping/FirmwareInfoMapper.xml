@@ -29,4 +29,22 @@
         )
     </insert>
 
+    <select id="getFirmwareInfoList" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+        SELECT
+            id,
+            firmware_type AS firmwareType,
+            version,
+            version_code AS versionCode,
+            hardware_code AS hardwareCode,
+            `enable`
+        FROM
+            firmware_info
+        WHERE
+            environment = #{environment,jdbcType=VARCHAR}
+            OR `enable` = 1
+        ORDER BY
+            create_time DESC
+        LIMIT 200
+    </select>
+
 </mapper>

@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 固件升级处理逻辑
@@ -45,7 +49,7 @@ public class FirmwareUpgradeService {
         // 校验参数
         checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file, description);
         int firmwareVersionCode = Integer.parseInt(firmwareVersion);
-        if(firmwareInfoMapper.exist(firmwareVersion, firmwareVersionCode, environment)) {
+        if (firmwareInfoMapper.exist(firmwareVersion, firmwareVersionCode, environment)) {
             throw new VersionHasExistException();
         }
         // 上传文件
@@ -102,6 +106,31 @@ public class FirmwareUpgradeService {
                 !FirmwareEnvironmentEnum.PROD.getEnvironment().equals(environment)) {
             throw new DataFormatException();
         }
+    }
+
+    /**
+     * 获取test、prod下面的数据（最多展示100条）
+     *
+     * @param environment 环境
+     */
+    public JSONObject firmwareUpgradeWristbandList(String environment) {
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        result.put("data", jsonArray);
+        List<FirmwareInfo> firmwareInfoList = firmwareInfoMapper.getFirmwareInfoList(environment);
+        if(firmwareInfoList != null) {
+            firmwareInfoList.forEach((item) -> {
+                jsonArray.add(new String[]{
+                        String.valueOf(item.getId()),
+                        item.getFirmwareType(),
+                        item.getHardwareCode(),
+                        item.getVersion(),
+                        String.valueOf(item.getVersionCode()),
+                        item.getEnable() == 0 ? "" : "<i class=\"fa fa-star\"></i>"
+                });
+            });
+        }
+        return result;
     }
 
 }

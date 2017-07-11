@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="$baseUrl/resources/datatable/jquery.dataTables.min.css">
 <link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
-<link rel="stylesheet" href="$baseUrl/resources/datatable/jquery.dataTables_themeroller.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">

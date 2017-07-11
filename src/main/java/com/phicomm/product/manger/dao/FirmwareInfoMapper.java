@@ -4,6 +4,8 @@ import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FirmwareInfoMapper {
 
@@ -24,5 +26,13 @@ public interface FirmwareInfoMapper {
      * @return 影响的行数
      */
     int insert(@Param("firmwareInfo") FirmwareInfo firmwareInfo);
+
+    /**
+     * 获得固件列表
+     *
+     * @param environment 环境
+     * @return 固件信息
+     */
+    List<FirmwareInfo> getFirmwareInfoList(@Param("environment") String environment);
 
 }

@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class FirmwareInfo {
 
+    private Integer id;
+
     private String firmwareType;
 
     private String version;
@@ -21,6 +23,14 @@ public class FirmwareInfo {
     private String url;
 
     private String description;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getFirmwareType() {
         return firmwareType;

@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.controller.firmware;
 
+import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
@@ -58,6 +59,24 @@ public class FirmwareUpgradeController {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpload(firmwareType,
                 hardwareVersion, firmwareVersion, environment, file, description);
         return CommonResponse.ok();
+    }
+
+    /**
+     * 固件升级获取列表接口
+     *
+     * @return 固件列表
+     */
+    @RequestMapping(value = "firmware/upgrade/wristband/list", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @ApiOperation("固件升级获取列表接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public JSONObject firmwareUpgradeWristbandList(@RequestParam("environment") String environment)
+            throws DataFormatException {
+        return firmwareUpgradeService.firmwareUpgradeWristbandList(environment);
     }
 
 }
