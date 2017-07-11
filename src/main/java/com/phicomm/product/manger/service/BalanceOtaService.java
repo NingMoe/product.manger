@@ -40,16 +40,10 @@ public class BalanceOtaService {
     /**
      * 上传Ota版本信息
      *
-<<<<<<< Updated upstream
      * @param aFile       a版本
      * @param bFile       b版本
      * @param version     版本号
      * @param environment 环境
-=======
-     * @param aFile   a版本
-     * @param bFile   b版本
-     * @param version 版本号
->>>>>>> Stashed changes
      * @return ota信息
      * @throws IOException         io异常
      * @throws DataFormatException 数据格式异常
