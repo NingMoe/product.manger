@@ -47,4 +47,25 @@
         LIMIT 200
     </select>
 
+    <select id="getFirmwareDetail" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+        SELECT
+            id AS id,
+            firmware_type AS firmwareType,
+            version AS version,
+            version_code AS versionCode,
+            environment AS environment,
+            hardware_code AS hardwareCode,
+            url AS url,
+            `enable` AS `enable`,
+            create_time AS createTime,
+            description AS description
+        FROM
+            firmware_info
+        WHERE
+            firmware_type = #{firmwareType,jdbcType=VARCHAR}
+            AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
+            AND environment = #{environment,jdbcType=VARCHAR}
+            AND version_code = #{versionCode,jdbcType=INTEGER}
+    </select>
+
 </mapper>

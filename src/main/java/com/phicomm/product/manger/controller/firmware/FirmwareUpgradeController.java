@@ -6,6 +6,7 @@ import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.VersionHasExistException;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.service.FirmwareUpgradeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -66,7 +67,7 @@ public class FirmwareUpgradeController {
      *
      * @return 固件列表
      */
-    @RequestMapping(value = "firmware/upgrade/wristband/list", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @RequestMapping(value = "firmware/upgrade/list", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
     @ApiOperation("固件升级获取列表接口")
     @ResponseBody
     @ApiResponses(value = {
@@ -77,6 +78,28 @@ public class FirmwareUpgradeController {
     public JSONObject firmwareUpgradeWristbandList(@RequestParam("environment") String environment)
             throws DataFormatException {
         return firmwareUpgradeService.firmwareUpgradeWristbandList(environment);
+    }
+
+    /**
+     * 获取固件详情
+     *
+     * @return 获取固件详情
+     */
+    @RequestMapping(value = "firmware/upgrade/detail", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @ApiOperation("获取固件详情")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public FirmwareInfo getFirmwareDetail(@RequestParam("firmwareType") String firmwareType,
+                                          @RequestParam("hardwareCode") String hardwareCode,
+                                          @RequestParam("versionCode") String versionCode,
+                                          @RequestParam("environment") String environment)
+            throws DataFormatException {
+        return firmwareUpgradeService.getFirmwareDetail(
+                firmwareType, hardwareCode, versionCode, environment);
     }
 
 }

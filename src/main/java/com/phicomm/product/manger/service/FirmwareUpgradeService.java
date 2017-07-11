@@ -3,6 +3,7 @@ package com.phicomm.product.manger.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -17,6 +18,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 固件升级处理逻辑
@@ -118,19 +120,37 @@ public class FirmwareUpgradeService {
         JSONArray jsonArray = new JSONArray();
         result.put("data", jsonArray);
         List<FirmwareInfo> firmwareInfoList = firmwareInfoMapper.getFirmwareInfoList(environment);
-        if(firmwareInfoList != null) {
+        if (firmwareInfoList != null) {
             firmwareInfoList.forEach((item) -> {
-                jsonArray.add(new String[]{
-                        String.valueOf(item.getId()),
-                        item.getFirmwareType(),
-                        item.getHardwareCode(),
-                        item.getVersion(),
-                        String.valueOf(item.getVersionCode()),
-                        item.getEnable() == 0 ? "" : "<i class=\"fa fa-star\"></i>"
-                });
+                Map<String, String> map = Maps.newHashMap();
+                map.put("firmwareType", item.getFirmwareType());
+                map.put("hardwareCode", item.getHardwareCode());
+                map.put("version", item.getVersion());
+                map.put("versionCode", String.valueOf(item.getVersionCode()));
+                map.put("enable", item.getEnable() == 0 ? "" : "<i class=\"fa fa-star\"></i>");
+                jsonArray.add(map);
             });
         }
         return result;
+    }
+
+    /**
+     * 获取固件详情
+     *
+     * @param firmwareType 固件类型
+     * @param hardwareCode 硬件版本号
+     * @param versionCode  固件版本号
+     */
+    public FirmwareInfo getFirmwareDetail(String firmwareType,
+                                          String hardwareCode,
+                                          String versionCode,
+                                          String environment) {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
+                hardwareCode, Integer.parseInt(versionCode), environment);
+        if (firmwareInfo == null) {
+            return new FirmwareInfo();
+        }
+        return firmwareInfo;
     }
 
 }

@@ -35,4 +35,16 @@ public interface FirmwareInfoMapper {
      */
     List<FirmwareInfo> getFirmwareInfoList(@Param("environment") String environment);
 
+    /**
+     * 获取固件详情
+     *
+     * @param firmwareType 固件类型
+     * @param hardwareCode 硬件版本
+     * @param versionCode  版本号
+     */
+    FirmwareInfo getFirmwareDetail(@Param("firmwareType") String firmwareType,
+                                   @Param("hardwareCode") String hardwareCode,
+                                   @Param("versionCode") Integer versionCode,
+                                   @Param("environment") String environment);
+
 }
