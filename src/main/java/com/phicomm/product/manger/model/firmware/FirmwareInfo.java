@@ -16,11 +16,11 @@ public class FirmwareInfo {
 
     private Integer enable;
 
-    private Integer test;
-
     private Date createTime;
 
     private String url;
+
+    private String description;
 
     public String getFirmwareType() {
         return firmwareType;
@@ -86,12 +86,12 @@ public class FirmwareInfo {
         this.url = url == null ? null : url.trim();
     }
 
-    public Integer getTest() {
-        return test;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTest(Integer test) {
-        this.test = test;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -103,9 +103,9 @@ public class FirmwareInfo {
                 ", environment='" + environment + '\'' +
                 ", hardwareCode='" + hardwareCode + '\'' +
                 ", enable=" + enable +
-                ", test=" + test +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
