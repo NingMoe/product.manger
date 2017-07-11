@@ -5,6 +5,7 @@
     <select id="obtainActiveCountByMonth" resultType="com.phicomm.product.manger.model.statistic.CountBean"
             parameterType="java.lang.Integer">
     <![CDATA[
+
       SELECT
             DATE_FORMAT(dayTime, '%Y-%m') AS generateTime,
             SUM(dayCount) AS generateCount
@@ -29,12 +30,14 @@
             )
         ORDER BY
             generateTime DESC
-       ]]>
+
+        ]]>
     </select>
 
     <select id="obtainActiveCountByDay" resultType="com.phicomm.product.manger.model.statistic.CountBean"
             parameterType="java.lang.Integer">
     <![CDATA[
+
        SELECT
             DATE_FORMAT(create_time, '%Y-%m-%d') AS generateTime,
             COUNT(1) AS generateCount
@@ -48,6 +51,7 @@
             generateTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
         ORDER BY
             generateTime DESC
+
         ]]>
     </select>
 
@@ -55,6 +59,7 @@
             resultType="com.phicomm.product.manger.model.statistic.LocationCountBean"
             parameterType="java.lang.Integer">
         <![CDATA[
+
        SELECT
             province AS province,
             COUNT(1) AS generateCount
@@ -74,6 +79,7 @@
         ORDER BY
             generateCount DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
+
         ]]>
     </select>
 
@@ -81,6 +87,7 @@
             resultType="com.phicomm.product.manger.model.statistic.LocationCountBean"
             parameterType="java.lang.Integer">
         <![CDATA[
+
             SELECT
                 province AS province,
                 COUNT(1) AS generateCount
@@ -107,6 +114,7 @@
             ORDER BY
                 generateCount DESC
             LIMIT #{pageSize,jdbcType=INTEGER}
+
         ]]>
     </select>
 
@@ -122,5 +130,23 @@
             `balance_lianbi_active_info`
         WHERE
             mac = #{mac,jdbcType=VARCHAR}
+    </select>
+
+    <select id="obtainActiveInfo" resultType="com.phicomm.product.manger.model.statistic.LianBiActiveBean">
+        SELECT
+            phone_number AS phoneNumber,
+            province AS activeProvince,
+            country AS activeCountry,
+            county AS activeCounty,
+            COUNT(1) AS activated,
+            city AS activeCity,
+            k_code AS kCode,
+            mac AS mac,
+            sn AS sn,
+            ip AS ip
+        FROM
+            `balance_lianbi_active_info`
+        WHERE
+            sn = #{sn,jdbcType=VARCHAR}
     </select>
 </mapper>

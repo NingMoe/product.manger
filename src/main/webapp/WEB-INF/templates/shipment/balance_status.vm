@@ -6,8 +6,8 @@
                 <div class="input-group input-group-sm Absolute-Center">
                     <input type="text"
                            class="form-control"
-                           id="inputMac"
-                           placeholder="搜索MAC相关信息，如键入:A020A6351AD5或5c:cf:7f:90:fd:13">
+                           id="inputParam"
+                           placeholder="搜索MAC/SN相关信息，如键入:5c:cf:7f:90:fd:13或CARBF1175J23166">
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-primary btn-flat" onclick="obtainMacInfo()">Go!</button>
                     </span>

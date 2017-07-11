@@ -116,7 +116,7 @@
     </navigation>
 
     <navigation>
-        <id>balanceMacStatus</id>
+        <id>balanceStatus</id>
         <title>
             <title-name>查询</title-name>
             <title-description>电子秤MAC信息查询</title-description>
@@ -124,9 +124,9 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/shipment/mac/status</url>
+            <url>$baseUrl/balance/shipment/status</url>
             <sub-directories>
-                <name>balanceMacStatus</name>
+                <name>balanceStatus</name>
             </sub-directories>
         </directory>
     </navigation>
