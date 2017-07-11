@@ -39,10 +39,15 @@ public class FirmwareUpgradeService {
                                                    String hardwareVersion,
                                                    String firmwareVersion,
                                                    String environment,
-                                                   MultipartFile file)
+                                                   MultipartFile file,
+                                                   String description)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
-        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file);
+        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file, description);
+        int firmwareVersionCode = Integer.parseInt(firmwareVersion);
+        if(firmwareInfoMapper.exist(firmwareVersion, firmwareVersionCode, environment)) {
+            throw new VersionHasExistException();
+        }
         // 上传文件
         String downloadUrl = FileUtil.uploadFileToHermes(file);
         FirmwareInfo firmwareInfo = new FirmwareInfo();
@@ -51,15 +56,11 @@ public class FirmwareUpgradeService {
         firmwareInfo.setVersion(file.getOriginalFilename());
         firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
         firmwareInfo.setEnvironment(environment);
-        firmwareInfo.setTest(1);
         firmwareInfo.setEnable(0);
         firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         logger.info(firmwareInfo);
-        try {
-            firmwareInfoMapper.insert(firmwareInfo);
-        } catch (Exception e) {
-            throw new VersionHasExistException();
-        }
+        firmwareInfoMapper.insert(firmwareInfo);
     }
 
     /**
@@ -72,16 +73,18 @@ public class FirmwareUpgradeService {
      * @param file            上传的文件
      */
     private void checkFirmwareUpgradeWristbandFileUpload(String firmwareType,
-                                                        String hardwareVersion,
-                                                        String firmwareVersion,
-                                                        String environment,
-                                                        MultipartFile file) throws DataFormatException {
+                                                         String hardwareVersion,
+                                                         String firmwareVersion,
+                                                         String environment,
+                                                         MultipartFile file,
+                                                         String description) throws DataFormatException {
         logger.info(String.format("firmwareType = %s", firmwareType));
         logger.info(String.format("hardwareVersion = %s", hardwareVersion));
         logger.info(String.format("firmwareVersion = %s", firmwareVersion));
         logger.info(String.format("environment = %s", environment));
+        logger.info(String.format("description = %s", description));
         logger.info(String.format("file = %s", file != null ? file.getOriginalFilename() : null));
-        if(Strings.isNullOrEmpty(firmwareType)
+        if (Strings.isNullOrEmpty(firmwareType)
                 || Strings.isNullOrEmpty(hardwareVersion)
                 || Strings.isNullOrEmpty(firmwareVersion)
                 || Strings.isNullOrEmpty(environment)
@@ -95,7 +98,7 @@ public class FirmwareUpgradeService {
         } catch (Exception e) {
             throw new DataFormatException();
         }
-        if(!FirmwareEnvironmentEnum.TEST.getEnvironment().equals(environment) &&
+        if (!FirmwareEnvironmentEnum.TEST.getEnvironment().equals(environment) &&
                 !FirmwareEnvironmentEnum.PROD.getEnvironment().equals(environment)) {
             throw new DataFormatException();
         }

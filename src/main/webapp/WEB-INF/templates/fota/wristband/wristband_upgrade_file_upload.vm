@@ -36,8 +36,12 @@
                         </div>
                         <div class="form-group">
                             <label for="file">固件上传</label>
-                            <input type="file" name="file" id="file">
+                            <input type="file" name="file" id="file" class="form-control">
                             <p class="help-block">例如：W1_A0_V1.00_0615_WB.zip</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">固件说明</label>
+                            <textarea id="description" name="description" form="form" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="box-footer">
