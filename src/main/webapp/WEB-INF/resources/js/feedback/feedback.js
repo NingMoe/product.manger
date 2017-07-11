@@ -1,5 +1,5 @@
-var firstLoad = true;
-var startId = 1;
+let firstLoad = true;
+let startId = 1;
 $(function init() {
     fetchFeedback();
 });
@@ -62,14 +62,14 @@ function viewMore() {
     }
 }
 function fetchCertainFeedback() {
-    var timeRange = $("#timeRange").val();
-    var appType = $("#appType").find("option:selected").text();
-    startTime = moment(timeRange.split('-')[0], "YYYY/MM/DD").format("YYYY-MM-DD");
-    endTime = moment(timeRange.split('-')[1], "YYYY/MM/DD").format("YYYY-MM-DD");
+    const timeRange = $("#timeRange").val();
+    const appType = $("#appType").find("option:selected").text();
+    let startTime = moment(timeRange.split('-')[0], "YYYY/MM/DD").format("YYYY-MM-DD");
+    let endTime = moment(timeRange.split('-')[1], "YYYY/MM/DD").format("YYYY-MM-DD");
     fetch(startTime, endTime, appType);
 }
 function fetch(startTime, endTime, appType) {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/feedback/fetch/v2",
@@ -85,9 +85,9 @@ function fetch(startTime, endTime, appType) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var result = data.data;
+            const result = data.data;
             if (result.length !== 0) {
-                for (var i = 0; i < result.length; i++) {
+                for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
                 }
                 startId = result[result.length - 1].id + 1;
@@ -98,14 +98,14 @@ function fetch(startTime, endTime, appType) {
 }
 function removeDiv() {
     const parent = document.getElementById("parentDiv");
-    var childs = parent.childNodes;
-    for (var i = childs.length - 1; i >= 0; i--) {
+    const childs = parent.childNodes;
+    for (let i = childs.length - 1; i >= 0; i--) {
         parent.removeChild(childs[i]);
     }
     startId = 1;
 }
 function fetchFeedback() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/feedback/fetch",
@@ -117,9 +117,9 @@ function fetchFeedback() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var result = data.data;
+            const result = data.data;
             if (result.length !== 0) {
-                for (var i = 0; i < result.length; i++) {
+                for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
                 }
                 startId = result[result.length - 1].id + 1;
@@ -129,9 +129,9 @@ function fetchFeedback() {
 }
 
 function loadItem(itemData) {
-    var src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` + loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) +
+    let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` + loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) +
         loadAppType(itemData.appId) + loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
-    var imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
+    let imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
     if (imgDiv !== null) {
         src = src + imgDiv;
     }
@@ -158,7 +158,7 @@ function loadUserId(userId) {
 }
 
 function loadAppType(appId) {
-    var src;
+    let src;
     if (appId === 'balance') {
         src = `<span class="label label-success pull-right">` + 'Balance' + `</span></a>`;
     } else if (appId === 'Link') {
@@ -171,14 +171,12 @@ function loadFeedback(feedback) {
     return `<p style="margin-left: 40px;word-wrap: break-word">` + feedback + `</p>`;
 }
 
-function loadFeedbackImg(imageUrl, id) {
-    var images = [];
-    images = imageUrl;
+function loadFeedbackImg(images, id) {
     if (images === null) {
         return null;
     }
-    var src = ` <div class="row" style="margin-left: 40px"><div id='page'><div class='demonstrations'>`;
-    for (var i = 0; i < images.length; i++) {
+    let src = ` <div class="row" style="margin-left: 40px"><div id='page'><div class='demonstrations'>`;
+    for (let i = 0; i < images.length; i++) {
         src = src + `<a href=` + images[i] + ` class='fresco' data-fresco-group=` + id + ` >
                         <img src=` + images[i] + ` style="width: 80px;height: 80px " alt='img'/></a>`;
     }
