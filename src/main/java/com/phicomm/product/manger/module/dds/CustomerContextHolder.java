@@ -10,6 +10,11 @@ public class CustomerContextHolder {
     private static final String MAIN_DATA_SOURCE = "localDataSource";
 
     /**
+     * 测试环境数据库
+     */
+    private static final String TEST_DATA_SOURCE = "testDataSource";
+
+    /**
      * 线上的数据库
      */
     private static final String PROD_DATA_SOURCE = "prodDataSource";
@@ -39,6 +44,13 @@ public class CustomerContextHolder {
      */
     public static void selectLocalDataSource() {
         contextHolder.set(MAIN_DATA_SOURCE);
+    }
+
+    /**
+     * 选择测试环境数据源
+     */
+    public static void selectTestDataSource() {
+        contextHolder.set(TEST_DATA_SOURCE);
     }
 
     /**
