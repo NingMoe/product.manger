@@ -2,20 +2,22 @@ package com.phicomm.product.manger.controller.ota;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.OtaVersionNotExistException;
+import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
+import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.service.BalanceOtaService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.HostAndPort;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Ota
@@ -53,5 +55,58 @@ public class BalanceOtaController {
                                                      @RequestParam String environment)
             throws IOException, DataFormatException {
         return new Response<BalanceOtaInfo>().setData(balanceOtaService.uploadOtaMessage(aFile, bFile, version, environment));
+    }
+
+    /**
+     * 更新版本状态并触发升级
+     *
+     * @param balanceOtaStatus 版本状态
+     * @return 触发升级失败的主机
+     * @throws OtaVersionNotExistException 版本已经存在
+     * @throws IOException                 socket读写异常
+     * @throws DataFormatException         数据格式异常
+     */
+    @RequestMapping(value = "balance/ota/status/change/trigger", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    @ApiOperation("修改版本状态")
+    @FunctionPoint(value = "common")
+    public Response<List<HostAndPort>> updateOtaStatusAndTrigger(@RequestBody BalanceOtaStatus balanceOtaStatus)
+            throws OtaVersionNotExistException, IOException, DataFormatException {
+        return new Response<List<HostAndPort>>().setData(balanceOtaService.updateStatusAndTrigger(balanceOtaStatus));
+    }
+
+    /**
+     * 更新版本状态并触发升级
+     *
+     * @param balanceOtaStatus 版本状态
+     * @return 操作状态
+     * @throws OtaVersionNotExistException 版本已经存在
+     * @throws DataFormatException         数据格式异常
+     */
+    @RequestMapping(value = "balance/ota/status/change", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    @ApiOperation("修改版本状态")
+    @FunctionPoint(value = "common")
+    public CommonResponse updateOtaStatus(@RequestBody BalanceOtaStatus balanceOtaStatus)
+            throws OtaVersionNotExistException, IOException, DataFormatException {
+        balanceOtaService.updateBalanceOtaStatus(balanceOtaStatus);
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 获取某个环境下的Ota列表
+     *
+     * @param environment 环境
+     * @return Ota信息列表
+     */
+    @RequestMapping(value = "balance/ota/list/change", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    @ApiOperation("获取Ota版本列表")
+    @FunctionPoint(value = "common")
+    public Response<List<BalanceOtaInfo>> fetchOtaList(@RequestParam String environment) {
+        return new Response<List<BalanceOtaInfo>>().setData(balanceOtaService.fetchOtaList(environment));
     }
 }

@@ -18,4 +18,38 @@
         #{balanceOtaInfo.bVersionCrc,jdbcType=INTEGER}
         )
     </insert>
+
+    <update id="updateOtaStatus" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaStatus">
+        UPDATE
+            balance_ota_info
+        SET
+            testing = #{balanceOtaStatus.testing,jdbcType=INTEGER},
+            `enable` = #{balanceOtaStatus.enable,jdbcType=INTEGER}
+        WHERE
+            software_version = #{balanceOtaStatus.version,jdbcType=INTEGER}
+    </update>
+
+    <update id="cleanOtaStatus" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaStatus">
+        UPDATE
+            balance_ota_info
+        SET
+            `enable` = #{balanceOtaStatus.enable,jdbcType=INTEGER}
+        WHERE
+            software_version != #{balanceOtaStatus.version,jdbcType=INTEGER}
+        AND
+            testing = #{balanceOtaStatus.testing,jdbcType=INTEGER}
+    </update>
+
+    <select id="fetchOtaList" resultType="com.phicomm.product.manger.model.ota.BalanceOtaInfo">
+        SELECT
+            software_version AS softwareVersion,
+            a_version_file_url AS aVersionFileUrl,
+            a_version_crc AS aVersionCrc,
+            b_version_file_url AS bVersionFileUrl,
+            b_version_crc AS bVersionCrc,
+            testing AS testing,
+            `enable` AS `enable`
+        FROM
+            balance_ota_info
+    </select>
 </mapper>

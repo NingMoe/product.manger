@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="$baseUrl/resources/css/statistic/layout.css">
-
 <section class="content">
     <div class="col-md-12">
         <div class="box box-info">
@@ -14,14 +12,14 @@
                             <input type="number" class="form-control" id="version" name="version" placeholder="version">
                         </div>
                         <div class="form-group">
-                            <label for="environment">环境（测试/生产）</label>
-                            <select class="form-control select2" style="width: 100%;" id="environment"
-                                    name="environment">
-                                <option selected="selected"></option>
-                                <option>test</option>
-                                <option>prod</option>
-                            </select>
-                        </div>
+                        <label for="environment">环境（测试/生产）</label>
+                        <select class="form-control select2" style="width: 100%;" id="environment"
+                                name="environment">
+                            <option selected="selected"></option>
+                            <option>test</option>
+                            <option>prod</option>
+                        </select>
+                    </div>
                         <div class="form-group">
                             <label for="aFile">File input</label>
                             <input type="file" id="aFile" name="aFile">
@@ -34,7 +32,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" onclick="uploadFile()">上传</button>
+                        <button type="button" class="btn btn-primary" onclick="uploadFile()">上传</button>
                     </div>
                 </form>
             </div>
@@ -42,6 +40,7 @@
     </div>
 </section>
 
+<script src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script>
     function uploadFile() {
         var formData = new FormData($("#uploadFile")[0]);
@@ -49,8 +48,6 @@
             type: "POST",
             url: "$baseUrl/balance/ota/upload",
             data: formData,
-            async: false,
-            cache: false,
             contentType: false,
             processData: false,
             dataType: 'json',
@@ -69,7 +66,6 @@
                         alert('fail !');
                     }
                 }
-
             }
         })
     }

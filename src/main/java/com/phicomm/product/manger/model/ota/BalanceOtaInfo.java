@@ -6,6 +6,8 @@ package com.phicomm.product.manger.model.ota;
  */
 public class BalanceOtaInfo {
 
+    private int id;
+
     private int softwareVersion;
 
     private String aVersionFileUrl;
@@ -17,6 +19,16 @@ public class BalanceOtaInfo {
     private int bVersionCrc;
 
     private int testing;
+
+    private int enable;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getSoftwareVersion() {
         return softwareVersion;
@@ -66,15 +78,25 @@ public class BalanceOtaInfo {
         this.testing = testing;
     }
 
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
+
     @Override
     public String toString() {
         return "BalanceOtaInfo{" +
-                "softwareVersion=" + softwareVersion +
+                "id=" + id +
+                ", softwareVersion=" + softwareVersion +
                 ", aVersionFileUrl='" + aVersionFileUrl + '\'' +
                 ", aVersionCrc=" + aVersionCrc +
                 ", bVersionFileUrl='" + bVersionFileUrl + '\'' +
                 ", bVersionCrc=" + bVersionCrc +
                 ", testing=" + testing +
+                ", enable=" + enable +
                 '}';
     }
 }

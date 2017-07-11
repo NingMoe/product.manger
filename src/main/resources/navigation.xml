@@ -178,4 +178,20 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>balanceOtaList</id>
+        <title>
+            <title-name>电子秤Ota固件列表</title-name>
+            <title-description>Ota固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/list</url>
+            <sub-directories>
+                <name>balanceOtaList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
