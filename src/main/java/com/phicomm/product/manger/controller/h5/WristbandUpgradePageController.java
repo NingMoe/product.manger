@@ -75,4 +75,19 @@ public class WristbandUpgradePageController {
         return modelAndView;
     }
 
+    /**
+     * 展示触发固件升级的配置页面
+     */
+    @RequestMapping(value = "wristband/upgrade/page/trigger/config", method = RequestMethod.GET)
+    @ApiIgnore("展示触发固件升级的配置页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showWristbandUpgradeForTriggerConfig(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "fota/wristband/wristband_upgrade_trigger_config.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForTriggerConfig"));
+        return modelAndView;
+    }
+
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
+import com.phicomm.product.manger.dao.FirmwareTriggerParamConfigMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
@@ -36,10 +37,15 @@ public class FirmwareUpgradeService {
 
     private FirmwareInfoMapper firmwareInfoMapper;
 
+    private FirmwareTriggerParamConfigMapper firmwareTriggerParamConfigMapper;
+
     @Autowired
-    public FirmwareUpgradeService(FirmwareInfoMapper firmwareInfoMapper) {
+    public FirmwareUpgradeService(FirmwareInfoMapper firmwareInfoMapper,
+                                  FirmwareTriggerParamConfigMapper firmwareTriggerParamConfigMapper) {
         this.firmwareInfoMapper = firmwareInfoMapper;
+        this.firmwareTriggerParamConfigMapper = firmwareTriggerParamConfigMapper;
         Assert.notNull(this.firmwareInfoMapper);
+        Assert.notNull(this.firmwareTriggerParamConfigMapper);
     }
 
     /**
@@ -194,9 +200,28 @@ public class FirmwareUpgradeService {
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode);
-        String param = "";
+        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();;
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
         new Thread(() -> new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext)).start();
+    }
+
+    /**
+     * 获取配置信息
+     *
+     * @return 获取配置信息
+     */
+    public String getFirmwareConfig() {
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        return Strings.nullToEmpty(configuation);
+    }
+
+    /**
+     * 设置配置信息
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public void setFirmwareConfig(String configuation) {
+        firmwareTriggerParamConfigMapper.clean();
+        firmwareTriggerParamConfigMapper.insert(configuation);
     }
 }

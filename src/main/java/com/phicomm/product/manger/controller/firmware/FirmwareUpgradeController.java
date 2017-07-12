@@ -130,4 +130,40 @@ public class FirmwareUpgradeController {
         return CommonResponse.ok();
     }
 
+    /**
+     * 获取配置信息
+     *
+     * @return 获取配置信息
+     */
+    @RequestMapping(value = "firmware/upgrade/config/get", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("获取配置信息")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse getFirmwareConfig() {
+        String configuation = firmwareUpgradeService.getFirmwareConfig();
+        return CommonResponse.ok().setDescription(configuation);
+    }
+
+    /**
+     * 设置配置信息
+     *
+     * @return 设置配置信息
+     */
+    @RequestMapping(value = "firmware/upgrade/config/set", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("设置配置信息")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse setFirmwareConfig(@RequestParam("configuation") String configuation) {
+        firmwareUpgradeService.setFirmwareConfig(configuation);
+        return CommonResponse.ok();
+    }
+
 }
