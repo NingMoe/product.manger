@@ -1,3 +1,40 @@
+function upgradeFirmware(node) {
+    if(!confirm("确认是否将该固件作为最新固件？")) {
+        return;
+    }
+
+    var firmwareType = node.parentNode.parentNode.childNodes[1].innerText;
+    var hardwareCode = node.parentNode.parentNode.childNodes[2].innerText;
+    var environment = node.parentNode.parentNode.childNodes[3].innerText;
+    var versionCode = node.parentNode.parentNode.childNodes[4].innerText;
+
+    console.info("firmwareType = " + firmwareType);
+    console.info("hardwareCode = " + hardwareCode);
+    console.info("environment = " + environment);
+    console.info("versionCode = " + versionCode);
+
+    var baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/upgrade",
+        dataType: "json",
+        data: {
+            "firmwareType": firmwareType,
+            "hardwareCode": hardwareCode,
+            "versionCode": versionCode,
+            "environment": "test",
+        }, error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("操作成功！");
+            } else {
+                alert("操作失败！");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+        }
+    });
+}
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
@@ -25,8 +62,21 @@ $(document).ready(function () {
                 sLast: "尾页"
             }
         },
+        drawCallback: function () {
+            var nodes = $(".table_enable_upgrade");
+            nodes.mouseover(function () {
+                if(this.innerHTML !== "当前版本" && this.getElementsByTagName("i").length === 0) {
+                    this.innerHTML = '<i class="fa fa-arrow-up" style="cursor: pointer" onclick="upgradeFirmware(this)"></i>';
+                }
+            });
+            nodes.mouseleave(function () {
+                if(this.innerHTML !== "当前版本" && this.getElementsByClassName("fa fa-arrow-up").length !== 0) {
+                    this.innerHTML = "";
+                }
+            });
+        },
         ajax: {
-            url: baseUrl + "/firmware/upgrade/list?environment=test"
+            url: baseUrl + "/firmware/upgrade/list?environment=test",
         },
         columns: [
             {
@@ -39,7 +89,10 @@ $(document).ready(function () {
             {data: "hardwareCode"},
             {data: "version"},
             {data: "versionCode"},
-            {data: "enable"}
+            {
+                data: "enable",
+                className: "table_enable_upgrade"
+            }
         ]
     });
     function format(d) {
@@ -55,7 +108,7 @@ $(document).ready(function () {
                 "versionCode": d.versionCode,
                 "environment": "test",
             }, error: function (req, status, err) {
-                alert('Failed reason: ' + err);
+                console.log('Failed reason: ' + err);
             }, success: function (data) {
                 result = data;
             }
@@ -79,8 +132,7 @@ $(document).ready(function () {
         if (row.child.isShown()) {
             row.child.hide();
             tr.removeClass('shown');
-        }
-        else {
+        } else {
             row.child(format(row.data())).show();
             tr.addClass('shown');
         }
