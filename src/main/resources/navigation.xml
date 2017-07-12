@@ -198,7 +198,7 @@
     <navigation>
         <id>balanceOta</id>
         <title>
-            <title-name>电子秤Ota升级</title-name>
+            <title-name>体脂秤Ota升级</title-name>
             <title-description>Ota升级</title-description>
         </title>
         <directory>
@@ -214,7 +214,7 @@
     <navigation>
         <id>balanceOtaList</id>
         <title>
-            <title-name>电子秤Ota固件列表</title-name>
+            <title-name>体脂秤Ota固件列表</title-name>
             <title-description>Ota固件列表</title-description>
         </title>
         <directory>
@@ -226,4 +226,21 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>wristbandUpgradeForTriggerConfig</id>
+        <title>
+            <title-name>手环触发升级配置</title-name>
+            <title-description>触发升级配置</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/wristband/upgrade/page/trigger/config</url>
+            <sub-directories>
+                <name>wristbandUpgradeForTriggerConfig</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>

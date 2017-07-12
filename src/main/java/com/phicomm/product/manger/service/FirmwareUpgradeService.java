@@ -5,12 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
+import com.phicomm.product.manger.dao.FirmwareTriggerParamConfigMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.VersionHasExistException;
 import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
+import com.phicomm.product.manger.module.fota.DefaultFirmwareUpgradeTrigger;
+import com.phicomm.product.manger.module.fota.FirmwareUpgradeContext;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +37,15 @@ public class FirmwareUpgradeService {
 
     private FirmwareInfoMapper firmwareInfoMapper;
 
+    private FirmwareTriggerParamConfigMapper firmwareTriggerParamConfigMapper;
+
     @Autowired
-    public FirmwareUpgradeService(FirmwareInfoMapper firmwareInfoMapper) {
+    public FirmwareUpgradeService(FirmwareInfoMapper firmwareInfoMapper,
+                                  FirmwareTriggerParamConfigMapper firmwareTriggerParamConfigMapper) {
         this.firmwareInfoMapper = firmwareInfoMapper;
+        this.firmwareTriggerParamConfigMapper = firmwareTriggerParamConfigMapper;
         Assert.notNull(this.firmwareInfoMapper);
+        Assert.notNull(this.firmwareTriggerParamConfigMapper);
     }
 
     /**
@@ -178,5 +186,42 @@ public class FirmwareUpgradeService {
             throw new VersionNotExistException();
         }
         // 通知其他项目版本变更
+        trigger(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
+    }
+
+    /**
+     * 触发升级
+     */
+    private void trigger(String firmwareType,
+                         String hardwareCode,
+                         String environment,
+                         int versionCode) {
+        FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
+                FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
+                hardwareCode, environment, versionCode);
+        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();;
+        FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
+                hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
+        new Thread(() -> new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext)).start();
+    }
+
+    /**
+     * 获取配置信息
+     *
+     * @return 获取配置信息
+     */
+    public String getFirmwareConfig() {
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        return Strings.nullToEmpty(configuation);
+    }
+
+    /**
+     * 设置配置信息
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public void setFirmwareConfig(String configuation) {
+        firmwareTriggerParamConfigMapper.clean();
+        firmwareTriggerParamConfigMapper.insert(configuation);
     }
 }
