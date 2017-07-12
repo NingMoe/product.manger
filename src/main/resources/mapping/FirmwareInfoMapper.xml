@@ -8,9 +8,18 @@
         FROM
             firmware_info
         WHERE
-            (version = #{version,jdbcType=VARCHAR}
-            OR version_code = #{versionCode,jdbcType=INTEGER})
-            AND environment = #{environment,jdbcType=VARCHAR}
+            (
+                firmware_type = #{firmwareType,jdbcType=VARCHAR}
+                AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
+                AND environment = #{environment,jdbcType=VARCHAR}
+                AND version = #{version,jdbcType=VARCHAR}
+            )
+            OR (
+                firmware_type = #{firmwareType,jdbcType=VARCHAR}
+                AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
+                AND environment = #{environment,jdbcType=VARCHAR}
+                AND version_code = #{versionCode,jdbcType=INTEGER}
+            )
     </select>
 
     <insert id="insert" parameterType="com.phicomm.product.manger.model.firmware.FirmwareInfo">

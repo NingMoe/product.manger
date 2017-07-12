@@ -74,4 +74,5 @@ public class WristbandUpgradePageController {
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForProdList"));
         return modelAndView;
     }
+
 }

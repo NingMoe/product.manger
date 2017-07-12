@@ -9,11 +9,13 @@ import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.VersionHasExistException;
+import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +53,7 @@ public class FirmwareUpgradeService {
         // 校验参数
         checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file, description);
         int firmwareVersionCode = Integer.parseInt(firmwareVersion);
-        if (firmwareInfoMapper.exist(firmwareVersion, firmwareVersionCode, environment)) {
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode)) {
             throw new VersionHasExistException();
         }
         // 上传文件
@@ -143,14 +145,38 @@ public class FirmwareUpgradeService {
      */
     public FirmwareInfo getFirmwareDetail(String firmwareType,
                                           String hardwareCode,
-                                          String versionCode,
-                                          String environment) {
+                                          String environment,
+                                          String versionCode) {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
-                hardwareCode, Integer.parseInt(versionCode), environment);
+                hardwareCode, environment, Integer.parseInt(versionCode));
         if (firmwareInfo == null) {
             return new FirmwareInfo();
         }
         return firmwareInfo;
     }
 
+    /**
+     * 修改当前最新的版本
+     *
+     * @param firmwareType 固件类型
+     * @param hardwareCode 硬件版本号
+     * @param versionCode  固件版本号
+     * @param environment  环境
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public void modifyCurrentFirmwareVersion(String firmwareType,
+                                             String hardwareCode,
+                                             String environment,
+                                             String versionCode) throws VersionNotExistException {
+        boolean exist = firmwareInfoMapper.exist(firmwareType, hardwareCode, environment, "", Integer.parseInt(versionCode));
+        if(!exist) {
+            throw new VersionNotExistException();
+        }
+        firmwareInfoMapper.cleanFirmware(firmwareType, hardwareCode, environment);
+        int affectRows = firmwareInfoMapper.enableFirmware(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
+        if(affectRows < 1) {
+            throw new VersionNotExistException();
+        }
+        // 通知其他项目版本变更
+    }
 }
