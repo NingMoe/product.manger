@@ -11,6 +11,8 @@ import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.VersionHasExistException;
 import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
+import com.phicomm.product.manger.module.fota.DefaultFirmwareUpgradeTrigger;
+import com.phicomm.product.manger.module.fota.FirmwareUpgradeContext;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,5 +180,23 @@ public class FirmwareUpgradeService {
             throw new VersionNotExistException();
         }
         // 通知其他项目版本变更
+        trigger(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
+    }
+
+    /**
+     * 触发升级
+     */
+    private void trigger(String firmwareType,
+                         String hardwareCode,
+                         String environment,
+                         int versionCode) {
+        FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
+                FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
+                hardwareCode, environment, versionCode);
+        String param = "";
+        FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
+                hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
+        new Thread(() -> new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext)).start();
     }
 }
