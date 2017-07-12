@@ -16,13 +16,13 @@ function upgradeFirmware(node) {
     var baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/firmware/upgrade",
+        url: baseUrl + "/firmware/upgrade/modify/current/version",
         dataType: "json",
         data: {
             "firmwareType": firmwareType,
             "hardwareCode": hardwareCode,
-            "versionCode": versionCode,
             "environment": "test",
+            "versionCode": versionCode
         }, error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
