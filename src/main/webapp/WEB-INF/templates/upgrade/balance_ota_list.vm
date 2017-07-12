@@ -13,8 +13,8 @@
                         <tr>
                             <th>id</th>
                             <th>固件版本</th>
-                            <th>测试版</th>
-                            <th>当前版本</th>
+                            <th>版本类型</th>
+                            <th>版本状态</th>
                             <th>创建时间</th>
                         </tr>
                         </thead>
