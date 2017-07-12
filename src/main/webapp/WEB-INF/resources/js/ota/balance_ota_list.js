@@ -114,6 +114,7 @@ $(document).ready(function () {
  */
 function selectNewValue(node, columnNumber) {
     let selector;
+    let oldVal;
     $(node).text('');
     remove(node);
     if (columnNumber === 2) {
@@ -135,7 +136,6 @@ function selectNewValue(node, columnNumber) {
     }
     firstClick = false;
     firstClickVersion = $(node).parent().find('td').eq(1).text();
-    console.info(firstClick);
 }
 
 /**

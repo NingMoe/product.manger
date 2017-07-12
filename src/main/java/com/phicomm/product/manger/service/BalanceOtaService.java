@@ -99,7 +99,6 @@ public class BalanceOtaService {
      */
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
             VersionNotExistException {
-        logger.info(balanceOtaStatus);
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
         if ("prod".equalsIgnoreCase(environment)) {
