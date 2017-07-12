@@ -11,7 +11,7 @@
                     <table id="wristbandTestList" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>id</th>
+                            <th></th>
                             <th>固件类型</th>
                             <th>硬件版本号</th>
                             <th>固件版本</th>
