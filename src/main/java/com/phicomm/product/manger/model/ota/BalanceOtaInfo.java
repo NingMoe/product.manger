@@ -16,11 +16,13 @@ public class BalanceOtaInfo {
 
     private String bVersionFileUrl;
 
+    private String createTime;
+
     private int bVersionCrc;
 
-    private int testing;
+    private String testing;
 
-    private int enable;
+    private String enable;
 
     public int getId() {
         return id;
@@ -62,6 +64,14 @@ public class BalanceOtaInfo {
         this.bVersionFileUrl = bVersionFileUrl;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
     public int getbVersionCrc() {
         return bVersionCrc;
     }
@@ -70,19 +80,19 @@ public class BalanceOtaInfo {
         this.bVersionCrc = bVersionCrc;
     }
 
-    public int getTesting() {
+    public String getTesting() {
         return testing;
     }
 
-    public void setTesting(int testing) {
+    public void setTesting(String testing) {
         this.testing = testing;
     }
 
-    public int getEnable() {
+    public String getEnable() {
         return enable;
     }
 
-    public void setEnable(int enable) {
+    public void setEnable(String enable) {
         this.enable = enable;
     }
 
@@ -94,9 +104,10 @@ public class BalanceOtaInfo {
                 ", aVersionFileUrl='" + aVersionFileUrl + '\'' +
                 ", aVersionCrc=" + aVersionCrc +
                 ", bVersionFileUrl='" + bVersionFileUrl + '\'' +
+                ", createTime='" + createTime + '\'' +
                 ", bVersionCrc=" + bVersionCrc +
-                ", testing=" + testing +
-                ", enable=" + enable +
+                ", testing='" + testing + '\'' +
+                ", enable='" + enable + '\'' +
                 '}';
     }
 }

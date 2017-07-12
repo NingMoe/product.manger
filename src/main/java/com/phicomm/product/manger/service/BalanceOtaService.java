@@ -1,5 +1,8 @@
 package com.phicomm.product.manger.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -91,7 +94,7 @@ public class BalanceOtaService {
      * 更新版本状态:当状态信息中的enable为1的时候顺带清理一下其他版本的状态，默认environment为test
      *
      * @param balanceOtaStatus 版本状态信息
-     * @throws DataFormatException         数据格式异常
+     * @throws DataFormatException      数据格式异常
      * @throws VersionNotExistException 版本不存在
      */
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
@@ -119,9 +122,9 @@ public class BalanceOtaService {
      *
      * @param balanceOtaStatus 版本状态
      * @return 触发失败的ip
-     * @throws DataFormatException         数据格式异常
+     * @throws DataFormatException      数据格式异常
      * @throws VersionNotExistException 版本不存在
-     * @throws IOException                 读异常
+     * @throws IOException              读异常
      */
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
             VersionNotExistException, IOException {
@@ -145,6 +148,20 @@ public class BalanceOtaService {
         balanceOtaInfoList = balanceOtaMapper.fetchOtaList();
         CustomerContextHolder.clearDataSource();
         return balanceOtaInfoList;
+    }
+
+    /**
+     * 获取JSONObject格式的结果
+     *
+     * @param environment 环境
+     * @return 版本列表
+     */
+    public JSONObject fetchOtaVersionList(String environment) {
+        List<BalanceOtaInfo> balanceOtaInfoList = fetchOtaList(environment);
+        JSONArray jsonArray = (JSONArray) JSON.toJSON(balanceOtaInfoList);
+        JSONObject result = new JSONObject();
+        result.put("data", jsonArray);
+        return result;
     }
 
     /**

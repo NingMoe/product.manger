@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/fota/wristband_upgrade_test_list.css">
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">电子秤Ota列表</h3>
+                </div>
+                <div class="box-body">
+                    <table id="otaVersionList" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>固件版本</th>
+                            <th>测试版</th>
+                            <th>当前版本</th>
+                            <th>创建时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_list.js"></script>

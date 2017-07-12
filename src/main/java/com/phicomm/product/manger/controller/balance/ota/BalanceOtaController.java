@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.controller.balance.ota;
 
+import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.VersionNotExistException;
@@ -66,7 +67,7 @@ public class BalanceOtaController {
      * @throws IOException                 socket读写异常
      * @throws DataFormatException         数据格式异常
      */
-    @RequestMapping(value = "balance/ota/status/change/trigger", method = RequestMethod.POST,
+    @RequestMapping(value = "balance/ota/status/update/trigger", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ResponseBody
     @ApiOperation("修改版本状态")
@@ -84,7 +85,7 @@ public class BalanceOtaController {
      * @throws VersionNotExistException 版本已经存在
      * @throws DataFormatException         数据格式异常
      */
-    @RequestMapping(value = "balance/ota/status/change", method = RequestMethod.POST,
+    @RequestMapping(value = "balance/ota/update/change", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ResponseBody
     @ApiOperation("修改版本状态")
@@ -101,12 +102,26 @@ public class BalanceOtaController {
      * @param environment 环境
      * @return Ota信息列表
      */
-    @RequestMapping(value = "balance/ota/list/change", method = RequestMethod.POST,
+    @RequestMapping(value = "balance/ota/list", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
-    public Response<List<BalanceOtaInfo>> fetchOtaList(@RequestParam String environment) {
-        return new Response<List<BalanceOtaInfo>>().setData(balanceOtaService.fetchOtaList(environment));
+    public List<BalanceOtaInfo> fetchOtaList(@RequestParam String environment) {
+        return balanceOtaService.fetchOtaList(environment);
+    }
+
+    /**
+     * 获取某个环境下的Ota列表
+     *
+     * @param environment 环境
+     * @return Ota信息列表
+     */
+    @RequestMapping(value = "balance/ota/list/json",method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("获取Ota版本列表")
+    @FunctionPoint(value = "common")
+    public JSONObject fetchOtaVersionList(@RequestParam String environment) {
+        return balanceOtaService.fetchOtaVersionList(environment);
     }
 }

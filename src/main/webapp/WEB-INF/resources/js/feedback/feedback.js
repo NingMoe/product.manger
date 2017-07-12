@@ -145,16 +145,16 @@ function loadItem(itemData) {
 }
 
 function loadUserHeader(headerUrl) {
-    return `<div class="product-img"><img src=` + headerUrl + ` alt="Header"></div>`;
+    return `<div class="product-img"><img src=${headerUrl} alt="Header"></div>`;
 }
 
 function loadUsername(username) {
     return `<div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">` + username;
+                        <a href="javascript:void(0)" class="product-title">${username}`;
 }
 
 function loadUserId(userId) {
-    return `<span class="product-description">` + userId + `</span>`;
+    return `<span class="product-description">${userId}</span>`;
 }
 
 function loadAppType(appId) {
@@ -168,7 +168,7 @@ function loadAppType(appId) {
 }
 
 function loadFeedback(feedback) {
-    return `<p style="margin-left: 40px;word-wrap: break-word">` + feedback + `</p>`;
+    return `<p style="margin-left: 40px;word-wrap: break-word">${feedback}</p>`;
 }
 
 function loadFeedbackImg(images, id) {
@@ -177,8 +177,8 @@ function loadFeedbackImg(images, id) {
     }
     let src = ` <div class="row" style="margin-left: 40px"><div id='page'><div class='demonstrations'>`;
     for (let i = 0; i < images.length; i++) {
-        src = src + `<a href=` + images[i] + ` class='fresco' data-fresco-group=` + id + ` >
-                        <img src=` + images[i] + ` style="width: 80px;height: 80px " alt='img'/></a>`;
+        src = src + `<a href=${images[i]} class='fresco' data-fresco-group=${id} >
+                        <img src=${images[i]} style="width: 80px;height: 80px " alt='img'/></a>`;
     }
     src = src + `</div></div></div>`;
     return src;
@@ -193,6 +193,6 @@ function loadCommonDiv() {
 
 function loadTime(createTime) {
     return `<div style="margin-left: 40px;margin-top: 10px">
-                        <span>提交于:</span><span>` + createTime + `</span>
+                        <span>提交于:</span><span>${createTime}</span>
                     </div>`;
 }

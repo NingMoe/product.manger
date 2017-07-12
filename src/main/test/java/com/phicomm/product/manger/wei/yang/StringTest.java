@@ -1,8 +1,14 @@
 package com.phicomm.product.manger.wei.yang;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * test
@@ -39,12 +45,21 @@ public class StringTest {
 
     @Test
     public void test2(){
-        BalanceLocationBean locationBean=new BalanceLocationBean();
-        locationBean.setActiveCity("市");
-        locationBean.setActiveCountry("国家");
-        locationBean.setActiveCounty("县");
-        locationBean.setActiveProvince("省");
-        System.out.println(formatLocation(locationBean));
+        List<BalanceLocationBean> balanceLocationBeans=new ArrayList<>();
+        for (int i=0;i<10;i++){
+            BalanceLocationBean locationBean=new BalanceLocationBean();
+            locationBean.setActiveCity("市");
+            locationBean.setActiveCountry("国家");
+            locationBean.setActiveCounty("县");
+            locationBean.setActiveProvince("省");
+            balanceLocationBeans.add(locationBean);
+        }
+        JSONArray result= (JSONArray) JSON.toJSON(balanceLocationBeans);
+        System.out.println(result);
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("data",result);
+        System.out.println(jsonObject);
+
     }
 
     private String formatLocation(BalanceLocationBean locationBean) {
