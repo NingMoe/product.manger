@@ -246,8 +246,8 @@
     <navigation>
         <id>balanceOtaServer</id>
         <title>
-            <title-name>体脂秤Ota固件列表</title-name>
-            <title-description>Ota固件列表</title-description>
+            <title-name>体脂秤Ota服务器地址管理</title-name>
+            <title-description>Ota服务器</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -262,8 +262,8 @@
     <navigation>
         <id>balanceOtaMac</id>
         <title>
-            <title-name>体脂秤Ota固件列表</title-name>
-            <title-description>Ota固件列表</title-description>
+            <title-name>体脂秤Ota测试Mac管理</title-name>
+            <title-description>Mac管理</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
