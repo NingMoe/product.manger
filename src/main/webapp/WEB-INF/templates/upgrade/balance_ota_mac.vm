@@ -12,8 +12,8 @@
                             <select class="form-control select2" style="width: 100%;" id="environment"
                                     name="environment">
                                 <option selected="selected"></option>
-                                <option>test</option>
-                                <option>prod</option>
+                                <option>测试环境</option>
+                                <option>生产环境</option>
                             </select>
                         </div>
                         <div class="form-group">
