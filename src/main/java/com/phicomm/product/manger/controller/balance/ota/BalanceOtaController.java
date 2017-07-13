@@ -64,8 +64,8 @@ public class BalanceOtaController {
      * @param balanceOtaStatus 版本状态
      * @return 触发升级失败的主机
      * @throws VersionNotExistException 版本已经存在
-     * @throws IOException                 socket读写异常
-     * @throws DataFormatException         数据格式异常
+     * @throws IOException              socket读写异常
+     * @throws DataFormatException      数据格式异常
      */
     @RequestMapping(value = "balance/ota/status/update/trigger", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
@@ -83,7 +83,7 @@ public class BalanceOtaController {
      * @param balanceOtaStatus 版本状态
      * @return 操作状态
      * @throws VersionNotExistException 版本已经存在
-     * @throws DataFormatException         数据格式异常
+     * @throws DataFormatException      数据格式异常
      */
     @RequestMapping(value = "balance/ota/update/change", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
@@ -117,7 +117,7 @@ public class BalanceOtaController {
      * @param environment 环境
      * @return Ota信息列表
      */
-    @RequestMapping(value = "balance/ota/list/json",method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @RequestMapping(value = "balance/ota/list/json", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
