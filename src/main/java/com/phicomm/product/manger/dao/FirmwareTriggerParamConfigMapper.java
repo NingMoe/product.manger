@@ -20,5 +20,4 @@ public interface FirmwareTriggerParamConfigMapper {
      * 插入
      */
     void insert(@Param("param") String param);
-
 }
