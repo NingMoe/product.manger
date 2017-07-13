@@ -53,8 +53,9 @@ function drawBarChart(labes, datas, chart) {
         labels: labes,
         datasets: [
             {
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,1)",
+                fillColor: "#4096B5",
+                strokeColor: "#4096B5",
+                pointColor: "#4096B5",
                 data: datas
             }
         ]
@@ -86,15 +87,15 @@ function drawBarChart(labes, datas, chart) {
         scaleFontStyle: "500",
         //Number - Pixel width of the bar stroke
         barStrokeWidth: 1,
-        datasetFill:false,
+        datasetFill: false,
         //Number - Spacing between each of the X value sets
         barValueSpacing: 5,
         //Number - Spacing between data sets within X values
         barDatasetSpacing: 1,
         //String - 示例模板
-        legendTemplate: `<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++)" +
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++)" +
         "{%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%>" +
-        "<%=datasets[i].label%><%}%></li><%}%></ul>`,
+        "<%=datasets[i].label%><%}%></li><%}%></ul>",
         //Boolean - whether to make the chart responsive
         responsive: true,
         maintainAspectRatio: true,
@@ -118,8 +119,5 @@ function drawBarChart(labes, datas, chart) {
             });
         }
     };
-    chartDataArea.datasets[0].fillColor = "#4096B5";
-    chartDataArea.datasets[0].strokeColor = "#4096B5";
-    chartDataArea.datasets[0].pointColor = "#4096B5";
     chart.Bar(chartDataArea, chartOption);
 }
