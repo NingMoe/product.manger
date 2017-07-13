@@ -1,5 +1,5 @@
 $(function obtainMacInfoByDay() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/statistic/day",
@@ -11,9 +11,9 @@ $(function obtainMacInfoByDay() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
@@ -24,7 +24,7 @@ $(function obtainMacInfoByDay() {
     })
 });
 $(function obtainMacYearData() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/statistic/month",
@@ -36,9 +36,9 @@ $(function obtainMacYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
@@ -49,7 +49,7 @@ $(function obtainMacYearData() {
     })
 });
 function drawBarChart(labes, datas, chart) {
-    var chartDataArea = {
+    let chartDataArea = {
         labels: labes,
         datasets: [
             {
@@ -59,7 +59,7 @@ function drawBarChart(labes, datas, chart) {
             }
         ]
     };
-    var chartOption = {
+    const chartOption = {
         //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
         scaleBeginAtZero: true,
         //Boolean - 是否显示网格线
@@ -86,14 +86,15 @@ function drawBarChart(labes, datas, chart) {
         scaleFontStyle: "500",
         //Number - Pixel width of the bar stroke
         barStrokeWidth: 1,
+        datasetFill:false,
         //Number - Spacing between each of the X value sets
         barValueSpacing: 5,
         //Number - Spacing between data sets within X values
         barDatasetSpacing: 1,
         //String - 示例模板
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++)" +
+        legendTemplate: `<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++)" +
         "{%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%>" +
-        "<%=datasets[i].label%><%}%></li><%}%></ul>",
+        "<%=datasets[i].label%><%}%></li><%}%></ul>`,
         //Boolean - whether to make the chart responsive
         responsive: true,
         maintainAspectRatio: true,
@@ -105,7 +106,7 @@ function drawBarChart(labes, datas, chart) {
         animationEasing: "easeOutQuart",
         showTooltips: false,
         onAnimationComplete: function () {
-            var ctx = this.chart.ctx;
+            let ctx = this.chart.ctx;
             ctx.font = this.scale.font;
             ctx.fillStyle = this.scale.textColor;
             ctx.textAlign = "center";
@@ -117,11 +118,8 @@ function drawBarChart(labes, datas, chart) {
             });
         }
     };
-    var barChartOptions = chartOption;
-    var barChartData = chartDataArea;
-    barChartData.datasets[0].fillColor = "#4096B5";
-    barChartData.datasets[0].strokeColor = "#4096B5";
-    barChartData.datasets[0].pointColor = "#4096B5";
-    barChartOptions.datasetFill = false;
-    chart.Bar(chartDataArea, barChartOptions);
+    chartDataArea.datasets[0].fillColor = "#4096B5";
+    chartDataArea.datasets[0].strokeColor = "#4096B5";
+    chartDataArea.datasets[0].pointColor = "#4096B5";
+    chart.Bar(chartDataArea, chartOption);
 }
