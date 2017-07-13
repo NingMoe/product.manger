@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,14 +52,15 @@ public class BalanceOtaTestMacService {
      * @return mac列表
      */
     private List<String> formatMac(String macString) {
+        List<String> macList = new ArrayList<>();
         macString = macString.replaceAll("\\s+", "、");
-        List<String> macList = Arrays.asList(macString.split("、"));
-        for (int i = macList.size() - 1; i >= 0; i--) {
-            if (macList.get(i).length() != 17) {
-                macList.remove(i);
+        String[] macArray = macString.split("、");
+        for (String mac : macArray) {
+            if (mac.length() == 17) {
+                macList.add(mac);
             }
         }
-        return Arrays.asList(macString.split("、"));
+        return macList;
     }
 
     /**
