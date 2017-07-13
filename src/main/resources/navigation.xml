@@ -87,7 +87,7 @@
         <id>balanceStatisticLocation</id>
         <title>
             <title-name>统计</title-name>
-            <title-description>体脂秤位置信息统计</title-description>
+            <title-description>体脂秤地区统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
