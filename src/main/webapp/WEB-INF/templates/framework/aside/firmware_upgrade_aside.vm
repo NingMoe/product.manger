@@ -18,8 +18,23 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i> OTA文件上传</a></li>
-                <li><a href="$baseUrl/balance/ota/list"><i class="fa fa-circle-o"></i> OTA固件列表</a></li>
-                <li><a href="#2"><i class="fa fa-circle-o"></i> 固件列表</a></li>
+                <li>
+                    <a href="$baseUrl/balance/ota/list/test"><i class="fa fa-circle-o"></i>
+                        <span>Ota固件列表</span>
+                        <span class="pull-right-container">
+                                <small class="label pull-right bg-green">test</small>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="$baseUrl/balance/ota/list/prod"><i class="fa fa-list"></i>
+                        <span>Ota固件列表</span>
+                        <span class="pull-right-container">
+                            <small class="label pull-right bg-red-active">prod</small>
+                        </span>
+                    </a>
+                </li>
+
                 <li><a href="#3"><i class="fa fa-circle-o"></i> 配置管理</a></li>
 
             </ul>

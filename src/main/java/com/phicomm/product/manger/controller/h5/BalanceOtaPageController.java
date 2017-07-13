@@ -53,13 +53,28 @@ public class BalanceOtaPageController {
     /**
      * 电子秤Ota固件列表
      */
-    @RequestMapping(value = "balance/ota/list", method = RequestMethod.GET)
+    @RequestMapping(value = "balance/ota/list/test", method = RequestMethod.GET)
     @ApiIgnore("电子秤Ota升级")
     @FunctionPoint(value = "common")
-    public ModelAndView showBalanceOtaStatusPage(HttpSession session) {
+    public ModelAndView showTestBalanceOtaStatusPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "upgrade/balance_ota_list.vm");
+        modelAndView.getModel().put("context", "upgrade/balance_ota_list_test.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
+        return modelAndView;
+    }
+
+    /**
+     * 电子秤Ota固件列表
+     */
+    @RequestMapping(value = "balance/ota/list/prod", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Ota升级")
+    @FunctionPoint(value = "common")
+    public ModelAndView showProdBalanceOtaStatusPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "upgrade/balance_ota_list_prod.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;
