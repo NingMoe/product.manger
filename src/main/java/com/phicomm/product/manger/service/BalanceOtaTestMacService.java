@@ -54,6 +54,12 @@ public class BalanceOtaTestMacService {
      */
     private List<String> formatMac(String macString) {
         macString = macString.replaceAll("\\s+", "、");
+        List<String> macList = Arrays.asList(macString.split("、"));
+        for (int i = macList.size() - 1; i >= 0; i--) {
+            if (macList.get(i).length() != 17) {
+                macList.remove(i);
+            }
+        }
         return Arrays.asList(macString.split("、"));
     }
 
