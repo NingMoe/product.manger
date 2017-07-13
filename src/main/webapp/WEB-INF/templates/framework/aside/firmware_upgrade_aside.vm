@@ -68,7 +68,8 @@
                         </span>
                     </a>
                 </li>
-                <li><a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-file-archive-o"></i> 配置管理</a></li>
+                <li><a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-file-archive-o"></i>
+                    配置管理</a></li>
             </ul>
         </li>
     </ul>
