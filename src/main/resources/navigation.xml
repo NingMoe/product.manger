@@ -87,11 +87,7 @@
         <id>balanceStatisticLocation</id>
         <title>
             <title-name>统计</title-name>
-<<<<<<< HEAD
             <title-description>体脂秤地区统计</title-description>
-=======
-            <title-description>S7地区统计</title-description>
->>>>>>> 20f8c29ac5ab3af9c1ce0ce4e706afcecca0805e
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
