@@ -79,4 +79,34 @@ public class BalanceOtaPageController {
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;
     }
+
+    /**
+     * 电子秤Ota服务器地址管理
+     */
+    @RequestMapping(value = "balance/ota/server/manage", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Ota升级")
+    @FunctionPoint(value = "common")
+    public ModelAndView balanceOtaServerManage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "upgrade/balance_ota_server.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaServer"));
+        return modelAndView;
+    }
+
+    /**
+     * 电子秤Ota服务器地址管理
+     */
+    @RequestMapping(value = "balance/ota/mac/manage", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Ota升级")
+    @FunctionPoint(value = "common")
+    public ModelAndView balanceOtaMacManage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "upgrade/balance_ota_mac.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaMac"));
+        return modelAndView;
+    }
 }

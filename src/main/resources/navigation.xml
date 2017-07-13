@@ -243,4 +243,35 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceOtaServer</id>
+        <title>
+            <title-name>体脂秤Ota固件列表</title-name>
+            <title-description>Ota固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/server/manage</url>
+            <sub-directories>
+                <name>balanceOtaServer</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceOtaMac</id>
+        <title>
+            <title-name>体脂秤Ota固件列表</title-name>
+            <title-description>Ota固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/mac/manage</url>
+            <sub-directories>
+                <name>balanceOtaMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>

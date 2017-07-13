@@ -22,8 +22,8 @@ let firstClick = true;
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
-    $("#firmware-upgrade-wristband-li-node").addClass("active");
-    $("#firmware-upgrade-wristband-menu-node").addClass("active");
+    $("#balance_ota_menu_node").addClass("active");
+    $("#balance_ota_list_prod_node").addClass("active");
     let baseUrl = $("#baseUrl").val();
 
     const table = $("#otaVersionList").DataTable({
