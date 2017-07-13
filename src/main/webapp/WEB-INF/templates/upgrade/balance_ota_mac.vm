@@ -1,0 +1,34 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">配置测试Mac</h3>
+                </div>
+                <form id="form" role="form" enctype="multipart/form-data">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <select class="form-control select2" style="width: 100%;" id="environment"
+                                    name="environment">
+                                <option selected="selected"></option>
+                                <option>test</option>
+                                <option>prod</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="configuation">Mac数据</label>
+                            <textarea id="macList" name="macList" form="form" class="form-control"
+                                      style="min-height: 400px"></textarea>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" id="submit">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_test_mac.js"></script>
