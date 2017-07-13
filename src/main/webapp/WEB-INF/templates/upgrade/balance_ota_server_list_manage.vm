@@ -15,7 +15,7 @@
                             <th>ip地址</th>
                             <th>端口号</th>
                             <th>创建时间</th>
-                            <th>操 作</th>
+                            <th>操    作</th>
                         </tr>
                         </thead>
                         <tbody>
