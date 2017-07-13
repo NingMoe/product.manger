@@ -19,4 +19,9 @@ public interface BalanceOtaTestMacMapper {
      * @return 影响行数
      */
     int insertBatch(@Param("macList") List macList);
+
+    /**
+     * 清除mac
+     */
+    void cleanMac();
 }

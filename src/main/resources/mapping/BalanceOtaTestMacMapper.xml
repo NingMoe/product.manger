@@ -13,4 +13,8 @@
         </foreach>
     </insert>
 
+    <delete id="cleanMac">
+        DELETE FROM
+            balance_ota_test_mac_info
+    </delete>
 </mapper>

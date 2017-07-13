@@ -32,7 +32,6 @@ public class BalanceOtaTestMacService {
      * @param macString mac
      */
     public void insertMac(String macString, String environment) throws DataFormatException {
-        System.out.println(environment);
         List macList = formatMac(macString);
         if (macList.isEmpty()) {
             throw new DataFormatException();
@@ -42,6 +41,7 @@ public class BalanceOtaTestMacService {
         } else {
             CustomerContextHolder.selectTestDataSource();
         }
+        balanceOtaTestMacMapper.cleanMac();
         balanceOtaTestMacMapper.insertBatch(macList);
         CustomerContextHolder.clearDataSource();
     }
