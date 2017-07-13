@@ -55,7 +55,7 @@
         <id>balanceStatisticKCodeActive</id>
         <title>
             <title-name>统计</title-name>
-            <title-description>体脂秤K码激活统计</title-description>
+            <title-description>S7 K码激活统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -71,7 +71,7 @@
         <id>balanceStatisticCount</id>
         <title>
             <title-name>统计</title-name>
-            <title-description>体脂秤数量统计</title-description>
+            <title-description>S7数量统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -87,7 +87,11 @@
         <id>balanceStatisticLocation</id>
         <title>
             <title-name>统计</title-name>
+<<<<<<< HEAD
             <title-description>体脂秤地区统计</title-description>
+=======
+            <title-description>S7地区统计</title-description>
+>>>>>>> 20f8c29ac5ab3af9c1ce0ce4e706afcecca0805e
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -119,7 +123,7 @@
         <id>balanceStatus</id>
         <title>
             <title-name>查询</title-name>
-            <title-description>电子秤MAC信息查询</title-description>
+            <title-description>S7 MAC信息查询</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -135,7 +139,7 @@
         <id>showBalanceFeedback</id>
         <title>
             <title-name>反馈信息</title-name>
-            <title-description>电子秤反馈信息展示</title-description>
+            <title-description>反馈信息展示</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -214,7 +218,7 @@
     <navigation>
         <id>balanceOtaList</id>
         <title>
-            <title-name>体脂秤Ota固件列表</title-name>
+            <title-name>S7 Ota固件列表</title-name>
             <title-description>Ota固件列表</title-description>
         </title>
         <directory>
@@ -246,7 +250,7 @@
     <navigation>
         <id>balanceOtaServer</id>
         <title>
-            <title-name>体脂秤Ota服务器列表</title-name>
+            <title-name>S7 Ota服务器列表</title-name>
             <title-description>Ota服务器</title-description>
         </title>
         <directory>
@@ -278,7 +282,7 @@
     <navigation>
         <id>balanceOtaMac</id>
         <title>
-            <title-name>体脂秤Ota测试Mac管理</title-name>
+            <title-name>S7 Ota测试Mac管理</title-name>
             <title-description>Mac管理</title-description>
         </title>
         <directory>
