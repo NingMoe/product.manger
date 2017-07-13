@@ -44,6 +44,9 @@ public class BalanceLocation {
 
     public BalanceLocation format() {
         BalanceLocation balanceLocation = new BalanceLocation();
+        if(this.province == null) {
+            return null;
+        }
         String key = this.province.substring(0, 2);
         if(!PROVINCES.contains(key)) {
             return null;
