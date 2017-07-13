@@ -4,28 +4,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border phicomm_k_code_center">
-                    <h3 class="box-title">体脂秤K码激活统计（年）</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <br>
-                <div class="box-body phicomm_k_code_box_body">
-                    <div class="chart">
-                        <canvas id="activeYearChart" height="145px"></canvas>
-                    </div>
-                </div><br/><br/>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border phicomm_k_code_center">
-                    <h3 class="box-title">体脂秤K码激活统计（月）</h3>
+                    <h3 class="box-title">体脂秤K码激活统计（月）:来源斐讯健康APP</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -39,6 +18,29 @@
                 <div class="box-body phicomm_k_code_box_body">
                     <div class="chart">
                         <canvas id="activeMonthChart" height="145px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border phicomm_k_code_center">
+                    <h3 class="box-title">体脂秤K码激活统计（年）:来源斐讯健康APP</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <div class="box-body phicomm_k_code_box_body">
+                    <div class="chart">
+                        <canvas id="activeYearChart" height="145px"></canvas>
                     </div>
                 </div>
             </div>
