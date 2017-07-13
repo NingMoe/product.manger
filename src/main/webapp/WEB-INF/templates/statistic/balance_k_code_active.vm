@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border phicomm_k_code_center">
-                    <h3 class="box-title">联璧激活: 按月统计</h3>
+                    <h3 class="box-title">S7激活信息: 按月统计</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -25,7 +25,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border phicomm_k_code_center">
-                    <h3 class="box-title">联璧激活: 按天统计</h3>
+                    <h3 class="box-title">S7激活信息: 按天统计</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
