@@ -24,7 +24,7 @@ $(document).ready(function () {
     $("#firmware-upgrade-menu-node").addClass("active");
     $("#balance_ota_menu_node").addClass("active");
     $("#balance_ota_list_prod_node").addClass("active");
-    let baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
 
     const table = $("#otaVersionList").DataTable({
         paging: true,
@@ -162,7 +162,7 @@ function upgradeVersionList(node) {
  */
 function modifyVersionStatus(version, testing, enable) {
     const baseUrl = $("#baseUrl").val();
-    let result = 'fail:' + 'please try again.';;
+    let result = 'fail:' + 'please try again.';
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/ota/status/update/trigger",
