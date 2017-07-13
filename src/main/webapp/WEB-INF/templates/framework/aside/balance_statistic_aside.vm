@@ -1,5 +1,5 @@
 <li class="header">Balance Sales Stistic</li>
-<li class="treeview">
+<li class="treeview" id="balance-statistic-1">
     <a href="#">
         <i class="fa fa-tasks"></i>
         <span>体脂秤销售统计</span>
@@ -7,7 +7,7 @@
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
-    <ul class="treeview-menu">
+    <ul class="treeview-menu" id="balance-statistic-2">
         <li><a href="$baseUrl/balance/statistic/page/k/code/active"><i class="fa fa-rmb"></i> K码激活统计</a></li>
         <li><a href="$baseUrl/balance/statistic/balance/sales/location"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
         <li><a href="$baseUrl/balance/statistic/count"><i class="fa fa-bar-chart"></i> 体脂秤销售数量统计</a></li>
