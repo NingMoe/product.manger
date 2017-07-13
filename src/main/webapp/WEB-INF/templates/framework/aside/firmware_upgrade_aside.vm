@@ -19,7 +19,7 @@
             <ul class="treeview-menu">
                 <li><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i> OTA文件上传</a></li>
                 <li>
-                    <a href="$baseUrl/balance/ota/list/test"><i class="fa fa-circle-o"></i>
+                    <a href="$baseUrl/balance/ota/list/test"><i class="fa fa-list"></i>
                         <span>Ota固件列表</span>
                         <span class="pull-right-container">
                                 <small class="label pull-right bg-green">test</small>
@@ -35,8 +35,8 @@
                     </a>
                 </li>
 
-                <li><a href="#3"><i class="fa fa-circle-o"></i> 配置管理</a></li>
-
+                <li><a href="#3"><i class="fa fa-circle-o"></i> 服务器配置管理</a></li>
+                <li><a href="#4"><i class="fa fa-circle-o"></i> 测试MAC管理</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="fa fa-cloud"></i> 体脂秤固件升级</a></li>
