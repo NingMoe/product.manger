@@ -18,7 +18,8 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li id="balance_ota_upload_node"><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i> OTA文件上传</a></li>
+                <li id="balance_ota_upload_node"><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i>
+                    OTA文件上传</a></li>
                 <li id="balance_ota_list_test_node">
                     <a href="$baseUrl/balance/ota/list/test"><i class="fa fa-list"></i>
                         <span>Ota固件列表</span>
@@ -36,8 +37,17 @@
                     </a>
                 </li>
 
-                <li><a href="$baseUrl/balance/ota/server/manage"><i class="fa fa-circle-o"></i> 服务器配置管理</a></li>
-                <li><a href="$baseUrl/balance/ota/mac/manage"><i class="fa fa-circle-o"></i> 测试MAC管理</a></li>
+                <li id="balance_ota_server_node">
+                    <a href="$baseUrl/balance/ota/server/manage"><i class="fa fa-list"></i> 服务器地址列表</a>
+                </li>
+
+                <li id="balance_ota_server_node">
+                    <a href="$baseUrl/balance/ota/server/add"><i class="fa fa-circle-o"></i> 服务器地址上传</a>
+                </li>
+
+                <li id="balance_ota_mac_node">
+                    <a href="$baseUrl/balance/ota/mac/manage"><i class="fa fa-circle-o"></i> 添加测试MAC</a>
+                </li>
             </ul>
         </li>
 

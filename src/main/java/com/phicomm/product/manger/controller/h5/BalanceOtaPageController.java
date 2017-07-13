@@ -89,9 +89,24 @@ public class BalanceOtaPageController {
     public ModelAndView balanceOtaServerManage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "upgrade/balance_ota_server.vm");
+        modelAndView.getModel().put("context", "upgrade/balance_ota_server_list_manage.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaServer"));
+        return modelAndView;
+    }
+
+    /**
+     * 添加电子秤Ota服务器地址
+     */
+    @RequestMapping(value = "balance/ota/server/add", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Ota升级")
+    @FunctionPoint(value = "common")
+    public ModelAndView balanceServerAdd(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "upgrade/balance_ota_server_add.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaServerAdd"));
         return modelAndView;
     }
 

@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.dao;
 
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
+import com.phicomm.product.manger.model.server.BalanceServerBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,13 @@ public interface OtaServerAddressMapper {
      * @return 服务器地址
      */
     List<BalanceServerAddressBean> obtainServerAddress();
+
+    /**
+     * 获取服务器信息
+     *
+     * @return 服务器信息
+     */
+    List<BalanceServerBean> obtainServerList();
 
     /**
      * 录入ota 服务地址

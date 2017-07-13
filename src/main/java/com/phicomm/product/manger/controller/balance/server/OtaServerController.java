@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.controller.balance.server;
 
+import com.alibaba.fastjson.JSONObject;
+import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
@@ -7,6 +9,7 @@ import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
 import com.phicomm.product.manger.service.OtaServerService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,35 +68,42 @@ public class OtaServerController {
      * @throws ServerAddressNotExistException 删除失败
      * @throws DataFormatException            数据格式异常
      */
-    @RequestMapping(value = "balance/server/address/delete", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "balance/server/address/delete", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
             @ApiResponse(code = 5, message = "删除失败，可能地址不存在", response = ServerAddressNotExistException.class)
     })
-    public Response<Object> deleteServerAddress(@RequestParam("ip") String ip,
+    public Response<String> deleteServerAddress(@RequestParam("ip") String ip,
                                                 @RequestParam("port") int port)
             throws DataFormatException, ServerAddressNotExistException {
         otaServerService.deleteServerAddress(new HostAndPort(ip, port));
-        return new Response<>().setData("HostAndPort:" + new HostAndPort(ip, port).toString());
+        return new Response<String>().setData("HostAndPort:" + new HostAndPort(ip, port).toString());
     }
 
     /**
-     * 删除服务器地址
-     *
-     * @return Response.class
+     * 获取服务器地址
      */
     @RequestMapping(value = "balance/server/address/obtain", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
-            @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
-            @ApiResponse(code = 5, message = "删除失败，可能地址不存在", response = ServerAddressNotExistException.class)
-    })
+    @ApiOperation("获取Ota服务器列表")
+    @FunctionPoint(value = "common")
     public Response<List<BalanceServerAddressBean>> obtainServerAddress()
             throws DataFormatException, ServerAddressNotExistException {
-
         return new Response<List<BalanceServerAddressBean>>().setData(otaServerService.obtainHostAndPort());
+    }
+
+    /**
+     * 获取服务器地址:格式化
+     */
+    @RequestMapping(value = "balance/server/address/list/obtain", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("获取Ota服务器列表")
+    @FunctionPoint(value = "common")
+    public JSONObject obtainServerAddressList()
+            throws DataFormatException, ServerAddressNotExistException {
+        return otaServerService.obtainServerList();
     }
 }

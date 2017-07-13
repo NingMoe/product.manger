@@ -246,7 +246,7 @@
     <navigation>
         <id>balanceOtaServer</id>
         <title>
-            <title-name>体脂秤Ota服务器地址管理</title-name>
+            <title-name>体脂秤Ota服务器列表</title-name>
             <title-description>Ota服务器</title-description>
         </title>
         <directory>
@@ -255,6 +255,22 @@
             <url>$baseUrl/balance/ota/server/manage</url>
             <sub-directories>
                 <name>balanceOtaServer</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceOtaServerAdd</id>
+        <title>
+            <title-name>添加Ota服务器地址</title-name>
+            <title-description>Ota服务器</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/server/add</url>
+            <sub-directories>
+                <name>balanceOtaServerAdd</name>
             </sub-directories>
         </directory>
     </navigation>

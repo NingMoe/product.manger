@@ -9,6 +9,18 @@
             balance_ota_server_address
     </select>
 
+    <select id="obtainServerList" resultType="com.phicomm.product.manger.model.server.BalanceServerBean">
+        SELECT
+        id AS id,
+        host_and_port AS hostAndPort,
+        DATE_FORMAT(
+        create_time,
+        '%Y-%m-%d %H:%i:%s'
+        ) AS createTime
+        FROM
+        balance_ota_server_address
+    </select>
+
     <insert id="insertServerAddress">
         INSERT IGNORE INTO
             balance_ota_server_address (
