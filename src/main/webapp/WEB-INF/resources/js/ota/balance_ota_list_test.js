@@ -12,12 +12,12 @@ const enableEle = `<span><select class="form-control select2" id="enableSelector
                            </select>
                      </span>`;
 
-const modifyBtn=`<i class="fa fa-arrow-up" style="cursor: pointer" id="updateVersionBtn" 
+const modifyBtn = `<i class="fa fa-arrow-up" style="cursor: pointer" id="updateVersionBtn" 
         onclick="upgradeVersionList(this)"></i>`;
 
 let firstClickVersion;
 
-let firstClick=true;
+let firstClick = true;
 
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
@@ -96,11 +96,11 @@ $(document).ready(function () {
      */
     otaVersionListDiv.on('dblclick', 'td', function () {
         const lineNumber = $(this).parent().find('td').index($(this)[0]);
-        if ((lineNumber === 2 || lineNumber === 3 ) && (firstClick || firstClickVersion===$(this).parent().find('td').eq(1).text())) {
-            if(lineNumber===2){
-                selectNewValue(this,2);
-            }else {
-                selectNewValue(this,3);
+        if ((lineNumber === 2 || lineNumber === 3 ) && (firstClick || firstClickVersion === $(this).parent().find('td').eq(1).text())) {
+            if (lineNumber === 2) {
+                selectNewValue(this, 2);
+            } else {
+                selectNewValue(this, 3);
             }
         }
     });
@@ -143,14 +143,14 @@ function selectNewValue(node, columnNumber) {
  * @param node 节点
  */
 function upgradeVersionList(node) {
-    const version=node.parentNode.parentNode.children[1].innerText;
-    const testing=node.parentNode.parentNode.children[2].innerText==='公开版'? 0:1;
-    const enable=node.parentNode.parentNode.children[3].innerText==='可用'? 1:0;
-    let result=modifyVersionStatus(version,testing,enable);
-    if('success'===result){
+    const version = node.parentNode.parentNode.children[1].innerText;
+    const testing = node.parentNode.parentNode.children[2].innerText === '公开版' ? 0 : 1;
+    const enable = node.parentNode.parentNode.children[3].innerText === '可用' ? 1 : 0;
+    let result = modifyVersionStatus(version, testing, enable);
+    if ('success' === result) {
         remove(document.getElementById('updateVersionBtn').parentNode);
     }
-    firstClick=true;
+    firstClick = true;
     alert(result);
 }
 
@@ -160,14 +160,14 @@ function upgradeVersionList(node) {
  * @param testing 是否为测试版
  * @param enable 是否可用
  */
-function modifyVersionStatus(version,testing,enable) {
+function modifyVersionStatus(version, testing, enable) {
     const baseUrl = $("#baseUrl").val();
-    let result;
+    let result = 'fail:' + 'please try again.';
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/ota/update/change",
+        url: baseUrl + "/balance/ota/status/update/trigger",
         dataType: "json",
-        async : false,
+        async: false,
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify({
             "environment": 'test',
@@ -176,13 +176,13 @@ function modifyVersionStatus(version,testing,enable) {
             "enable": enable
         }),
         error: function (req, status, err) {
-            result= 'Failed reason: ' + err;
+            result = 'Failed reason: ' + err;
         }, success: function (data) {
-            const status=data.status;
-            if(status===0){
-                result= 'success';
-            }else {
-                result= 'fail:'+'please try again.';
+            const status = data.status;
+            if (status === 0) {
+                result = 'success';
+            } else {
+                result = 'fail:' + 'please try again.';
             }
         }
     });
