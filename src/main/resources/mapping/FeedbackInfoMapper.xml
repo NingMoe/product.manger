@@ -44,10 +44,10 @@
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
             feedback_info.id >=  #{requestBean.startId,jdbcType=INTEGER}
-            AND feedback_info.create_time >= #{requestBean.startTime,jdbcType=TIMESTAMP}
-            AND feedback_info.create_time< #{requestBean.endTime,jdbcType=TIMESTAMP}
+            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') >= #{requestBean.startTime,jdbcType=TIMESTAMP}
+            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') < #{requestBean.endTime,jdbcType=TIMESTAMP}
             AND app_id = #{requestBean.appType,jdbcType=VARCHAR}
-        LIMIT #{requestBean.pageSize,jdbcType=INTEGER};
+        LIMIT #{requestBean.pageSize,jdbcType=INTEGER}
         ]]>
     </select>
 </mapper>
