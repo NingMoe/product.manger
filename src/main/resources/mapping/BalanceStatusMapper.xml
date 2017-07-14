@@ -103,7 +103,7 @@
 
     <select id="obtainStatusCreateTime" parameterType="java.lang.String" resultType="java.lang.String">
     SELECT
-         DATE_FORMAT(create_time,'%Y-%m-%d %H-%i-%s') AS createTime
+         DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') AS createTime
     FROM
          balance_status_info
     WHERE
