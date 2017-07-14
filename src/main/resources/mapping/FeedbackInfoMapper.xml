@@ -50,4 +50,52 @@
         LIMIT #{requestBean.pageSize,jdbcType=INTEGER};
         ]]>
     </select>
+
+    <insert id="createFeedbackReview" parameterType="com.phicomm.product.manger.model.table.FeedbackReview">
+        INSERT INTO `feedback_review`
+            (
+                user_id,feedback_info_id,reply,create_time
+            )
+        VALUES
+            (
+                #{feedbackReview.userId, jdbcType=INTEGER}, #{feedbackReview.feedbackInfoId, jdbcType=INTEGER},#{feedbackReview.reply, jdbcType=VARCHAR},#{feedbackReview.createTime, jdbcType=TIMESTAMP}
+            );
+    </insert>
+
+    <select id="listFeedbackReview" resultType="com.phicomm.product.manger.model.table.FeedbackReview">
+        SELECT
+            id AS id,
+            user_id AS userId,
+            feedback_info_id AS feedbackInfoId,
+            reply AS reply,
+            DATE_FORMAT(
+            create_time,
+            '%Y-%m-%d %H:%i:%s'
+            ) AS createTime
+        FROM
+            `feedback_review`
+        WHERE
+            feedback_info_id =  #{feedbackId,jdbcType=INTEGER};
+    </select>
+
+    <delete id="deleteFeedbackReview" parameterType="java.lang.Long">
+        DELETE FROM
+            `feedback_review`
+        WHERE
+            id = #{feedbackReviewId,jdbcType=INTEGER};
+    </delete>
+    <update id="collectFeedback" parameterType="java.lang.Long">
+        UPDATE `feedback_info` SET
+            status = 1
+        WHERE
+            id = #{feedbackId,jdbcType=INTEGER};
+    </update>
+
+    <update id="unCollectFeedback" parameterType="java.lang.Long">
+        UPDATE `feedback_info` SET
+            status = 0
+        WHERE
+            id = #{feedbackId,jdbcType=INTEGER};
+    </update>
+
 </mapper>
