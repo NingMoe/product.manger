@@ -8,11 +8,11 @@
                 <form role="form" enctype="multipart/form-data" id="addNewAddress">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="version">IP地址</label>
+                            <label for="serverIp">IP地址</label>
                             <input type="text" class="form-control" id="serverIp" name="serverIp" placeholder="Server Ip">
                         </div>
                         <div class="form-group">
-                            <label for="version">端口号</label>
+                            <label for="serverPort">端口号</label>
                             <input type="number" class="form-control" id="serverPort" name="serverPort" placeholder="Server Port">
                         </div>
                     </div>
