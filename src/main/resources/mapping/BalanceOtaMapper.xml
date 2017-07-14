@@ -56,5 +56,9 @@
         IF(`enable`=1,"可用","不可用") AS `enable`
     FROM
         balance_ota_info
+    ORDER BY
+        create_time DESC
+    LIMIT
+        200
     </select>
 </mapper>
