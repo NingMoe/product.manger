@@ -2,6 +2,10 @@ package com.phicomm.product.manger.module.fota;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 触发升级的接口
  * <p>
@@ -16,7 +20,7 @@ public interface FirmwareUpgradeTrigger {
      *
      * @param firmwareUpgradeContext 上下文
      */
-    void trigger(FirmwareUpgradeContext firmwareUpgradeContext);
+    void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException, KeyManagementException, IOException;
 
     /**
      * 获得日志对象
