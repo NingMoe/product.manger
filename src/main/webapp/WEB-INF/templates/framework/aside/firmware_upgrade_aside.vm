@@ -41,7 +41,7 @@
                     <a href="$baseUrl/balance/ota/server/manage"><i class="fa fa-list"></i> 服务器地址列表</a>
                 </li>
 
-                <li id="balance_ota_server_node">
+                <li id="balance_ota_server_add_node">
                     <a href="$baseUrl/balance/ota/server/add"><i class="fa fa-circle-o"></i> 服务器地址上传</a>
                 </li>
 

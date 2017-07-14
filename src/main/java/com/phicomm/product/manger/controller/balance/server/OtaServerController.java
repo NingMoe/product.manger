@@ -52,11 +52,11 @@ public class OtaServerController {
             @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class)
     })
-    public Response<Object> insertServerAddress(@RequestParam("serverIp") String serverIp,
+    public Response<String> insertServerAddress(@RequestParam("serverIp") String serverIp,
                                                 @RequestParam("serverPort") int serverPort)
             throws DataFormatException, ServerAddressExistException {
         otaServerService.insertServerAddress(new HostAndPort(serverIp, serverPort));
-        return new Response<>().setData("HostAndPort:" + new HostAndPort(serverIp, serverPort).toString());
+        return new Response<String>().setData("HostAndPort:" + new HostAndPort(serverIp, serverPort).toString());
     }
 
     /**

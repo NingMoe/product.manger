@@ -20,6 +20,7 @@ public class StringTest {
     public void test(){
         System.out.println("5c:cf:7f:41:77:cf".length());
         System.out.println("A020A6351AD5".length());
+        System.out.println("5ccf".substring(2,4));
     }
 
     @Test
