@@ -4,6 +4,7 @@
 
     <select id="fetchFeedback" resultType="com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs">
         <![CDATA[
+
         SELECT
             feedback_info.id AS id,
             feedback_info.user_id AS userId,
@@ -22,11 +23,13 @@
         WHERE
             feedback_info.id >=  #{startId,jdbcType=INTEGER}
         LIMIT #{pageSize,jdbcType=INTEGER};
+
         ]]>
     </select>
 
     <select id="fetchFeedbackV2" resultType="com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs">
         <![CDATA[
+
         SELECT
             feedback_info.id AS id,
             feedback_info.user_id AS userId,
@@ -44,10 +47,11 @@
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
             feedback_info.id >=  #{requestBean.startId,jdbcType=INTEGER}
-            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') >= #{requestBean.startTime,jdbcType=TIMESTAMP}
-            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') < #{requestBean.endTime,jdbcType=TIMESTAMP}
+            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{requestBean.startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') < DATE_FORMAT(#{requestBean.endTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
             AND app_id = #{requestBean.appType,jdbcType=VARCHAR}
         LIMIT #{requestBean.pageSize,jdbcType=INTEGER}
+
         ]]>
     </select>
 </mapper>
