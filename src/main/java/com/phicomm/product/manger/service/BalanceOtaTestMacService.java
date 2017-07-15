@@ -46,14 +46,14 @@ public class BalanceOtaTestMacService {
     }
 
     /**
-     * 认为每个mac都是合法的、且都已空格分隔
+     * 认为每个mac都是合法的、且都已、分隔
      *
      * @param macString mac字符串
      * @return mac列表
      */
     private List<String> formatMac(String macString) {
+        System.out.println(macString);
         List<String> macList = new ArrayList<>();
-        macString = macString.replaceAll("\\s+", "、");
         String[] macArray = macString.split("、");
         for (String mac : macArray) {
             if (mac.length() == 17) {
