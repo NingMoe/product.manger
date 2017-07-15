@@ -16,7 +16,7 @@ $(document).ready(function () {
         if (len === 0) {
             count = 0;
         }
-        if (text % 18 !== 0 || text.indexOf("、") < 0) {
+        if (text % 18 !== getSplitCount(text)) {
             text = format(text);
             document.getElementById('macList').value = text;
         } else if (len % 17 === 0 && len !== 0) {
@@ -41,6 +41,21 @@ $(document).ready(function () {
         text = macList.join("");
         count = macList.length;
         return text;
+    }
+
+    /**
+     * 获取、出现的次数
+     * @param text 文本
+     * @returns {number} 次数
+     */
+    function getSplitCount(text) {
+        let splitCount = 0;
+        for (let i = 0; i < text.length; i++) {
+            if ('、' === text[i]) {
+                splitCount++;
+            }
+        }
+        return splitCount;
     }
 
     /**
