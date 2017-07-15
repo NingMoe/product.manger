@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 测试mac
@@ -46,13 +48,14 @@ public class BalanceOtaTestMacService {
     }
 
     /**
-     * 认为每个mac都是合法的、且都已、分隔
+     * 认为每个mac都是合法的、且都已、分隔:在程序中去除重复的mac地址
      *
      * @param macString mac字符串
      * @return mac列表
      */
     private List<String> formatMac(String macString) {
         System.out.println(macString);
+        Set<String> macSet = new HashSet<>();
         List<String> macList = new ArrayList<>();
         String[] macArray = macString.split("、");
         for (String mac : macArray) {
@@ -60,6 +63,9 @@ public class BalanceOtaTestMacService {
                 macList.add(mac);
             }
         }
+        macSet.addAll(macList);
+        macList.clear();
+        macList.addAll(macSet);
         return macList;
     }
 
