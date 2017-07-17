@@ -77,8 +77,9 @@ public class BalanceLocationController {
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainLocationCountByMonth(@RequestParam int month,
-                                                           @RequestParam String type) {
-        return balanceLocationService.obtainLocationCountByMonth(month, type);
+                                                           @RequestParam String type,
+                                                           @RequestParam int pageSize) {
+        return balanceLocationService.obtainLocationCountByMonth(month, type, pageSize);
     }
 
     /**
@@ -94,7 +95,8 @@ public class BalanceLocationController {
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainLocationCountByDay(@RequestParam int day,
-                                                         @RequestParam String type) {
-        return balanceLocationService.obtainLocationCountByDay(day, type);
+                                                         @RequestParam String type,
+                                                         @RequestParam int pageSize) {
+        return balanceLocationService.obtainLocationCountByDay(day, type, pageSize);
     }
 }

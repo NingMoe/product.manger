@@ -10,7 +10,8 @@ $(function obtainLocationInfoByDay() {
         dataType: "json",
         data: {
             "day": 30,
-            "type": "balance"
+            "type": "balance",
+            "pageSize": 15
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -37,7 +38,8 @@ $(function obtainLocationYearData() {
         dataType: "json",
         data: {
             "month": 12,
-            "type": "balance"
+            "type": "balance",
+            "pageSize": 15
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -64,7 +66,8 @@ $(function obtainActiveLocationInfoByDay() {
         dataType: "json",
         data: {
             "day": 30,
-            "type": "lianbi"
+            "type": "lianbi",
+            "pageSize": 15
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -92,12 +95,12 @@ $(function obtainActiveLocationYearData() {
         dataType: "json",
         data: {
             "month": 12,
-            "type": "lianbi"
+            "type": "lianbi",
+            "pageSize": 15
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            console.info(JSON.stringify(data));
             let labels = [];
             let dates = [];
             for (let key in data) {

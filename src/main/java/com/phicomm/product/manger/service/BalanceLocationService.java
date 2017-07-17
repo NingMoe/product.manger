@@ -90,14 +90,16 @@ public class BalanceLocationService {
     /**
      * 获取N个月的位置信息
      */
-    public Map<String, Integer> obtainLocationCountByMonth(int month, String type) {
+    public Map<String, Integer> obtainLocationCountByMonth(int month, String type, int pageSize) {
         List<LocationCountBean> countBeans;
+        month = month <= 0 ? 12 : month;
+        pageSize = pageSize <= 0 ? LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
         //联璧激活的位置信息
         if ("lianbi".equals(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, LOCATION_PAGE_SIZE);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, pageSize);
         } else {
-            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, LOCATION_PAGE_SIZE);
+            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, pageSize);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {
@@ -114,15 +116,17 @@ public class BalanceLocationService {
     /**
      * 获取N天的位置信息
      */
-    public Map<String, Integer> obtainLocationCountByDay(int day, String type) {
+    public Map<String, Integer> obtainLocationCountByDay(int day, String type, int pageSize) {
         List<LocationCountBean> countBeans;
+        day = day <= 0 ? 30 : day;
+        pageSize = pageSize <= 0 ? LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
         //联璧激活位置信息
         if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, LOCATION_PAGE_SIZE);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, pageSize);
         } else {
             //其它默认为电子秤位置信息
-            countBeans = balanceLocationMapper.obtainLocationCountByDay(day, LOCATION_PAGE_SIZE);
+            countBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {
