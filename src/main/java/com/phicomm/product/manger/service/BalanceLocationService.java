@@ -8,7 +8,6 @@ import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
 import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
-import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,6 @@ import java.util.Map;
  */
 @Service
 public class BalanceLocationService {
-
-    private static final Logger logger = Logger.getLogger(BalanceLocationService.class);
 
     private BalanceLocationMapper balanceLocationMapper;
 
