@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
 import com.phicomm.product.manger.utils.HttpsUtil;
 
 import java.io.IOException;
@@ -26,11 +27,15 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         JSONObject jsonObject = JSON.parseObject(param);
         String testCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.testCallback"));
         String prodCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.prodCallback"));
-        if(firmwareUpgradeContext.isTestEnvironment()) {
-            HttpsUtil.post(testCallbackUrl, firmwareUpgradeContext.getFirmwareData(), Charsets.UTF_8.name());
+        String data = firmwareUpgradeContext.getFirmwareData();
+        getLogger().info(data);
+        if(firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
+            getLogger().info(String.format("testCallbackUrl is %s.", testCallbackUrl));
+            HttpsUtil.post(testCallbackUrl, data, Charsets.UTF_8.name());
         }
-        if(firmwareUpgradeContext.isProdEnvironment()) {
-            HttpsUtil.post(prodCallbackUrl, firmwareUpgradeContext.getFirmwareData(), Charsets.UTF_8.name());
+        if(firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
+            getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
+            HttpsUtil.post(prodCallbackUrl, data, Charsets.UTF_8.name());
         }
     }
 
