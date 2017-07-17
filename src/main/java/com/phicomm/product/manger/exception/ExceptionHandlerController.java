@@ -29,6 +29,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception8;
     private static JSONObject exception9;
     private static JSONObject exception10;
+    private static JSONObject exception11;
 
     static {
         exception1001 = new JSONObject();
@@ -94,6 +95,12 @@ public class ExceptionHandlerController {
         exception10 = new JSONObject();
         exception10.put("status", 10);
         exception10.put("description", "Type not found.");
+    }
+
+    static {
+        exception11 = new JSONObject();
+        exception11.put("status", 11);
+        exception11.put("description", "firmware disable.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -180,5 +187,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(TypeNotPresentException.class)
     public ModelAndView processTypeNotPresentException(){
         return new ModelAndView(new MappingJackson2JsonView(),exception10);
+    }
+
+    /**
+     * 当前固件不可用
+     */
+    @ExceptionHandler(FirmwareDisableException.class)
+    public ModelAndView processFirmwareDisableException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception11);
     }
 }

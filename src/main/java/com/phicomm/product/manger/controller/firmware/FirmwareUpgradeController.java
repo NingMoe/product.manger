@@ -2,10 +2,7 @@ package com.phicomm.product.manger.controller.firmware;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.UploadFileException;
-import com.phicomm.product.manger.exception.VersionHasExistException;
-import com.phicomm.product.manger.exception.VersionNotExistException;
+import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.service.FirmwareUpgradeService;
@@ -17,6 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 固件文件上传
@@ -163,6 +164,27 @@ public class FirmwareUpgradeController {
     @FunctionPoint(value = "common")
     public CommonResponse setFirmwareConfig(@RequestParam("configuation") String configuation) {
         firmwareUpgradeService.setFirmwareConfig(configuation);
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 固件降级
+     *
+     * @return 固件降级
+     */
+    @RequestMapping(value = "firmware/downgrade", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("固件降级")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class),
+            @ApiResponse(code = 11, message = "该固件当前不可用", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareDowngrade(@RequestParam("id") Integer id)
+            throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
+        firmwareUpgradeService.firmwareDowngrade(id);
         return CommonResponse.ok();
     }
 

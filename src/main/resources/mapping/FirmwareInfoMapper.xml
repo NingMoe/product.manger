@@ -112,4 +112,37 @@
             AND version_code = #{versionCode,jdbcType=INTEGER}
     </update>
 
+    <select id="checkEnable" resultType="java.lang.Integer">
+        SELECT
+            `enable`
+        FROM
+            firmware_info
+        WHERE
+            id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="setEnable">
+        UPDATE firmware_info
+        SET `enable` = #{enable,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getFirmwareInfo" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+        SELECT
+            id AS id,
+            firmware_type AS firmwareType,
+            version AS version,
+            version_code AS versionCode,
+            environment AS environment,
+            hardware_code AS hardwareCode,
+            url AS url,
+            `enable` AS `enable`,
+            create_time AS createTime,
+            description AS description
+        FROM
+            firmware_info
+        WHERE
+            id = #{id,jdbcType=INTEGER}
+    </select>
+
 </mapper>

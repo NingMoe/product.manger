@@ -7,10 +7,7 @@ import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
 import com.phicomm.product.manger.dao.FirmwareTriggerParamConfigMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.UploadFileException;
-import com.phicomm.product.manger.exception.VersionHasExistException;
-import com.phicomm.product.manger.exception.VersionNotExistException;
+import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.module.fota.DefaultFirmwareUpgradeTrigger;
 import com.phicomm.product.manger.module.fota.FirmwareUpgradeContext;
@@ -206,7 +203,7 @@ public class FirmwareUpgradeService {
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode);
-        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();;
+        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
         new Thread(() -> {
@@ -236,4 +233,26 @@ public class FirmwareUpgradeService {
         firmwareTriggerParamConfigMapper.clean();
         firmwareTriggerParamConfigMapper.insert(configuation);
     }
+
+    /**
+     * 固件降级（enable为1设置为0，使其不可用）
+     *
+     * @param id id
+     */
+    public void firmwareDowngrade(Integer id)
+            throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if(firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if(firmwareInfo.getEnable() != 1) {
+            throw new FirmwareDisableException();
+        }
+        firmwareInfoMapper.setEnable(id, 0);
+        // 通知线上服务器对固件降级
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
+        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+    }
+
 }
