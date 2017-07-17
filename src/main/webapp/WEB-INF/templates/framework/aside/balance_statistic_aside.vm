@@ -12,6 +12,7 @@
         <li><a href="$baseUrl/balance/statistic/balance/sales/location"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
         <li><a href="$baseUrl/balance/statistic/count"><i class="fa fa-bar-chart"></i> 体脂秤销售数量统计</a></li>
         <li><a href="$baseUrl/balance/shipment/status"><i class="fa fa-truck"></i> 体脂秤出货查询</a></li>
+        <li><a href="$baseUrl/statistic/page/user/analysis"><i class="fa fa-bullhorn"></i> 用户成分分析</a></li>
         <li>
             <a href="$baseUrl/statistic/sales/location/projection">
                 <i class="fa fa-line-chart"></i> 统计全屏显示

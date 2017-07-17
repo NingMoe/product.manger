@@ -74,4 +74,20 @@ public class BalanceStatisticPageController {
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticLocation"));
         return modelAndView;
     }
+
+    /**
+     * 获取用户成分分析的页面
+     */
+    @RequestMapping(value = "statistic/page/user/analysis", method = RequestMethod.GET)
+    @ApiIgnore("获取用户成分分析的页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showStatisticPageUserAnalysis(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "statistic/user_analysis.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userAnalysis"));
+        return modelAndView;
+    }
+
 }

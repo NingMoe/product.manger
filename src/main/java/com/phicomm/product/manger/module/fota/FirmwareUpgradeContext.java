@@ -1,10 +1,9 @@
 package com.phicomm.product.manger.module.fota;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 固件升级的上下文
@@ -67,23 +66,29 @@ public class FirmwareUpgradeContext {
     /**
      * 判断是否是测试环境
      */
-    public boolean isTestEnvironment() {
+    boolean isTestEnvironment() {
         return firmwareEnvironmentEnum.getEnvironment().equals("test");
     }
 
     /**
      * 判断是否是生产环境
      */
-    public boolean isProdEnvironment() {
+    boolean isProdEnvironment() {
         return firmwareEnvironmentEnum.getEnvironment().equals("prod");
     }
 
     /**
      * 获取输入参数
      */
-    @NotNull
     public String getParam() {
         return Strings.nullToEmpty(param);
+    }
+
+    /**
+     * 获得固件的数据
+     */
+    public String getFirmwareData() {
+        return JSON.toJSONString(firmwareInfo);
     }
 
     @Override
