@@ -180,12 +180,12 @@ public class FirmwareUpgradeService {
                                              String environment,
                                              String versionCode) throws VersionNotExistException {
         boolean exist = firmwareInfoMapper.exist(firmwareType, hardwareCode, environment, "", Integer.parseInt(versionCode));
-        if(!exist) {
+        if (!exist) {
             throw new VersionNotExistException();
         }
         firmwareInfoMapper.cleanFirmware(firmwareType, hardwareCode, environment);
         int affectRows = firmwareInfoMapper.enableFirmware(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
-        if(affectRows < 1) {
+        if (affectRows < 1) {
             throw new VersionNotExistException();
         }
         // 通知其他项目版本变更
@@ -242,10 +242,10 @@ public class FirmwareUpgradeService {
     public void firmwareDowngrade(Integer id)
             throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
-        if(firmwareInfo == null) {
+        if (firmwareInfo == null) {
             throw new VersionNotExistException();
         }
-        if(firmwareInfo.getEnable() != 1) {
+        if (firmwareInfo.getEnable() != 1) {
             throw new FirmwareDisableException();
         }
         firmwareInfoMapper.setEnable(id, 0);
@@ -260,12 +260,42 @@ public class FirmwareUpgradeService {
      */
     public void firmwareDelete(Integer id) throws VersionNotExistException, FirmwareEnableException {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
-        if(firmwareInfo == null) {
+        if (firmwareInfo == null) {
             throw new VersionNotExistException();
         }
-        if(firmwareInfo.getEnable() == 1) {
+        if (firmwareInfo.getEnable() == 1) {
             throw new FirmwareEnableException();
         }
         firmwareInfoMapper.delete(id);
+    }
+
+    /**
+     * 重新触发升级
+     */
+    public void firmwareRepeatTrigger(Integer id)
+            throws VersionNotExistException, FirmwareDisableException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if (firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if (firmwareInfo.getEnable() != 1) {
+            throw new FirmwareDisableException();
+        }
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        new Thread(() -> {
+            String firmwareType = firmwareInfo.getFirmwareType();
+            String hardwareCode = firmwareInfo.getHardwareCode();
+            FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(firmwareInfo.getEnvironment())
+                    ? FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
+            int versionCode = firmwareInfo.getVersionCode();
+            FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType, hardwareCode,
+                    firmwareEnvironmentEnum, versionCode, firmwareInfo, configuation);
+            DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
+            try {
+                trigger.trigger(firmwareUpgradeContext);
+            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+                logger.info(ExceptionUtil.getErrorMessage(e));
+            }
+        }).start();
     }
 }

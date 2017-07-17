@@ -36,7 +36,27 @@ function upgradeFirmware(node) {
     });
 }
 function repeatTrigger(node) {
-
+    var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/repeat/trigger",
+        dataType: "json",
+        data: {
+            "id": index
+        }, error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("操作成功！");
+            } else if(data.status === 9) {
+                alert("当前固件不存在");
+            } else if(data.status === 11) {
+                alert("当前固件不是可用状态");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+        }
+    });
 }
 function downgrade(node) {
     var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;

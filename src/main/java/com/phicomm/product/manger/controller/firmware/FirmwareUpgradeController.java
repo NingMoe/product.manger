@@ -208,4 +208,25 @@ public class FirmwareUpgradeController {
         firmwareUpgradeService.firmwareDelete(id);
         return CommonResponse.ok();
     }
+
+    /**
+     * 重新触发升级
+     *
+     * @return 重新触发升级
+     */
+    @RequestMapping(value = "firmware/repeat/trigger", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("重新触发升级")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class),
+            @ApiResponse(code = 11, message = "该固件当前不可用", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareRepeatTrigger(@RequestParam("id") Integer id)
+            throws FirmwareDisableException, VersionNotExistException {
+        firmwareUpgradeService.firmwareRepeatTrigger(id);
+        return CommonResponse.ok();
+    }
 }
