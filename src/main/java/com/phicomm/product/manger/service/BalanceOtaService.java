@@ -10,7 +10,6 @@ import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.CRC16Util;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,8 +25,6 @@ import java.util.List;
  */
 @Service
 public class BalanceOtaService {
-
-    private static final Logger logger = Logger.getLogger(BalanceOtaService.class);
 
     private BalanceOtaMapper balanceOtaMapper;
 
@@ -61,7 +58,6 @@ public class BalanceOtaService {
     public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
             throws IOException,
             DataFormatException {
-        logger.info(environment);
         checkOtaParamFormat(aFile, bFile, version);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
