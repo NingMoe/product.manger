@@ -1,24 +1,32 @@
+<link rel="stylesheet" href="$baseUrl/resources/css/ota/otaLayout.css">
 <section class="content">
     <div class="col-md-12">
-        <div class="box box-info">
+        <div class="box box-solid">
             <div class="input-group input-group-sm col-md-12">
-                <div class="box-header">
+                <div class="box-header" style="text-align: center;margin-top: 2%">
                     <h3 class="box-title">新增体脂称Ota服务器地址</h3>
                 </div>
-                <form role="form" enctype="multipart/form-data" id="addNewAddress">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="version">IP地址</label>
-                            <input type="text" class="form-control" id="serverIp" name="serverIp" placeholder="Server Ip">
+                <form role="form" enctype="multipart/form-data" id="addNewAddress"
+                      style="padding-top: 10%;margin-bottom: 20%">
+                    <div class="box-body center-layout">
+                        <div class="input-group input-group-sm" style="width: 30%">
+                            <input type="text" class="form-control" id="serverIp" name="serverIp"
+                                   placeholder="Server Ip" style="text-align: center;border-radius: 4px">
                         </div>
-                        <div class="form-group">
-                            <label for="version">端口号</label>
-                            <input type="number" class="form-control" id="serverPort" name="serverPort" placeholder="Server Port">
+                        <div>
+                            <H5>:</H5>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-primary" onclick="addNewServer()">上传</button>
-                    </div>
+                        <div style="width: 20%">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" id="serverPort" name="serverPort"
+                                       placeholder="Server Port" style="text-align: center;border-radius: 4px">
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn btn-info btn-flat"
+                                          onclick="addNewServer()">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+
                 </form>
             </div>
         </div>
