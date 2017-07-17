@@ -55,11 +55,32 @@ function downgrade(node) {
             } else if(data.status === 11) {
                 alert("当前固件不是可用状态");
             }
+            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
         }
     });
 }
 function deleteFirmware(node) {
-
+    var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/delete",
+        dataType: "json",
+        data: {
+            "id": index
+        }, error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("操作成功！");
+            } else if(data.status === 9) {
+                alert("需要删除的固件不存在");
+            } else if(data.status === 12) {
+                alert("该固件当前正在使用");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+        }
+    });
 }
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");

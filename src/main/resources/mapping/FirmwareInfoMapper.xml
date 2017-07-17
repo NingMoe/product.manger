@@ -112,15 +112,6 @@
             AND version_code = #{versionCode,jdbcType=INTEGER}
     </update>
 
-    <select id="checkEnable" resultType="java.lang.Integer">
-        SELECT
-            `enable`
-        FROM
-            firmware_info
-        WHERE
-            id = #{id,jdbcType=INTEGER}
-    </select>
-
     <update id="setEnable">
         UPDATE firmware_info
         SET `enable` = #{enable,jdbcType=INTEGER}
@@ -143,6 +134,11 @@
             firmware_info
         WHERE
             id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="delete">
+        DELETE FROM firmware_info
+        WHERE id = #{id,jdbcType=INTEGER}
     </select>
 
 </mapper>

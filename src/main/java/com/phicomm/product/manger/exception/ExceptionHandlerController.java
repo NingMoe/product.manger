@@ -30,6 +30,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception9;
     private static JSONObject exception10;
     private static JSONObject exception11;
+    private static JSONObject exception12;
 
     static {
         exception1001 = new JSONObject();
@@ -101,6 +102,12 @@ public class ExceptionHandlerController {
         exception11 = new JSONObject();
         exception11.put("status", 11);
         exception11.put("description", "firmware disable.");
+    }
+
+    static {
+        exception12 = new JSONObject();
+        exception12.put("status", 12);
+        exception12.put("description", "firmware current enable.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -196,4 +203,13 @@ public class ExceptionHandlerController {
     public ModelAndView processFirmwareDisableException(){
         return new ModelAndView(new MappingJackson2JsonView(),exception11);
     }
+
+    /**
+     * 当前固件可用
+     */
+    @ExceptionHandler(FirmwareEnableException.class)
+    public ModelAndView processFirmwareEnableException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception12);
+    }
+
 }

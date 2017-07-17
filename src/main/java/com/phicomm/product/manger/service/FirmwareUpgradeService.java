@@ -255,4 +255,17 @@ public class FirmwareUpgradeService {
         trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
     }
 
+    /**
+     * 删除固件
+     */
+    public void firmwareDelete(Integer id) throws VersionNotExistException, FirmwareEnableException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if(firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if(firmwareInfo.getEnable() == 1) {
+            throw new FirmwareEnableException();
+        }
+        firmwareInfoMapper.delete(id);
+    }
 }

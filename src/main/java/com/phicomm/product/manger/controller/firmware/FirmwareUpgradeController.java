@@ -188,4 +188,24 @@ public class FirmwareUpgradeController {
         return CommonResponse.ok();
     }
 
+    /**
+     * 删除固件
+     *
+     * @return 删除固件
+     */
+    @RequestMapping(value = "firmware/delete", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("删除固件")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class),
+            @ApiResponse(code = 12, message = "版本当前可用", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareDelete(@RequestParam("id") Integer id)
+            throws VersionNotExistException, FirmwareEnableException {
+        firmwareUpgradeService.firmwareDelete(id);
+        return CommonResponse.ok();
+    }
 }
