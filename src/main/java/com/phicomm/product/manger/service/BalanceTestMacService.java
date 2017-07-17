@@ -1,7 +1,9 @@
 package com.phicomm.product.manger.service;
 
+import com.phicomm.product.manger.dao.BalanceMcuTestMacMapper;
 import com.phicomm.product.manger.dao.BalanceOtaTestMacMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.TypeNotFoundException;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,22 +19,30 @@ import java.util.Set;
  * Created by wei.yang on 2017/7/13.
  */
 @Service
-public class BalanceOtaTestMacService {
+public class BalanceTestMacService {
 
     private BalanceOtaTestMacMapper balanceOtaTestMacMapper;
 
+    private BalanceMcuTestMacMapper balanceMcuTestMacMapper;
+
     @Autowired
-    public BalanceOtaTestMacService(BalanceOtaTestMacMapper balanceOtaTestMacMapper) {
+    public BalanceTestMacService(BalanceOtaTestMacMapper balanceOtaTestMacMapper,
+                                 BalanceMcuTestMacMapper balanceMcuTestMacMapper) {
         this.balanceOtaTestMacMapper = balanceOtaTestMacMapper;
+        this.balanceMcuTestMacMapper = balanceMcuTestMacMapper;
+        Assert.notNull(this.balanceMcuTestMacMapper);
         Assert.notNull(this.balanceOtaTestMacMapper);
     }
 
     /**
      * 将需要写入的mac地址写入表中
      *
-     * @param macString mac
+     * @param macString   mac
+     * @param macType     mac类型
+     * @param environment 环境
      */
-    public void insertMac(String macString, String environment) throws DataFormatException {
+    public void insertMac(String macString, String environment, String macType) throws DataFormatException,
+            TypeNotFoundException {
         List macList = formatMac(macString);
         if (macList.isEmpty()) {
             throw new DataFormatException();
@@ -42,8 +52,15 @@ public class BalanceOtaTestMacService {
         } else {
             CustomerContextHolder.selectTestDataSource();
         }
-        balanceOtaTestMacMapper.cleanMac();
-        balanceOtaTestMacMapper.insertBatch(macList);
+        if ("ota".equalsIgnoreCase(macType)) {
+            balanceOtaTestMacMapper.cleanMac();
+            balanceOtaTestMacMapper.insertBatch(macList);
+        } else if ("mcu".equalsIgnoreCase(macType)) {
+            balanceMcuTestMacMapper.cleanMac();
+            balanceMcuTestMacMapper.insertBatch(macList);
+        } else {
+            throw new TypeNotFoundException();
+        }
         CustomerContextHolder.clearDataSource();
     }
 

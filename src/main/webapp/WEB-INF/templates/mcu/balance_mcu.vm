@@ -1,0 +1,39 @@
+<section class="content">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="input-group input-group-sm col-md-12">
+                <div class="box-header">
+                    <h3 class="box-title">体脂称MCU升级</h3>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="uploadFile">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="version">固件版本号</label>
+                            <input type="number" class="form-control" id="version" name="version" placeholder="version">
+                        </div>
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <select class="form-control select2" style="width: 100%;" id="environment"
+                                    name="environment">
+                                <option selected="selected"></option>
+                                <option>test</option>
+                                <option>prod</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">File input</label>
+                            <input type="file" id="file" name="file">
+                            <p class="help-block">例如：OTA_0202_20170420.hex</p>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" onclick="uploadFile()">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/mcu/balance_mcu.js"></script>

@@ -2,8 +2,9 @@ package com.phicomm.product.manger.controller.balance.mac;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.TypeNotFoundException;
 import com.phicomm.product.manger.model.common.CommonResponse;
-import com.phicomm.product.manger.service.BalanceOtaTestMacService;
+import com.phicomm.product.manger.service.BalanceTestMacService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,21 +21,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class BalanceOtaTestMacController {
 
-    private BalanceOtaTestMacService balanceOtaTestMacService;
+    private BalanceTestMacService balanceTestMacService;
 
     @Autowired
-    public BalanceOtaTestMacController(BalanceOtaTestMacService balanceOtaTestMacService) {
-        this.balanceOtaTestMacService = balanceOtaTestMacService;
-        Assert.notNull(this.balanceOtaTestMacService);
+    public BalanceOtaTestMacController(BalanceTestMacService balanceTestMacService) {
+        this.balanceTestMacService = balanceTestMacService;
+        Assert.notNull(this.balanceTestMacService);
     }
 
-    @RequestMapping(value = "balance/ota/test/mac", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "balance/test/mac", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @ApiOperation("ota升级时上传测试mac地址")
+    @ApiOperation("测试mac地址")
     @FunctionPoint("common")
     public CommonResponse insertMac(@RequestParam String environment,
-                                    @RequestParam String macList) throws DataFormatException {
-        balanceOtaTestMacService.insertMac(macList, environment);
+                                    @RequestParam String macList,
+                                    @RequestParam String macType) throws DataFormatException, TypeNotFoundException {
+        balanceTestMacService.insertMac(macList, environment, macType);
         return CommonResponse.ok();
     }
 }

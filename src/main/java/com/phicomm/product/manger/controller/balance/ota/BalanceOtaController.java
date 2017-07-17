@@ -82,7 +82,6 @@ public class BalanceOtaController {
      *
      * @param balanceOtaStatus 版本状态
      * @return 操作状态
-     * @throws VersionNotExistException 版本已经存在
      * @throws DataFormatException      数据格式异常
      */
     @RequestMapping(value = "balance/ota/update/change", method = RequestMethod.POST,
@@ -91,7 +90,7 @@ public class BalanceOtaController {
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
     public CommonResponse updateOtaStatus(@RequestBody BalanceOtaStatus balanceOtaStatus)
-            throws VersionNotExistException, IOException, DataFormatException {
+            throws IOException, DataFormatException {
         balanceOtaService.updateBalanceOtaStatus(balanceOtaStatus);
         return CommonResponse.ok();
     }

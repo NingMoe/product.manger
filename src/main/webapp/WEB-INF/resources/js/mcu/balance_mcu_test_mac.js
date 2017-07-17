@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
-    $("#balance_ota_menu_node").addClass("active");
-    $("#balance_ota_mac_node").addClass("active");
+    $("#balance_mcu_menu_node").addClass("active");
+    $("#balance_mcu_mac_node").addClass("active");
 
     const baseUrl = $("#baseUrl").val();
     let count = 0;
@@ -70,11 +70,12 @@ $(document).ready(function () {
             data: {
                 "macList": $("#macList").val(),
                 "environment": environment,
-                "macType": "ota"
+                "macType":"mcu"
             },
             error: function (req, status, err) {
                 console.log('Failed reason: ' + err);
             }, success: function (data) {
+                console.info(data);
                 if (data.status === 0) {
                     alert("Success !");
                     window.location.reload();

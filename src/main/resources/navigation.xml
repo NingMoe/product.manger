@@ -290,4 +290,52 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>balanceMcu</id>
+        <title>
+            <title-name>体脂秤MCU升级</title-name>
+            <title-description>MCU升级</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu</url>
+            <sub-directories>
+                <name>balanceMcu</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMcuList</id>
+        <title>
+            <title-name>体脂秤MCU固件列表</title-name>
+            <title-description>MCU固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu/list</url>
+            <sub-directories>
+                <name>balanceMcuList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMcuMac</id>
+        <title>
+            <title-name>体脂秤MCU测试Mac管理</title-name>
+            <title-description>MCU管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu/mac/manage</url>
+            <sub-directories>
+                <name>balanceMcuMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
