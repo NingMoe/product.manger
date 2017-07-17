@@ -41,20 +41,62 @@
     </update>
 
     <select id="fetchOtaList" resultType="com.phicomm.product.manger.model.ota.BalanceOtaInfo">
-        SELECT
-        id AS id,
-        software_version AS softwareVersion,
-        a_version_file_url AS aVersionFileUrl,
-        a_version_crc AS aVersionCrc,
-        b_version_file_url AS bVersionFileUrl,
-        b_version_crc AS bVersionCrc,
-        DATE_FORMAT(
-            create_time,
-            '%Y-%m-%d %H:%i:%s'
-        ) AS createTime,
-        IF(testing=1,"测试版","公开版") AS testing,
-        IF(`enable`=1,"可用","不可用") AS `enable`
-    FROM
-        balance_ota_info
+        (
+            SELECT
+                id AS id,
+                software_version AS softwareVersion,
+                a_version_file_url AS aVersionFileUrl,
+                a_version_crc AS aVersionCrc,
+                b_version_file_url AS bVersionFileUrl,
+                b_version_crc AS bVersionCrc,
+                DATE_FORMAT(
+                    create_time,
+                    '%Y-%m-%d %H:%i:%s'
+                ) AS createTime,
+            IF (
+                testing = 1,
+                "测试版",
+                "公开版"
+            ) AS testing,
+        IF (
+            `enable` = 1,
+            "可用",
+            "不可用"
+        ) AS `enable`
+        FROM
+            balance_ota_info
+        WHERE
+            `enable` = 1
+        )
+        UNION
+            (
+                SELECT
+                    id AS id,
+                    software_version AS softwareVersion,
+                    a_version_file_url AS aVersionFileUrl,
+                    a_version_crc AS aVersionCrc,
+                    b_version_file_url AS bVersionFileUrl,
+                    b_version_crc AS bVersionCrc,
+                    DATE_FORMAT(
+                        create_time,
+                        '%Y-%m-%d %H:%i:%s'
+                    ) AS createTime,
+
+                IF (
+                    testing = 1,
+                    "测试版",
+                    "公开版"
+                ) AS testing,
+            IF (
+                `enable` = 1,
+                "可用",
+                "不可用"
+            ) AS `enable`
+            FROM
+                balance_ota_info
+            WHERE
+                `enable` != 1
+            LIMIT 198
+            )
     </select>
 </mapper>

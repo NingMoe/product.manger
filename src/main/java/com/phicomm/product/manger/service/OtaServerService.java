@@ -1,10 +1,13 @@
 package com.phicomm.product.manger.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
+import com.phicomm.product.manger.model.server.BalanceOtaServerDetailBean;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
+import com.phicomm.product.manger.model.server.BalanceServerBean;
 import com.phicomm.product.manger.module.ota.UpdateTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,9 +77,31 @@ public class OtaServerService {
      * @return 服务器地址
      */
     public List<BalanceServerAddressBean> obtainHostAndPort() {
-        List<BalanceServerAddressBean> balanceServerAddressBeans;
-        balanceServerAddressBeans = otaServerAddressMapper.obtainServerAddress();
-        return balanceServerAddressBeans;
+        return otaServerAddressMapper.obtainServerAddress();
+    }
+
+    /**
+     * 返回格式化好的数据
+     *
+     * @return 服务器地址信息
+     */
+    public JSONObject obtainServerList() {
+        List<BalanceServerBean> balanceServerBeans = otaServerAddressMapper.obtainServerList();
+        List<BalanceOtaServerDetailBean> balanceOtaServerDetailBeans = new ArrayList<>();
+        JSONObject result = new JSONObject();
+        BalanceOtaServerDetailBean balanceOtaServerDetailBean;
+        HostAndPort hostAndPort;
+        for (BalanceServerBean balanceServerBean : balanceServerBeans) {
+            balanceOtaServerDetailBean = new BalanceOtaServerDetailBean();
+            hostAndPort = HostAndPort.parseString(balanceServerBean.getHostAndPort());
+            balanceOtaServerDetailBean.setCreateTime(balanceServerBean.getCreateTime());
+            balanceOtaServerDetailBean.setIp(hostAndPort.getHost());
+            balanceOtaServerDetailBean.setPort(hostAndPort.getPort());
+            balanceOtaServerDetailBean.setId(balanceServerBean.getId());
+            balanceOtaServerDetailBeans.add(balanceOtaServerDetailBean);
+        }
+        result.put("data", balanceOtaServerDetailBeans);
+        return result;
     }
 
     /**

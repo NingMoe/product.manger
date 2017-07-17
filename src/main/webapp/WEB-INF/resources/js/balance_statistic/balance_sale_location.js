@@ -1,5 +1,9 @@
+$(document).ready(function () {
+    $("#balance-statistic-1").addClass("active");
+    $("#balance-statistic-2").addClass("active");
+});
 $(function obtainLocationInfoByDay() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/location/day",
@@ -11,22 +15,22 @@ $(function obtainLocationInfoByDay() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var barChartCavas = $("#locationMonthChart").get(0).getContext("2d");
-            var barChart = new Chart(barChartCavas);
+            let barChartCavas = $("#locationMonthChart").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
             drawBarChart(labels, dates, barChart);
         }
     })
 });
 $(function obtainLocationYearData() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/location/month",
@@ -38,22 +42,23 @@ $(function obtainLocationYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            console.info(JSON.stringify(data));
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var barChartCavas = $("#locationYearChart").get(0).getContext("2d");
-            var barChart = new Chart(barChartCavas);
+            let barChartCavas = $("#locationYearChart").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
             drawBarChart(labels, dates, barChart);
         }
     })
 });
 $(function obtainActiveLocationInfoByDay() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/location/day",
@@ -65,23 +70,23 @@ $(function obtainActiveLocationInfoByDay() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var barChartCavas = $("#activeLocationMonthChart").get(0).getContext("2d");
-            var barChart = new Chart(barChartCavas);
+            let barChartCavas = $("#activeLocationMonthChart").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
             drawBarChart(labels, dates, barChart);
         }
     })
 });
 
 $(function obtainActiveLocationYearData() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/location/month",
@@ -93,32 +98,34 @@ $(function obtainActiveLocationYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            console.info(JSON.stringify(data));
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var barChartCavas = $("#activeLocationYearChart").get(0).getContext("2d");
-            var barChart = new Chart(barChartCavas);
+            let barChartCavas = $("#activeLocationYearChart").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
             drawBarChart(labels, dates, barChart);
         }
     })
 });
 function drawBarChart(labes, datas, chart) {
-    var chartDataArea = {
+    let chartDataArea = {
         labels: labes,
         datasets: [
             {
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,1)",
+                fillColor: "#4096B5",
+                strokeColor: "#4096B5",
+                pointColor: "#4096B5",
                 data: datas
             }
         ]
     };
-    var chartOption = {
+    const chartOption = {
         //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
         scaleBeginAtZero: true,
         //Boolean - 是否显示网格线
@@ -163,8 +170,9 @@ function drawBarChart(labes, datas, chart) {
         //String - Animation easing effect
         animationEasing: "easeOutQuart",
         showTooltips: false,
+        datasetFill: false,
         onAnimationComplete: function () {
-            var ctx = this.chart.ctx;
+            let ctx = this.chart.ctx;
             ctx.font = this.scale.font;
             ctx.fillStyle = this.scale.textColor;
             ctx.textAlign = "center";
@@ -176,11 +184,5 @@ function drawBarChart(labes, datas, chart) {
             });
         }
     };
-    var barChartOptions = chartOption;
-    var barChartData = chartDataArea;
-    barChartData.datasets[0].fillColor = "#4096B5";
-    barChartData.datasets[0].strokeColor = "#4096B5";
-    barChartData.datasets[0].pointColor = "#4096B5";
-    barChartOptions.datasetFill = false;
-    chart.Bar(chartDataArea, barChartOptions);
+    chart.Bar(chartDataArea, chartOption);
 }

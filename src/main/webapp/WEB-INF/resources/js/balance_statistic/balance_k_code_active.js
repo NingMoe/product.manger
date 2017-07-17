@@ -1,5 +1,9 @@
+$(document).ready(function () {
+    $("#balance-statistic-1").addClass("active");
+    $("#balance-statistic-2").addClass("active");
+});
 $(function obtainActiveByDay() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/statistic/day",
@@ -11,22 +15,22 @@ $(function obtainActiveByDay() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var lineChartCavas = $("#activeMonthChart").get(0).getContext("2d");
-            var lineChart = new Chart(lineChartCavas);
+            let lineChartCavas = $("#activeMonthChart").get(0).getContext("2d");
+            let lineChart = new Chart(lineChartCavas);
             drawLinechart(labels, dates, lineChart);
         }
     })
 });
 $(function obtainActiveYearData() {
-    var baseUrl = $("#baseUrl").val();
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/statistic/month",
@@ -38,22 +42,22 @@ $(function obtainActiveYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var labels = [];
-            var dates = [];
-            for (var key in data) {
+            let labels = [];
+            let dates = [];
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     labels.push(key);
                     dates.push(data[key]);
                 }
             }
-            var lineChartCavas = $("#activeYearChart").get(0).getContext("2d");
-            var lineChart = new Chart(lineChartCavas);
+            let lineChartCavas = $("#activeYearChart").get(0).getContext("2d");
+            let lineChart = new Chart(lineChartCavas);
             drawLinechart(labels, dates, lineChart);
         }
     })
 });
 function drawLinechart(labes, datas, chart) {
-    var areaChartData = {
+    let areaChartData = {
         labels: labes,
         datasets: [
             {
@@ -65,7 +69,7 @@ function drawLinechart(labes, datas, chart) {
             }
         ]
     };
-    var areaChartOptions = {
+    const areaChartOptions = {
         //是否显示刻度
         showScale: true,
         //是否显示网格线

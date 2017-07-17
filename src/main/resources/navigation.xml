@@ -87,7 +87,7 @@
         <id>balanceStatisticLocation</id>
         <title>
             <title-name>统计</title-name>
-            <title-description>体脂秤位置信息统计</title-description>
+            <title-description>体脂秤销售地区统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -119,7 +119,7 @@
         <id>balanceStatus</id>
         <title>
             <title-name>查询</title-name>
-            <title-description>电子秤MAC信息查询</title-description>
+            <title-description>体脂秤MAC信息查询</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -135,7 +135,7 @@
         <id>showBalanceFeedback</id>
         <title>
             <title-name>反馈信息</title-name>
-            <title-description>电子秤反馈信息展示</title-description>
+            <title-description>反馈信息展示</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -243,4 +243,115 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceOtaServer</id>
+        <title>
+            <title-name>体脂秤Ota服务器列表</title-name>
+            <title-description>Ota服务器</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/server/manage</url>
+            <sub-directories>
+                <name>balanceOtaServer</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceOtaServerAdd</id>
+        <title>
+            <title-name>添加Ota服务器地址</title-name>
+            <title-description>Ota服务器</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/server/add</url>
+            <sub-directories>
+                <name>balanceOtaServerAdd</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceOtaMac</id>
+        <title>
+            <title-name>体脂秤Ota测试Mac管理</title-name>
+            <title-description>Mac管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/ota/mac/manage</url>
+            <sub-directories>
+                <name>balanceOtaMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userAnalysis</id>
+        <title>
+            <title-name>用户成分分析</title-name>
+            <title-description>用户成分分析</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/statistic/page/user/analysis</url>
+            <sub-directories>
+                <name>userAnalysis</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMcu</id>
+        <title>
+            <title-name>体脂秤MCU升级</title-name>
+            <title-description>MCU升级</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu</url>
+            <sub-directories>
+                <name>balanceMcu</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMcuList</id>
+        <title>
+            <title-name>体脂秤MCU固件列表</title-name>
+            <title-description>MCU固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu/list</url>
+            <sub-directories>
+                <name>balanceMcuList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceMcuMac</id>
+        <title>
+            <title-name>体脂秤MCU测试Mac管理</title-name>
+            <title-description>MCU管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/mcu/mac/manage</url>
+            <sub-directories>
+                <name>balanceMcuMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>

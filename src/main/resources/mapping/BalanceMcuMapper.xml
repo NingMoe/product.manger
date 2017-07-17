@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BalanceMcuMapper">
+
+    <select id="fetchMcuList" resultType="com.phicomm.product.manger.model.mcu.BalanceMcuBean">
+        (
+            SELECT
+                id AS id,
+                software_version AS version,
+                file_url AS fileUrl,
+                crc AS crc,
+                DATE_FORMAT(
+                    create_time,
+                    '%Y-%m-%d %H:%i:%s'
+                ) AS createTime,
+
+            IF (
+                testing = 1,
+                "测试版",
+                "公开版"
+            ) AS testing,
+
+        IF (
+            `enable` = 1,
+            "可用",
+            "不可用"
+        ) AS `enable`
+        FROM
+            balance_mcu_info
+        WHERE
+            `enable` = 1
+        )
+        UNION
+            (
+                SELECT
+                    id AS id,
+                    software_version AS version,
+                    file_url AS fileUrl,
+                    crc AS crc,
+                    DATE_FORMAT(
+                        create_time,
+                        '%Y-%m-%d %H:%i:%s'
+                    ) AS createTime,
+
+                IF (
+                    testing = 1,
+                    "测试版",
+                    "公开版"
+                ) AS testing,
+
+            IF (
+                `enable` = 1,
+                "可用",
+                "不可用"
+            ) AS `enable`
+            FROM
+                balance_mcu_info
+            WHERE
+                `enable` != 1
+            LIMIT 198
+            )
+    </select>
+
+    <insert id="uploadMcuMessage" parameterType="com.phicomm.product.manger.model.mcu.BalanceMcuBean">
+        INSERT INTO balance_mcu_info (
+            software_version,
+            file_url,
+            crc
+        )
+        VALUES(
+            #{balanceMcuBean.version,jdbcType=INTEGER},
+            #{balanceMcuBean.fileUrl,jdbcType=VARCHAR},
+            #{balanceMcuBean.crc,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <update id="modifyMcuVersionStatus" parameterType="com.phicomm.product.manger.model.mcu.BalanceMcuStatus">
+        UPDATE
+            balance_mcu_info
+        SET
+            testing = #{balanceMcuStatus.testing,jdbcType=INTEGER},
+            `enable` = #{balanceMcuStatus.enable,jdbcType=INTEGER}
+        WHERE
+            software_version = #{balanceMcuStatus.version,jdbcType=INTEGER}
+    </update>
+
+    <update id="cleanMcuStatus" parameterType="com.phicomm.product.manger.model.mcu.BalanceMcuStatus">
+        UPDATE
+            balance_mcu_info
+        SET
+            `enable` = #{balanceMcuStatus.enable,jdbcType=INTEGER}
+        WHERE
+            software_version != #{balanceMcuStatus.version,jdbcType=INTEGER}
+        AND
+            testing = #{balanceMcuStatus.testing,jdbcType=INTEGER}
+    </update>
+</mapper>

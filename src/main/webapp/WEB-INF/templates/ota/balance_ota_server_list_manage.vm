@@ -1,21 +1,21 @@
 <link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
-<link rel="stylesheet" href="$baseUrl/resources/css/fota/wristband_upgrade_test_list.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/datatables/datatables.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">电子秤Ota列表</h3>
+                    <h3 class="box-title">体脂称Ota服务器地址管理</h3>
                 </div>
                 <div class="box-body">
-                    <table id="otaVersionList" class="table table-bordered table-striped">
+                    <table id="otaServerList" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>id</th>
-                            <th>固件版本</th>
-                            <th>版本类型</th>
-                            <th>版本状态</th>
+                            <th>ip地址</th>
+                            <th>端口号</th>
                             <th>创建时间</th>
+                            <th>操    作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,4 +29,4 @@
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_list.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_server_list_manage.js"></script>

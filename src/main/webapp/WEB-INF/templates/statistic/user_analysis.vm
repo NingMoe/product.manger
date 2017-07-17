@@ -1,0 +1,4 @@
+aaa
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/user_statistic.js"></script>

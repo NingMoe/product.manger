@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
@@ -94,11 +93,9 @@ public class BalanceOtaService {
      * 更新版本状态:当状态信息中的enable为1的时候顺带清理一下其他版本的状态，默认environment为test
      *
      * @param balanceOtaStatus 版本状态信息
-     * @throws DataFormatException      数据格式异常
-     * @throws VersionNotExistException 版本不存在
+     * @throws DataFormatException 数据格式异常
      */
-    public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
-            VersionNotExistException {
+    public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException {
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
         if ("prod".equalsIgnoreCase(environment)) {
@@ -106,10 +103,7 @@ public class BalanceOtaService {
         } else {
             CustomerContextHolder.selectTestDataSource();
         }
-        int effectLine = balanceOtaMapper.updateOtaStatus(balanceOtaStatus);
-        if (effectLine <= 0) {
-            throw new VersionNotExistException();
-        }
+        balanceOtaMapper.updateOtaStatus(balanceOtaStatus);
         if (balanceOtaStatus.getEnable() == 1) {
             balanceOtaStatus.setEnable(0);
             balanceOtaMapper.cleanOtaStatus(balanceOtaStatus);
@@ -122,12 +116,11 @@ public class BalanceOtaService {
      *
      * @param balanceOtaStatus 版本状态
      * @return 触发失败的ip
-     * @throws DataFormatException      数据格式异常
-     * @throws VersionNotExistException 版本不存在
-     * @throws IOException              读异常
+     * @throws DataFormatException 数据格式异常
+     * @throws IOException         读异常
      */
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
-            VersionNotExistException, IOException {
+            IOException {
         updateBalanceOtaStatus(balanceOtaStatus);
         return otaServerService.updateTrigger();
     }

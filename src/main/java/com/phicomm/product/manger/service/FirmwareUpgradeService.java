@@ -14,6 +14,7 @@ import com.phicomm.product.manger.exception.VersionNotExistException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.module.fota.DefaultFirmwareUpgradeTrigger;
 import com.phicomm.product.manger.module.fota.FirmwareUpgradeContext;
+import com.phicomm.product.manger.utils.ExceptionUtil;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +81,8 @@ public class FirmwareUpgradeService {
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
+        // 触发升级
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
     }
 
     /**
@@ -203,7 +209,13 @@ public class FirmwareUpgradeService {
         String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();;
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
-        new Thread(() -> new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext)).start();
+        new Thread(() -> {
+            try {
+                new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext);
+            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+                logger.info(ExceptionUtil.getErrorMessage(e));
+            }
+        }).start();
     }
 
     /**

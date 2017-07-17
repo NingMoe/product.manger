@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BalanceMcuTestMacMapper">
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT IGNORE INTO balance_mcu_test_mac_info(
+        mac
+        )VALUES
+        <foreach collection="macList" item="item" index="index" separator=",">
+            (
+            #{item,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="cleanMac">
+        DELETE FROM
+        balance_mcu_test_mac_info
+    </delete>
+</mapper>

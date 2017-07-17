@@ -12,7 +12,8 @@
                             <label for="firmwareType">固件类型</label>
                             <select id="firmwareType" class="form-control" name="firmwareType" style="width: 100%;">
                                 <option value=""></option>
-                                <option value="wristband">手环</option>
+                                <option value="W1">手环</option>
+                                <option value="W2">手表</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -20,6 +21,7 @@
                             <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
                                 <option value=""></option>
                                 <option value="A0">A0</option>
+                                <option value="A0">A1</option>
                             </select>
                         </div>
                         <div class="form-group">
