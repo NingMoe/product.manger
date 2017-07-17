@@ -57,6 +57,6 @@ public class CustomerContextHolder {
      * 清除数据源选择项
      */
     public static void clearDataSource() {
-        contextHolder.remove();
+        contextHolder.set(MAIN_DATA_SOURCE);
     }
 }  
