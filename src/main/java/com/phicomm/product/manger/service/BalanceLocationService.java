@@ -28,7 +28,7 @@ public class BalanceLocationService {
 
     private BalanceLocationMapper balanceLocationMapper;
 
-    private static final int LOCATION_PAGE_SIZE = 15;
+    private static final int DEFAULT_LOCATION_PAGE_SIZE = 15;
 
     private LianbiActiveMapper lianbiActiveMapper;
 
@@ -94,7 +94,7 @@ public class BalanceLocationService {
     public Map<String, Integer> obtainLocationCountByMonth(int month, String type, int pageSize) {
         List<LocationCountBean> countBeans;
         month = month <= 0 ? DEFAULT_MONTH : month;
-        pageSize = pageSize <= 0 ? LOCATION_PAGE_SIZE : pageSize;
+        pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
         //联璧激活的位置信息
         if ("lianbi".equals(type)) {
@@ -119,7 +119,7 @@ public class BalanceLocationService {
     public Map<String, Integer> obtainLocationCountByDay(int day, String type, int pageSize) {
         List<LocationCountBean> countBeans;
         day = day <= 0 ? DEFAULT_DAY : day;
-        pageSize = pageSize <= 0 ? LOCATION_PAGE_SIZE : pageSize;
+        pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
         //联璧激活位置信息
         if ("lianbi".equalsIgnoreCase(type)) {
