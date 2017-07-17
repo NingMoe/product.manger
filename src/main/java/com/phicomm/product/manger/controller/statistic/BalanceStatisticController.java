@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 
 /**
@@ -43,7 +42,7 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainCountByMonth(@RequestParam int month,
@@ -60,7 +59,7 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainCountByDay(@RequestParam int day,

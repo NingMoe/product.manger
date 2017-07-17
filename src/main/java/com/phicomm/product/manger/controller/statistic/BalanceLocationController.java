@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 
 /**
@@ -43,8 +42,7 @@ public class BalanceLocationController {
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
-            @ApiResponse(code = 3, message = "用户不存在", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint("common")
     public BalanceLocationStatistic getBalanceLocationStatistic() {
@@ -59,8 +57,7 @@ public class BalanceLocationController {
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
-            @ApiResponse(code = 3, message = "用户不存在", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint("common")
     public BalanceSaleNumber getBalanceSaleNumber() {
@@ -76,7 +73,7 @@ public class BalanceLocationController {
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainLocationCountByMonth(@RequestParam int month,
@@ -93,7 +90,7 @@ public class BalanceLocationController {
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
     public Map<String, Integer> obtainLocationCountByDay(@RequestParam int day,
