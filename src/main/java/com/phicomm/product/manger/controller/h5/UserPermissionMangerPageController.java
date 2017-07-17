@@ -1,7 +1,7 @@
 package com.phicomm.product.manger.controller.h5;
 
-import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.table.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +15,47 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpSession;
 
 /**
- * 返回权限管理页面
- * Created by yufei.liu on 2017/6/3.
+ * 用户管理和权限管理
+ * <p>
+ * Created by yufei.liu on 2017/7/17.
  */
 @Controller
-public class PermissionPageController {
+public class UserPermissionMangerPageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public PermissionPageController(NavigationManger navigationManger) {
+    public UserPermissionMangerPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
 
     /**
+     * 返回用户管理页面
+     */
+    @RequestMapping(value = "user/manger/page", method = RequestMethod.GET)
+    @ApiIgnore("用户管理页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showUserMangerPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("context", "user_manger/user_manger.vm");
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userManger"));
+        return modelAndView;
+    }
+
+    /**
      * 返回权限管理页面
      */
-    @RequestMapping(value = "permission", method = RequestMethod.GET)
-    @ApiIgnore("permission")
-    @FunctionPoint(value = "permissionManger")
+    @RequestMapping(value = "permission/manger/page", method = RequestMethod.GET)
+    @ApiIgnore("权限管理页面")
+    @FunctionPoint(value = "common")
     public ModelAndView showPermissionMangerPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("context", "permission/permission.vm");
+        modelAndView.getModelMap().put("context", "permission_manger/permission_manger.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("permissionManger"));
         return modelAndView;
     }

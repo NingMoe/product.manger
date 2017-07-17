@@ -20,22 +20,6 @@
     </navigation>
 
     <navigation>
-        <id>permissionManger</id>
-        <title>
-            <title-name>权限管理</title-name>
-            <title-description>权限管理</title-description>
-        </title>
-        <directory>
-            <icon>fa fa-dashboard</icon>
-            <name>Home</name>
-            <url>$baseUrl/permission</url>
-            <sub-directories>
-                <name>permission</name>
-            </sub-directories>
-        </directory>
-    </navigation>
-
-    <navigation>
         <id>salesLocationStatistic</id>
         <title>
             <title-name>统计</title-name>
@@ -354,4 +338,37 @@
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>userManger</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>userManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>permissionManger</id>
+        <title>
+            <title-name>权限管理</title-name>
+            <title-description>权限管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/permission/manger/page</url>
+            <sub-directories>
+                <name>permissionManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>
