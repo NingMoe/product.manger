@@ -113,7 +113,6 @@ public class BalanceLocationService {
         for (LocationCountBean countBean : countBeans) {
             result.put(countBean.getProvince(), countBean.getGenerateCount());
         }
-        logger.info(result);
         return result;
     }
 
