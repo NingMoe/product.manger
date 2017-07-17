@@ -42,6 +42,7 @@ $(function obtainLocationYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
+            console.info(JSON.stringify(data));
             let labels = [];
             let dates = [];
             for (let key in data) {
@@ -97,6 +98,7 @@ $(function obtainActiveLocationYearData() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
+            console.info(JSON.stringify(data));
             let labels = [];
             let dates = [];
             for (let key in data) {
