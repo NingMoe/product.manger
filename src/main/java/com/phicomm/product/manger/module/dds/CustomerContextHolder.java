@@ -24,7 +24,7 @@ public class CustomerContextHolder {
     /**
      * 如果没有设置，那就取默认的数据源maxscale，否则选择该数据源
      */
-    static String getCustomerType() {
+    public static String getCustomerType() {
         String datasource = contextHolder.get();
         if (Strings.isNullOrEmpty(datasource)) {
             return MAIN_DATA_SOURCE;
