@@ -29,7 +29,7 @@ public class BalanceLocationService {
 
     private static final Logger logger = Logger.getLogger(BalanceLocationService.class);
 
-    private final BalanceLocationMapper balanceLocationMapper;
+    private BalanceLocationMapper balanceLocationMapper;
 
     private static final int LOCATION_PAGE_SIZE = 15;
 
