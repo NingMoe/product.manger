@@ -54,7 +54,7 @@ function repeatTrigger(node) {
             } else if(data.status === 11) {
                 alert("当前固件不是可用状态");
             }
-            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
     });
 }
@@ -75,7 +75,7 @@ function downgrade(node) {
             } else if(data.status === 11) {
                 alert("当前固件不是可用状态");
             }
-            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
     });
 }
@@ -98,7 +98,7 @@ function deleteFirmware(node) {
             } else if(data.status === 12) {
                 alert("该固件当前正在使用");
             }
-            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
     });
 }
