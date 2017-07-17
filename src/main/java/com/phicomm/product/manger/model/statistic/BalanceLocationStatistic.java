@@ -9,9 +9,19 @@ import java.util.List;
  */
 public class BalanceLocationStatistic {
 
+    private int locationTotalCount;
+
     private List<BalanceLocation> totalStatistic;
 
     private List<BalanceLocation> currentDateStatistic;
+
+    public int getLocationTotalCount() {
+        return locationTotalCount;
+    }
+
+    public void setLocationTotalCount(int locationTotalCount) {
+        this.locationTotalCount = locationTotalCount;
+    }
 
     public List<BalanceLocation> getTotalStatistic() {
         return totalStatistic;
@@ -32,7 +42,8 @@ public class BalanceLocationStatistic {
     @Override
     public String toString() {
         return "BalanceLocationStatistic{" +
-                "totalStatistic=" + totalStatistic +
+                "locationTotalCount=" + locationTotalCount +
+                ", totalStatistic=" + totalStatistic +
                 ", currentDateStatistic=" + currentDateStatistic +
                 '}';
     }

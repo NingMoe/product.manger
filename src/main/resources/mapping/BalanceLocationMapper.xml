@@ -12,6 +12,13 @@
             province
     </select>
 
+    <select id="getLocationTotalCount" resultType="java.lang.Integer">
+         SELECT
+            count(1)
+        FROM
+            balance_location_info
+    </select>
+
     <select id="getCurrentDateBalanceLocation" resultType="com.phicomm.product.manger.model.statistic.BalanceLocation">
         SELECT
             province AS province,

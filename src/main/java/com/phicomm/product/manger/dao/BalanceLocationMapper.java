@@ -45,4 +45,11 @@ public interface BalanceLocationMapper {
      * 获取电子秤销售数量
      */
     int getBalanceSaleNumber();
+
+    /**
+     * 获取销售总量
+     *
+     * @return 总量
+     */
+    int getLocationTotalCount();
 }
