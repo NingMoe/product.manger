@@ -91,9 +91,8 @@ public class BalanceLocationService {
     public Map<String, Integer> obtainLocationCountByMonth(int month, String type) {
         List<LocationCountBean> countBeans;
         CustomerContextHolder.selectProdDataSource();
-        logger.info(CustomerContextHolder.getCustomerType());
-        logger.info(String.format("month = %s", month));
-        logger.info(String.format("type = %s", type));
+        logger.info(String.format("CustomerType = %s, thread = %s, month = %s, type = %s",
+                CustomerContextHolder.getCustomerType(), Thread.currentThread().getName(), month, type));
         //联璧激活的位置信息
         if ("lianbi".equals(type)) {
             countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, LOCATION_PAGE_SIZE);
