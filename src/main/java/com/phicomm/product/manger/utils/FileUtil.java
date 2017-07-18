@@ -133,7 +133,7 @@ public class FileUtil {
             dataOutputStream.writeBytes(hyphens + boundary + hyphens + end);
             dataOutputStream.flush();
             dataOutputStream.close();
-            if (httpURLConnection.getResponseCode() == 200) {
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
                 int ch;
                 StringBuilder stringBuilder = new StringBuilder();
