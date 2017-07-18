@@ -45,7 +45,7 @@ $(function () {
         },
         "minDate": "2016/08/16",
         "maxDate": "2020/11/20",
-        "startDate": moment().add(-7,'days'),
+        "startDate": moment().add(-7, 'days'),
         "endDate": moment.now
     });
 });
@@ -129,8 +129,9 @@ function fetchFeedback() {
 }
 
 function loadItem(itemData) {
-    let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` + loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) +
-        loadAppType(itemData.appId) + loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
+    let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
+        loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) + loadAppType(itemData.appId) +
+        loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
     let imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
     if (imgDiv !== null) {
         src = src + imgDiv;
@@ -149,8 +150,7 @@ function loadUserHeader(headerUrl) {
 }
 
 function loadUsername(username) {
-    return `<div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">${username}`;
+    return `<div class="product-info"><a href="javascript:void(0)" class="product-title">${username}`;
 }
 
 function loadUserId(userId) {
