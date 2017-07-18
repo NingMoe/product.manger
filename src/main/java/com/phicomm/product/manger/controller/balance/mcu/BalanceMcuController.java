@@ -53,8 +53,8 @@ public class BalanceMcuController {
      * @throws IOException         socket读写异常
      * @throws DataFormatException 数据格式异常
      */
-    @RequestMapping(value = "balance/mcu/status/update/trigger", method = RequestMethod.POST,
-            consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "balance/mcu/status/update/trigger", method = RequestMethod.POST, consumes = "application/json",
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
@@ -70,8 +70,8 @@ public class BalanceMcuController {
      * @return 操作状态
      * @throws DataFormatException 数据格式异常
      */
-    @RequestMapping(value = "balance/mcu/update/change", method = RequestMethod.POST,
-            consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "balance/mcu/update/change", method = RequestMethod.POST, consumes = "application/json",
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
@@ -87,8 +87,8 @@ public class BalanceMcuController {
      * @param environment 环境
      * @return Ota信息列表
      */
-    @RequestMapping(value = "balance/mcu/list", method = RequestMethod.POST,
-            consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "balance/mcu/list", method = RequestMethod.POST, consumes = "application/json",
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
@@ -102,7 +102,8 @@ public class BalanceMcuController {
      * @param environment 环境
      * @return Ota信息列表
      */
-    @RequestMapping(value = "balance/mcu/list/json", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    @RequestMapping(value = "balance/mcu/list/json", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
