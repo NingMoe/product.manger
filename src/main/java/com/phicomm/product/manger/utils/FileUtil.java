@@ -115,7 +115,7 @@ public class FileUtil {
             httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             httpURLConnection.setRequestProperty("hermes_downloadName", fileName);
             httpURLConnection.setRequestProperty("downloadName", fileName);
-            httpURLConnection.setChunkedStreamingMode(8092);
+            httpURLConnection.setChunkedStreamingMode(8192);
             httpURLConnection.setConnectTimeout(30000);
             httpURLConnection.connect();
             dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
