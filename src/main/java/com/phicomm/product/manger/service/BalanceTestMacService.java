@@ -99,7 +99,8 @@ public class BalanceTestMacService {
      */
     private List formatMacAbort(String macString) {
         List<String> macList = new ArrayList<>();
-        macString = macString.replaceAll("\\s+", "").replaceAll("、", "").replaceAll(",", "");
+        macString = macString.replaceAll("\\s+", "").replaceAll("、", "").
+                replaceAll(",", "");
         String[] splitMac = macString.split(":");
         String nextMacHeader = "";
         boolean start = true;
