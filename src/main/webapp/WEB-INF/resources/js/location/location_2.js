@@ -1,4 +1,4 @@
-var geoCoordMap = {
+const geoCoordMap = {
     "北京": [116.3976359367, 39.9033991344],
     "天津": [117.1993700000, 39.0851000000],
     "上海": [121.4737000000, 31.2303700000],
@@ -34,36 +34,36 @@ var geoCoordMap = {
     "香港": [114.1654600000, 22.2753400000],
     "澳门": [113.5491300000, 22.1987500000]
 };
-var options = {
-    useEasing : true,
-    useGrouping : true,
-    separator : ','
+const options = {
+    useEasing: true,
+    useGrouping: true,
+    separator: ','
 };
-var countUp = new CountUp("ct", 0, 0, 0, 1.2, options);
+const countUp = new CountUp("ct", 0, 0, 0, 1.2, options);
 countUp.start();
 function getTotalStatisticForBarY(totalStatistic) {
-    var yList = [];
-    var length = totalStatistic.length;
-    for (var i = 0; i < length; i++) {
+    let yList = [];
+    const length = totalStatistic.length;
+    for (let i = 0; i < length; i++) {
         yList.push(totalStatistic[i].province);
     }
     return yList.reverse();
 }
 function getTotalStatisticForBarX(totalStatistic) {
-    var xList = [];
-    var length = totalStatistic.length;
-    for (var i = 0; i < length; i++) {
+    let xList = [];
+    const length = totalStatistic.length;
+    for (let i = 0; i < length; i++) {
         xList.push(totalStatistic[i].number);
     }
     return xList.reverse();
 }
 function getScatterData(totalStatistic) {
-    var result = [];
+    let result = [];
     totalStatistic.forEach(function (item) {
-        var province = item.province;
-        var number = item.number;
-        var p = geoCoordMap[province];
-        var obj = {};
+        let province = item.province;
+        let number = item.number;
+        let p = geoCoordMap[province];
+        let obj = {};
         obj.name = province;
         obj.value = [p[0], p[1], number, 10];
         result.push(obj);
@@ -71,13 +71,13 @@ function getScatterData(totalStatistic) {
     return result;
 }
 function getEffectScatter(totalStatistic) {
-    var result = [];
-    for (var i = 0; i < topN && i < totalStatistic.length; i++) {
-        var item = totalStatistic[i];
-        var province = item.province;
-        var number = item.number;
-        var p = geoCoordMap[province];
-        var obj = {};
+    let result = [];
+    for (let i = 0; i < topN && i < totalStatistic.length; i++) {
+        let item = totalStatistic[i];
+        let province = item.province;
+        let number = item.number;
+        let p = geoCoordMap[province];
+        let obj = {};
         obj.name = province;
         obj.value = [p[0], p[1], number, 20];
         result.push(obj);
@@ -85,7 +85,7 @@ function getEffectScatter(totalStatistic) {
     return result;
 }
 function refreshData() {
-    var url = $("#baseUrl").val() + "/balance/location/statistic";
+    const url = $("#baseUrl").val() + "/balance/location/statistic";
     $.ajax({
         type: "POST",
         url: url,
@@ -94,11 +94,11 @@ function refreshData() {
         error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
-            var totalStatistic = data.totalStatistic;
+            const totalStatistic = data.data.totalStatistic;
             totalStatistic.sort(function (a, b) {
                 return b.number - a.number;
             });
-            var dataOption = {
+            let dataOption = {
                 yAxis: [
                     {
                         id: 'totalStatistic',
@@ -123,7 +123,7 @@ function refreshData() {
     });
 }
 function refreshSaleNumber() {
-    var url = $("#baseUrl").val() + "/balance/sales/number";
+    const url = $("#baseUrl").val() + "/balance/sales/number";
     $.ajax({
         type: "POST",
         url: url,
@@ -132,13 +132,13 @@ function refreshSaleNumber() {
         error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
-            countUp.update(data.saleNumber);
+            countUp.update(data.data.saleNumber);
         }
     });
 }
-var topN = 15;
+const topN = 15;
 
-var mainOption = {
+const mainOption = {
     backgroundColor: '#404a59',
     animation: true,
     animationDuration: 1000,
@@ -282,7 +282,7 @@ var mainOption = {
                     show: true,
                     position: 'right',
                     offset: [0, 0],
-                    formatter: function(item) {
+                    formatter: function (item) {
                         return item['data'];
                     },
                     textStyle: {
@@ -297,7 +297,7 @@ var mainOption = {
                     show: true,
                     position: 'right',
                     offset: [0, 0],
-                    formatter: function(item) {
+                    formatter: function (item) {
                         return item['data'];
                     },
                     textStyle: {
@@ -336,11 +336,11 @@ var mainOption = {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: function(item) {
+                formatter: function (item) {
                     console.log(JSON.stringify(item));
-                    var s = item["seriesName"];
-                    var c = item["data"]["name"];
-                    var v = item["data"]["value"][2];
+                    let s = item["seriesName"];
+                    let c = item["data"]["name"];
+                    let v = item["data"]["value"][2];
                     return s + '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#ddb926;"></span>' + c + ": " + v;
                 }
             }
@@ -376,18 +376,18 @@ var mainOption = {
             zlevel: 1,
             tooltip: {
                 trigger: 'item',
-                formatter: function(item) {
+                formatter: function (item) {
                     console.log(JSON.stringify(item));
-                    var s = item["seriesName"];
-                    var c = item["data"]["name"];
-                    var v = item["data"]["value"][2];
+                    let s = item["seriesName"];
+                    let c = item["data"]["name"];
+                    let v = item["data"]["value"][2];
                     return s + '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#f4e925;"></span>' + c + ": " + v;
                 }
             }
         }
     ]
 };
-var myChart = echarts.init(document.getElementById('main'));
+let myChart = echarts.init(document.getElementById('main'));
 myChart.setOption(mainOption);
 refreshData();
 refreshSaleNumber();
