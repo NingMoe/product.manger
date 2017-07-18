@@ -49,8 +49,8 @@ public class OtaServerController {
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
-            @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class),
-            @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class)
+            @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
+            @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class)
     })
     public Response<String> insertServerAddress(@RequestParam("serverIp") String serverIp,
                                                 @RequestParam("serverPort") int serverPort)
