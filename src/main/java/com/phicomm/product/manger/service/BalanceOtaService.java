@@ -56,8 +56,7 @@ public class BalanceOtaService {
      * @throws DataFormatException 数据格式异常
      */
     public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
-            throws IOException,
-            DataFormatException {
+            throws IOException, DataFormatException {
         checkOtaParamFormat(aFile, bFile, version);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
