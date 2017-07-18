@@ -22,10 +22,10 @@ $(function obtainLocationInfoByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let barChartCavas = $("#locationMonthChart").get(0).getContext("2d");
@@ -54,10 +54,10 @@ $(function obtainLocationYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let barChartCavas = $("#locationYearChart").get(0).getContext("2d");
@@ -86,10 +86,10 @@ $(function obtainActiveLocationInfoByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let barChartCavas = $("#activeLocationMonthChart").get(0).getContext("2d");
@@ -118,10 +118,10 @@ $(function obtainActiveLocationYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let barChartCavas = $("#activeLocationYearChart").get(0).getContext("2d");

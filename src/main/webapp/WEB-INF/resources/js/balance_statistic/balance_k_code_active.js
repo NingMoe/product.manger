@@ -21,10 +21,10 @@ $(function obtainActiveByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let lineChartCavas = $("#activeMonthChart").get(0).getContext("2d");
@@ -52,10 +52,10 @@ $(function obtainActiveYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let lineChartCavas = $("#activeYearChart").get(0).getContext("2d");

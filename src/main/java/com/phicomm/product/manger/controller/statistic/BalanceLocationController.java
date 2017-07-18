@@ -2,6 +2,7 @@ package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
 import com.phicomm.product.manger.service.BalanceLocationService;
@@ -42,11 +43,11 @@ public class BalanceLocationController {
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public BalanceLocationStatistic getBalanceLocationStatistic() {
-        return balanceLocationService.getBalanceLocationStatistic();
+    public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
+        return new Response<BalanceLocationStatistic>().setData(balanceLocationService.getBalanceLocationStatistic());
     }
 
     /**
@@ -60,8 +61,8 @@ public class BalanceLocationController {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint("common")
-    public BalanceSaleNumber getBalanceSaleNumber() {
-        return balanceLocationService.getBalanceSaleNumber();
+    public Response<BalanceSaleNumber> getBalanceSaleNumber() {
+        return new Response<BalanceSaleNumber>().setData(balanceLocationService.getBalanceSaleNumber());
     }
 
     /**
@@ -76,10 +77,10 @@ public class BalanceLocationController {
             @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
-    public Map<String, Integer> obtainLocationCountByMonth(@RequestParam int month,
-                                                           @RequestParam String type,
-                                                           @RequestParam int pageSize) {
-        return balanceLocationService.obtainLocationCountByMonth(month, type, pageSize);
+    public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
+                                                                     @RequestParam String type,
+                                                                     @RequestParam int pageSize) {
+        return new Response<Map<String, Integer>>().setData(balanceLocationService.obtainLocationCountByMonth(month, type, pageSize));
     }
 
     /**
@@ -94,9 +95,9 @@ public class BalanceLocationController {
             @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
-    public Map<String, Integer> obtainLocationCountByDay(@RequestParam int day,
-                                                         @RequestParam String type,
-                                                         @RequestParam int pageSize) {
-        return balanceLocationService.obtainLocationCountByDay(day, type, pageSize);
+    public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
+                                                                   @RequestParam String type,
+                                                                   @RequestParam int pageSize) {
+        return new Response<Map<String, Integer>>().setData(balanceLocationService.obtainLocationCountByDay(day, type, pageSize));
     }
 }

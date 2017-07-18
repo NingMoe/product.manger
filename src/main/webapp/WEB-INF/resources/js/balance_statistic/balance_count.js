@@ -21,10 +21,10 @@ $(function obtainMacInfoByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             drawBarChart(labels, dates, new Chart($("#macMonthChart").get(0).getContext("2d")));
@@ -50,10 +50,10 @@ $(function obtainMacYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             drawBarChart(labels, dates, new Chart($("#macYearChart").get(0).getContext("2d")));

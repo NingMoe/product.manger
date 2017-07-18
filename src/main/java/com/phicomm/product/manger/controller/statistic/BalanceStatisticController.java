@@ -45,9 +45,9 @@ public class BalanceStatisticController {
             @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByMonth(@RequestParam int month,
-                                                   @RequestParam String type) {
-        return balanceStatisticService.obtainCountByMonth(month, type);
+    public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month,
+                                                             @RequestParam String type) {
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.obtainCountByMonth(month, type));
     }
 
     /**
@@ -62,9 +62,9 @@ public class BalanceStatisticController {
             @ApiResponse(code = 0, message = "正常情况", response = Map.class)
     })
     @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByDay(@RequestParam int day,
-                                                 @RequestParam String type) {
-        return balanceStatisticService.obtainCountByDay(day, type);
+    public Response<Map<String, Integer>> obtainCountByDay(@RequestParam int day,
+                                                           @RequestParam String type) {
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.obtainCountByDay(day, type));
     }
 
     /**
