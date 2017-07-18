@@ -26,6 +26,7 @@
         INSERT INTO firmware_info (
             firmware_type, version,
             version_code, environment,
+            gnss_version, md5,
             hardware_code, `enable`,
             create_time, url,
             description
@@ -33,6 +34,7 @@
         VALUES (
             #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
             #{firmwareInfo.versionCode,jdbcType=INTEGER}, #{firmwareInfo.environment,jdbcType=VARCHAR},
+            #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
             #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
             now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR}
         )

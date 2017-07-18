@@ -16,7 +16,11 @@ public class FirmwareInfo {
 
     private String environment;
 
+    private String gnssVersion;
+
     private String hardwareCode;
+
+    private String md5;
 
     private Integer enable;
 
@@ -107,14 +111,33 @@ public class FirmwareInfo {
         this.description = description;
     }
 
+    public String getGnssVersion() {
+        return gnssVersion;
+    }
+
+    public void setGnssVersion(String gnssVersion) {
+        this.gnssVersion = gnssVersion;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
     @Override
     public String toString() {
         return "FirmwareInfo{" +
-                "firmwareType='" + firmwareType + '\'' +
+                "id=" + id +
+                ", firmwareType='" + firmwareType + '\'' +
                 ", version='" + version + '\'' +
                 ", versionCode=" + versionCode +
                 ", environment='" + environment + '\'' +
+                ", gnssVersion='" + gnssVersion + '\'' +
                 ", hardwareCode='" + hardwareCode + '\'' +
+                ", md5='" + md5 + '\'' +
                 ", enable=" + enable +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +

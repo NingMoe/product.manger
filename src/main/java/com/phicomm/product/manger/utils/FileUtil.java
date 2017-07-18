@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
@@ -14,6 +15,7 @@ import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -169,11 +171,14 @@ public class FileUtil {
      * @return 下载链接
      * @throws UploadFileException 上传文件失败的链接
      */
-    public static String uploadFileToHermes(MultipartFile file) throws UploadFileException {
+    public static Map<String, String> uploadFileToHermes(MultipartFile file) throws UploadFileException {
+        Map<String, String> result = Maps.newHashMap();
         File tempFile = new File(hermesTempDirPath, UUID.randomUUID().toString());
-        CommonResponse commonResponse = null;
+        CommonResponse commonResponse;
         try {
             file.transferTo(tempFile);
+            String md5 = md5(tempFile);
+            result.put("md5", md5);
             commonResponse = uploadHermes(tempFile, file.getOriginalFilename());
         } catch (IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
@@ -182,6 +187,8 @@ public class FileUtil {
             //noinspection ResultOfMethodCallIgnored
             tempFile.delete();
         }
-        return HERMES_FILE_HTTP_URL_PREFIX + commonResponse.getDescription();
+        String url = HERMES_FILE_HTTP_URL_PREFIX + commonResponse.getDescription();
+        result.put("url", url);
+        return result;
     }
 }
