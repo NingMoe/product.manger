@@ -1,7 +1,6 @@
 package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
@@ -58,7 +57,7 @@ public class BalanceLocationController {
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
@@ -74,7 +73,7 @@ public class BalanceLocationController {
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
@@ -92,7 +91,7 @@ public class BalanceLocationController {
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Map.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
