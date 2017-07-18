@@ -9,7 +9,7 @@
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
     <context:annotation-config/>
-    <context:component-scan use-default-filters="false" base-package="com.phicomm.feedback.controller">
+    <context:component-scan use-default-filters="false" base-package="com.phicomm.product.manger.controller">
         <!-- 这样就会扫描这个包下所有的controller-->
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
@@ -41,7 +41,7 @@
             </list>
         </property>
     </bean>
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
                 <ref bean="mappingJacksonHttpMessageConverter"/>
