@@ -55,12 +55,13 @@ public class FirmwareUpgradeController {
     public CommonResponse firmwareUpgradeWristbandFileUpload(@RequestParam("firmwareType") String firmwareType,
                                                              @RequestParam("hardwareVersion") String hardwareVersion,
                                                              @RequestParam("firmwareVersion") String firmwareVersion,
+                                                             @RequestParam("gnssVersion") String gnssVersion,
                                                              @RequestParam("environment") String environment,
                                                              @RequestPart("file") MultipartFile file,
                                                              @RequestParam("description") String description)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpload(firmwareType,
-                hardwareVersion, firmwareVersion, environment, file, description);
+                hardwareVersion, firmwareVersion, environment, gnssVersion, file, description);
         return CommonResponse.ok();
     }
 

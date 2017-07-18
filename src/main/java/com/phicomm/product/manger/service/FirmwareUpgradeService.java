@@ -56,25 +56,31 @@ public class FirmwareUpgradeService {
                                                    String hardwareVersion,
                                                    String firmwareVersion,
                                                    String environment,
+                                                   String gnssVersion,
                                                    MultipartFile file,
                                                    String description)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
-        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file, description);
+        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion,
+                environment, gnssVersion, file, description);
         int firmwareVersionCode = Integer.parseInt(firmwareVersion);
         if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode)) {
             throw new VersionHasExistException();
         }
         // 上传文件
-        String downloadUrl = FileUtil.uploadFileToHermes(file);
+        Map<String, String> result = FileUtil.uploadFileToHermes(file);
+        String downloadUrl = result.get("url");
+        String md5 = result.get("md5");
         FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
         firmwareInfo.setVersion(file.getOriginalFilename());
         firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
         firmwareInfo.setEnvironment(environment);
+        firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setEnable(0);
         firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
@@ -95,18 +101,21 @@ public class FirmwareUpgradeService {
                                                          String hardwareVersion,
                                                          String firmwareVersion,
                                                          String environment,
+                                                         String gnssVersion,
                                                          MultipartFile file,
                                                          String description) throws DataFormatException {
         logger.info(String.format("firmwareType = %s", firmwareType));
         logger.info(String.format("hardwareVersion = %s", hardwareVersion));
         logger.info(String.format("firmwareVersion = %s", firmwareVersion));
         logger.info(String.format("environment = %s", environment));
+        logger.info(String.format("gnssVersion = %s", gnssVersion));
         logger.info(String.format("description = %s", description));
         logger.info(String.format("file = %s", file != null ? file.getOriginalFilename() : null));
         if (Strings.isNullOrEmpty(firmwareType)
                 || Strings.isNullOrEmpty(hardwareVersion)
                 || Strings.isNullOrEmpty(firmwareVersion)
                 || Strings.isNullOrEmpty(environment)
+                || Strings.isNullOrEmpty(gnssVersion)
                 || file == null
                 || file.isEmpty()) {
             throw new DataFormatException();
