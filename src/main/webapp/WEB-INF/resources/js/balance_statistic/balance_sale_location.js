@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
+
+/**
+ * 获取位置统计信息（30天），并作图。
+ */
 $(function obtainLocationInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -30,6 +34,10 @@ $(function obtainLocationInfoByDay() {
         }
     })
 });
+
+/**
+ * 获取过去12个月的位置统计信息，并作图。
+ */
 $(function obtainLocationYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -58,6 +66,10 @@ $(function obtainLocationYearData() {
         }
     })
 });
+
+/**
+ * 获取激活位置统计信息，并作图。(30天)
+ */
 $(function obtainActiveLocationInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -87,6 +99,9 @@ $(function obtainActiveLocationInfoByDay() {
     })
 });
 
+/**
+ * 获取过去12个月激活位置统计信息，并作图。
+ */
 $(function obtainActiveLocationYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -115,6 +130,13 @@ $(function obtainActiveLocationYearData() {
         }
     })
 });
+
+/**
+ * 绘制柱状图
+ * @param labes 横坐标
+ * @param datas 数据
+ * @param chart 图标类型
+ */
 function drawBarChart(labes, datas, chart) {
     let chartDataArea = {
         labels: labes,

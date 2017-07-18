@@ -5,6 +5,9 @@ $(document).ready(function () {
     $("#balance_ota_server_add_node").addClass("active");
 });
 
+/**
+ * 初始化组件
+ */
 function addNewServer() {
     const baseUrl = $("#baseUrl").val();
     let formData = new FormData($("#addNewAddress")[0]);

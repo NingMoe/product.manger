@@ -19,6 +19,9 @@ let firstClickVersion;
 
 let firstClick = true;
 
+/**
+ * 初始化表格
+ */
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");

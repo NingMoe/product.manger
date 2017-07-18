@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
+
+/**
+ * 获取过去30天的mac统计信息
+ */
 $(function obtainMacInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -27,6 +31,10 @@ $(function obtainMacInfoByDay() {
         }
     })
 });
+
+/**
+ * 获取过去12个月的mac统计信息
+ */
 $(function obtainMacYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -52,6 +60,13 @@ $(function obtainMacYearData() {
         }
     })
 });
+
+/**
+ * 绘制柱状图
+ * @param labes 横坐标
+ * @param datas 数据
+ * @param chart 图表类型
+ */
 function drawBarChart(labes, datas, chart) {
     let chartDataArea = {
         labels: labes,
