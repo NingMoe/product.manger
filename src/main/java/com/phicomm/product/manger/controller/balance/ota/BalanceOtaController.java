@@ -1,6 +1,6 @@
 package com.phicomm.product.manger.controller.balance.ota;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.VersionNotExistException;
@@ -82,7 +82,7 @@ public class BalanceOtaController {
      *
      * @param balanceOtaStatus 版本状态
      * @return 操作状态
-     * @throws DataFormatException      数据格式异常
+     * @throws DataFormatException 数据格式异常
      */
     @RequestMapping(value = "balance/ota/update/change", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
@@ -120,7 +120,8 @@ public class BalanceOtaController {
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
-    public JSONObject fetchOtaVersionList(@RequestParam String environment) {
-        return balanceOtaService.fetchOtaVersionList(environment);
+    public Response<JSONArray> fetchOtaVersionList(@RequestParam String environment) {
+        JSONArray otaList = balanceOtaService.fetchOtaVersionList(environment);
+        return new Response<JSONArray>().setData(otaList);
     }
 }

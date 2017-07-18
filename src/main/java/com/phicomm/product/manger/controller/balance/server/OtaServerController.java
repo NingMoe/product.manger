@@ -1,11 +1,11 @@
 package com.phicomm.product.manger.controller.balance.server;
 
-import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.server.BalanceOtaServerDetailBean;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
 import com.phicomm.product.manger.service.OtaServerService;
 import io.swagger.annotations.Api;
@@ -90,7 +90,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public Response<List<BalanceServerAddressBean>> obtainServerAddress(){
+    public Response<List<BalanceServerAddressBean>> obtainServerAddress() {
         return new Response<List<BalanceServerAddressBean>>().setData(otaServerService.obtainHostAndPort());
     }
 
@@ -101,7 +101,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public JSONObject obtainServerAddressList(){
-        return otaServerService.obtainServerList();
+    public Response<List<BalanceOtaServerDetailBean>> obtainServerAddressList() {
+        return new Response<List<BalanceOtaServerDetailBean>>().setData(otaServerService.obtainServerList());
     }
 }
