@@ -90,8 +90,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public Response<List<BalanceServerAddressBean>> obtainServerAddress()
-            throws DataFormatException, ServerAddressNotExistException {
+    public Response<List<BalanceServerAddressBean>> obtainServerAddress(){
         return new Response<List<BalanceServerAddressBean>>().setData(otaServerService.obtainHostAndPort());
     }
 
@@ -102,8 +101,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public JSONObject obtainServerAddressList()
-            throws DataFormatException, ServerAddressNotExistException {
+    public JSONObject obtainServerAddressList(){
         return otaServerService.obtainServerList();
     }
 }
