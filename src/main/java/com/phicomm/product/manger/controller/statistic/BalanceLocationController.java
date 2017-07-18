@@ -79,7 +79,8 @@ public class BalanceLocationController {
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
-        return new Response<Map<String, Integer>>().setData(balanceLocationService.obtainLocationCountByMonth(month, type, pageSize));
+        return new Response<Map<String, Integer>>().
+                setData(balanceLocationService.obtainLocationCountByMonth(month, type, pageSize));
     }
 
     /**
@@ -97,6 +98,7 @@ public class BalanceLocationController {
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {
-        return new Response<Map<String, Integer>>().setData(balanceLocationService.obtainLocationCountByDay(day, type, pageSize));
+        return new Response<Map<String, Integer>>().
+                setData(balanceLocationService.obtainLocationCountByDay(day, type, pageSize));
     }
 }
