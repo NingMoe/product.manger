@@ -1,8 +1,16 @@
 let firstLoad = true;
 let startId = 1;
+
+/**
+ * 初始化  显示10条信息
+ */
 $(function init() {
     fetchFeedback();
 });
+
+/**
+ * 日期选择组件
+ */
 $(function () {
     $('#timeRange').daterangepicker({
         "autoApply": true,
@@ -49,11 +57,19 @@ $(function () {
         "endDate": moment.now
     });
 });
+
+/**
+ * 获取反馈信息的同时，移除之前的反馈显示信息组件
+ */
 function fetchWithRemove() {
     firstLoad = 2;
     removeDiv();
     fetchCertainFeedback();
 }
+
+/**
+ * 加载更多反馈：默认反馈只拉10条
+ */
 function viewMore() {
     if (firstLoad === 1) {
         fetchFeedback();
@@ -61,6 +77,10 @@ function viewMore() {
         fetchCertainFeedback();
     }
 }
+
+/**
+ * 获取特定条件得反馈信息
+ */
 function fetchCertainFeedback() {
     const timeRange = $("#timeRange").val();
     const appType = $("#appType").find("option:selected").text();
@@ -68,6 +88,13 @@ function fetchCertainFeedback() {
     let endTime = moment(timeRange.split('-')[1], "YYYY/MM/DD").format("YYYY-MM-DD");
     fetch(startTime, endTime, appType);
 }
+
+/**
+ * 根据指定条件获取反馈信息
+ * @param startTime 开始时间
+ * @param endTime 终止时间
+ * @param appType app类型
+ */
 function fetch(startTime, endTime, appType) {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -96,6 +123,10 @@ function fetch(startTime, endTime, appType) {
         }
     })
 }
+
+/**
+ * 用于移除组件
+ */
 function removeDiv() {
     const parent = document.getElementById("parentDiv");
     const childs = parent.childNodes;
@@ -104,6 +135,10 @@ function removeDiv() {
     }
     startId = 1;
 }
+
+/**
+ * 请求获取反馈信息
+ */
 function fetchFeedback() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -128,6 +163,10 @@ function fetchFeedback() {
     })
 }
 
+/**
+ * 动态载入反馈显示
+ * @param itemData 某一条反馈信息
+ */
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
         loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) + loadAppType(itemData.appId) +
@@ -149,14 +188,29 @@ function loadUserHeader(headerUrl) {
     return `<div class="product-img"><img src=${headerUrl} alt="Header"></div>`;
 }
 
+/**
+ * 获取用户昵称模块
+ * @param username 昵称
+ * @returns {string} 用户昵称模块
+ */
 function loadUsername(username) {
     return `<div class="product-info"><a href="javascript:void(0)" class="product-title">${username}`;
 }
 
+/**
+ * 获取用户id显示模块
+ * @param userId 用户id
+ * @returns {string} 用户id模块
+ */
 function loadUserId(userId) {
     return `<span class="product-description">${userId}</span>`;
 }
 
+/**
+ * appId：目前有balance和Link
+ * @param appId app类别
+ * @returns {*} app类别
+ */
 function loadAppType(appId) {
     let src;
     if (appId === 'balance') {
@@ -167,10 +221,21 @@ function loadAppType(appId) {
     return src;
 }
 
+/**
+ * 获取反馈正文模块
+ * @param feedback 反馈
+ * @returns {string} 反馈信息
+ */
 function loadFeedback(feedback) {
     return `<p style="margin-left: 40px;word-wrap: break-word">${feedback}</p>`;
 }
 
+/**
+ * 获取反馈图片模块
+ * @param images 图片
+ * @param id 反馈id
+ * @returns {*} 图片gallery
+ */
 function loadFeedbackImg(images, id) {
     if (images === null) {
         return null;
@@ -184,6 +249,10 @@ function loadFeedbackImg(images, id) {
     return src;
 }
 
+/**
+ * 获取共同模块：目前未使用
+ * @returns {string} 共同模块
+ */
 function loadCommonDiv() {
     return `<div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
@@ -191,8 +260,14 @@ function loadCommonDiv() {
                     </div>`;
 }
 
+/**
+ * 获取反馈时间模块
+ * @param createTime 时间
+ * @returns {string} div
+ */
 function loadTime(createTime) {
     return `<div style="margin-left: 40px;margin-top: 10px">
-                        <span>提交于:</span><span>${createTime}</span>
-                    </div>`;
+                  <span>提交于:</span>
+                  <span>${createTime}</span>
+             </div>`;
 }
