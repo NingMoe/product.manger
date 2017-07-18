@@ -46,7 +46,8 @@ public class BalanceLocationController {
     })
     @FunctionPoint("common")
     public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
-        return new Response<BalanceLocationStatistic>().setData(balanceLocationService.getBalanceLocationStatistic());
+        BalanceLocationStatistic balanceLocationStatistic = balanceLocationService.getBalanceLocationStatistic();
+        return new Response<BalanceLocationStatistic>().setData(balanceLocationStatistic);
     }
 
     /**
@@ -61,7 +62,8 @@ public class BalanceLocationController {
     })
     @FunctionPoint("common")
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
-        return new Response<BalanceSaleNumber>().setData(balanceLocationService.getBalanceSaleNumber());
+        BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
+        return new Response<BalanceSaleNumber>().setData(balanceSaleNumber);
     }
 
     /**
@@ -79,8 +81,8 @@ public class BalanceLocationController {
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
-        return new Response<Map<String, Integer>>().
-                setData(balanceLocationService.obtainLocationCountByMonth(month, type, pageSize));
+        Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCountByMonth(month, type, pageSize);
+        return new Response<Map<String, Integer>>().setData(locationInfo);
     }
 
     /**
@@ -98,7 +100,7 @@ public class BalanceLocationController {
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {
-        return new Response<Map<String, Integer>>().
-                setData(balanceLocationService.obtainLocationCountByDay(day, type, pageSize));
+        Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCountByDay(day, type, pageSize);
+        return new Response<Map<String, Integer>>().setData(locationInfo);
     }
 }

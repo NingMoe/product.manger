@@ -47,7 +47,8 @@ public class BalanceStatisticController {
     @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month,
                                                              @RequestParam String type) {
-        return new Response<Map<String, Integer>>().setData(balanceStatisticService.obtainCountByMonth(month, type));
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByMonth(month, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
@@ -64,7 +65,8 @@ public class BalanceStatisticController {
     @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainCountByDay(@RequestParam int day,
                                                            @RequestParam String type) {
-        return new Response<Map<String, Integer>>().setData(balanceStatisticService.obtainCountByDay(day, type));
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByDay(day, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
