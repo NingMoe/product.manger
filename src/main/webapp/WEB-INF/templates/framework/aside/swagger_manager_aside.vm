@@ -8,6 +8,6 @@
         </span>
     </a>
     <ul class="treeview-menu" id="swagger_menu_node">
-        <li><a href="#"><i class="fa fa-user"></i>账户管理</a></li>
+        <li><a href="$baseUrl/swagger/account/manager"><i class="fa fa-user"></i>账户管理</a></li>
     </ul>
 </li>

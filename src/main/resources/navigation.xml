@@ -371,4 +371,19 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>swaggerManager</id>
+        <title>
+            <title-name>Swagger管理</title-name>
+            <title-description>Swagger管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/swagger/account/manager</url>
+            <sub-directories>
+                <name>swaggerManager</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>
