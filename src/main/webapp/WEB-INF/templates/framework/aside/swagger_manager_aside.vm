@@ -1,0 +1,13 @@
+<li class="header">Swagger Manger</li>
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-gears"></i>
+        <span>Swagger管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="swagger_menu_node">
+        <li><a href="#"><i class="fa fa-user"></i>账户管理</a></li>
+    </ul>
+</li>

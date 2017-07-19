@@ -1,7 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -143,9 +141,8 @@ public class BalanceOtaService {
      * @param environment 环境
      * @return 版本列表
      */
-    public JSONArray fetchOtaVersionList(String environment) {
-        List<BalanceOtaInfo> balanceOtaInfoList = fetchOtaList(environment);
-        return (JSONArray) JSON.toJSON(balanceOtaInfoList);
+    public List<BalanceOtaInfo> fetchOtaVersionList(String environment) {
+        return fetchOtaList(environment);
     }
 
     /**

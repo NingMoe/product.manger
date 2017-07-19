@@ -1,7 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceMcuMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -139,9 +137,8 @@ public class BalanceMcuService {
      * @param environment 环境
      * @return JSONArray格式的版本信息
      */
-    public JSONArray fetchMcuVersionList(String environment) {
-        List<BalanceMcuBean> balanceMcuBeanList = fetchMcuList(environment);
-        return (JSONArray) JSON.toJSON(balanceMcuBeanList);
+    public List<BalanceMcuBean> fetchMcuVersionList(String environment) {
+        return fetchMcuList(environment);
     }
 
     /**

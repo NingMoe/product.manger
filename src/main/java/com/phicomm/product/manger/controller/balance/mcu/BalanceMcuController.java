@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.controller.balance.mcu;
 
-import com.alibaba.fastjson.JSONArray;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.CommonResponse;
@@ -107,8 +106,8 @@ public class BalanceMcuController {
     @ResponseBody
     @ApiOperation("获取Ota版本列表")
     @FunctionPoint(value = "common")
-    public Response<JSONArray> fetchMcuVersionList(@RequestParam String environment) {
-        JSONArray mcuList = balanceMcuService.fetchMcuVersionList(environment);
-        return new Response<JSONArray>().setData(mcuList);
+    public Response<List<BalanceMcuBean>> fetchMcuVersionList(@RequestParam String environment) {
+        List<BalanceMcuBean> mcuList = balanceMcuService.fetchMcuVersionList(environment);
+        return new Response<List<BalanceMcuBean>>().setData(mcuList);
     }
 }
