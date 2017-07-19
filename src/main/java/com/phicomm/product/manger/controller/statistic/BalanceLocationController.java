@@ -71,7 +71,8 @@ public class BalanceLocationController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "balance/location/month")
+    @RequestMapping(value = "balance/location/month", method = RequestMethod.POST,
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
@@ -90,7 +91,8 @@ public class BalanceLocationController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "balance/location/day")
+    @RequestMapping(value = "balance/location/day", method = RequestMethod.POST,
+            produces = "application/json")
     @ResponseBody
     @ApiOperation("位置信息统计")
     @ApiResponses(value = {
