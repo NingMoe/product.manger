@@ -61,7 +61,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
         BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
         return new Response<BalanceSaleNumber>().setData(balanceSaleNumber);
