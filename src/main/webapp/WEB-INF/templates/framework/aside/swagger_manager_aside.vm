@@ -2,12 +2,17 @@
 <li class="treeview">
     <a href="#">
         <i class="fa fa-gears"></i>
-        <span>Swagger管理</span>
+        <span>在线文档管理</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
     <ul class="treeview-menu" id="swagger_menu_node">
-        <li><a href="$baseUrl/swagger/account/manager"><i class="fa fa-user"></i>账户管理</a></li>
+        <li id="swagger_project_manager_node">
+            <a href="$baseUrl/swagger/project/manager"><i class="fa fa-user"></i>项目管理</a>
+        </li>
+        <li id="swagger_project_edit_node">
+            <a href="$baseUrl/swagger/project/edit"><i class="fa fa-user"></i>信息编辑</a>
+        </li>
     </ul>
 </li>
