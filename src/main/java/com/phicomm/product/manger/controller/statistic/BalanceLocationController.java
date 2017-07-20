@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
@@ -39,12 +40,12 @@ public class BalanceLocationController {
      */
     @RequestMapping(value = "balance/location/statistic", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
-    @ApiOperation("用户反馈信息")
+    @ApiOperation("获取电子秤第一次激活电子秤的地理位置信息")
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+    @PublicInterface
     public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
         BalanceLocationStatistic balanceLocationStatistic = balanceLocationService.getBalanceLocationStatistic();
         return new Response<BalanceLocationStatistic>().setData(balanceLocationStatistic);
@@ -55,12 +56,13 @@ public class BalanceLocationController {
      */
     @RequestMapping(value = "balance/sales/number", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
-    @ApiOperation("用户反馈信息")
+    @ApiOperation("获取电子秤销售数量")
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
         BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
         return new Response<BalanceSaleNumber>().setData(balanceSaleNumber);
@@ -74,11 +76,12 @@ public class BalanceLocationController {
     @RequestMapping(value = "balance/location/month", method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    @ApiOperation("位置信息统计")
+    @ApiOperation("按月统计位置信息:类型包括lianbi和其它（默认其它都是走的非联璧）")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
@@ -94,11 +97,12 @@ public class BalanceLocationController {
     @RequestMapping(value = "balance/location/day", method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    @ApiOperation("位置信息统计")
+    @ApiOperation("按天统计位置信息")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {

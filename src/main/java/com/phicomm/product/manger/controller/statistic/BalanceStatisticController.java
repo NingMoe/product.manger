@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
@@ -44,7 +45,8 @@ public class BalanceStatisticController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month,
                                                              @RequestParam String type) {
         Map<String, Integer> statisticData = balanceStatisticService.obtainCountByMonth(month, type);
@@ -62,7 +64,8 @@ public class BalanceStatisticController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainCountByDay(@RequestParam int day,
                                                            @RequestParam String type) {
         Map<String, Integer> statisticData = balanceStatisticService.obtainCountByDay(day, type);
