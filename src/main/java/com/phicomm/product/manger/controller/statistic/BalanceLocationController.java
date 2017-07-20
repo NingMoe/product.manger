@@ -79,7 +79,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
@@ -99,7 +100,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {
