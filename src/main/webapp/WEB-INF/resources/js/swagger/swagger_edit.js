@@ -76,6 +76,8 @@ function update(obj) {
             if (status === 0) {
                 alert('success');
                 window.location.href = baseUrl + "/swagger/project/manager";
+            } else {
+                alert("未知错误!");
             }
         }
     });
@@ -100,6 +102,12 @@ function insertNewProject(obj) {
             if (status === 0) {
                 alert('success');
                 window.location.reload();
+            } else if (status === 2) {
+                alert("数据格式错误，请检查!");
+            } else if (status === 14) {
+                alert("该项目已经存在！");
+            } else {
+                alert("未知错误!");
             }
         }
     });
