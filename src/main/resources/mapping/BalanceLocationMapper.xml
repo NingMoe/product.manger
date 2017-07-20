@@ -43,7 +43,14 @@
         <![CDATA[
 
         SELECT
-            province AS province,
+            IF (
+                POSITION('自治区' IN province)>0,
+                LEFT (
+                    province,
+                    LOCATE('自治区', province) - 1
+                ),
+                province
+            ) AS province,
             COUNT(1) AS generateCount
         FROM
             balance_location_info
@@ -76,7 +83,14 @@
                 (
                     SELECT
                         DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
-                        province AS province
+                        IF (
+                            POSITION('自治区' IN province)>0,
+                            LEFT (
+                                province,
+                                LOCATE('自治区', province) - 1
+                            ),
+                            province
+                        ) AS province
                     FROM
                         balance_location_info
                     HAVING
