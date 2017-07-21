@@ -145,39 +145,31 @@ body{
     width:calc(50% - .20rem);
     width:-webkit-calc(50% - .20rem);
     padding-left:0.2rem;
-    padding-top: 0.2rem;
+    padding-top: 0.1rem;
 }
 .data-rank .ranklist1:before{
-    content:"";
-    display:block;
-    width:0.4rem;
-    height:.08rem;
-    margin-bottom:.05rem;
-    background: #ff0006;
+    content: "1-5名";
+    display: block;
+    font-size: .18rem;
+    color: #34a7e8;
 }
 .data-rank .ranklist2:before{
-    content:"";
-    display:block;
-    width:0.4rem;
-    height:.08rem;
-    margin-bottom:.05rem;
-    background: #eb7180;
+    content: "6-10名";
+    display: block;
+    font-size: .18rem;
+    color: #34a7e8;
 }
 .data-rank .ranklist3:before{
-    content:"";
-    display:block;
-    width:0.4rem;
-    height:.08rem;
-    margin-bottom:.05rem;
-    background: #f9e71e;
+    content: "11-15名";
+    display: block;
+    font-size: .18rem;
+    color: #34a7e8;
 }
 .data-rank .ranklist4:before{
-    content:"";
-    display:block;
-    width:0.4rem;
-    height:.08rem;
-    margin-bottom:.05rem;
-    background: #6ea5ff;
+    content: "15-20名";
+    display: block;
+    font-size: .18rem;
+    color: #34a7e8;
 }
 .data-rank li span{
     display:block;

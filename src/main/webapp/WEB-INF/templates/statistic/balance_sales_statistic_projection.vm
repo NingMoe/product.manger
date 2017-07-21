@@ -9,44 +9,48 @@
 <body>
 <div class="title"></div>
 <div class="content">
-    <div class="left">
-        <div class="left-title">地域激活分布</div>
-        <div id="total">
-            <span class="t_num"></span>
+    <div class="title"></div>
+    <div class="content">
+        <div class="left">
+            <div class="left-title">地域激活分布</div>
+            <div id="total">
+                <span class="num_zero"><i></i></span>
+                <span class="t_num"></span>
+            </div>
+            <div id="main" style="width: 100%; height:100%;"></div>
         </div>
-        <div id="main" style="width: 100%; height:100%;"></div>
-    </div>
 
-    <div class="asideright right" style="width: 42%;">
-        <div class="sectionleft">
-            <div class="articletop">
-                <div class="right-title">激活排行</div>
-                <ul class="data-rank">
-                    <li class="ranklist1"></li>
-                    <li class="ranklist2"></li>
-                    <li class="ranklist3"></li>
-                    <li class="ranklist4"></li>
-                </ul>
+        <div class="asideright right" style="width: 42%;">
+            <div class="sectionleft">
+                <div class="articletop">
+                    <div class="right-title">激活排行</div>
+                    <ul class="data-rank">
+                        <li class="ranklist1"></li>
+                        <li class="ranklist2"></li>
+                        <li class="ranklist3"></li>
+                        <li class="ranklist4"></li>
+                    </ul>
+                </div>
+                <div class="sb">
+                    <div class="righttop rightspec" id="balancefive"></div>
+                </div>
+                <div class="sb">
+                    <div class="righttop rightbottom" id="balancesix"></div>
+                </div>
             </div>
-            <div class="sb">
-                <div class="righttop rightspec" id="balancefive"></div>
-            </div>
-            <div class="sb">
-                <div class="righttop rightbottom" id="balancesix"></div>
-            </div>
-        </div>
-        <div class="sectionright">
-            <div class="sb">
-                <div class="righttop" id="balanceone"></div>
-            </div>
-            <div class="sb">
-                <div class="righttop" id="balancetwo"></div>
-            </div>
-            <div class="sb">
-                <div class="righttop" id="balancethird"></div>
-            </div>
-            <div class="sb">
-                <div class="righttop" id="balancefour"></div>
+            <div class="sectionright">
+                <div class="sb">
+                    <div class="righttop" id="balanceone"></div>
+                </div>
+                <div class="sb">
+                    <div class="righttop" id="balancetwo"></div>
+                </div>
+                <div class="sb">
+                    <div class="righttop" id="balancethird"></div>
+                </div>
+                <div class="sb">
+                    <div class="righttop" id="balancefour"></div>
+                </div>
             </div>
         </div>
     </div>
