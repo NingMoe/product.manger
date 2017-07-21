@@ -1,3 +1,4 @@
+baseUrl = $("#baseUrl").val();
 $(function(){
     jQuery.axpost = function(e, a, b, c) {
         a = null == a || "" == a || "undefined" == typeof a ? {
@@ -25,7 +26,7 @@ $(function(){
     }
 
     //左边地图
-    ajaxData('https://test.phicomm.com/product-manger/balance/location/statistic',"",showMap);
+    ajaxData(baseUrl + '/balance/location/statistic',"",showMap);
     getdata(); 
     setInterval('getdata()', 5000); //每隔10秒执行一次
 
@@ -33,7 +34,7 @@ $(function(){
     var dataAxis = [];
     var datay = [];
     var myChart = echarts.init(document.getElementById('balanceone'));
-    setTimeout($.axpost("https://test.phicomm.com/product-manger/balance/location/day",{"day":30,"type":"lianbi","pageSize":12},function (a) {
+    setTimeout($.axpost(baseUrl + "/balance/location/day",{"day":30,"type":"lianbi","pageSize":12},function (a) {
         var number = data(a.data,dataAxis,datay);
         setoption('体脂秤K码激活地区分布前12名(月)',['#fe6161','#fe6161','#fec182'],number.dataAxis.reverse(),number.datay.reverse());
         myChart.setOption(option);
@@ -45,7 +46,7 @@ $(function(){
     var dataAxis1 = [];
     var datay1 = [];
     var myChart1 = echarts.init(document.getElementById('balancetwo'));
-    setTimeout($.axpost("https://test.phicomm.com/product-manger/balance/location/month",{"month":12,"type":"lianbi","pageSize":12},function (a) {
+    setTimeout($.axpost(baseUrl + "/balance/location/month",{"month":12,"type":"lianbi","pageSize":12},function (a) {
         var number = data(a.data,dataAxis1,datay1);
         setoption('体脂秤K码激活地区分布前12名(年)',['#fe6161','#fe6161','#fec182'],number.dataAxis.reverse(),number.datay.reverse());
         myChart1.setOption(option);
@@ -57,7 +58,7 @@ $(function(){
     var dataAxis2 = [];
     var datay2 = [];
     var myChart2 = echarts.init(document.getElementById('balancethird'));
-    $.axpost("https://test.phicomm.com/product-manger/balance/location/day",{"day":30,"type":"balance","pageSize":12},function (a) {
+    $.axpost(baseUrl + "/balance/location/day",{"day":30,"type":"balance","pageSize":12},function (a) {
         var number = data(a.data,dataAxis2,datay2);
         setoption('体脂秤使用地区分布前12名(月)',['#fe6161','#fe6161','#fec182'],number.dataAxis,number.datay);
         myChart2.setOption(option);
@@ -70,7 +71,7 @@ $(function(){
     var dataAxis3 = [];
     var datay3 = [];
     var myChart3 = echarts.init(document.getElementById('balancefour'));
-    $.axpost("https://test.phicomm.com/product-manger/balance/location/month",{"month":12,"type":"balance","pageSize":12},function (a) {
+    $.axpost(baseUrl + "/balance/location/month",{"month":12,"type":"balance","pageSize":12},function (a) {
         var number = data(a.data,dataAxis3,datay3);
         setoption('体脂秤使用地区分布前12名(月)',['#fe6161','#fe6161','#fec182'],number.dataAxis,number.datay);
         myChart3.setOption(option);
@@ -82,7 +83,7 @@ $(function(){
     var dataAxis4 = [];
     var datay4 = [];
     var myChart4 = echarts.init(document.getElementById('balancefive'));
-    $.axpost("https://test.phicomm.com/product-manger/balance/statistic/day",{"day":12,"type":"balance","pageSize":12},function (a) {
+    $.axpost(baseUrl + "/balance/statistic/day",{"day":12,"type":"balance","pageSize":12},function (a) {
         var number = data(a.data,dataAxis4,datay4);
         setoption('体脂秤新增使用数(月)',['#57fdfe'],number.dataAxis,number.datay);
         myChart4.setOption(option);
@@ -94,7 +95,7 @@ $(function(){
     var dataAxis5 = [];
     var datay5 = [];
     var myChart5 = echarts.init(document.getElementById('balancesix'));
-    $.axpost("https://test.phicomm.com/product-manger/balance/statistic/month",{"month":12,"type":"balance"},function (a) {
+    $.axpost(baseUrl + "/balance/statistic/month",{"month":12,"type":"balance"},function (a) {
         var number = data(a.data,dataAxis5,datay5);
         setoption('体脂秤新增使用数(年)',['#57fdfe'],number.dataAxis,number.datay);
         myChart5.setOption(option);
@@ -233,7 +234,7 @@ function show_num(n){
 /* 获取销量数据 */
 function getdata(){ 
     $.ajax({ 
-        url: 'https://test.phicomm.com/product-manger/balance/sales/number', 
+        url: baseUrl + '/balance/sales/number',
         type: 'POST', 
         dataType: "json", 
         contentType: 'application/json',

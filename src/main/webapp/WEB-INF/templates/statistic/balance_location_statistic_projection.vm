@@ -51,7 +51,7 @@
         </div>
     </div>
 </div>
-<input type="text" value="$baseUrl" hidden>
+<input type="text" value="$baseUrl" id="baseUrl" hidden>
 </body>
 <script src="$baseUrl/resources/map/jquery-1.10.1.min.js" type="text/javascript"></script>
 <script src="$baseUrl/resources/map/echarts.min.js" type="text/javascript"></script>
