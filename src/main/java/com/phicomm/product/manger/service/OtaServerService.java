@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
@@ -85,10 +84,9 @@ public class OtaServerService {
      *
      * @return 服务器地址信息
      */
-    public JSONObject obtainServerList() {
+    public List<BalanceOtaServerDetailBean> obtainServerList() {
         List<BalanceServerBean> balanceServerBeans = otaServerAddressMapper.obtainServerList();
         List<BalanceOtaServerDetailBean> balanceOtaServerDetailBeans = new ArrayList<>();
-        JSONObject result = new JSONObject();
         BalanceOtaServerDetailBean balanceOtaServerDetailBean;
         HostAndPort hostAndPort;
         for (BalanceServerBean balanceServerBean : balanceServerBeans) {
@@ -100,8 +98,7 @@ public class OtaServerService {
             balanceOtaServerDetailBean.setId(balanceServerBean.getId());
             balanceOtaServerDetailBeans.add(balanceOtaServerDetailBean);
         }
-        result.put("data", balanceOtaServerDetailBeans);
-        return result;
+        return balanceOtaServerDetailBeans;
     }
 
     /**

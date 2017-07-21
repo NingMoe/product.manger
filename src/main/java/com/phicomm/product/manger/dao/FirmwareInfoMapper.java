@@ -73,4 +73,19 @@ public interface FirmwareInfoMapper {
                        @Param("environment") String environment,
                        @Param("versionCode") Integer versionCode);
 
+    /**
+     * 获得固件信息
+     */
+    FirmwareInfo getFirmwareInfo(@Param("id") Integer id);
+
+    /**
+     * 设置是否可用
+     */
+    void setEnable(@Param("id") Integer id,
+                   @Param("enable") int enable);
+
+    /**
+     * 删除该固件
+     */
+    void delete(@Param("id") Integer id);
 }

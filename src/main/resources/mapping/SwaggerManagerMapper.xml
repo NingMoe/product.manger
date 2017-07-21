@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.SwaggerManagerMapper">
+
+    <insert id="inputNewProject" parameterType="com.phicomm.product.manger.model.swagger.SwaggerCoreMessageBean">
+        INSERT INTO swagger_account_manager (
+            project_name,
+            project_address,
+            swagger_address_prod,
+            swagger_username_prod,
+            swagger_password_prod,
+            swagger_address_test,
+            swagger_username_test,
+            swagger_password_test,
+            description
+        )
+        VALUES
+            (
+                #{swaggerCoreMessageBean.projectName,jdbcType=VARCHAR},
+                #{swaggerCoreMessageBean.projectAddress,jdbcType=LONGVARCHAR},
+                #{swaggerCoreMessageBean.swaggerAddressProd,jdbcType=LONGVARCHAR},
+                #{swaggerCoreMessageBean.swaggerUsernameProd,jdbcType=VARCHAR},
+                #{swaggerCoreMessageBean.swaggerPasswordProd,jdbcType=VARCHAR},
+                #{swaggerCoreMessageBean.swaggerAddressTest,jdbcType=LONGVARCHAR},
+                #{swaggerCoreMessageBean.swaggerUsernameTest,jdbcType=VARCHAR},
+                #{swaggerCoreMessageBean.swaggerPasswordTest,jdbcType=VARCHAR},
+                #{swaggerCoreMessageBean.description,jdbcType=LONGVARCHAR}
+            )
+    </insert>
+
+    <update id="updateProject" parameterType="com.phicomm.product.manger.model.swagger.SwaggerCoreMessageBean">
+        UPDATE
+            swagger_account_manager
+        SET
+            project_address = #{swaggerCoreMessageBean.projectAddress,jdbcType=LONGVARCHAR},
+            swagger_address_prod = #{swaggerCoreMessageBean.swaggerAddressProd,jdbcType=LONGVARCHAR},
+            swagger_username_prod = #{swaggerCoreMessageBean.swaggerUsernameProd,jdbcType=VARCHAR},
+            swagger_password_prod =  #{swaggerCoreMessageBean.swaggerPasswordProd,jdbcType=VARCHAR},
+            swagger_address_test = #{swaggerCoreMessageBean.swaggerAddressTest,jdbcType=LONGVARCHAR},
+            swagger_username_test = #{swaggerCoreMessageBean.swaggerUsernameTest,jdbcType=VARCHAR},
+            swagger_password_test = #{swaggerCoreMessageBean.swaggerPasswordTest,jdbcType=VARCHAR},
+            description = #{swaggerCoreMessageBean.description,jdbcType=LONGVARCHAR},
+            update_time = NOW()
+        WHERE
+            project_name =  #{swaggerCoreMessageBean.projectName,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="dropProject" parameterType="java.lang.String">
+        DELETE
+        FROM
+            `swagger_account_manager`
+        WHERE
+            project_name=#{projectName,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="checkProject" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT
+            COUNT(1)
+        FROM
+            `swagger_account_manager`
+        WHERE
+            project_name=#{projectName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="fetchTestList" resultType="com.phicomm.product.manger.model.swagger.SwaggerTestEnvironmentBean">
+        SELECT
+            id AS id,
+            project_name AS projectName,
+            project_address AS projectAddress,
+            swagger_address_test AS swaggerAddressTest,
+            swagger_username_test AS swaggerUsernameTest,
+            swagger_password_test AS swaggerPasswordTest,
+            description AS description,
+            DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') AS createTime,
+            DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') AS updateTime
+        FROM
+            `swagger_account_manager`
+    </select>
+
+    <select id="fetchProjectDetail" parameterType="java.lang.String"
+            resultType="com.phicomm.product.manger.model.swagger.SwaggerAccountBean">
+        SELECT
+            id AS id,
+            project_name AS projectName,
+            project_address AS projectAddress,
+            swagger_address_prod AS swaggerAddressProd,
+            swagger_username_prod AS swaggerUsernameProd,
+            swagger_password_prod AS swaggerPasswordProd,
+            swagger_address_test AS swaggerAddressTest,
+            swagger_username_test AS swaggerUsernameTest,
+            swagger_password_test AS swaggerPasswordTest,
+            description AS description,
+            DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') AS createTime,
+            DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') AS updateTime
+        FROM
+            `swagger_account_manager`
+        WHERE
+            project_name = #{projectName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="fetchTotalList" resultType="com.phicomm.product.manger.model.swagger.SwaggerAccountBean">
+        SELECT
+            id AS id,
+            project_name AS projectName,
+            project_address AS projectAddress,
+            swagger_address_prod AS swaggerAddressProd,
+            swagger_username_prod AS swaggerUsernameProd,
+            swagger_password_prod AS swaggerPasswordProd,
+            swagger_address_test AS swaggerAddressTest,
+            swagger_username_test AS swaggerUsernameTest,
+            swagger_password_test AS swaggerPasswordTest,
+            description AS description,
+            DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') AS createTime,
+            DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') AS updateTime
+        FROM
+            `swagger_account_manager`
+    </select>
+</mapper>

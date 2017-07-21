@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
+
+/**
+ * 获取过去30天的mac统计信息
+ */
 $(function obtainMacInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -17,16 +21,20 @@ $(function obtainMacInfoByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             drawBarChart(labels, dates, new Chart($("#macMonthChart").get(0).getContext("2d")));
         }
     })
 });
+
+/**
+ * 获取过去12个月的mac统计信息
+ */
 $(function obtainMacYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -42,16 +50,23 @@ $(function obtainMacYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             drawBarChart(labels, dates, new Chart($("#macYearChart").get(0).getContext("2d")));
         }
     })
 });
+
+/**
+ * 绘制柱状图
+ * @param labes 横坐标
+ * @param datas 数据
+ * @param chart 图表类型
+ */
 function drawBarChart(labes, datas, chart) {
     let chartDataArea = {
         labels: labes,

@@ -29,6 +29,10 @@ public class ExceptionHandlerController {
     private static JSONObject exception8;
     private static JSONObject exception9;
     private static JSONObject exception10;
+    private static JSONObject exception11;
+    private static JSONObject exception12;
+    private static JSONObject exception13;
+    private static JSONObject exception14;
 
     static {
         exception1001 = new JSONObject();
@@ -94,6 +98,30 @@ public class ExceptionHandlerController {
         exception10 = new JSONObject();
         exception10.put("status", 10);
         exception10.put("description", "Type not found.");
+    }
+
+    static {
+        exception11 = new JSONObject();
+        exception11.put("status", 11);
+        exception11.put("description", "firmware disable.");
+    }
+
+    static {
+        exception12 = new JSONObject();
+        exception12.put("status", 12);
+        exception12.put("description", "firmware current enable.");
+    }
+
+    static {
+        exception13 = new JSONObject();
+        exception13.put("status", 13);
+        exception13.put("description", "Swagger project not found .");
+    }
+
+    static {
+        exception14 = new JSONObject();
+        exception14.put("status", 14);
+        exception14.put("description", "Swagger project already existed .");
     }
 
     @ExceptionHandler(Exception.class)
@@ -178,7 +206,39 @@ public class ExceptionHandlerController {
      * 类型错误
      */
     @ExceptionHandler(TypeNotPresentException.class)
-    public ModelAndView processTypeNotPresentException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception10);
+    public ModelAndView processTypeNotPresentException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception10);
+    }
+
+    /**
+     * 当前固件不可用
+     */
+    @ExceptionHandler(FirmwareDisableException.class)
+    public ModelAndView processFirmwareDisableException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception11);
+    }
+
+    /**
+     * 当前固件可用
+     */
+    @ExceptionHandler(FirmwareEnableException.class)
+    public ModelAndView processFirmwareEnableException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception12);
+    }
+
+    /**
+     * 某个项目不存在
+     */
+    @ExceptionHandler(SwaggerProjectNotFoundException.class)
+    public ModelAndView processSwaggerProjectNotFoundException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception13);
+    }
+
+    /**
+     * 某个项目已经存在
+     */
+    @ExceptionHandler(SwaggerProjectHasExistedException.class)
+    public ModelAndView processSwaggerProjectHasExistedException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception14);
     }
 }

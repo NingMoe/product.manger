@@ -26,6 +26,7 @@
         INSERT INTO firmware_info (
             firmware_type, version,
             version_code, environment,
+            gnss_version, md5,
             hardware_code, `enable`,
             create_time, url,
             description
@@ -33,6 +34,7 @@
         VALUES (
             #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
             #{firmwareInfo.versionCode,jdbcType=INTEGER}, #{firmwareInfo.environment,jdbcType=VARCHAR},
+            #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
             #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
             now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR}
         )
@@ -79,6 +81,8 @@
             version AS version,
             version_code AS versionCode,
             environment AS environment,
+            gnss_version AS  gnssVersion,
+            md5 AS md5,
             hardware_code AS hardwareCode,
             url AS url,
             `enable` AS `enable`,
@@ -111,5 +115,34 @@
             AND environment = #{environment,jdbcType=VARCHAR}
             AND version_code = #{versionCode,jdbcType=INTEGER}
     </update>
+
+    <update id="setEnable">
+        UPDATE firmware_info
+        SET `enable` = #{enable,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getFirmwareInfo" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+        SELECT
+            id AS id,
+            firmware_type AS firmwareType,
+            version AS version,
+            version_code AS versionCode,
+            environment AS environment,
+            hardware_code AS hardwareCode,
+            url AS url,
+            `enable` AS `enable`,
+            create_time AS createTime,
+            description AS description
+        FROM
+            firmware_info
+        WHERE
+            id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="delete">
+        DELETE FROM firmware_info
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
 
 </mapper>

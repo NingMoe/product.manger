@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 
 /**
@@ -43,12 +43,14 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByMonth(@RequestParam int month,
-                                                   @RequestParam String type) {
-        return balanceStatisticService.obtainCountByMonth(month, type);
+//    @FunctionPoint("common")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month,
+                                                             @RequestParam String type) {
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByMonth(month, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
@@ -60,12 +62,14 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByDay(@RequestParam int day,
-                                                 @RequestParam String type) {
-        return balanceStatisticService.obtainCountByDay(day, type);
+//    @FunctionPoint("common")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainCountByDay(@RequestParam int day,
+                                                           @RequestParam String type) {
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByDay(day, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
@@ -98,8 +102,8 @@ public class BalanceStatisticController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<Map<String,int[]>> statisticUserByAge() {
-        return new Response<Map<String,int[]>>().setData(balanceStatisticService.statisticUserByAge());
+    public Response<Map<String, int[]>> statisticUserByAge() {
+        return new Response<Map<String, int[]>>().setData(balanceStatisticService.statisticUserByAge());
     }
 
     /**
@@ -116,7 +120,7 @@ public class BalanceStatisticController {
     })
     @FunctionPoint("common")
     public Response<Map<String, Integer>> statisticUser() {
-        return new Response<Map<String,Integer>>().setData(balanceStatisticService.statisticUser());
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.statisticUser());
     }
 
     /**
@@ -132,8 +136,8 @@ public class BalanceStatisticController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<Map<String,int[]>> statisticMemberByAge() {
-        return new Response<Map<String,int[]>>().setData(balanceStatisticService.statisticMemberByAge());
+    public Response<Map<String, int[]>> statisticMemberByAge() {
+        return new Response<Map<String, int[]>>().setData(balanceStatisticService.statisticMemberByAge());
     }
 
     /**
@@ -150,7 +154,7 @@ public class BalanceStatisticController {
     })
     @FunctionPoint("common")
     public Response<Map<String, Integer>> statisticMember() {
-        return new Response<Map<String,Integer>>().setData(balanceStatisticService.statisticMember());
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.statisticMember());
     }
 }
 

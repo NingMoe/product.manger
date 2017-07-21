@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
+
+/**
+ * 获取激活信息（30天）
+ */
 $(function obtainActiveByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -17,10 +21,10 @@ $(function obtainActiveByDay() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let lineChartCavas = $("#activeMonthChart").get(0).getContext("2d");
@@ -29,6 +33,10 @@ $(function obtainActiveByDay() {
         }
     })
 });
+
+/**
+ * 获取过去12个月的激活信息
+ */
 $(function obtainActiveYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -44,10 +52,10 @@ $(function obtainActiveYearData() {
         }, success: function (data) {
             let labels = [];
             let dates = [];
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data[key]);
+                    dates.push(data.data[key]);
                 }
             }
             let lineChartCavas = $("#activeYearChart").get(0).getContext("2d");
@@ -56,6 +64,13 @@ $(function obtainActiveYearData() {
         }
     })
 });
+
+/**
+ * 绘制曲线图
+ * @param labes 横坐标
+ * @param datas 数据
+ * @param chart 图表类型
+ */
 function drawLinechart(labes, datas, chart) {
     let areaChartData = {
         labels: labes,

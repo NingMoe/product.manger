@@ -20,22 +20,6 @@
     </navigation>
 
     <navigation>
-        <id>permissionManger</id>
-        <title>
-            <title-name>权限管理</title-name>
-            <title-description>权限管理</title-description>
-        </title>
-        <directory>
-            <icon>fa fa-dashboard</icon>
-            <name>Home</name>
-            <url>$baseUrl/permission</url>
-            <sub-directories>
-                <name>permission</name>
-            </sub-directories>
-        </directory>
-    </navigation>
-
-    <navigation>
         <id>salesLocationStatistic</id>
         <title>
             <title-name>统计</title-name>
@@ -351,6 +335,70 @@
             <url>$baseUrl/balance/mcu/mac/manage</url>
             <sub-directories>
                 <name>balanceMcuMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userManger</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>userManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>permissionManger</id>
+        <title>
+            <title-name>权限管理</title-name>
+            <title-description>权限管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/permission/manger/page</url>
+            <sub-directories>
+                <name>permissionManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>swaggerManager</id>
+        <title>
+            <title-name>在线文档管理</title-name>
+            <title-description>在线文档管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/swagger/project/manager</url>
+            <sub-directories>
+                <name>swaggerManager</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>swaggerEdit</id>
+        <title>
+            <title-name>在线文档编辑</title-name>
+            <title-description>项目编辑</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/swagger/project/edit</url>
+            <sub-directories>
+                <name>swaggerEdit</name>
             </sub-directories>
         </directory>
     </navigation>

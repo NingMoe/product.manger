@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
+
+/**
+ * 获取mac统计信息
+ */
 function obtainMacInfo() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({

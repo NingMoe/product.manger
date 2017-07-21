@@ -1,8 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -56,8 +53,7 @@ public class BalanceOtaService {
      * @throws DataFormatException 数据格式异常
      */
     public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
-            throws IOException,
-            DataFormatException {
+            throws IOException, DataFormatException {
         checkOtaParamFormat(aFile, bFile, version);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
@@ -145,12 +141,8 @@ public class BalanceOtaService {
      * @param environment 环境
      * @return 版本列表
      */
-    public JSONObject fetchOtaVersionList(String environment) {
-        List<BalanceOtaInfo> balanceOtaInfoList = fetchOtaList(environment);
-        JSONArray jsonArray = (JSONArray) JSON.toJSON(balanceOtaInfoList);
-        JSONObject result = new JSONObject();
-        result.put("data", jsonArray);
-        return result;
+    public List<BalanceOtaInfo> fetchOtaVersionList(String environment) {
+        return fetchOtaList(environment);
     }
 
     /**

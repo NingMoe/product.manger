@@ -100,7 +100,7 @@ public class BalanceStatisticService {
      */
     public Map<String, Integer> obtainCountByDay(int day, String type) {
         DateTime dateTime = new DateTime(DateTime.now()).minusDays(1);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
         List<CountBean> countBeans;
         CustomerContextHolder.selectProdDataSource();
         if ("lianbi".equalsIgnoreCase(type)) {

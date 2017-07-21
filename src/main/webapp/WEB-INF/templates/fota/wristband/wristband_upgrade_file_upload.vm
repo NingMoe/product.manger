@@ -26,7 +26,11 @@
                         </div>
                         <div class="form-group">
                             <label for="firmwareVersion">固件版本号</label>
-                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" placeholder="固件版本号">
+                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="firmwareVersion">GNSS版本号</label>
+                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
                         </div>
                         <div class="form-group">
                             <label for="environment">环境（测试/生产）</label>
@@ -38,8 +42,8 @@
                         </div>
                         <div class="form-group">
                             <label for="file">固件上传</label>
-                            <input type="file" name="file" id="file" class="form-control">
-                            <p class="help-block">例如：W1_A0_V1.00_0615_WB.zip</p>
+                            <input type="file" name="file" id="file" class="form-control" style="border-radius: 4px">
+                            <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
                         </div>
                         <div class="form-group">
                             <label for="description">固件说明</label>
