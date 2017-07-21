@@ -17,4 +17,22 @@ public interface BalanceUserManagerMapper {
      * @return 绑定该电子秤的成员数
      */
     int obtainMemberCount(@Param("mac") String mac);
+
+    /**
+     * 按年龄统计所有成员
+     *
+     * @param lowAge 年龄段下限
+     * @param highAge 年龄段上限
+     * @param sex 性别
+     * @return 性别和年龄都匹配的成员数量
+     */
+    int statisticMemberByAge(@Param("lowAge") int lowAge, @Param("highAge") int highAge, @Param("sex") int sex);
+
+    /**
+     * 统计所有成员
+     *
+     * @param sex 性别
+     * @return 性别匹配的成员数量
+     */
+    int statisticMember(@Param("sex") int sex);
 }

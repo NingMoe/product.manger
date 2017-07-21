@@ -4,11 +4,13 @@ import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceStatusMapper;
 import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.LianbiActiveMapper;
+import com.phicomm.product.manger.dao.UserInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.model.statistic.CountBean;
 import com.phicomm.product.manger.model.statistic.LianBiActiveBean;
+import com.phicomm.product.manger.module.analysis.UserCacheImpl;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.RegexUtil;
 import org.joda.time.DateTime;
@@ -35,17 +37,26 @@ public class BalanceStatisticService {
 
     private LianbiActiveMapper lianbiActiveMapper;
 
+    private UserInfoMapper userInfoMapper;
+
+    private UserCacheImpl userCache;
+
     @Autowired
     public BalanceStatisticService(BalanceUserManagerMapper balanceUserManagerMapper,
                                    BalanceStatusMapper balanceStatusMapper,
-                                   LianbiActiveMapper lianbiActiveMapper) {
+                                   LianbiActiveMapper lianbiActiveMapper,
+                                   UserInfoMapper userInfoMapper,
+                                   UserCacheImpl userCache) {
         this.balanceUserManagerMapper = balanceUserManagerMapper;
         this.balanceStatusMapper = balanceStatusMapper;
         this.lianbiActiveMapper = lianbiActiveMapper;
+        this.userInfoMapper = userInfoMapper;
+        this.userCache = userCache;
         Assert.notNull(this.balanceUserManagerMapper);
         Assert.notNull(this.balanceStatusMapper);
         Assert.notNull(this.lianbiActiveMapper);
-
+        Assert.notNull(this.userInfoMapper);
+        Assert.notNull(this.userCache);
     }
 
     /**
@@ -224,5 +235,58 @@ public class BalanceStatisticService {
             return "无激活信息";
         }
 
+    }
+
+    /**
+     * 按年龄统计用户中的男女数量
+     *
+     * @return 不同年龄段的男女数量
+     */
+    public Map<String, int[]> statisticUserByAge() {
+        return userCache.getUserCache().getUserResult();
+    }
+
+    /**
+     * 统计用户中的男女数量
+     *
+     * @return 用户中的男女数量
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, Integer> statisticUser() {
+        Map<String, Integer> result = new HashMap<>();
+        CustomerContextHolder.selectProdDataSource();
+        int menNum = userInfoMapper.statisticUser(1);
+        int womenNum = userInfoMapper.statisticUser(0);
+        CustomerContextHolder.clearDataSource();
+        result.put("男", menNum);
+        result.put("女", womenNum);
+        return result;
+    }
+
+    /**
+     * 按年龄统计成员中的男女数量
+     *
+     * @return 不同年龄段的男女数量
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, int[]> statisticMemberByAge() {
+        return userCache.getUserCache().getMemberResult();
+    }
+
+    /**
+     * 统计成员中的男女数量
+     *
+     * @return 成员中的男女数量
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, Integer> statisticMember() {
+        Map<String, Integer> result = new HashMap<>();
+        CustomerContextHolder.selectProdDataSource();
+        int menNum = balanceUserManagerMapper.statisticMember(1);
+        int womenNum = balanceUserManagerMapper.statisticMember(0);
+        CustomerContextHolder.clearDataSource();
+        result.put("男", menNum);
+        result.put("女", womenNum);
+        return result;
     }
 }
