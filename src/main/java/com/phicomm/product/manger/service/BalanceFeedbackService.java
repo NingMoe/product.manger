@@ -5,11 +5,13 @@ import com.phicomm.product.manger.dao.FeedbackInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs;
 import com.phicomm.product.manger.model.table.FeedbackRequestBean;
+import com.phicomm.product.manger.model.table.FeedbackReview;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -163,5 +165,62 @@ public class BalanceFeedbackService {
             }
         }
         return Arrays.copyOfRange(array, 0, count.get() + 1);
+    }
+
+    /**
+     * 创建反馈回复
+     *
+     * @param feedbackReview 反馈回复
+     */
+    public void createFeedbackReview(FeedbackReview feedbackReview) {
+        CustomerContextHolder.selectTestDataSource();
+        feedbackInfoMapper.createFeedbackReview(feedbackReview);
+        CustomerContextHolder.clearDataSource();
+    }
+
+    /**
+     * 获取回复列表
+     *
+     * @param feedbackId 用户反馈ID
+     * @return 反馈信息
+     */
+    public List<FeedbackReview> listFeedbackReview(long feedbackId) {
+        CustomerContextHolder.selectTestDataSource();
+        List<FeedbackReview> feedbackReview = feedbackInfoMapper.listFeedbackReview(feedbackId);
+        CustomerContextHolder.clearDataSource();
+        return feedbackReview;
+    }
+
+    /**
+     * 删除回复
+     *
+     * @param feedbackReviewId 回复ID
+     */
+    public void deleteFeedbackReview(long feedbackReviewId) {
+        CustomerContextHolder.selectTestDataSource();
+        feedbackInfoMapper.deleteFeedbackReview(feedbackReviewId);
+        CustomerContextHolder.clearDataSource();
+    }
+
+    /**
+     * 收藏用户反馈
+     *
+     * @param feedbackId 用户反馈ID
+     */
+    public void collectFeedback(long feedbackId) {
+        CustomerContextHolder.selectTestDataSource();
+        feedbackInfoMapper.collectFeedback(feedbackId);
+        CustomerContextHolder.clearDataSource();
+    }
+
+    /**
+     * 取消收藏用户反馈
+     *
+     * @param feedbackId 用户反馈ID
+     */
+    public void unCollectFeedback(long feedbackId) {
+        CustomerContextHolder.selectTestDataSource();
+        feedbackInfoMapper.unCollectFeedback(feedbackId);
+        CustomerContextHolder.clearDataSource();
     }
 }
