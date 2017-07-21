@@ -72,7 +72,7 @@ $(function(){
     var dataAxis3 = [];
     var datay3 = [];
     var myChart3 = echarts.init(document.getElementById('balancefour'));
-    $.axpost(baseUrl = "/balance/location/month",{"month":12,"type":"balance","pageSize":12},function (a) {
+    $.axpost(baseUrl + "/balance/location/month",{"month":12,"type":"balance","pageSize":12},function (a) {
         var number = data(a.data,dataAxis3,datay3);
         setoption('体脂秤使用地区分布前12名(年)',['#cf641c','#fe6161','#ff7708'],number.dataAxis.reverse(),number.datay.reverse());
         myChart3.setOption(option);
