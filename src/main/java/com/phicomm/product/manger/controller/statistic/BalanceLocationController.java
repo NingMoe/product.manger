@@ -45,7 +45,7 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @PublicInterface
+    @FunctionPoint("common")
     public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
         BalanceLocationStatistic balanceLocationStatistic = balanceLocationService.getBalanceLocationStatistic();
         return new Response<BalanceLocationStatistic>().setData(balanceLocationStatistic);
@@ -61,8 +61,7 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
-    @PublicInterface
+    @FunctionPoint("common")
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
         BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
         return new Response<BalanceSaleNumber>().setData(balanceSaleNumber);
@@ -80,8 +79,7 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
-    @PublicInterface
+    @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
@@ -101,8 +99,7 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
-    @PublicInterface
+    @FunctionPoint("common")
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {
