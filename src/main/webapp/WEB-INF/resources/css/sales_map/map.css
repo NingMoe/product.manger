@@ -27,11 +27,15 @@ body {
     font-size: 100px;
     background-color: #091525;
 }
+.contentinner{
+    min-width: 1200px;
+    max-height: 1920px;
+}
 body{
     font-family: "microsoft yahei";
-    font-size:0.16rem;
+    font-size:0.12rem;
     color:#fff;
-    background: url(../../image/sales_map/bg.jpg) no-repeat;
+    background: url(../../image/sales_map/bg.jpg)  no-repeat;
     background-size: 100% 100%;
 }
 .title{
@@ -55,7 +59,7 @@ body{
     position:relative;
     width:56%;
     height:7.45rem;
-    margin-bottom: 20px;
+    margin-bottom: 0.2rem;
     margin-right:2%;
     float: left;
     background: url(../../image/sales_map/bg_left.png) no-repeat;
@@ -64,7 +68,7 @@ body{
 .left .left-title{
     position:absolute;
     top:0;
-    width:calc(100% - 20px);
+    width:calc(100% - .20rem);
     margin: 1px;
     padding-left: 0.18rem;
     font-size:0.18rem;
@@ -77,21 +81,20 @@ body{
 #total {
     display: block;
     position: absolute;
-    top: 1rem;
+    top: 0.65rem;
     left: 0.45rem;
     font-size: 0;
     z-index: 999;
 }
 .t_num span{
     display: inline-block;
-    margin: 0 5px;
-    padding: .12rem 2px;
+    margin: 0 0.05rem;
+    padding: .12rem .02rem;
     cursor: pointer;
     color: #FFF;
-
     background: rgba(3,144,216,.52);
     border: 2px solid rgba(16,32,54,.52);
-    border-radius: 8px;
+    border-radius: .08rem;
 }
 .t_num i {
     width: 0.5rem;
@@ -101,11 +104,34 @@ body{
     background-position: 0 0;
     text-indent: -999em;
 }
+.t_num img{
+    margin: 0 2px;
+    vertical-align: bottom;
+}
+.num_zero{
+    display: inline-block;
+    margin: 0 0.05rem;
+    padding: .12rem .02rem;
+    cursor: pointer;
+    color: #FFF;
+    background: rgba(3,144,216,.52);
+    border: 2px solid rgba(16,32,54,.52);
+    border-radius: .08rem;
+    display: none;
+}
+.num_zero i {
+    width: 0.5rem;
+    height:0.5rem;
+    display: inline-block;
+    background: url(../../image/sales_map/num.png) no-repeat;
+    background-position: 0 0;
+    text-indent: -999em;
+}
 .right .right-title{
-    width:calc(100% - 13px);
-    padding-left: 13px;
-    font-size:14px;
-    line-height: 30px;
+    width:calc(100% - 0.13rem);
+    padding-left: 0.13rem;
+    font-size:0.14rem;
+    line-height: 0.30rem;
     background: -ms-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
     background:-moz-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
     background: -webkit-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
@@ -116,8 +142,8 @@ body{
 }
 .data-rank li{
     float:left;
-    width:calc(50% - 20px);
-    width:-webkit-calc(50% - 20px);
+    width:calc(50% - .20rem);
+    width:-webkit-calc(50% - .20rem);
     padding-left:0.2rem;
     padding-top: 0.2rem;
 }
@@ -125,32 +151,32 @@ body{
     content:"";
     display:block;
     width:0.4rem;
-    height:8px;
-    margin-bottom:5px;
+    height:.08rem;
+    margin-bottom:.05rem;
     background: #ff0006;
 }
 .data-rank .ranklist2:before{
     content:"";
     display:block;
     width:0.4rem;
-    height:8px;
-    margin-bottom:5px;
+    height:.08rem;
+    margin-bottom:.05rem;
     background: #eb7180;
 }
 .data-rank .ranklist3:before{
     content:"";
     display:block;
     width:0.4rem;
-    height:8px;
-    margin-bottom:5px;
+    height:.08rem;
+    margin-bottom:.05rem;
     background: #f9e71e;
 }
 .data-rank .ranklist4:before{
     content:"";
     display:block;
     width:0.4rem;
-    height:8px;
-    margin-bottom:5px;
+    height:.08rem;
+    margin-bottom:.05rem;
     background: #6ea5ff;
 }
 .data-rank li span{
@@ -159,10 +185,10 @@ body{
 .articletop{
     width:100%;
     height:3.20rem;
-    margin-bottom:10px;
+    margin-bottom:.10rem;
     color: #FFFFFF;
     border:1px solid #0284d8;
-    box-shadow:inset 0 0 20px #1173a7;
+    box-shadow:inset 0 0 .20rem #1173a7;
     background:rgba(13,27,38,.09);
 }
 
@@ -188,9 +214,9 @@ body{
     height:2rem;
 }
 .sb{
-    background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat  ;
+    background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat;
     margin-bottom: 0.1rem;
     background-size:cover;
     border:1px solid #0284d8;
-    box-shadow:inset 0 0 20px #1173a7;
+    box-shadow:inset 0 0 .20rem #1173a7;
 }
