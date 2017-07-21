@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+a,
+input,
+button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body * {
+    -webkit-user-select: none;
+    font-family: Helvetica;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+a {
+    text-decoration: none;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-size: 100px;
+    background-color: #091525;
+}
+body{
+    font-family: "microsoft yahei";
+    font-size:0.16rem;
+    color:#fff;
+    background: url(../../image/sales_map/bg.jpg) no-repeat;
+    background-size: 100% 100%;
+}
+.title{
+    width: 71.25%;
+    margin: auto;
+    background: url("../../image/sales_map/title.png") no-repeat;
+    background-size: contain;
+    height: 0.70rem;
+    background-position: center;
+}
+.title img{
+    width: 100%;
+}
+.content{
+    width:94%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.left{
+    position:relative;
+    width:56%;
+    height:7.45rem;
+    margin-bottom: 20px;
+    margin-right:2%;
+    float: left;
+    background: url(../../image/sales_map/bg_left.png) no-repeat;
+    background-size: 100% 100%;
+}
+.left .left-title{
+    position:absolute;
+    top:0;
+    width:calc(100% - 20px);
+    margin: 1px;
+    padding-left: 0.18rem;
+    font-size:0.18rem;
+    line-height: 0.40rem;
+    background: -ms-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background:-moz-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background: -webkit-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background: -o-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+}
+#total {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    left: 0.45rem;
+    font-size: 0;
+    z-index: 999;
+}
+.t_num span{
+    display: inline-block;
+    margin: 0 5px;
+    padding: .12rem 2px;
+    cursor: pointer;
+    color: #FFF;
+
+    background: rgba(3,144,216,.52);
+    border: 2px solid rgba(16,32,54,.52);
+    border-radius: 8px;
+}
+.t_num i {
+    width: 0.5rem;
+    height:0.5rem;
+    display: inline-block;
+    background: url(../../image/sales_map/num.png) no-repeat;
+    background-position: 0 0;
+    text-indent: -999em;
+}
+.right .right-title{
+    width:calc(100% - 13px);
+    padding-left: 13px;
+    font-size:14px;
+    line-height: 30px;
+    background: -ms-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background:-moz-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background: -webkit-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+    background: -o-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
+}
+.data-rank{
+    font-size:0.16rem;
+}
+.data-rank li{
+    float:left;
+    width:calc(50% - 20px);
+    width:-webkit-calc(50% - 20px);
+    padding-left:0.2rem;
+    padding-top: 0.2rem;
+}
+.data-rank .ranklist1:before{
+    content:"";
+    display:block;
+    width:0.4rem;
+    height:8px;
+    margin-bottom:5px;
+    background: #ff0006;
+}
+.data-rank .ranklist2:before{
+    content:"";
+    display:block;
+    width:0.4rem;
+    height:8px;
+    margin-bottom:5px;
+    background: #eb7180;
+}
+.data-rank .ranklist3:before{
+    content:"";
+    display:block;
+    width:0.4rem;
+    height:8px;
+    margin-bottom:5px;
+    background: #f9e71e;
+}
+.data-rank .ranklist4:before{
+    content:"";
+    display:block;
+    width:0.4rem;
+    height:8px;
+    margin-bottom:5px;
+    background: #6ea5ff;
+}
+.data-rank li span{
+    display:block;
+}
+.articletop{
+    width:100%;
+    height:3.20rem;
+    margin-bottom:10px;
+    color: #FFFFFF;
+    border:1px solid #0284d8;
+    box-shadow:inset 0 0 20px #1173a7;
+    background:rgba(13,27,38,.09);
+}
+
+.asideright{
+    -height:100%;
+    float: left;
+}
+.sectionleft,.sectionright{
+    float: left;
+    width:49%;
+}
+.sectionleft{
+    margin-right:2%;
+}
+.righttop{
+    width:100%;
+    height:1.8rem;
+}
+.rightbottom{
+    height:2rem;
+}
+.rightspec{
+    height:2rem;
+}
+.sb{
+    background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat  ;
+    margin-bottom: 0.1rem;
+    background-size:cover;
+    border:1px solid #0284d8;
+    box-shadow:inset 0 0 20px #1173a7;
+}

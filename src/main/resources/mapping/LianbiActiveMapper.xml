@@ -39,16 +39,16 @@
     <![CDATA[
 
        SELECT
-            DATE_FORMAT(create_time, '%Y-%m-%d') AS generateTime,
+            DATE_FORMAT(create_time, '%y-%m-%d') AS generateTime,
             COUNT(1) AS generateCount
         FROM
             `balance_lianbi_active_info`
         GROUP BY
             generateTime
         HAVING
-            generateTime >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),'%Y-%m-%d')
+            generateTime >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),'%y-%m-%d')
         AND
-            generateTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+            generateTime < DATE_FORMAT(NOW(), '%y-%m-%d')
         ORDER BY
             generateTime DESC
 
@@ -61,7 +61,14 @@
         <![CDATA[
 
        SELECT
-            province AS province,
+            IF (
+                POSITION('自治区' IN province)>0,
+                LEFT (
+                    province,
+                    LOCATE('自治区', province) - 1
+                ),
+                province
+            ) AS province,
             COUNT(1) AS generateCount
         FROM
             balance_lianbi_active_info
@@ -95,7 +102,14 @@
                 (
                     SELECT
                         DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
-                        province AS province
+                        IF (
+                            POSITION('自治区' IN province)>0,
+                            LEFT (
+                                province,
+                                LOCATE('自治区', province) - 1
+                            ),
+                            province
+                        )  AS province
                     FROM
                         balance_lianbi_active_info
                     HAVING

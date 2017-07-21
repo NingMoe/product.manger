@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.controller.statistic;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 
 /**
@@ -43,12 +43,14 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByMonth(@RequestParam int month,
-                                                   @RequestParam String type) {
-        return balanceStatisticService.obtainCountByMonth(month, type);
+//    @FunctionPoint("common")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month,
+                                                             @RequestParam String type) {
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByMonth(month, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
@@ -60,12 +62,14 @@ public class BalanceStatisticController {
     @ResponseBody
     @ApiOperation("新增信息统计")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Array.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
-    public Map<String, Integer> obtainCountByDay(@RequestParam int day,
-                                                 @RequestParam String type) {
-        return balanceStatisticService.obtainCountByDay(day, type);
+//    @FunctionPoint("common")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainCountByDay(@RequestParam int day,
+                                                           @RequestParam String type) {
+        Map<String, Integer> statisticData = balanceStatisticService.obtainCountByDay(day, type);
+        return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
     /**
@@ -84,4 +88,74 @@ public class BalanceStatisticController {
         BalanceMacStatus balanceMacStatus = balanceStatisticService.obtainBalanceStatusInfo(searchParam);
         return new Response<BalanceMacStatus>().setData(balanceMacStatus);
     }
+
+    /**
+     * 按年龄统计用户中的男女数量
+     *
+     * @return 不同年龄段的男女数量
+     */
+    @RequestMapping(value = "balance/statistic/user/analysis/age", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("按年龄统计用户中的男女数量")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<Map<String, int[]>> statisticUserByAge() {
+        return new Response<Map<String, int[]>>().setData(balanceStatisticService.statisticUserByAge());
+    }
+
+    /**
+     * 统计用户中的男女数量
+     *
+     * @return 用户中的男女数量
+     */
+    @RequestMapping(value = "balance/statistic/user/analysis/all", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("统计用户中的男女数量")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<Map<String, Integer>> statisticUser() {
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.statisticUser());
+    }
+
+    /**
+     * 按年龄统计成员中的男女数量
+     *
+     * @return 不同年龄段的男女数量
+     */
+    @RequestMapping(value = "balance/statistic/member/analysis/age", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("按年龄统计所有成员中的男女数量")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<Map<String, int[]>> statisticMemberByAge() {
+        return new Response<Map<String, int[]>>().setData(balanceStatisticService.statisticMemberByAge());
+    }
+
+    /**
+     * 统计成员中的男女数量
+     *
+     * @return 成员中的男女数量
+     */
+    @RequestMapping(value = "balance/statistic/member/analysis/all", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("统计所有成员中的男女数量")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<Map<String, Integer>> statisticMember() {
+        return new Response<Map<String, Integer>>().setData(balanceStatisticService.statisticMember());
+    }
 }
+
+

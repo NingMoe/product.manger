@@ -5,6 +5,9 @@ $(document).ready(function () {
     $("#balance_mcu_upload_node").addClass("active");
 });
 
+/**
+ * 上传文件
+ */
 function uploadFile() {
     const baseUrl = $("#baseUrl").val();
     let formData = new FormData($("#uploadFile")[0]);

@@ -1,2 +1,14 @@
 <li class="header">Permission Manger</li>
-<li><a href="$baseUrl/permission"><i class="fa fa-gears"></i> <span>权限管理</span></a></li>
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-gears"></i>
+        <span>用户权限管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="$baseUrl/user/manger/page"><i class="fa fa-user"></i> 用户管理</a></li>
+        <li><a href="$baseUrl/permission/manger/page"><i class="fa fa-legal"></i> 权限管理</a></li>
+    </ul>
+</li>

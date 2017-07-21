@@ -33,4 +33,9 @@ public class RegexTest {
     public void test5() {
         System.out.println("$baseUrl/a/b/c/d".replace("$baseUrl", "http://192.168.40.41:8080"));
     }
+
+    @Test
+    public void test6() {
+        System.out.println("abcxshjah.zip".replace(".zip", ""));
+    }
 }

@@ -7,10 +7,7 @@ import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.FirmwareInfoMapper;
 import com.phicomm.product.manger.dao.FirmwareTriggerParamConfigMapper;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.UploadFileException;
-import com.phicomm.product.manger.exception.VersionHasExistException;
-import com.phicomm.product.manger.exception.VersionNotExistException;
+import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.module.fota.DefaultFirmwareUpgradeTrigger;
 import com.phicomm.product.manger.module.fota.FirmwareUpgradeContext;
@@ -59,30 +56,36 @@ public class FirmwareUpgradeService {
                                                    String hardwareVersion,
                                                    String firmwareVersion,
                                                    String environment,
+                                                   String gnssVersion,
                                                    MultipartFile file,
                                                    String description)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
-        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion, environment, file, description);
+        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion,
+                environment, gnssVersion, file, description);
         int firmwareVersionCode = Integer.parseInt(firmwareVersion);
         if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode)) {
             throw new VersionHasExistException();
         }
         // 上传文件
-        String downloadUrl = FileUtil.uploadFileToHermes(file);
+        Map<String, String> result = FileUtil.uploadFileToHermes(file);
+        String downloadUrl = result.get("url");
+        String md5 = result.get("md5");
         FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
-        firmwareInfo.setVersion(file.getOriginalFilename());
+        firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
         firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
         firmwareInfo.setEnvironment(environment);
+        firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setEnable(0);
         firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
         // 触发升级
-        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+        // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
     }
 
     /**
@@ -98,18 +101,21 @@ public class FirmwareUpgradeService {
                                                          String hardwareVersion,
                                                          String firmwareVersion,
                                                          String environment,
+                                                         String gnssVersion,
                                                          MultipartFile file,
                                                          String description) throws DataFormatException {
         logger.info(String.format("firmwareType = %s", firmwareType));
         logger.info(String.format("hardwareVersion = %s", hardwareVersion));
         logger.info(String.format("firmwareVersion = %s", firmwareVersion));
         logger.info(String.format("environment = %s", environment));
+        logger.info(String.format("gnssVersion = %s", gnssVersion));
         logger.info(String.format("description = %s", description));
         logger.info(String.format("file = %s", file != null ? file.getOriginalFilename() : null));
         if (Strings.isNullOrEmpty(firmwareType)
                 || Strings.isNullOrEmpty(hardwareVersion)
                 || Strings.isNullOrEmpty(firmwareVersion)
                 || Strings.isNullOrEmpty(environment)
+                || Strings.isNullOrEmpty(gnssVersion)
                 || file == null
                 || file.isEmpty()) {
             throw new DataFormatException();
@@ -183,12 +189,12 @@ public class FirmwareUpgradeService {
                                              String environment,
                                              String versionCode) throws VersionNotExistException {
         boolean exist = firmwareInfoMapper.exist(firmwareType, hardwareCode, environment, "", Integer.parseInt(versionCode));
-        if(!exist) {
+        if (!exist) {
             throw new VersionNotExistException();
         }
         firmwareInfoMapper.cleanFirmware(firmwareType, hardwareCode, environment);
         int affectRows = firmwareInfoMapper.enableFirmware(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
-        if(affectRows < 1) {
+        if (affectRows < 1) {
             throw new VersionNotExistException();
         }
         // 通知其他项目版本变更
@@ -206,7 +212,7 @@ public class FirmwareUpgradeService {
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode);
-        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();;
+        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
         new Thread(() -> {
@@ -235,5 +241,70 @@ public class FirmwareUpgradeService {
     public void setFirmwareConfig(String configuation) {
         firmwareTriggerParamConfigMapper.clean();
         firmwareTriggerParamConfigMapper.insert(configuation);
+    }
+
+    /**
+     * 固件降级（enable为1设置为0，使其不可用）
+     *
+     * @param id id
+     */
+    public void firmwareDowngrade(Integer id)
+            throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if (firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if (firmwareInfo.getEnable() != 1) {
+            throw new FirmwareDisableException();
+        }
+        firmwareInfoMapper.setEnable(id, 0);
+        // 通知线上服务器对固件降级
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
+        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+    }
+
+    /**
+     * 删除固件
+     */
+    public void firmwareDelete(Integer id) throws VersionNotExistException, FirmwareEnableException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if (firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if (firmwareInfo.getEnable() == 1) {
+            throw new FirmwareEnableException();
+        }
+        firmwareInfoMapper.delete(id);
+    }
+
+    /**
+     * 重新触发升级
+     */
+    public void firmwareRepeatTrigger(Integer id)
+            throws VersionNotExistException, FirmwareDisableException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if (firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if (firmwareInfo.getEnable() != 1) {
+            throw new FirmwareDisableException();
+        }
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        new Thread(() -> {
+            String firmwareType = firmwareInfo.getFirmwareType();
+            String hardwareCode = firmwareInfo.getHardwareCode();
+            FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(firmwareInfo.getEnvironment())
+                    ? FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
+            int versionCode = firmwareInfo.getVersionCode();
+            FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType, hardwareCode,
+                    firmwareEnvironmentEnum, versionCode, firmwareInfo, configuation);
+            DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
+            try {
+                trigger.trigger(firmwareUpgradeContext);
+            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+                logger.info(ExceptionUtil.getErrorMessage(e));
+            }
+        }).start();
     }
 }

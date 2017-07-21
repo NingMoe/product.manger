@@ -1,11 +1,11 @@
 package com.phicomm.product.manger.controller.balance.server;
 
-import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.server.BalanceOtaServerDetailBean;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
 import com.phicomm.product.manger.service.OtaServerService;
 import io.swagger.annotations.Api;
@@ -49,8 +49,8 @@ public class OtaServerController {
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
-            @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class),
-            @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class)
+            @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
+            @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class)
     })
     public Response<String> insertServerAddress(@RequestParam("serverIp") String serverIp,
                                                 @RequestParam("serverPort") int serverPort)
@@ -90,8 +90,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public Response<List<BalanceServerAddressBean>> obtainServerAddress()
-            throws DataFormatException, ServerAddressNotExistException {
+    public Response<List<BalanceServerAddressBean>> obtainServerAddress() {
         return new Response<List<BalanceServerAddressBean>>().setData(otaServerService.obtainHostAndPort());
     }
 
@@ -102,8 +101,7 @@ public class OtaServerController {
     @ResponseBody
     @ApiOperation("获取Ota服务器列表")
     @FunctionPoint(value = "common")
-    public JSONObject obtainServerAddressList()
-            throws DataFormatException, ServerAddressNotExistException {
-        return otaServerService.obtainServerList();
+    public Response<List<BalanceOtaServerDetailBean>> obtainServerAddressList() {
+        return new Response<List<BalanceOtaServerDetailBean>>().setData(otaServerService.obtainServerList());
     }
 }

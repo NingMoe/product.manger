@@ -1,8 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -10,7 +7,6 @@ import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.CRC16Util;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,8 +22,6 @@ import java.util.List;
  */
 @Service
 public class BalanceOtaService {
-
-    private static final Logger logger = Logger.getLogger(BalanceOtaService.class);
 
     private BalanceOtaMapper balanceOtaMapper;
 
@@ -59,9 +53,7 @@ public class BalanceOtaService {
      * @throws DataFormatException 数据格式异常
      */
     public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
-            throws IOException,
-            DataFormatException {
-        logger.info(environment);
+            throws IOException, DataFormatException {
         checkOtaParamFormat(aFile, bFile, version);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
@@ -149,12 +141,8 @@ public class BalanceOtaService {
      * @param environment 环境
      * @return 版本列表
      */
-    public JSONObject fetchOtaVersionList(String environment) {
-        List<BalanceOtaInfo> balanceOtaInfoList = fetchOtaList(environment);
-        JSONArray jsonArray = (JSONArray) JSON.toJSON(balanceOtaInfoList);
-        JSONObject result = new JSONObject();
-        result.put("data", jsonArray);
-        return result;
+    public List<BalanceOtaInfo> fetchOtaVersionList(String environment) {
+        return fetchOtaList(environment);
     }
 
     /**

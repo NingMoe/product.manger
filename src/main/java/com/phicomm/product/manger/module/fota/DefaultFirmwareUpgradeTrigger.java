@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
+import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.utils.HttpsUtil;
 
 import java.io.IOException;
@@ -36,6 +37,29 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         if(firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
             getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
             HttpsUtil.post(prodCallbackUrl, data, Charsets.UTF_8.name());
+        }
+    }
+
+    /**
+     * 触发固件降级
+     */
+    @Override
+    public void triggerFirmwareDowngrade(FirmwareInfo firmwareInfo, String param) throws NoSuchAlgorithmException, KeyManagementException, IOException {
+        getLogger().info("trigger fota firmware downgrade.");
+        getLogger().info(firmwareInfo);
+        JSONObject jsonObject = JSON.parseObject(param);
+        String testDowngradeCallback = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.testDowngradeCallback"));
+        String prodDowngradeCallback = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.prodDowngradeCallback"));
+        boolean isTestEnvironment = "test".equals(firmwareInfo.getEnvironment());
+        boolean isProdEnvironment = "prod".equals(firmwareInfo.getEnvironment());
+        String data = JSON.toJSONString(firmwareInfo);
+        if(isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
+            getLogger().info(String.format("testDowngradeCallback is %s.", testDowngradeCallback));
+            HttpsUtil.post(testDowngradeCallback, data, Charsets.UTF_8.name());
+        }
+        if(isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
+            getLogger().info(String.format("prodDowngradeCallback is %s.", prodDowngradeCallback));
+            HttpsUtil.post(prodDowngradeCallback, data, Charsets.UTF_8.name());
         }
     }
 

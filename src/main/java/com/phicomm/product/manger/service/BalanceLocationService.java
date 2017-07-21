@@ -8,7 +8,6 @@ import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;
 import com.phicomm.product.manger.model.statistic.BalanceSaleNumber;
 import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
-import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,15 @@ import java.util.Map;
 @Service
 public class BalanceLocationService {
 
-    private static final Logger logger = Logger.getLogger(BalanceLocationService.class);
+    private BalanceLocationMapper balanceLocationMapper;
 
-    private static final int LOCATION_PAGE_SIZE = 15;
-
-    private final BalanceLocationMapper balanceLocationMapper;
+    private static final int DEFAULT_LOCATION_PAGE_SIZE = 15;
 
     private LianbiActiveMapper lianbiActiveMapper;
+
+    private static final int DEFAULT_MONTH = 12;
+
+    private static final int DEFAULT_DAY = 30;
 
     @Autowired
     public BalanceLocationService(BalanceLocationMapper balanceLocationMapper,
@@ -52,8 +53,10 @@ public class BalanceLocationService {
         List<BalanceLocation> totalBalanceLocations = balanceLocationMapper.getTotalBalanceLocation();
         List<BalanceLocation> currentDateBalanceLocations = balanceLocationMapper.getCurrentDateBalanceLocation(
                 LocalDateTime.now().toString("yyyy-MM-dd 00:00:00"));
+        int saleCount = balanceLocationMapper.getLocationTotalCount();
         CustomerContextHolder.clearDataSource();
         BalanceLocationStatistic balanceLocationStatistic = new BalanceLocationStatistic();
+        balanceLocationStatistic.setLocationTotalCount(saleCount);
         balanceLocationStatistic.setTotalStatistic(format(totalBalanceLocations));
         balanceLocationStatistic.setCurrentDateStatistic(format(currentDateBalanceLocations));
         return balanceLocationStatistic;
@@ -88,16 +91,16 @@ public class BalanceLocationService {
     /**
      * 获取N个月的位置信息
      */
-    public Map<String, Integer> obtainLocationCountByMonth(int month, String type) {
+    public Map<String, Integer> obtainLocationCountByMonth(int month, String type, int pageSize) {
         List<LocationCountBean> countBeans;
+        month = month <= 0 ? DEFAULT_MONTH : month;
+        pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
-        logger.info(String.format("CustomerType = %s, thread = %s, month = %s, type = %s",
-                CustomerContextHolder.getCustomerType(), Thread.currentThread().getName(), month, type));
         //联璧激活的位置信息
         if ("lianbi".equals(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, LOCATION_PAGE_SIZE);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, pageSize);
         } else {
-            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, LOCATION_PAGE_SIZE);
+            countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, pageSize);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {
@@ -107,22 +110,23 @@ public class BalanceLocationService {
         for (LocationCountBean countBean : countBeans) {
             result.put(countBean.getProvince(), countBean.getGenerateCount());
         }
-        logger.info(result);
         return result;
     }
 
     /**
      * 获取N天的位置信息
      */
-    public Map<String, Integer> obtainLocationCountByDay(int day, String type) {
+    public Map<String, Integer> obtainLocationCountByDay(int day, String type, int pageSize) {
         List<LocationCountBean> countBeans;
+        day = day <= 0 ? DEFAULT_DAY : day;
+        pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
         //联璧激活位置信息
         if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, LOCATION_PAGE_SIZE);
+            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, pageSize);
         } else {
             //其它默认为电子秤位置信息
-            countBeans = balanceLocationMapper.obtainLocationCountByDay(day, LOCATION_PAGE_SIZE);
+            countBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
         }
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {

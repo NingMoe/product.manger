@@ -29,6 +29,11 @@ $(document).ready(function() {
             success: function(data) {
                 if(data.status === 0) {
                     alert("上传成功");
+                    if($("#environment").val() === "test") {
+                        window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+                    } else {
+                        window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+                    }
                 } else if(data.status === 2) {
                     alert("数据格式错误，请检查参数并重新上传！");
                 } else if(data.status === 7) {

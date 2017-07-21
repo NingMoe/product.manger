@@ -39,7 +39,7 @@
         <![CDATA[
 
         SELECT
-            DATE_FORMAT(create_time, '%Y-%m-%d') AS generateTime,
+            DATE_FORMAT(create_time, '%y-%m-%d') AS generateTime,
             COUNT(1) AS generateCount
         FROM
             `balance_status_info`
@@ -48,10 +48,10 @@
         HAVING
             generateTime >= DATE_FORMAT(
             DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
-            '%Y-%m-%d'
+            '%y-%m-%d'
             )
         AND
-            generateTime<DATE_FORMAT(NOW(),'%Y-%m-%d')
+            generateTime<DATE_FORMAT(NOW(),'%y-%m-%d')
         ORDER BY
             generateTime DESC
 
