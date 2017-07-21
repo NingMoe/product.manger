@@ -45,7 +45,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
         BalanceLocationStatistic balanceLocationStatistic = balanceLocationService.getBalanceLocationStatistic();
         return new Response<BalanceLocationStatistic>().setData(balanceLocationStatistic);
@@ -61,7 +62,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
         BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
         return new Response<BalanceSaleNumber>().setData(balanceSaleNumber);
@@ -79,7 +81,8 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
                                                                      @RequestParam int pageSize) {
@@ -99,11 +102,13 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-    @FunctionPoint("common")
+//    @FunctionPoint("common")
+    @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
                                                                    @RequestParam int pageSize) {
         Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCountByDay(day, type, pageSize);
         return new Response<Map<String, Integer>>().setData(locationInfo);
     }
+
 }

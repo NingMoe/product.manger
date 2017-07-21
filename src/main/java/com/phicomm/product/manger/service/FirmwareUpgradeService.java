@@ -74,7 +74,7 @@ public class FirmwareUpgradeService {
         FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
-        firmwareInfo.setVersion(file.getOriginalFilename());
+        firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
         firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
@@ -85,7 +85,7 @@ public class FirmwareUpgradeService {
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
         // 触发升级
-        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+        // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
     }
 
     /**
