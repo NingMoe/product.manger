@@ -17,4 +17,26 @@
                   mac = #{mac,jdbcType=VARCHAR}
              )
     </select>
+
+    <select id="statisticMember" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            balance_user_manger_info
+        WHERE
+        sex = #{sex,jdbcType=INTEGER}
+    </select>
+
+    <select id="statisticMemberByAge" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            balance_user_manger_info
+        WHERE
+            ROUND(DATEDIFF(CURDATE(), birthday)/365.2422)
+        BETWEEN
+            #{lowAge,jdbcType=INTEGER} and #{highAge,jdbcType=INTEGER}
+        AND
+            sex = #{sex,jdbcType=INTEGER}
+    </select>
 </mapper>

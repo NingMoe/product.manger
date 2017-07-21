@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.UserInfoMapper">
+
+    <select id="statisticUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            user_info
+        WHERE
+            gender = #{gender,jdbcType=INTEGER}
+    </select>
+
+    <select id="statisticUserByAge" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            user_info
+        WHERE
+            ROUND(DATEDIFF(CURDATE(), birthday)/365.2422)
+        BETWEEN
+            #{lowAge,jdbcType=INTEGER} and #{highAge,jdbcType=INTEGER}
+        AND
+            gender = #{gender,jdbcType=INTEGER}
+    </select>
+
+</mapper>
