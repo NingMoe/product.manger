@@ -2,6 +2,8 @@
  * 初始化组件
  */
 $(document).ready(function () {
+    $("#swagger-node").addClass("active");
+    $("#swagger_menu_node").addClass("active");
     const baseUrl = $("#baseUrl").val();
     const table = $("#swaggerProjectList").DataTable({
         paging: true,
