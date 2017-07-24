@@ -156,4 +156,11 @@ public class HttpUtil {
         HttpServletRequest request = attributes.getRequest();
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
+
+    /**
+     * 获取baseUrl
+     */
+    public static String getBaseUrl(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
 }
