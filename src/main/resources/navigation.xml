@@ -182,15 +182,15 @@
     <navigation>
         <id>balanceOta</id>
         <title>
-            <title-name>体脂秤Ota升级</title-name>
-            <title-description>Ota升级</title-description>
+            <title-name>体脂秤OTA升级</title-name>
+            <title-description>OTA升级</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota</url>
             <sub-directories>
-                <name>balanceOta</name>
+                <name>balanceOTA</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -198,15 +198,15 @@
     <navigation>
         <id>balanceOtaList</id>
         <title>
-            <title-name>体脂秤Ota固件列表</title-name>
-            <title-description>Ota固件列表</title-description>
+            <title-name>体脂秤OTA固件列表</title-name>
+            <title-description>OTA固件列表</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota/list</url>
             <sub-directories>
-                <name>balanceOtaList</name>
+                <name>balanceOTAList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -262,8 +262,8 @@
     <navigation>
         <id>balanceOtaMac</id>
         <title>
-            <title-name>体脂秤Ota测试Mac管理</title-name>
-            <title-description>Mac管理</title-description>
+            <title-name>体脂秤OTA测试Mac管理</title-name>
+            <title-description>MAC管理</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>

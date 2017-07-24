@@ -11,18 +11,18 @@
     <ul class="treeview-menu" id="firmware-upgrade-menu-node">
         <li id="balance_ota_menu_node">
             <a href="pages/widgets.html">
-                <i class="fa fa-th"></i>
+                <i class="fa fa-cloud"></i>
                 <span>体脂秤OTA升级</span>
                 <span class="pull-right-container">
-                    <small class="label pull-right bg-green">ota</small>
+                    <small class="label pull-right bg-green">OTA</small>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li id="balance_ota_upload_node"><a href="$baseUrl/balance/ota"><i class="fa fa-circle-o"></i>
+                <li id="balance_ota_upload_node"><a href="$baseUrl/balance/ota"><i class="fa fa-toggle-up"></i>
                     OTA文件上传</a></li>
                 <li id="balance_ota_list_test_node">
                     <a href="$baseUrl/balance/ota/list/test"><i class="fa fa-list"></i>
-                        <span>Ota固件列表</span>
+                        <span>OTA固件列表</span>
                         <span class="pull-right-container">
                                 <small class="label pull-right bg-green">test</small>
                         </span>
@@ -30,7 +30,7 @@
                 </li>
                 <li id="balance_ota_list_prod_node">
                     <a href="$baseUrl/balance/ota/list/prod"><i class="fa fa-list"></i>
-                        <span>Ota固件列表</span>
+                        <span>OTA固件列表</span>
                         <span class="pull-right-container">
                             <small class="label pull-right bg-red-active">prod</small>
                         </span>
@@ -42,11 +42,11 @@
                 </li>
 
                 <li id="balance_ota_server_add_node">
-                    <a href="$baseUrl/balance/ota/server/add"><i class="fa fa-circle-o"></i> 服务器地址上传</a>
+                    <a href="$baseUrl/balance/ota/server/add"><i class="fa fa-toggle-up"></i> 服务器地址上传</a>
                 </li>
 
                 <li id="balance_ota_mac_node">
-                    <a href="$baseUrl/balance/ota/mac/manage"><i class="fa fa-circle-o"></i> 添加测试MAC</a>
+                    <a href="$baseUrl/balance/ota/mac/manage"><i class="fa fa-empire"></i> 添加测试MAC</a>
                 </li>
             </ul>
         </li>
@@ -60,7 +60,7 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li id="balance_mcu_upload_node"><a href="$baseUrl/balance/mcu"><i class="fa fa-circle-o"></i>
+                <li id="balance_mcu_upload_node"><a href="$baseUrl/balance/mcu"><i class="fa fa-toggle-up"></i>
                     MCU文件上传</a></li>
                 <li id="balance_mcu_list_test_node">
                     <a href="$baseUrl/balance/mcu/list/test"><i class="fa fa-list"></i>
@@ -79,12 +79,10 @@
                     </a>
                 </li>
                 <li id="balance_mcu_mac_node">
-                    <a href="$baseUrl/balance/mcu/mac/manage"><i class="fa fa-circle-o"></i> 添加测试MAC</a>
+                    <a href="$baseUrl/balance/mcu/mac/manage"><i class="fa fa-empire"></i> 添加测试MAC</a>
                 </li>
             </ul>
         </li>
-
-        <li><a href="#"><i class="fa fa-cloud"></i> 体脂秤固件升级</a></li>
         <li id="firmware-upgrade-wristband-li-node">
             <a href="pages/widgets.html">
                 <i class="fa fa-soundcloud"></i>
