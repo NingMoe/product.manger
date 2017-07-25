@@ -3,6 +3,7 @@ let newProject;
  * 初始化：如果是页面跳转则赋值
  */
 $(function () {
+    $("#swagger-node").addClass("active");
     $("#swagger_menu_node").addClass("active");
     //非管理员权限则关闭
     if (projectName !== "$projectName") {

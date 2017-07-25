@@ -16,7 +16,7 @@
 
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven>
-        <mvc:message-converters register-defaults="true">
+        <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
             </bean>
@@ -68,15 +68,9 @@
     </bean>
     <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
         <property name="exposeSpringMacroHelpers" value="true"/>
-        <property name="suffix">
-            <value>.vm</value>
-        </property>
-        <property name="toolboxConfigLocation">
-            <value>/WEB-INF/toolbox.xml</value>
-        </property>
-        <property name="contentType">
-            <value>text/html;charset=UTF-8</value>
-        </property>
+        <property name="suffix" value=".vm"/>
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
     <!-- 静态资源 -->

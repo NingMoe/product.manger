@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.utils.HttpUtil;
 import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -55,12 +56,12 @@ public class PermissionFilter extends HandlerInterceptorAdapter {
         FunctionPoint functionPoint = handlerMethod.getMethod().getAnnotation(FunctionPoint.class);
         if (functionPoint == null) {
             logger.error("interface must @PublicInterface or @FunctionPoint.");
-            response.sendRedirect("login");
+            response.sendRedirect(HttpUtil.getBaseUrl(request) + "/login");
             return false;
         }
         if (functionPoint.mustLogin() && !userLoginFlag) {
             logger.error(String.format("interface %s must login.", request.getContextPath()));
-            response.sendRedirect("login");
+            response.sendRedirect(HttpUtil.getBaseUrl(request) + "/login");
             return false;
         }
         // 已经登陆
@@ -68,7 +69,7 @@ public class PermissionFilter extends HandlerInterceptorAdapter {
             Object object = session.getAttribute(SessionKeyEnum.USER_PERMISSIONS.getKeyName());
             if (!(object instanceof Set)) {
                 logger.error("error.");
-                response.sendRedirect("login");
+                response.sendRedirect(HttpUtil.getBaseUrl(request) + "/login");
                 return false;
             }
             Set permissionList = (Set) object;
@@ -80,7 +81,7 @@ public class PermissionFilter extends HandlerInterceptorAdapter {
             }
             logger.error(String.format("you have not permission[%s], own [%s].",
                     Joiner.on(",").join(values), Joiner.on(",").join(permissionList)));
-            response.sendRedirect("login");
+            response.sendRedirect(HttpUtil.getBaseUrl(request) + "/login");
             return false;
         }
         return true;

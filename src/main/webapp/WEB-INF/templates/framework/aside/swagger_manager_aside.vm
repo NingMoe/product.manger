@@ -1,7 +1,7 @@
 <li class="header">Swagger Manger</li>
-<li class="treeview">
+<li class="treeview" id="swagger-node">
     <a href="#">
-        <i class="fa fa-gears"></i>
+        <i class="fa fa-desktop"></i>
         <span>在线文档管理</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -9,10 +9,10 @@
     </a>
     <ul class="treeview-menu" id="swagger_menu_node">
         <li id="swagger_project_manager_node">
-            <a href="$baseUrl/swagger/project/manager"><i class="fa fa-user"></i>项目管理</a>
+            <a href="$baseUrl/swagger/project/manager"><i class="fa fa-file-text-o"></i>项目管理</a>
         </li>
         <li id="swagger_project_edit_node">
-            <a href="$baseUrl/swagger/project/edit"><i class="fa fa-user"></i>信息编辑</a>
+            <a href="$baseUrl/swagger/project/edit"><i class="fa fa-edit"></i>信息编辑</a>
         </li>
     </ul>
 </li>
