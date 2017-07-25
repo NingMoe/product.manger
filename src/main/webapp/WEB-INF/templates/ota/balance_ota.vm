@@ -12,21 +12,21 @@
                             <input type="number" class="form-control" id="version" name="version" placeholder="version">
                         </div>
                         <div class="form-group">
-                        <label for="environment">环境（测试/生产）</label>
-                        <select class="form-control select2" style="width: 100%;" id="environment"
-                                name="environment">
-                            <option selected="selected"></option>
-                            <option>test</option>
-                            <option>prod</option>
-                        </select>
-                    </div>
+                            <label for="environment">环境（测试/生产）</label>
+                            <select class="form-control select2" style="width: 100%;" id="environment"
+                                    name="environment">
+                                <option selected="selected"></option>
+                                <option>test</option>
+                                <option>prod</option>
+                            </select>
+                        </div>
                         <div class="form-group">
-                            <label for="aFile">File input</label>
+                            <label for="aFile">A File</label>
                             <input type="file" id="aFile" name="aFile">
                             <p class="help-block">例如：PHI_CS-HWR701_V0.4.17B_0.bin</p>
                         </div>
                         <div class="form-group">
-                            <label for="bFile">File input</label>
+                            <label for="bFile">B File</label>
                             <input type="file" id="bFile" name="bFile">
                             <p class="help-block">例如：PHI_CS-HWR701_V0.4.17B_0.bin</p>
                         </div>
