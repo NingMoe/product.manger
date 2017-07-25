@@ -15,4 +15,14 @@ public interface AdminUserInfoMapper {
      */
     AdminUserInfo getUserInfo(@Param("phoneNumber") String phoneNumber);
 
+    /**
+     * 插入数据
+     */
+    void insert(@Param("phoneNumber") String phoneNumber,
+                @Param("email") String email,
+                @Param("username") String username,
+                @Param("sex") int sex,
+                @Param("sex") String role,
+                @Param("headPicture") String headPicture);
+
 }

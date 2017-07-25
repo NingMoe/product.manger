@@ -16,7 +16,7 @@ $(document).ready(function() {
         multiple: false
     });
     $("#submit").click(function() {
-        var baseUrl  =$("#baseUrl").val();
+        var baseUrl = $("#baseUrl").val();
         var formData = new FormData($("#form")[0]);
         $.ajax({
             type   : "POST",

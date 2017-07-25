@@ -33,6 +33,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception12;
     private static JSONObject exception13;
     private static JSONObject exception14;
+    private static JSONObject exception15;
 
     static {
         exception1001 = new JSONObject();
@@ -122,6 +123,12 @@ public class ExceptionHandlerController {
         exception14 = new JSONObject();
         exception14.put("status", 14);
         exception14.put("description", "Swagger project already existed .");
+    }
+
+    static {
+        exception15 = new JSONObject();
+        exception15.put("status", 15);
+        exception15.put("description", "user has existed.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -240,5 +247,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(SwaggerProjectHasExistedException.class)
     public ModelAndView processSwaggerProjectHasExistedException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception14);
+    }
+
+    /**
+     * 用户已经存在
+     */
+    @ExceptionHandler(UserHasExistException.class)
+    public ModelAndView processUserHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception15);
     }
 }

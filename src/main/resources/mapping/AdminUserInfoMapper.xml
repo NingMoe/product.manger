@@ -18,4 +18,26 @@
             phone_number = #{phoneNumber,jdbcType=VARCHAR}
     </select>
 
+    <insert id="insert">
+        INSERT IGNORE INTO admin_user_info (
+            phone_number,
+            email,
+            username,
+            sex,
+            role,
+            head_picture,
+            create_time
+        )
+        VALUES
+            (
+                #{phoneNumber,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{username,jdbcType=VARCHAR},
+                #{sex,jdbcType=INTEGER},
+                #{role,jdbcType=VARCHAR},
+                #{headPicture,jdbcType=VARCHAR},
+                now()
+            )
+    </insert>
+
 </mapper>

@@ -6,11 +6,20 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">创建用户</h3>
                 </div>
-                <form role="form" enctype="multipart/form-data" id="form">
+                <form id="form" role="form" enctype="multipart/form-data">
                     <div class="box-body">
-                        <div class="form-group"><label for="phoneNumber">手机号</label><input type="text" class="form-control" name="phoneNumber"/></div>
-                        <div class="form-group"><label for="email">公司邮箱</label><input type="email" class="form-control" name="email"/></div>
-                        <div class="form-group"><label for="username">昵称</label><input type="text" class="form-control" name="username"/></div>
+                        <div class="form-group">
+                            <label for="phoneNumber">手机号</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">公司邮箱</label>
+                            <input type="text" class="form-control" id="email" name="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">昵称</label>
+                            <input type="text" class="form-control" id="username" name="username"/>
+                        </div>
                         <div class="form-group">
                             <label for="sex">性别</label>
                             <select id="sex" class="form-control" name="sex">
@@ -27,10 +36,14 @@
                                 <option value="user">user</option>
                             </select>
                         </div>
-                        <div class="form-group"><label for="headPicture">头像</label><input type="file" class="form-control" name="headPicture"></div>
+                        <div class="form-group">
+                            <label for="headPicture">头像</label>
+                            <input type="file" class="form-control" id="headPicture" name="headPicture"/>
+                            <p class="help-block">*.jpg *.png *.jpeg</p>
+                        </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-primary add-user">添加用户</button>
+                        <button type="button" class="btn btn-primary" id="submit">添加用户</button>
                     </div>
                 </form>
             </div>
@@ -39,4 +52,4 @@
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_add_user.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_create_user.js"></script>
