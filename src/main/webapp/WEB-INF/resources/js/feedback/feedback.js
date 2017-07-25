@@ -112,7 +112,8 @@ function fetch(startTime, endTime, appType) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            const result = data.data;
+            let result = data.data;
+            console.info(result);
             if (result.length !== 0) {
                 for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
@@ -152,7 +153,8 @@ function fetchFeedback() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            const result = data.data;
+            let result = data.data;
+            console.info(result);
             if (result.length !== 0) {
                 for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
@@ -245,8 +247,7 @@ function loadFeedbackImg(images, id) {
         src = src + `<a href=${images[i]} class='fresco' data-fresco-group=${id} >
                         <img src=${images[i]} style="width: 80px;height: 80px " alt='img'/></a>`;
     }
-    src = src + `</div></div></div>`;
-    return src;
+    return src + `</div></div></div>`;
 }
 
 /**

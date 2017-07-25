@@ -22,8 +22,7 @@
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
             feedback_info.id >=  #{startId,jdbcType=INTEGER}
-        LIMIT #{pageSize,jdbcType=INTEGER};
-
+        LIMIT #{pageSize,jdbcType=INTEGER}
         ]]>
     </select>
 
@@ -56,14 +55,17 @@
     </select>
 
     <insert id="createFeedbackReview" parameterType="com.phicomm.product.manger.model.table.FeedbackReview">
-        INSERT INTO `feedback_review`
-            (
-                user_id,feedback_info_id,reply,create_time
+        INSERT INTO `feedback_review`(
+                user_id,
+                feedback_info_id,
+                reply,
+                create_time
+            )VALUES(
+                #{feedbackReview.userId, jdbcType=INTEGER},
+                #{feedbackReview.feedbackInfoId, jdbcType=INTEGER},
+                #{feedbackReview.reply, jdbcType=VARCHAR},
+                #{feedbackReview.createTime, jdbcType=TIMESTAMP}
             )
-        VALUES
-            (
-                #{feedbackReview.userId, jdbcType=INTEGER}, #{feedbackReview.feedbackInfoId, jdbcType=INTEGER},#{feedbackReview.reply, jdbcType=VARCHAR},#{feedbackReview.createTime, jdbcType=TIMESTAMP}
-            );
     </insert>
 
     <select id="listFeedbackReview" resultType="com.phicomm.product.manger.model.table.FeedbackReview">
