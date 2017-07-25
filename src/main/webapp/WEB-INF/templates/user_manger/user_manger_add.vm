@@ -1,3 +1,71 @@
-添加用户
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">创建用户</h3>
+                </div>
+                <form role="form" id="projectMessage">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="projectName">项目名称</label>
+                            <input type="text" class="form-control" id="projectName" name="projectName">
+                        </div>
 
+                        <div class="form-group">
+                            <label for="projectAddress">项目地址</label>
+                            <input type="text" class="form-control" id="projectAddress" name="projectAddress">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerAddressProd">生产环境地址</label>
+                            <input type="text" class="form-control" id="swaggerAddressProd"
+                                   name="swaggerAddressProd">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerUsernameProd">生产环境用户名</label>
+                            <input type="text" class="form-control" id="swaggerUsernameProd"
+                                   name="swaggerUsernameProd">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerPasswordProd">生产环境密码</label>
+                            <input type="text" class="form-control" id="swaggerPasswordProd"
+                                   name="swaggerPasswordProd">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerAddressTest">测试环境地址</label>
+                            <input type="text" class="form-control" id="swaggerAddressTest"
+                                   name="swaggerAddressTest">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerUsernameTest">测试环境用户名</label>
+                            <input type="text" class="form-control" id="swaggerUsernameTest"
+                                   name="swaggerUsernameTest">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="swaggerPasswordTest">测试环境密码</label>
+                            <input type="text" class="form-control" id="swaggerPasswordTest"
+                                   name="swaggerPasswordTest">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">项目描述</label>
+                            <textarea id="description" name="description" form="form" class="form-control"
+                                      style="min-height: 50px"></textarea>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" onclick="editOrInsertNewProject()">更新</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/swagger/swagger_edit.js"></script>

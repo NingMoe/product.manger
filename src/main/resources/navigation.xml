@@ -30,7 +30,7 @@
             <name>Home</name>
             <url>$baseUrl/statistic/sales/location</url>
             <sub-directories>
-                <name>salesLocationStatistic</name>
+                <name>SalesLocationStatistic</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -94,7 +94,7 @@
             <name>Home</name>
             <url>$baseUrl/hermes/page</url>
             <sub-directories>
-                <name>hermes</name>
+                <name>Hermes</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -110,7 +110,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/shipment/status</url>
             <sub-directories>
-                <name>balanceStatus</name>
+                <name>BalanceStatus</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -126,7 +126,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/feedback/show</url>
             <sub-directories>
-                <name>showBalanceFeedback</name>
+                <name>BalanceFeedback</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -142,7 +142,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/file/upload</url>
             <sub-directories>
-                <name>wristbandUpgradeForFileUpload</name>
+                <name>WristbandUpgradeForFileUpload</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -158,7 +158,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/test/list</url>
             <sub-directories>
-                <name>wristbandUpgradeForTestList</name>
+                <name>WristbandUpgradeForTestList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -174,7 +174,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/prod/list</url>
             <sub-directories>
-                <name>wristbandUpgradeForProdList</name>
+                <name>WristbandUpgradeForProdList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -190,7 +190,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/ota</url>
             <sub-directories>
-                <name>balanceOTA</name>
+                <name>BalanceOTA</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -206,7 +206,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/ota/list</url>
             <sub-directories>
-                <name>balanceOTAList</name>
+                <name>BalanceOTAList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -222,7 +222,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/trigger/config</url>
             <sub-directories>
-                <name>wristbandUpgradeForTriggerConfig</name>
+                <name>WristbandUpgradeForTriggerConfig</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -238,7 +238,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/ota/server/manage</url>
             <sub-directories>
-                <name>balanceOtaServer</name>
+                <name>BalanceOTAServer</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -246,15 +246,15 @@
     <navigation>
         <id>balanceOtaServerAdd</id>
         <title>
-            <title-name>添加Ota服务器地址</title-name>
-            <title-description>Ota服务器</title-description>
+            <title-name>添加OTA服务器地址</title-name>
+            <title-description>OTA服务器</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota/server/add</url>
             <sub-directories>
-                <name>balanceOtaServerAdd</name>
+                <name>BalanceOtaServerAdd</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -270,7 +270,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/ota/mac/manage</url>
             <sub-directories>
-                <name>balanceOtaMac</name>
+                <name>BalanceOTAMac</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -286,7 +286,7 @@
             <name>Home</name>
             <url>$baseUrl/statistic/page/user/analysis</url>
             <sub-directories>
-                <name>userAnalysis</name>
+                <name>UserAnalysis</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -302,7 +302,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu</url>
             <sub-directories>
-                <name>balanceMcu</name>
+                <name>BalanceMcu</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -318,7 +318,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu/list</url>
             <sub-directories>
-                <name>balanceMcuList</name>
+                <name>BalanceMcuList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -334,7 +334,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu/mac/manage</url>
             <sub-directories>
-                <name>balanceMcuMac</name>
+                <name>BalanceMcuMac</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -350,7 +350,7 @@
             <name>Home</name>
             <url>$baseUrl/user/manger/page</url>
             <sub-directories>
-                <name>userManger</name>
+                <name>UserManger</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -366,7 +366,7 @@
             <name>Home</name>
             <url>$baseUrl/permission/manger/page</url>
             <sub-directories>
-                <name>permissionManger</name>
+                <name>PermissionManger</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -382,7 +382,7 @@
             <name>Home</name>
             <url>$baseUrl/swagger/project/manager</url>
             <sub-directories>
-                <name>swaggerManager</name>
+                <name>SwaggerManager</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -398,7 +398,7 @@
             <name>Home</name>
             <url>$baseUrl/swagger/project/edit</url>
             <sub-directories>
-                <name>swaggerEdit</name>
+                <name>SwaggerEdit</name>
             </sub-directories>
         </directory>
     </navigation>
