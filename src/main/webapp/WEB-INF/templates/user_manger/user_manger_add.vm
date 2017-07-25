@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="$baseUrl/resources/select2/select2.min.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -5,62 +6,31 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">创建用户</h3>
                 </div>
-                <form role="form" id="projectMessage">
+                <form role="form" enctype="multipart/form-data" id="form">
                     <div class="box-body">
+                        <div class="form-group"><label for="phoneNumber">手机号</label><input type="text" class="form-control" name="phoneNumber"/></div>
+                        <div class="form-group"><label for="email">公司邮箱</label><input type="email" class="form-control" name="email"/></div>
+                        <div class="form-group"><label for="username">昵称</label><input type="text" class="form-control" name="username"/></div>
                         <div class="form-group">
-                            <label for="projectName">项目名称</label>
-                            <input type="text" class="form-control" id="projectName" name="projectName">
+                            <label for="sex">性别</label>
+                            <select id="sex" class="form-control" name="sex">
+                                <option value=""></option>
+                                <option value="boy">男</option>
+                                <option value="girl">女</option>
+                            </select>
                         </div>
-
                         <div class="form-group">
-                            <label for="projectAddress">项目地址</label>
-                            <input type="text" class="form-control" id="projectAddress" name="projectAddress">
+                            <label for="role">系统角色</label>
+                            <select id="role" class="form-control" name="role">
+                                <option value=""></option>
+                                <option value="administrator">administrator</option>
+                                <option value="user">user</option>
+                            </select>
                         </div>
-
-                        <div class="form-group">
-                            <label for="swaggerAddressProd">生产环境地址</label>
-                            <input type="text" class="form-control" id="swaggerAddressProd"
-                                   name="swaggerAddressProd">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="swaggerUsernameProd">生产环境用户名</label>
-                            <input type="text" class="form-control" id="swaggerUsernameProd"
-                                   name="swaggerUsernameProd">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="swaggerPasswordProd">生产环境密码</label>
-                            <input type="text" class="form-control" id="swaggerPasswordProd"
-                                   name="swaggerPasswordProd">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="swaggerAddressTest">测试环境地址</label>
-                            <input type="text" class="form-control" id="swaggerAddressTest"
-                                   name="swaggerAddressTest">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="swaggerUsernameTest">测试环境用户名</label>
-                            <input type="text" class="form-control" id="swaggerUsernameTest"
-                                   name="swaggerUsernameTest">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="swaggerPasswordTest">测试环境密码</label>
-                            <input type="text" class="form-control" id="swaggerPasswordTest"
-                                   name="swaggerPasswordTest">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">项目描述</label>
-                            <textarea id="description" name="description" form="form" class="form-control"
-                                      style="min-height: 50px"></textarea>
-                        </div>
+                        <div class="form-group"><label for="headPicture">头像</label><input type="file" class="form-control" name="headPicture"></div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-primary" onclick="editOrInsertNewProject()">更新</button>
+                        <button type="button" class="btn btn-primary add-user">添加用户</button>
                     </div>
                 </form>
             </div>
@@ -68,4 +38,5 @@
     </div>
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/swagger/swagger_edit.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_add_user.js"></script>
