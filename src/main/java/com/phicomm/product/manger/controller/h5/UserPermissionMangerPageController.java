@@ -51,12 +51,27 @@ public class UserPermissionMangerPageController {
     @RequestMapping(value = "user/manger/page/create/user", method = RequestMethod.GET)
     @ApiIgnore("创建用户的页面")
     @FunctionPoint(value = "common")
-    public ModelAndView showUserMangerPageForAddUser(HttpSession session) {
+    public ModelAndView showUserMangerPageForCreateUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("context", "user_manger/user_manger_create.vm");
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userManger"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userMangerCreate"));
+        return modelAndView;
+    }
+
+    /**
+     * 查看用户列表页面
+     */
+    @RequestMapping(value = "user/manger/page/list", method = RequestMethod.GET)
+    @ApiIgnore("查看用户列表页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showUserMangerPageForList(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("context", "user_manger/user_manger_list.vm");
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userMangerList"));
         return modelAndView;
     }
 

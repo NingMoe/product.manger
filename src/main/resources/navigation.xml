@@ -340,10 +340,26 @@
     </navigation>
 
     <navigation>
-        <id>userManger</id>
+        <id>userMangerCreate</id>
         <title>
             <title-name>用户管理</title-name>
-            <title-description>用户管理</title-description>
+            <title-description>创建新用户</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>UserManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userMangerList</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户列表</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
