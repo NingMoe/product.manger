@@ -22,7 +22,7 @@ public interface AdminUserInfoMapper {
                 @Param("email") String email,
                 @Param("username") String username,
                 @Param("sex") int sex,
-                @Param("sex") String role,
+                @Param("role") String role,
                 @Param("headPicture") String headPicture);
 
 }

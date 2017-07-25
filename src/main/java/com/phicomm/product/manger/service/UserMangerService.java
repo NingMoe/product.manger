@@ -50,7 +50,7 @@ public class UserMangerService {
                            String sex,
                            String role,
                            MultipartFile headPicture) throws UploadFileException, UserHasExistException, DataFormatException {
-        check(phoneNumber, email, username, sex, role);
+        check(phoneNumber, email, username, sex, role, headPicture);
         Map<String, String> result = FileUtil.uploadFileToHermes(headPicture);
         String hermesUrl = result.get("url");
         logger.info(String.format("phoneNumber = %s, email = %s, username = %s, sex = %s, role = %s, url = %s.",
@@ -66,7 +66,8 @@ public class UserMangerService {
                        String email,
                        String username,
                        String sex,
-                       String role) throws DataFormatException, UserHasExistException {
+                       String role,
+                       MultipartFile headPicture) throws DataFormatException, UserHasExistException {
         if (!RegexUtil.checkPhoneNumber(phoneNumber)) {
             throw new DataFormatException();
         }
@@ -85,6 +86,13 @@ public class UserMangerService {
         AdminUserInfo adminUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
         if(adminUserInfo != null) {
             throw new UserHasExistException();
+        }
+        if(headPicture.isEmpty()) {
+            throw new DataFormatException();
+        }
+        String filename = headPicture.getOriginalFilename();
+        if(!filename.endsWith(".jpg") && !filename.endsWith(".jpeg") && !filename.endsWith(".png")) {
+            throw new DataFormatException();
         }
     }
 
