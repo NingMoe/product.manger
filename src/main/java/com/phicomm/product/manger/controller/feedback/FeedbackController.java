@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 接收客户端发送的反馈信息
@@ -45,7 +43,7 @@ public class FeedbackController {
      *
      * @return 响应
      */
-    @RequestMapping(value = "balance/feedback/fetch", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "balance/feedback/fetch", method = RequestMethod.POST, produces = "application/json")
     @ApiOperation("用户反馈信息")
     @ResponseBody
     @ApiResponses(value = {
@@ -72,14 +70,11 @@ public class FeedbackController {
     @FunctionPoint(value = "common")
     public Response<List<FeedbackInfoWithBLOBs>> fetchFeedbackV2(@RequestBody FeedbackRequestBean feedbackRequestBean)
             throws DataFormatException {
-        return new Response<List<FeedbackInfoWithBLOBs>>().
-                setData(feedbackService.fetchFeedbackV2(feedbackRequestBean));
+        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackService.fetchFeedbackV2(feedbackRequestBean));
     }
 
     /**
      * 创建用户反馈的回复
-     *
-     * @return 响应
      */
     @RequestMapping(value = "balance/feedback/review/create", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("创建回复")
@@ -88,9 +83,10 @@ public class FeedbackController {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint(value = "common")
-    public void createFeedbackReview(@RequestParam long userId,@RequestParam long feedbackId,@RequestParam String reply) {
-        System.out.println("Create!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        FeedbackReview feedbackReview = new FeedbackReview(userId,feedbackId,reply,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString());
+    public void createFeedbackReview(@RequestParam long userId,
+                                     @RequestParam long feedbackId,
+                                     @RequestParam String reply) {
+        FeedbackReview feedbackReview = new FeedbackReview(userId, feedbackId, reply, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         feedbackService.createFeedbackReview(feedbackReview);
     }
 
@@ -107,14 +103,11 @@ public class FeedbackController {
     })
     @FunctionPoint(value = "common")
     public Response<List<FeedbackReview>> listFeedbackReview(@RequestParam long feedbackId) {
-        System.out.println("List!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return new Response<List<FeedbackReview>>().setData(feedbackService.listFeedbackReview(feedbackId));
     }
 
     /**
      * 删除用户反馈的回复
-     *
-     * @return 响应
      */
     @RequestMapping(value = "balance/feedback/review/delete", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("删除回复")
@@ -124,14 +117,11 @@ public class FeedbackController {
     })
     @FunctionPoint(value = "common")
     public void deleteFeedbackReview(@RequestParam long feedbackReviewId) {
-        System.out.println("Delete!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         feedbackService.deleteFeedbackReview(feedbackReviewId);
     }
 
     /**
      * 收藏用户反馈
-     *
-     * @return 响应
      */
     @RequestMapping(value = "balance/feedback/collect", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("收藏用户反馈")
@@ -141,14 +131,11 @@ public class FeedbackController {
     })
     @FunctionPoint(value = "common")
     public void collectFeedback(@RequestParam long feedbackId) {
-        System.out.println("Collet!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         feedbackService.collectFeedback(feedbackId);
     }
 
     /**
      * 取消收藏用户反馈
-     *
-     * @return 响应
      */
     @RequestMapping(value = "balance/feedback/unCollect", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("取消收藏用户反馈")
@@ -158,7 +145,6 @@ public class FeedbackController {
     })
     @FunctionPoint(value = "common")
     public void unCollectFeedback(@RequestParam long feedbackId) {
-        System.out.println("unCollet!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         feedbackService.unCollectFeedback(feedbackId);
     }
 
