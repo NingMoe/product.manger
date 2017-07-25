@@ -1,3 +1,4 @@
 aaa
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_list.js"></script>
