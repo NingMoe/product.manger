@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    $("#user-manger-node-1").addClass("active");
+    $("#user-manger-node-2").addClass("active");
+    $("#user-manger-node-3").addClass("active");
+    $("#user-manger-node-li-1").addClass("active");
     $("#sex").select2({multiple: false});
     $("#role").select2({multiple: false});
     $(".add-user").click(function () {

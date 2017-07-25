@@ -48,14 +48,14 @@ public class UserPermissionMangerPageController {
     /**
      * 返回创建用户的页面
      */
-    @RequestMapping(value = "user/manger/page/add/user", method = RequestMethod.GET)
+    @RequestMapping(value = "user/manger/page/create/user", method = RequestMethod.GET)
     @ApiIgnore("创建用户的页面")
     @FunctionPoint(value = "common")
     public ModelAndView showUserMangerPageForAddUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("context", "user_manger/user_manger_add.vm");
+        modelAndView.getModelMap().put("context", "user_manger/user_manger_create.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userManger"));
         return modelAndView;
     }
