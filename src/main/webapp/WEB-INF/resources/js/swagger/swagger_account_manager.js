@@ -135,7 +135,7 @@ function format(d) {
             </tr>
         </table>`;
     } else {
-        return `<table class="table" style="margin-left: 50px">
+        return `<table class="table">
             <tr>
                 <td>ID:</td>
                 <td>${d.id}</td>
