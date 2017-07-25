@@ -21,7 +21,7 @@
                     <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-futbol-o"></i> 用户列表</a>
                 </li>
                 <li>
-                    <a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-puzzle-piece"></i> 添加用户</a>
+                    <a href="$baseUrl/user/manger/page/add/user"><i class="fa fa-puzzle-piece"></i> 添加用户</a>
                 </li>
             </ul>
         </li>
