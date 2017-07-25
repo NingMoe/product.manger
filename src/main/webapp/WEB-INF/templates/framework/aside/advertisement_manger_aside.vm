@@ -1,0 +1,21 @@
+<li class="header">Advertisement Manger</li>
+<li class="treeview" id="balance-statistic-1">
+    <a href="#">
+        <i class="fa fa-tasks"></i>
+        <span>广告管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="balance-statistic-2">
+        <li><a href="$baseUrl/balance/statistic/balance/sales/location"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
+        <li>
+            <a href="$baseUrl/statistic/sales/statistic/projection">
+                <i class="fa fa-line-chart"></i> 统计全屏显示
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-yellow-active">Big</small>
+                </span>
+            </a>
+        </li>
+    </ul>
+</li>

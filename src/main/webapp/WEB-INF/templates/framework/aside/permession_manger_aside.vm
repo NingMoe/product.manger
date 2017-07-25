@@ -8,7 +8,33 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="$baseUrl/user/manger/page"><i class="fa fa-user"></i> 用户管理</a></li>
-        <li><a href="$baseUrl/permission/manger/page"><i class="fa fa-legal"></i> 权限管理</a></li>
+        <li>
+            <a href="$baseUrl/user/manger/page">
+                <i class="fa fa-user"></i>
+                <span>用户管理</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-futbol-o"></i> 用户列表</a>
+                </li>
+                <li>
+                    <a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-puzzle-piece"></i> 添加用户</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="$baseUrl/permission/manger/page"><i class="fa fa-legal"></i> 权限管理</a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-puzzle-piece"></i> 用户列表</a>
+                </li>
+                <li>
+                    <a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-file-archive-o"></i> 用户列表</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </li>
