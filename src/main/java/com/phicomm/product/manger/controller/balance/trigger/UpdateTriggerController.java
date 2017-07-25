@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.controller.balance.trigger;
 
+import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.service.OtaServerService;
 import io.swagger.annotations.Api;
@@ -45,6 +46,7 @@ public class UpdateTriggerController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
+    @FunctionPoint("common")
     public Response<List<HostAndPort>> updateTrigger() throws IOException {
         return new Response<List<HostAndPort>>().setData(otaServerService.updateTrigger());
     }

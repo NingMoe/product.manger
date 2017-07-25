@@ -52,6 +52,7 @@ public class OtaServerController {
             @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
             @ApiResponse(code = 4, message = "录入失败", response = ServerAddressExistException.class)
     })
+    @FunctionPoint("common")
     public Response<String> insertServerAddress(@RequestParam("serverIp") String serverIp,
                                                 @RequestParam("serverPort") int serverPort)
             throws DataFormatException, ServerAddressExistException {
@@ -76,6 +77,7 @@ public class OtaServerController {
             @ApiResponse(code = 2, message = "数据格式异常", response = DataFormatException.class),
             @ApiResponse(code = 5, message = "删除失败，可能地址不存在", response = ServerAddressNotExistException.class)
     })
+    @FunctionPoint("common")
     public Response<String> deleteServerAddress(@RequestParam("ip") String ip,
                                                 @RequestParam("port") int port)
             throws DataFormatException, ServerAddressNotExistException {
