@@ -96,4 +96,10 @@ public class UserMangerService {
         }
     }
 
+    /**
+     * 用户列表
+     */
+    public void userList() {
+
+    }
 }

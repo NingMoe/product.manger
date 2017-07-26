@@ -50,7 +50,7 @@ public class UserMangerController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
             @ApiResponse(code = 7, message = "文件上传失败", response = Response.class),
-            @ApiResponse(code = 15, message = "手机号已经存在", response = Response.class),
+            @ApiResponse(code = 15, message = "手机号已经存在", response = Response.class)
     })
     @FunctionPoint("common")
     public CommonResponse createUser(@RequestParam("phoneNumber") String phoneNumber,
@@ -61,6 +61,24 @@ public class UserMangerController {
                                      @RequestParam("headPicture") MultipartFile headPicture)
             throws UploadFileException, UserHasExistException, DataFormatException {
         userMangerService.createUser(phoneNumber, email, username, sex, role, headPicture);
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 用户列表
+     *
+     * @return 数据
+     */
+    @RequestMapping(value = "user/manger/list", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("用户列表")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public CommonResponse userList() throws DataFormatException {
+        userMangerService.userList();
         return CommonResponse.ok();
     }
 
