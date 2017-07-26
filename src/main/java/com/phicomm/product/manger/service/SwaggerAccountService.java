@@ -9,7 +9,7 @@ import com.phicomm.product.manger.exception.SwaggerProjectNotFoundException;
 import com.phicomm.product.manger.model.swagger.SwaggerAccountBean;
 import com.phicomm.product.manger.model.swagger.SwaggerCoreMessageBean;
 import com.phicomm.product.manger.model.swagger.SwaggerTestEnvironmentBean;
-import com.phicomm.product.manger.model.table.AdminUserInfo;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
