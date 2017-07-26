@@ -116,6 +116,7 @@ body{
     background: url(../../image/sales_map/num.png) no-repeat;
     background-position: 0 0;
     text-indent: -999em;
+    background-size: cover;
 }
 .t_num img{
     margin: 0 2px;
@@ -138,6 +139,7 @@ body{
     display: inline-block;
     background: url(../../image/sales_map/num.png) no-repeat;
     background-position: 0 0;
+    background-size: cover;
     text-indent: -999em;
 }
 .right .right-title{
@@ -152,6 +154,8 @@ body{
 }
 .data-rank{
     font-size:0.16rem;
+    padding-top: 0.1rem;
+    padding-left: 0.08rem;
 }
 .data-rank li{
     float:left;
