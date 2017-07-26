@@ -59,7 +59,7 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>用户名:</td><td>#username#</td></tr><tr><td>手机号:</td><td>#phoneNumber#</td></tr><tr><td>邮箱:</td><td>#email#</td></tr><tr><td>性别:</td><td>#sex#</td></tr><tr><td>系统角色:</td><td>#role#</td></tr><tr><td>头像:</td><td><img src="#headPicture#" style="height: 50px;"/></td></tr><tr><td>创建时间:</td><td>#createTime#</td></tr></table>'
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>用户名:</td><td>#username#</td></tr><tr><td>手机号:</td><td>#phoneNumber#</td></tr><tr><td>邮箱:</td><td>#email#</td></tr><tr><td>性别:</td><td>#sex#</td></tr><tr><td>系统角色:</td><td>#role#</td></tr><tr><td>头像:</td><td><img src="#headPicture#" style="height: 50px;"/></td></tr><tr><td>创建时间:</td><td>#createTime#</td></tr><tr><td>修改信息:</td><td><button onclick="modifyUserInfo(this)">修改信息</button></td></tr><tr><td>删除用户:</td><td><button onclick="deleteUser(this)">删除用户</button></td></tr></table>'
             .replace("#id#", result.data.id)
             .replace("#username#", result.data.username)
             .replace("#phoneNumber#", result.data.phoneNumber)
@@ -81,4 +81,35 @@ $(document).ready(function () {
             tr.addClass('shown');
         }
     });
+
+
 });
+
+function modifyUserInfo(node) {
+    var phoneNumber = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    console.log(phoneNumber);
+
+}
+
+function deleteUser(node) {
+    var phoneNumber = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    console.log(phoneNumber);
+    var baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/user/manger/delete",
+        dataType: "json",
+        data: {
+            "phoneNumber": phoneNumber
+        }, error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("删除成功！");
+                window.location.href = baseUrl + "/user/manger/page/list";
+            } else if(data.status === 16) {
+                alert("权限不够！");
+            }
+        }
+    });
+}

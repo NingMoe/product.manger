@@ -32,4 +32,10 @@ public interface AdminUserInfoMapper {
      */
     List<AdminUserInfo> getUserInfoList();
 
+    /**
+     * 删除该用户
+     *
+     * @param phoneNumber 手机号
+     */
+    void delete(@Param("phoneNumber") String phoneNumber);
 }

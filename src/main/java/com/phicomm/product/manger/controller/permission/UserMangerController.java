@@ -3,6 +3,7 @@ package com.phicomm.product.manger.controller.permission;
 import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.PermissionHasNotEnoughException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.UserHasExistException;
 import com.phicomm.product.manger.model.common.CommonResponse;
@@ -100,6 +101,26 @@ public class UserMangerController {
     public Response<AdminUserInfo> getUserDetail(@Param("phoneNumber") String phoneNumber) throws DataFormatException {
         AdminUserInfo adminUserInfo = userMangerService.getUserDetail(phoneNumber);
         return new Response<AdminUserInfo>().setData(adminUserInfo);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @return 状态
+     */
+    @RequestMapping(value = "user/manger/delete", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("删除用户")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
+            @ApiResponse(code = 16, message = "权限不够", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public CommonResponse deleteUser(@Param("phoneNumber") String phoneNumber)
+            throws DataFormatException, PermissionHasNotEnoughException {
+        userMangerService.deleteUser(phoneNumber);
+        return CommonResponse.ok();
     }
 
 }

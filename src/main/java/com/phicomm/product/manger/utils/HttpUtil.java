@@ -2,11 +2,14 @@ package com.phicomm.product.manger.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
+import com.phicomm.product.manger.enumeration.SessionKeyEnum;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.net.ssl.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -110,42 +113,26 @@ public class HttpUtil {
      * 编码
      */
     private static String encodeUrl(JSONObject params) throws UnsupportedEncodingException {
-        if (params != null) {
-            StringBuilder builder = new StringBuilder();
-            boolean first = true;
-            Set<String> sets = params.keySet();
-            String value;
-            for (Object set : sets) {
-                value = params.getString(set.toString());
-                if (!Strings.isNullOrEmpty(value)) {
-                    if (first) {
-                        first = false;
-                    } else {
-                        builder.append("&");
-                    }
-                    builder.append(URLEncoder.encode(set.toString(), "UTF-8")).append("=")
-                            .append(URLEncoder.encode(value, "UTF-8"));
+        if (params == null) {
+            return null;
+        }
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        Set<String> sets = params.keySet();
+        String value;
+        for (Object set : sets) {
+            value = params.getString(set.toString());
+            if (!Strings.isNullOrEmpty(value)) {
+                if (first) {
+                    first = false;
+                } else {
+                    builder.append("&");
                 }
+                builder.append(URLEncoder.encode(set.toString(), "UTF-8")).append("=")
+                        .append(URLEncoder.encode(value, "UTF-8"));
             }
-            return builder.toString();
-        } else {
-            return null;
         }
-    }
-
-    private static class DefaultTrustManager implements X509TrustManager {
-        private DefaultTrustManager() {
-        }
-
-        public X509Certificate[] getAcceptedIssuers() {
-            return null;
-        }
-
-        public void checkClientTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
-        }
-
-        public void checkServerTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
-        }
+        return builder.toString();
     }
 
     /**
@@ -162,5 +149,30 @@ public class HttpUtil {
      */
     public static String getBaseUrl(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
+
+    /**
+     * 获取当前的用户信息
+     */
+    public static AdminUserInfo getCurrentUserInfo() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        return (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+    }
+
+
+    private static class DefaultTrustManager implements X509TrustManager {
+        private DefaultTrustManager() {
+        }
+
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+        public void checkClientTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
+        }
+
+        public void checkServerTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
+        }
     }
 }

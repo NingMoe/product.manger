@@ -6,10 +6,12 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.AdminUserInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.PermissionHasNotEnoughException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.UserHasExistException;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.utils.FileUtil;
+import com.phicomm.product.manger.utils.HttpUtil;
 import com.phicomm.product.manger.utils.RegexUtil;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -132,5 +134,28 @@ public class UserMangerService {
      */
     public AdminUserInfo getUserDetail(String phoneNumber) {
         return adminUserInfoMapper.getUserInfo(phoneNumber);
+    }
+
+    /**
+     * 删除用户
+     * 1、首先自己需要是管理员
+     * 2、被删除的用户不能是自己
+     * 3、被删除的用户不能是管理员
+     *
+     * @param phoneNumber 手机号
+     */
+    public void deleteUser(String phoneNumber) throws PermissionHasNotEnoughException {
+        AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
+        if(!"user".equalsIgnoreCase(adminUserInfo.getRole())) {
+            throw new PermissionHasNotEnoughException();
+        }
+        AdminUserInfo targetUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
+        if(!"user".equalsIgnoreCase(targetUserInfo.getRole())) {
+            throw new PermissionHasNotEnoughException();
+        }
+        if(targetUserInfo.getPhoneNumber().equals(adminUserInfo.getPhoneNumber())) {
+            throw new PermissionHasNotEnoughException();
+        }
+        adminUserInfoMapper.delete(phoneNumber);
     }
 }

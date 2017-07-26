@@ -54,4 +54,12 @@
             admin_user_info
     </select>
 
+    <delete id="delete">
+        DELETE
+        FROM
+            admin_user_info
+        WHERE
+            phone_number = #{phoneNumber,jdbcType=VARCHAR}
+    </delete>
+
 </mapper>
