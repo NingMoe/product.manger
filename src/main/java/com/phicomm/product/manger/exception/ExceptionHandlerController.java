@@ -35,6 +35,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception14;
     private static JSONObject exception15;
     private static JSONObject exception16;
+    private static JSONObject exception17;
 
     static {
         exception1001 = new JSONObject();
@@ -136,6 +137,12 @@ public class ExceptionHandlerController {
         exception16 = new JSONObject();
         exception16.put("status", 16);
         exception16.put("description", "permission has not enough exception.");
+    }
+
+    static {
+        exception17 = new JSONObject();
+        exception17.put("status", 17);
+        exception17.put("description", "user not found.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -270,5 +277,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(PermissionHasNotEnoughException.class)
     public ModelAndView processPermissionHasNotEnoughException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception16);
+    }
+
+    /**
+     * 用户找不到
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ModelAndView processUserNotFoundException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception17);
     }
 }

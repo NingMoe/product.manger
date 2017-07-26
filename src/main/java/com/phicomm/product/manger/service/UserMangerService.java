@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.AdminUserInfoMapper;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.PermissionHasNotEnoughException;
-import com.phicomm.product.manger.exception.UploadFileException;
-import com.phicomm.product.manger.exception.UserHasExistException;
+import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.utils.FileUtil;
 import com.phicomm.product.manger.utils.HttpUtil;
@@ -166,7 +163,7 @@ public class UserMangerService {
      * @param email       邮箱
      * @param username    用户名
      * @param sex         性别
-     * @param phoneNumber 手机号
+     * @param role        系统角色
      * @param headPicture 头像
      */
     public void modifyUserInfo(String phoneNumber,
@@ -174,10 +171,26 @@ public class UserMangerService {
                                String username,
                                String sex,
                                String role,
-                               MultipartFile headPicture) {
+                               MultipartFile headPicture)
+            throws PermissionHasNotEnoughException, UserNotFoundException, UploadFileException {
         AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
-        if(adminUserInfo != null && "administrator".equalsIgnoreCase(adminUserInfo.getRole())) {
-
+        if (adminUserInfo == null || !"administrator".equalsIgnoreCase(adminUserInfo.getRole())) {
+            throw new PermissionHasNotEnoughException();
         }
+        AdminUserInfo target = adminUserInfoMapper.getUserInfo(phoneNumber);
+        if(target == null) {
+            throw new UserNotFoundException();
+        }
+        target.setPhoneNumber(phoneNumber);
+        target.setEmail(email);
+        target.setUsername(username);
+        target.setSex("boy".equalsIgnoreCase(sex) ? 1 : 0);
+        target.setRole(role);
+        if(!headPicture.isEmpty()) {
+            Map<String, String> hermesResult = FileUtil.uploadFileToHermes(headPicture);
+            String url = hermesResult.get("url");
+            target.setHeadPicture(url);
+        }
+        adminUserInfoMapper.update(target);
     }
 }

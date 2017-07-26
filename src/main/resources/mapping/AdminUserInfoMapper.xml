@@ -62,4 +62,16 @@
             phone_number = #{phoneNumber,jdbcType=VARCHAR}
     </delete>
 
+    <update id="update" parameterType="com.phicomm.product.manger.model.user.AdminUserInfo">
+        UPDATE admin_user_info
+        SET
+            email = #{adminUserInfo.email,jdbcType=VARCHAR},
+            username = #{adminUserInfo.username,jdbcType=VARCHAR},
+            sex = #{adminUserInfo.sex,jdbcType=INTEGER},
+            role = #{adminUserInfo.role,jdbcType=VARCHAR},
+            head_picture = #{adminUserInfo.headPicture,jdbcType=VARCHAR}
+        WHERE
+            phone_number = #{adminUserInfo.phoneNumber,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

@@ -33,7 +33,18 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log("==============");
+                if(data.status === 0) {
+                    alert("修改成功！");
+                    window.location.href = baseUrl + "/user/manger/page/list";
+                } else if(data.status === 2) {
+                    alert("数据格式异常！");
+                } else if(data.status === 7) {
+                    alert("上传文件失败！");
+                } else if(data.status === 16) {
+                    alert("权限不够！");
+                } else if(data.status === 17) {
+                    alert("用户不见了！");
+                }
             }
         });
     });

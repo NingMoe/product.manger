@@ -2,10 +2,7 @@ package com.phicomm.product.manger.controller.permission;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.PermissionHasNotEnoughException;
-import com.phicomm.product.manger.exception.UploadFileException;
-import com.phicomm.product.manger.exception.UserHasExistException;
+import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
@@ -130,11 +127,13 @@ public class UserMangerController {
      */
     @RequestMapping(value = "user/manger/modify", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @ApiOperation("删除用户")
+    @ApiOperation("修改用户信息")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
-            @ApiResponse(code = 16, message = "权限不够", response = Response.class)
+            @ApiResponse(code = 7, message = "文件上传失败", response = Response.class),
+            @ApiResponse(code = 16, message = "权限不够", response = Response.class),
+            @ApiResponse(code = 17, message = "用户找不到", response = Response.class),
     })
     @FunctionPoint("common")
     public CommonResponse modifyUserInfo(@RequestParam("phoneNumber") String phoneNumber,
@@ -143,7 +142,7 @@ public class UserMangerController {
                                          @RequestParam("sex") String sex,
                                          @RequestParam("role") String role,
                                          @RequestParam("headPicture") MultipartFile headPicture)
-            throws DataFormatException, PermissionHasNotEnoughException {
+            throws DataFormatException, PermissionHasNotEnoughException, UserNotFoundException, UploadFileException {
         userMangerService.modifyUserInfo(phoneNumber, email, username, sex, role, headPicture);
         return CommonResponse.ok();
     }

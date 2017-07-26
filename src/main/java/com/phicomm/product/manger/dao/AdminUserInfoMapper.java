@@ -39,4 +39,10 @@ public interface AdminUserInfoMapper {
      */
     void delete(@Param("phoneNumber") String phoneNumber);
 
+    /**
+     * 更新用户信息
+     *
+     * @param adminUserInfo 用户信息
+     */
+    void update(@Param("adminUserInfo") AdminUserInfo adminUserInfo);
 }
