@@ -372,6 +372,22 @@
     </navigation>
 
     <navigation>
+        <id>userMangerModify</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户信息修改</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>UserManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>permissionManger</id>
         <title>
             <title-name>权限管理</title-name>

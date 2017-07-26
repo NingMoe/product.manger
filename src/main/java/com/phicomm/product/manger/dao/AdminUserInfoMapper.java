@@ -38,4 +38,5 @@ public interface AdminUserInfoMapper {
      * @param phoneNumber 手机号
      */
     void delete(@Param("phoneNumber") String phoneNumber);
+
 }

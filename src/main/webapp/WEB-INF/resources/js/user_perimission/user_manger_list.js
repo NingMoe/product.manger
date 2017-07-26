@@ -88,7 +88,7 @@ $(document).ready(function () {
 function modifyUserInfo(node) {
     var phoneNumber = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
     console.log(phoneNumber);
-
+    window.location.href = $("#baseUrl").val() + "/user/manger/page/modify?phoneNumber=" + phoneNumber;
 }
 
 function deleteUser(node) {

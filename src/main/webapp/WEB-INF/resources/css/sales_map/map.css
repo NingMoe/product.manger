@@ -153,16 +153,16 @@ body{
     background: -o-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
 }
 .data-rank{
-    font-size:0.16rem;
-    padding-top: 0.1rem;
-    padding-left: 0.08rem;
+    font-size: 0.16rem;
+    padding-top: 0.16rem;
+    padding-left: 0.15rem;
 }
 .data-rank li{
-    float:left;
-    width:calc(50% - .20rem);
-    width:-webkit-calc(50% - .15rem);
-    padding-left:0.15rem;
+    float: left;
+    width: calc(50% - .20rem);
+    width: -webkit-calc(50% - .15rem);
     padding-top: 0.1rem;
+    text-align: center;
 }
 .data-rank .ranklist1:before{
     content: "1-5名";
@@ -190,10 +190,11 @@ body{
 }
 .data-rank li span{
     display:block;
+    margin-top: 0.05rem;
 }
 .articletop{
     width: 100%;
-    height: 3.53rem;
+    height: 4.16rem;
     margin-bottom: .20rem;
     color: #FFFFFF;
     border: 1px solid #0284d8;
@@ -214,14 +215,14 @@ body{
 }
 .righttop{
     width:100%;
-    height:1.965rem;
+    height:1.97rem;
 }
 .rightbottom{
-    height:2rem;
+    height:1.97rem;
 }
 .rightspec{
-    -height:2rem;
-    height: 2.55rem;
+    height:2rem;
+    -height: 2.55rem;
 }
 .sb{
     background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat  ;

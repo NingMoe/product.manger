@@ -123,4 +123,29 @@ public class UserMangerController {
         return CommonResponse.ok();
     }
 
+    /**
+     * 修改用户信息
+     *
+     * @return 状态
+     */
+    @RequestMapping(value = "user/manger/modify", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("删除用户")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
+            @ApiResponse(code = 16, message = "权限不够", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public CommonResponse modifyUserInfo(@RequestParam("phoneNumber") String phoneNumber,
+                                         @RequestParam("email") String email,
+                                         @RequestParam("username") String username,
+                                         @RequestParam("sex") String sex,
+                                         @RequestParam("role") String role,
+                                         @RequestParam("headPicture") MultipartFile headPicture)
+            throws DataFormatException, PermissionHasNotEnoughException {
+        userMangerService.modifyUserInfo(phoneNumber, email, username, sex, role, headPicture);
+        return CommonResponse.ok();
+    }
+
 }

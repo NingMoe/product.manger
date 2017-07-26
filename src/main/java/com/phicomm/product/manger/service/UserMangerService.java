@@ -146,16 +146,38 @@ public class UserMangerService {
      */
     public void deleteUser(String phoneNumber) throws PermissionHasNotEnoughException {
         AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
-        if(!"user".equalsIgnoreCase(adminUserInfo.getRole())) {
+        if (!"user".equalsIgnoreCase(adminUserInfo.getRole())) {
             throw new PermissionHasNotEnoughException();
         }
         AdminUserInfo targetUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
-        if(!"user".equalsIgnoreCase(targetUserInfo.getRole())) {
+        if (!"user".equalsIgnoreCase(targetUserInfo.getRole())) {
             throw new PermissionHasNotEnoughException();
         }
-        if(targetUserInfo.getPhoneNumber().equals(adminUserInfo.getPhoneNumber())) {
+        if (targetUserInfo.getPhoneNumber().equals(adminUserInfo.getPhoneNumber())) {
             throw new PermissionHasNotEnoughException();
         }
         adminUserInfoMapper.delete(phoneNumber);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param phoneNumber 手机号
+     * @param email       邮箱
+     * @param username    用户名
+     * @param sex         性别
+     * @param phoneNumber 手机号
+     * @param headPicture 头像
+     */
+    public void modifyUserInfo(String phoneNumber,
+                               String email,
+                               String username,
+                               String sex,
+                               String role,
+                               MultipartFile headPicture) {
+        AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
+        if(adminUserInfo != null && "administrator".equalsIgnoreCase(adminUserInfo.getRole())) {
+
+        }
     }
 }
