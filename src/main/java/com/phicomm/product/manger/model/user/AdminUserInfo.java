@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.model.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class AdminUserInfo {
@@ -18,6 +20,7 @@ public class AdminUserInfo {
 
     private String headPicture;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     public Long getId() {
