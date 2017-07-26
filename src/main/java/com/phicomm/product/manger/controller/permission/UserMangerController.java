@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.controller.permission;
 
+import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
@@ -69,7 +70,7 @@ public class UserMangerController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "user/manger/list", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "user/manger/list", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     @ResponseBody
     @ApiOperation("用户列表")
     @ApiResponses(value = {
@@ -77,9 +78,8 @@ public class UserMangerController {
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class)
     })
     @FunctionPoint("common")
-    public CommonResponse userList() throws DataFormatException {
-        userMangerService.userList();
-        return CommonResponse.ok();
+    public JSONObject userList() throws DataFormatException {
+        return userMangerService.userList();
     }
 
 }

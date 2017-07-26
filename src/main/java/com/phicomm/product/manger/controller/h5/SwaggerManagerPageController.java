@@ -3,9 +3,8 @@ package com.phicomm.product.manger.controller.h5;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.exception.SwaggerProjectNotFoundException;
-import com.phicomm.product.manger.model.table.AdminUserInfo;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
-import com.phicomm.product.manger.service.SwaggerAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -24,16 +23,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class SwaggerManagerPageController {
 
-    private SwaggerAccountService swaggerAccountService;
-
     private NavigationManger navigationManger;
 
     @Autowired
-    public SwaggerManagerPageController(SwaggerAccountService swaggerAccountService,
-                                        NavigationManger navigationManger) {
-        this.swaggerAccountService = swaggerAccountService;
+    public SwaggerManagerPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
-        Assert.notNull(this.swaggerAccountService);
         Assert.notNull(this.navigationManger);
     }
 
@@ -63,7 +57,7 @@ public class SwaggerManagerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "swagger/swagger_edit.vm");
-        modelAndView.getModel().put("projectName",projectName);
+        modelAndView.getModel().put("projectName", projectName);
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("swaggerEdit"));
         return modelAndView;

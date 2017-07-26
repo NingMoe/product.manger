@@ -8,7 +8,7 @@ import com.phicomm.product.manger.config.SwaggerPropertiesConfig;
 import com.phicomm.product.manger.dao.AdminUserInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.login.AccountModel;
-import com.phicomm.product.manger.model.table.AdminUserInfo;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.account.PhicommAccount;
 import com.phicomm.product.manger.module.permission.PermissionManager;
 import com.phicomm.product.manger.utils.ExceptionUtil;

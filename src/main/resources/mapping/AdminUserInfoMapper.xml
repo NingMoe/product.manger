@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.AdminUserInfoMapper">
 
-    <select id="getUserInfo" resultType="com.phicomm.product.manger.model.table.AdminUserInfo">
+    <select id="getUserInfo" resultType="com.phicomm.product.manger.model.user.AdminUserInfo">
         SELECT
             id AS id,
             phone_number AS phoneNumber,
@@ -39,5 +39,19 @@
                 now()
             )
     </insert>
+
+    <select id="getUserInfoList" resultType="com.phicomm.product.manger.model.user.AdminUserInfo">
+        SELECT
+            `id` AS `id`,
+            phone_number AS phoneNumber,
+            email AS email,
+            username AS username,
+            sex AS sex,
+            role AS role,
+            head_picture AS headPicture,
+            create_time AS createTime
+        FROM
+            admin_user_info
+    </select>
 
 </mapper>

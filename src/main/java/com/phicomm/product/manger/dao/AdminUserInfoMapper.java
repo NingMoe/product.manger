@@ -1,8 +1,10 @@
 package com.phicomm.product.manger.dao;
 
-import com.phicomm.product.manger.model.table.AdminUserInfo;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface AdminUserInfoMapper {
@@ -24,5 +26,10 @@ public interface AdminUserInfoMapper {
                 @Param("sex") int sex,
                 @Param("role") String role,
                 @Param("headPicture") String headPicture);
+
+    /**
+     * 获得用户嘻嘻你列表
+     */
+    List<AdminUserInfo> getUserInfoList();
 
 }

@@ -16,6 +16,7 @@
                             <th>手机号</th>
                             <th>邮箱</th>
                             <th>系统角色</th>
+                            <th>创建日期</th>
                         </tr>
                         </thead>
                         <tbody>

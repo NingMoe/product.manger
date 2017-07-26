@@ -26,7 +26,7 @@ $(document).ready(function () {
             }
         },
         ajax: {
-            url: baseUrl + "/firmware/upgrade/list?environment=prod",
+            url: baseUrl + "/user/manger/list",
         },
         columns: [
             {
@@ -35,13 +35,11 @@ $(document).ready(function () {
                 data: null,
                 defaultContent: ""
             },
-            {data: "firmwareType"},
-            {data: "hardwareCode"},
-            {data: "version"},
-            {data: "versionCode"},
-            {
-                data: "enable"
-            }
+            {data: "username"},
+            {data: "phoneNumber"},
+            {data: "email"},
+            {data: "role"},
+            {data: "createTime"}
         ]
     });
 

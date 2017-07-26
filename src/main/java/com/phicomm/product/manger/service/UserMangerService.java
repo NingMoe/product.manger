@@ -1,19 +1,24 @@
 package com.phicomm.product.manger.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.AdminUserInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.UserHasExistException;
-import com.phicomm.product.manger.model.table.AdminUserInfo;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.utils.FileUtil;
 import com.phicomm.product.manger.utils.RegexUtil;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -99,7 +104,23 @@ public class UserMangerService {
     /**
      * 用户列表
      */
-    public void userList() {
-
+    public JSONObject userList() {
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        result.put("data", jsonArray);
+        List<AdminUserInfo> adminUserInfoList = adminUserInfoMapper.getUserInfoList();
+        if (adminUserInfoList != null) {
+            adminUserInfoList.forEach((item) -> {
+                Map<String, String> map = Maps.newHashMap();
+                map.put("id", String.valueOf(item.getId()));
+                map.put("username", item.getUsername());
+                map.put("phoneNumber", item.getPhoneNumber());
+                map.put("email", item.getEmail());
+                map.put("role", item.getRole());
+                map.put("createTime", new DateTime(item.getCreateTime()).toString("yyyy-MM-dd"));
+                jsonArray.add(map);
+            });
+        }
+        return result;
     }
 }
