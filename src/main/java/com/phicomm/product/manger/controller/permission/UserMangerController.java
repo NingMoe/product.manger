@@ -7,11 +7,13 @@ import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.exception.UserHasExistException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.service.UserMangerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -80,6 +82,24 @@ public class UserMangerController {
     @FunctionPoint("common")
     public JSONObject userList() throws DataFormatException {
         return userMangerService.userList();
+    }
+
+    /**
+     * 用户详情
+     *
+     * @return 数据
+     */
+    @RequestMapping(value = "user/manger/detail", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("用户详情")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<AdminUserInfo> getUserDetail(@Param("phoneNumber") String phoneNumber) throws DataFormatException {
+        AdminUserInfo adminUserInfo = userMangerService.getUserDetail(phoneNumber);
+        return new Response<AdminUserInfo>().setData(adminUserInfo);
     }
 
 }

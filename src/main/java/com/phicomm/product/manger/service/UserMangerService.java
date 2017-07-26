@@ -76,27 +76,27 @@ public class UserMangerService {
         if (!RegexUtil.checkPhoneNumber(phoneNumber)) {
             throw new DataFormatException();
         }
-        if(!RegexUtil.checkEmail(email)) {
+        if (!RegexUtil.checkEmail(email)) {
             throw new DataFormatException();
         }
-        if(Strings.isNullOrEmpty(username)) {
+        if (Strings.isNullOrEmpty(username)) {
             throw new DataFormatException();
         }
-        if(!"boy".equalsIgnoreCase(sex) && !"girl".equalsIgnoreCase(sex)) {
+        if (!"boy".equalsIgnoreCase(sex) && !"girl".equalsIgnoreCase(sex)) {
             throw new DataFormatException();
         }
-        if(!"administrator".equalsIgnoreCase(role) && !"user".equalsIgnoreCase(role)) {
+        if (!"administrator".equalsIgnoreCase(role) && !"user".equalsIgnoreCase(role)) {
             throw new DataFormatException();
         }
         AdminUserInfo adminUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
-        if(adminUserInfo != null) {
+        if (adminUserInfo != null) {
             throw new UserHasExistException();
         }
-        if(headPicture.isEmpty()) {
+        if (headPicture.isEmpty()) {
             throw new DataFormatException();
         }
         String filename = headPicture.getOriginalFilename();
-        if(!filename.endsWith(".jpg") && !filename.endsWith(".jpeg") && !filename.endsWith(".png")) {
+        if (!filename.endsWith(".jpg") && !filename.endsWith(".jpeg") && !filename.endsWith(".png")) {
             throw new DataFormatException();
         }
     }
@@ -122,5 +122,15 @@ public class UserMangerService {
             });
         }
         return result;
+    }
+
+    /**
+     * 获得用户详情
+     *
+     * @param phoneNumber 手机号
+     * @return 用户详情
+     */
+    public AdminUserInfo getUserDetail(String phoneNumber) {
+        return adminUserInfoMapper.getUserInfo(phoneNumber);
     }
 }

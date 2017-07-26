@@ -47,14 +47,11 @@ $(document).ready(function () {
         var result = null;
         $.ajax({
             type: "POST",
-            url: $("#baseUrl").val() + "/firmware/upgrade/detail",
+            url: $("#baseUrl").val() + "/user/manger/detail",
             dataType: "json",
             async: false,
             data: {
-                "firmwareType": d.firmwareType,
-                "hardwareCode": d.hardwareCode,
-                "versionCode": d.versionCode,
-                "environment": "prod",
+                "phoneNumber": d.phoneNumber
             }, error: function (req, status, err) {
                 console.log('Failed reason: ' + err);
             }, success: function (data) {
@@ -62,20 +59,15 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>重新触发:</td><td><button onclick="repeatTrigger(this)">重新触发</button></td></tr><tr><td>降级:</td><td><button onclick="downgrade(this)">降级</button></td></tr><tr><td>删除:</td><td><button onclick="deleteFirmware(this)">删除</button></td></tr></table>'
-            .replace("#id#", result.id)
-            .replace("#firmwareType#", result.firmwareType)
-            .replace("#hardwareCode#", result.hardwareCode)
-            .replace("#environment#", result.environment)
-            .replace("#version#", result.version)
-            .replace("#versionCode#", result.versionCode)
-            .replace("#description#", result.description)
-            .replace("#url#", result.url)
-            .replace("#url#", result.url)
-            .replace("#gnssVersion#", result.gnssVersion)
-            .replace("#md5#", result.md5)
-            .replace("#createTime#", result.createTime)
-            .replace("#enable#", result.enable);
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>用户名:</td><td>#username#</td></tr><tr><td>手机号:</td><td>#phoneNumber#</td></tr><tr><td>邮箱:</td><td>#email#</td></tr><tr><td>性别:</td><td>#sex#</td></tr><tr><td>系统角色:</td><td>#role#</td></tr><tr><td>头像:</td><td><img src="#headPicture#" style="height: 50px;"/></td></tr><tr><td>创建时间:</td><td>#createTime#</td></tr></table>'
+            .replace("#id#", result.data.id)
+            .replace("#username#", result.data.username)
+            .replace("#phoneNumber#", result.data.phoneNumber)
+            .replace("#email#", result.data.email)
+            .replace("#sex#", result.data.sex === 1 ? "男" : "女")
+            .replace("#role#", result.data.role)
+            .replace("#headPicture#", result.data.headPicture)
+            .replace("#createTime#", result.data.createTime);
     }
 
     $("#userList tbody").on("click", "td.details-control", function () {
