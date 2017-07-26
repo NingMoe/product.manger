@@ -62,7 +62,7 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table"><tr><td>ID:</td><td>#id#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>重新触发:</td><td><button onclick="repeatTrigger(this)">重新触发</button></td></tr><tr><td>降级:</td><td><button onclick="downgrade(this)">降级</button></td></tr><tr><td>删除:</td><td><button onclick="deleteFirmware(this)">删除</button></td></tr></table>'
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>重新触发:</td><td><button onclick="repeatTrigger(this)">重新触发</button></td></tr><tr><td>降级:</td><td><button onclick="downgrade(this)">降级</button></td></tr><tr><td>删除:</td><td><button onclick="deleteFirmware(this)">删除</button></td></tr></table>'
             .replace("#id#", result.id)
             .replace("#firmwareType#", result.firmwareType)
             .replace("#hardwareCode#", result.hardwareCode)
@@ -78,7 +78,7 @@ $(document).ready(function () {
             .replace("#enable#", result.enable);
     }
 
-    $("#wristbandProdList tbody").on("click", "td.details-control", function () {
+    $("#userList tbody").on("click", "td.details-control", function () {
         var tr = $(this).closest("tr");
         var row = table.row(tr);
         if (row.child.isShown()) {
