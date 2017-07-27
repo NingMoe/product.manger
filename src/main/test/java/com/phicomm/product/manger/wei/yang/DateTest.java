@@ -6,6 +6,10 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -26,5 +30,14 @@ public class DateTest {
         requestBean.setStartId(23);
         JSONObject jsonObject= (JSONObject) JSONObject.toJSON(requestBean);
         System.out.println(jsonObject);
+    }
+
+
+    @Test
+    public void time(){
+        System.out.println(LocalDate.now());
+        System.out.println(LocalTime.now());
+        System.out.println(LocalDateTime.now());
+        System.out.println(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
     }
 }

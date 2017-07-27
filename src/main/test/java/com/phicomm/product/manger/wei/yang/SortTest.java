@@ -2,12 +2,19 @@ package com.phicomm.product.manger.wei.yang;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 /**
  * Created by wei.yang on 2017/7/21.
  */
 public class SortTest {
+
+    private static final String CHAR_REPOSITORY = "abcdefghijklmnopqrstuvwxyz0123456789";
 
     @Test
     public void test() {
@@ -62,5 +69,107 @@ public class SortTest {
         if (h < high) {
             sort(a, l + 1, high);
         }
+    }
+
+    @Test
+    public void compareByValue() {
+        Map<String, String> map = getMap();
+        System.out.println(map);
+        List<Map.Entry<String, String>> entryList = new ArrayList<>(map.entrySet());
+        entryList.sort(Comparator.comparing(Map.Entry::getValue));
+        System.out.println(entryList);
+        entryList.sort(Comparator.comparing(Map.Entry::getKey));
+        System.out.println(entryList);
+    }
+
+    @Test
+    public void compareByValueV2() {
+        Map<String, String> map = getMap();
+        System.out.println(getMap());
+        Stream<Map.Entry<String, String>> sorted = map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue));
+        map = sorted.collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (s, s2) -> s,
+                (Supplier<Map<String, String>>) LinkedHashMap::new
+        ));
+        System.out.println(map);
+        Stream<Map.Entry<String, String>> sorted1 = map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey));
+        map = sorted1.collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new));
+        System.out.println(map);
+        System.out.println(
+                map.entrySet().stream().reduce((stringStringEntry, stringStringEntry2) -> stringStringEntry.getValue().contains("2") ? stringStringEntry : stringStringEntry2)
+        );
+        System.out.println(
+                map.entrySet().stream().reduce("guaguaguaga",
+                        (s, stringStringEntry) -> stringStringEntry.getValue(),
+                        (s, s2) -> s)
+        );
+    }
+
+    @Test
+    public void compareList() {
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            stringList.add(getRandomKey(6));
+        }
+        System.out.println(stringList);
+        Stream<String> stringStream = stringList.stream().sorted(Comparator.naturalOrder());
+        stringStream = stringStream.filter(s -> !s.contains("2"));
+        stringList = stringStream.collect(Collectors.toList());
+        System.out.println(stringList);
+        System.out.println(stringList.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toMap(
+                a -> 4,
+                Function.identity(),
+                (s, s1) -> s
+        )));
+    }
+
+    /**
+     * 获取map
+     */
+    private Map<String, String> getMap() {
+        Map<String, String> map = new LinkedHashMap<>();
+        for (int i = 0; i < 10; i++) {
+            map.put(getRandomKey(5), getRandomKey(8));
+        }
+        return map;
+    }
+
+    /**
+     * 获取长度固定的随机字符串
+     *
+     * @param len 长度
+     * @return 字符串
+     */
+    private String getRandomKey(int len) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            builder.append(CHAR_REPOSITORY.charAt((int) Math.round(Math.random() * (CHAR_REPOSITORY.length() - 1))));
+        }
+        return builder.toString();
+    }
+
+    @Test
+    public void test6(){
+        String[] datas=new String[10];
+        for (int i=0;i<10;i++){
+            datas[i]=getRandomKey(5);
+        }
+        List<String> stringList= new ArrayList<>(Arrays.asList(datas));
+        List<String> stringList1=Arrays.asList(datas);
+        System.out.println(stringList1.getClass());
+        System.out.println(stringList);
+        System.out.println(stringList1 instanceof ArrayList);
+        System.out.println(stringList1 instanceof Arrays);
+        System.out.println(stringList1 instanceof AbstractList);
+        System.out.println(stringList1 instanceof Arrays);
+        List<String> stringList2=new ArrayList<>(stringList);
+        System.out.println(stringList2 instanceof ArrayList);
+        System.out.println(stringList2.getClass());
     }
 }
