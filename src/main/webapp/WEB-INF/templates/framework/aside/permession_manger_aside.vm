@@ -1,5 +1,5 @@
 <li class="header">Permission Manger</li>
-<li class="treeview">
+<li class="treeview" id="user-manger-node-1">
     <a href="#">
         <i class="fa fa-gears"></i>
         <span>用户权限管理</span>
@@ -7,8 +7,8 @@
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
-    <ul class="treeview-menu">
-        <li>
+    <ul class="treeview-menu" id="user-manger-node-2">
+        <li id="user-manger-node-li-1">
             <a href="$baseUrl/user/manger/page">
                 <i class="fa fa-user"></i>
                 <span>用户管理</span>
@@ -16,13 +16,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu">
-                <li>
-                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-futbol-o"></i> 用户列表</a>
-                </li>
-                <li>
-                    <a href="$baseUrl/user/manger/page/add/user"><i class="fa fa-puzzle-piece"></i> 添加用户</a>
-                </li>
+            <ul class="treeview-menu" id="user-manger-node-3">
+                <li><a href="$baseUrl/user/manger/page/list"><i class="fa fa-futbol-o"></i> 用户列表</a></li>
+                <li><a href="$baseUrl/user/manger/page/create/user"><i class="fa fa-puzzle-piece"></i> 添加用户</a></li>
             </ul>
         </li>
         <li>

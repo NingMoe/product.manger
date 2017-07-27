@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.AdminUserInfoMapper">
 
-    <select id="getUserInfo" resultType="com.phicomm.product.manger.model.table.AdminUserInfo">
+    <select id="getUserInfo" resultType="com.phicomm.product.manger.model.user.AdminUserInfo">
         SELECT
             id AS id,
             phone_number AS phoneNumber,
@@ -17,5 +17,61 @@
         WHERE
             phone_number = #{phoneNumber,jdbcType=VARCHAR}
     </select>
+
+    <insert id="insert">
+        INSERT IGNORE INTO admin_user_info (
+            phone_number,
+            email,
+            username,
+            sex,
+            role,
+            head_picture,
+            create_time
+        )
+        VALUES
+            (
+                #{phoneNumber,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{username,jdbcType=VARCHAR},
+                #{sex,jdbcType=INTEGER},
+                #{role,jdbcType=VARCHAR},
+                #{headPicture,jdbcType=VARCHAR},
+                now()
+            )
+    </insert>
+
+    <select id="getUserInfoList" resultType="com.phicomm.product.manger.model.user.AdminUserInfo">
+        SELECT
+            `id` AS `id`,
+            phone_number AS phoneNumber,
+            email AS email,
+            username AS username,
+            sex AS sex,
+            role AS role,
+            head_picture AS headPicture,
+            create_time AS createTime
+        FROM
+            admin_user_info
+    </select>
+
+    <delete id="delete">
+        DELETE
+        FROM
+            admin_user_info
+        WHERE
+            phone_number = #{phoneNumber,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="update" parameterType="com.phicomm.product.manger.model.user.AdminUserInfo">
+        UPDATE admin_user_info
+        SET
+            email = #{adminUserInfo.email,jdbcType=VARCHAR},
+            username = #{adminUserInfo.username,jdbcType=VARCHAR},
+            sex = #{adminUserInfo.sex,jdbcType=INTEGER},
+            role = #{adminUserInfo.role,jdbcType=VARCHAR},
+            head_picture = #{adminUserInfo.headPicture,jdbcType=VARCHAR}
+        WHERE
+            phone_number = #{adminUserInfo.phoneNumber,jdbcType=VARCHAR}
+    </update>
 
 </mapper>

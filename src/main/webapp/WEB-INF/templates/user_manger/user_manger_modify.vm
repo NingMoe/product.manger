@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="$baseUrl/resources/select2/select2.min.css">
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">修改用户信息</h3>
+                </div>
+                <form id="form" role="form" enctype="multipart/form-data">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="phoneNumber">手机号</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="$phoneNumber" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">公司邮箱</label>
+                            <input type="text" class="form-control" id="email" name="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">昵称</label>
+                            <input type="text" class="form-control" id="username" name="username"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">性别</label>
+                            <select id="sex" class="form-control" name="sex">
+                                <option value=""></option>
+                                <option value="boy">男</option>
+                                <option value="girl">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">系统角色</label>
+                            <select id="role" class="form-control" name="role">
+                                <option value=""></option>
+                                <option value="administrator">administrator</option>
+                                <option value="user">user</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="headPicture">头像</label>
+                            <input type="file" class="form-control" id="headPicture" name="headPicture"/>
+                            <p class="help-block">后缀：*.jpg *.png *.jpeg</p>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" id="submit">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_modify.js"></script>

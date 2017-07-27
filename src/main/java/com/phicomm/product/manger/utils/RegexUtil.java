@@ -12,6 +12,8 @@ public class RegexUtil {
 
     private final static String PHONE_REGEX = "^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$";
 
+    private final static String EMAIL_REGEX = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+";
+
     private final static String MAC_REGEX_SPLIT = "^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2})$";
 
     private final static String MAC_REGEX = "^[0-9a-fA-F]{12}$";
@@ -31,6 +33,16 @@ public class RegexUtil {
      */
     public static boolean checkPhoneNumber(String phoneNumber) {
         return phoneNumber != null && Pattern.matches(PHONE_REGEX, phoneNumber);
+    }
+
+    /**
+     * 校验邮箱的正则表达式
+     *
+     * @param email 邮箱号
+     * @return 如果通过则返回true
+     */
+    public static boolean checkEmail(String email) {
+        return email != null && Pattern.matches(EMAIL_REGEX, email);
     }
 
     /**

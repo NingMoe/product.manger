@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/user_perimission/user_manger_list.css">
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">用户列表</h3>
+                </div>
+                <div class="box-body">
+                    <table id="userList" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>用户名</th>
+                            <th>手机号</th>
+                            <th>邮箱</th>
+                            <th>系统角色</th>
+                            <th>创建日期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/user_perimission/user_manger_list.js"></script>

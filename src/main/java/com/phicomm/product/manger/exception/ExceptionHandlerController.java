@@ -33,6 +33,9 @@ public class ExceptionHandlerController {
     private static JSONObject exception12;
     private static JSONObject exception13;
     private static JSONObject exception14;
+    private static JSONObject exception15;
+    private static JSONObject exception16;
+    private static JSONObject exception17;
 
     static {
         exception1001 = new JSONObject();
@@ -122,6 +125,24 @@ public class ExceptionHandlerController {
         exception14 = new JSONObject();
         exception14.put("status", 14);
         exception14.put("description", "Swagger project already existed .");
+    }
+
+    static {
+        exception15 = new JSONObject();
+        exception15.put("status", 15);
+        exception15.put("description", "user has existed.");
+    }
+
+    static {
+        exception16 = new JSONObject();
+        exception16.put("status", 16);
+        exception16.put("description", "permission has not enough exception.");
+    }
+
+    static {
+        exception17 = new JSONObject();
+        exception17.put("status", 17);
+        exception17.put("description", "user not found.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -240,5 +261,29 @@ public class ExceptionHandlerController {
     @ExceptionHandler(SwaggerProjectHasExistedException.class)
     public ModelAndView processSwaggerProjectHasExistedException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception14);
+    }
+
+    /**
+     * 用户已经存在
+     */
+    @ExceptionHandler(UserHasExistException.class)
+    public ModelAndView processUserHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception15);
+    }
+
+    /**
+     * 权限不够
+     */
+    @ExceptionHandler(PermissionHasNotEnoughException.class)
+    public ModelAndView processPermissionHasNotEnoughException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception16);
+    }
+
+    /**
+     * 用户找不到
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ModelAndView processUserNotFoundException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception17);
     }
 }
