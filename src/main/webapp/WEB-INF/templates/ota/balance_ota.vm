@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="aFile">A File</label>
                             <input type="file" id="aFile" name="aFile">
-                            <p class="help-block">例如：PHI_CS-HWR701_V0.4.17B_0.bin</p>
+                            <p class="help-block">例如：PHI_CS-HWR701_V0.4.17A_0.bin</p>
                         </div>
                         <div class="form-group">
                             <label for="bFile">B File</label>
