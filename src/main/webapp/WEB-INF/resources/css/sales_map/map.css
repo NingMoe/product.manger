@@ -9,7 +9,7 @@ button {
 }
 body * {
     -webkit-user-select: none;
-    font-family: Helvetica;
+    -font-family: Helvetica;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 a {
@@ -153,7 +153,7 @@ body{
     background: -o-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
 }
 .data-rank{
-    font-size: 0.16rem;
+    font-size: 0.17rem;
     padding-top: 0.16rem;
     padding-left: 0.15rem;
 }
