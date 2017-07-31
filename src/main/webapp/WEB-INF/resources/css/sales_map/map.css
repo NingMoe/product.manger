@@ -28,9 +28,11 @@ body {
     background-color: #091525;
 }
 .contentinner{
+    position: relative;
     min-width: 1300px;
     max-width: 1920px;
-    -min-height:1000px;
+    background-color:#0a1729;
+
 }
 .title{
     width: 71.25%;
@@ -60,7 +62,21 @@ body{
     background: url(../../image/sales_map/bg.jpg)  no-repeat;
     background-size: 100% 100%;
 }
-
+.jietu{
+    display: block;
+    position: fixed;
+    bottom: .1rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    left: .6rem;
+    border-radius: 50%;
+    font-size: 0.36rem;
+    background-color: #224e85;
+    color: #FFFFFF;
+    -opacity: 0.7;
+    line-height:1.2rem;
+    text-align: center;
+}
 .content{
     width:94%;
     margin: auto;
