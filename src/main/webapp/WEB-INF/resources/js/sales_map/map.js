@@ -42,7 +42,7 @@ $(function () {
                 /* //以下代码为下载此图片功能
                  $("<a class=\"jietu\" id=\"down_button\">").attr("href", url).attr("download","your.png").text("截图").appendTo("body");*/
                 storage.setItem("imgurl",url);
-                $("<a class=\"jietu\" id=\"down_button\">").attr("href", "downloadImg.html").text("去下载").appendTo("body");
+                $("<a class=\"jietu\" id=\"down_button\">").attr("href", baseUrl + "/statistic/sales/statistic/projection/download").text("去下载").appendTo("body");
             }
         });
     }
