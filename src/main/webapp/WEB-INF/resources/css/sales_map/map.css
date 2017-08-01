@@ -240,7 +240,7 @@ body{
     -height: 2.55rem;
 }
 .sb{
-    background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat;
+    background:url(../../image/sales_map/right.png) rgba(13,27,38,.09) no-repeat  ;
     margin-bottom: 0.2rem;
     background-size:cover;
     border:1px solid #0284d8;
