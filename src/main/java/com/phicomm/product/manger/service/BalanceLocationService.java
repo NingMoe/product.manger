@@ -70,7 +70,18 @@ public class BalanceLocationService {
         balanceLocationList.forEach((location) -> {
             BalanceLocation balanceLocation = location.format();
             if (balanceLocation != null) {
-                balanceLocations.add(balanceLocation);
+                Integer index = null;
+                for (int i = 0; i < balanceLocations.size(); i++) {
+                    if (balanceLocations.get(i).getProvince().equals(balanceLocation.getProvince())) {
+                        index = i;
+                    }
+                }
+                if (index != null) {
+                    balanceLocation.setNumber(balanceLocation.getNumber() + balanceLocations.get(index).getNumber());
+                    balanceLocations.set(index, balanceLocation);
+                } else {
+                    balanceLocations.add(balanceLocation);
+                }
             }
         });
         return balanceLocations;
