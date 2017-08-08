@@ -25,15 +25,18 @@ $(function () {
         }
         return {"dataAxis": dataAxis, "datay": datay}
     }
-    var storage=window.localStorage;
+
+    var storage = window.localStorage;
+
     function detectmob() {
-        if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)){
+        if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
             return true;
         }
         else {
             return false;
         }
     }
+
     function print() {
         html2canvas($(".contentinner"), {
             height: $(".contentinner").height() + 20,
@@ -41,15 +44,16 @@ $(function () {
                 var url = canvas.toDataURL("image/png");
                 /* //以下代码为下载此图片功能
                  $("<a class=\"jietu\" id=\"down_button\">").attr("href", url).attr("download","your.png").text("截图").appendTo("body");*/
-                storage.setItem("imgurl",url);
+                storage.setItem("imgurl", url);
                 $("<a class=\"jietu\" id=\"down_button\">").attr("href", baseUrl + "/statistic/sales/statistic/projection/download").text("去下载").appendTo("body");
             }
         });
     }
-    if(detectmob()){
+
+    if (detectmob()) {
         setTimeout(function () {
             print();
-        },2000);
+        }, 2000);
     }
     //左边地图
     ajaxData(baseUrl + '/balance/location/statistic', "", showMap);
@@ -116,7 +120,7 @@ $(function () {
     var myChart4 = echarts.init(document.getElementById('balancefive'));
     $.axpost(baseUrl + "/balance/statistic/day", {"day": 12, "type": "balance", "pageSize": 12}, function (a) {
         var number = data(a.data, dataAxis4, datay4);
-        setoption('体脂秤新增使用数(月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂设备激活量(每天)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart4.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c);
@@ -128,7 +132,7 @@ $(function () {
     var myChart5 = echarts.init(document.getElementById('balancesix'));
     $.axpost(baseUrl + "/balance/statistic/month", {"month": 12, "type": "balance"}, function (a) {
         var number = data(a.data, dataAxis5, datay5);
-        setoption('体脂秤新增使用数(年)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart5.setOption(option);
     }, function (c) {
         //alert("接口出错了"+c);
