@@ -9,7 +9,7 @@
         FROM
             balance_location_info
         GROUP BY
-            province
+            LEFT (province, 2)
     </select>
 
     <select id="getLocationTotalCount" resultType="java.lang.Integer">
@@ -28,7 +28,7 @@
         WHERE
             create_time > #{currentDate,jdbcType=VARCHAR}
         GROUP BY
-            province
+            LEFT (province, 2)
     </select>
 
     <select id="getBalanceSaleNumber" resultType="java.lang.Integer">
@@ -71,7 +71,7 @@
         AND province <> 'no_location'
         AND province <> 'Reserved Address'
         GROUP BY
-            province
+            LEFT (province, 2)
         ORDER BY
             generateCount DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
@@ -112,7 +112,7 @@
             AND province <> 'no_location'
             AND province <> 'Reserved Address'
             GROUP BY
-                province
+                LEFT (province, 2)
             ORDER BY
                 generateCount DESC
             LIMIT #{pageSize,jdbcType=INTEGER}

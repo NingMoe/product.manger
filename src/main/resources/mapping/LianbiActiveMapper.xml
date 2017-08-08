@@ -88,7 +88,7 @@
         AND province <> 'no_location'
         AND province <> 'Reserved Address'
         GROUP BY
-            province
+        	LEFT (province, 2)
         ORDER BY
             generateCount DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
@@ -129,7 +129,7 @@
             AND province <> 'no_location'
             AND province <> 'Reserved Address'
             GROUP BY
-                province
+            	LEFT (province, 2)
             ORDER BY
                 generateCount DESC
             LIMIT #{pageSize,jdbcType=INTEGER}
