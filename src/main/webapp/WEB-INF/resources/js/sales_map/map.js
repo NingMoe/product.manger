@@ -120,7 +120,7 @@ $(function () {
     var myChart4 = echarts.init(document.getElementById('balancefive'));
     $.axpost(baseUrl + "/balance/statistic/day", {"day": 12, "type": "balance", "pageSize": 12}, function (a) {
         var number = data(a.data, dataAxis4, datay4);
-        setoption('体脂设备激活量(每天)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每天)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart4.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c);
