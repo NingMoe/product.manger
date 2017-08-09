@@ -1,0 +1,45 @@
+<li class="header">Essay Manger</li>
+<li class="treeview" id="essay_manage_node">
+    <a href="#">
+        <i class="fa fa-bullhorn"></i>
+        <span>文章管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="essay_manage_menu_node">
+        <li id="essay_add_test_node">
+            <a href="$baseUrl/essay/add/test"><i class="fa fa-newspaper-o"></i>
+                <span>文章新建</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green">test</small>
+                </span>
+            </a>
+        </li>
+        <li id="essay_add_prod_node">
+            <a href="$baseUrl/essay/add/prod"><i class="fa fa-newspaper-o"></i>
+                <span>文章新建</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-red-active">prod</small>
+                </span>
+            </a>
+        </li>
+        <li id="essay_list_test_node">
+            <a href="$baseUrl/essay/list/test"><i class="fa fa-edit"></i>
+                <span>文章列表</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green">test</small>
+                </span>
+            </a>
+        </li>
+        <li id="essay_list_prod_node">
+            <a href="$baseUrl/essay/list/prod"><i class="fa fa-edit"></i>
+                <span>文章列表</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-red-active">prod</small>
+                </span>
+            </a>
+        </li>
+    </ul>
+
+</li>

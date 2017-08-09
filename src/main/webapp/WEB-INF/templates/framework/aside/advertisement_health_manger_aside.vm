@@ -1,0 +1,35 @@
+<li class="header">Advertisement Manger</li>
+<li class="treeview" id="advertisement_manage_node">
+    <a href="#">
+        <i class="fa fa-bullhorn"></i>
+        <span>广告管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="advertisement_manage_menu_node">
+        <li id="advertisement_health_menu_node">
+            <a href="pages/widgets.html">
+                <i class="fa fa-heart-o"></i>
+                <span>健康</span>
+            </a>
+            <ul class="treeview-menu">
+                <li id="advertisement_health_upload_node">
+                    <a href="$baseUrl/health/advertisement/add"><i class="fa fa-upload"></i> 广告上传</a>
+                </li>
+                <li id="advertisement_health_manage_node">
+                    <a href="$baseUrl/health/advertisement/manage"><i class="fa fa-edit"></i> 广告管理</a>
+                </li>
+                <li id="advertisement_health_launch_method_node">
+                    <a href="$baseUrl/health/advertisement/launch/method"><i class="fa fa-fire"></i> 投放策略</a>
+                </li>
+                <li id="advertisement_health_update_node">
+                    <a href="$baseUrl/health/advertisement/update/trigger"><i class="fa fa-file-archive-o"></i>
+                    配置管理</a>
+                </li>
+            </ul>
+        </li>
+        <li id="advertisement_sport_menu_node"><a href="#"><i class="fa fa-bicycle"></i>运动</a></li>
+    </ul>
+
+</li>

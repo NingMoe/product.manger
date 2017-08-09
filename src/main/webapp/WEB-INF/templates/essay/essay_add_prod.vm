@@ -1,0 +1,48 @@
+<section class="content">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="input-group input-group-sm col-md-12">
+                <div class="box-header">
+                    <h3 class="box-title">文章新增</h3>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="uploadEssay">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="essayId"><font style="color: red">*</font>文章ID</label>
+                            <input type="text" class="form-control" id="essayId" name="essayId" placeholder="用户自定义文章ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="title"><font style="color: red">*</font>标题</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="文章标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="subtitle"><font style="color: red">*</font>副标题</label>
+                            <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="文章副标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="coverUrl"><font style="color: red">*</font>封面URL</label>
+                            <input type="text" class="form-control" id="coverUrl" name="coverUrl" placeholder="文章封面URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="contentUrl"><font style="color: red">*</font>正文URL</label>
+                            <input type="text" class="form-control" id="contentUrl" name="contentUrl" placeholder="文章正文URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="summary"><font style="color: red">*</font>简介</label>
+                            <textarea rows="3" cols="80" name="summary" class="form-control" id="summary" placeholder="文章简介"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="type" name="type" value="prod">
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" onclick="uploadEssay()">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/essay/essay_add_prod.js"></script>

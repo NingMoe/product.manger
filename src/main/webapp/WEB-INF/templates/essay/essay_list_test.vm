@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/datatables/datatables.css">
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">文章列表</h3>
+                </div>
+                <div class="box-body">
+                    <table id="essayList" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>详情</th>
+                            <th>ID</th>
+                            <th>标题</th>
+                            <th>副标题</th>
+                            <th>创建时间</th>
+                            <th width="5%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="essayModal" tabindex="-1" role="dialog" aria-labelledby="essayModalLabel">
+        <div class="modal-dialog" role="document" style="width: 50%; margin-left: auto; margin-right: auto">
+            <div class="modal-content input-group input-group-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="essayModalLabel">编辑</h4>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="updateEssay">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="essayId"><font style="color: red">*</font>ID</label>
+                            <input type="text" class="form-control" id="essayId" name="essayId" placeholder="用户自定义文章ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="title"><font style="color: red">*</font>标题</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="文章标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="subtitle"><font style="color: red">*</font>副标题</label>
+                            <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="文章副标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="coverUrl"><font style="color: red">*</font>封面URL</label>
+                            <input type="text" class="form-control" id="coverUrl" name="coverUrl" placeholder="文章封面URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="contentUrl"><font style="color: red">*</font>正文URL</label>
+                            <input type="text" class="form-control" id="contentUrl" name="contentUrl" placeholder="文章正文URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="summary"><font style="color: red">*</font>简介</label>
+                            <textarea rows="3" cols="80" name="summary" class="form-control" id="summary" placeholder="文章简介"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="type" name="type" value="test">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                        <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal" onclick="updateEssay();"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/essay/essay_list_test.js"></script>

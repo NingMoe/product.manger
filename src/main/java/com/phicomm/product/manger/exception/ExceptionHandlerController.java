@@ -36,6 +36,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception15;
     private static JSONObject exception16;
     private static JSONObject exception17;
+    private static JSONObject exception18;
 
     static {
         exception1001 = new JSONObject();
@@ -143,6 +144,12 @@ public class ExceptionHandlerController {
         exception17 = new JSONObject();
         exception17.put("status", 17);
         exception17.put("description", "user not found.");
+    }
+
+    static {
+        exception18 = new JSONObject();
+        exception18.put("status", 18);
+        exception18.put("description", "id has exist.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -285,5 +292,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(UserNotFoundException.class)
     public ModelAndView processUserNotFoundException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception17);
+    }
+
+    /**
+     * ID已经存在
+     */
+    @ExceptionHandler(IdHasExistException.class)
+    public ModelAndView processIdHasExistException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception18);
     }
 }

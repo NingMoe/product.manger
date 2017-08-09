@@ -20,6 +20,22 @@
     </navigation>
 
     <navigation>
+        <id>permissionManger</id>
+        <title>
+            <title-name>权限管理</title-name>
+            <title-description>权限管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/permission</url>
+            <sub-directories>
+                <name>permission</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>salesLocationStatistic</id>
         <title>
             <title-name>统计</title-name>
@@ -30,7 +46,7 @@
             <name>Home</name>
             <url>$baseUrl/statistic/sales/location</url>
             <sub-directories>
-                <name>SalesLocationStatistic</name>
+                <name>salesLocationStatistic</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -94,7 +110,7 @@
             <name>Home</name>
             <url>$baseUrl/hermes/page</url>
             <sub-directories>
-                <name>Hermes</name>
+                <name>hermes</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -110,7 +126,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/shipment/status</url>
             <sub-directories>
-                <name>BalanceStatus</name>
+                <name>balanceStatus</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -126,7 +142,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/feedback/show</url>
             <sub-directories>
-                <name>BalanceFeedback</name>
+                <name>showBalanceFeedback</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -142,7 +158,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/file/upload</url>
             <sub-directories>
-                <name>WristbandUpgradeForFileUpload</name>
+                <name>wristbandUpgradeForFileUpload</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -158,7 +174,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/test/list</url>
             <sub-directories>
-                <name>WristbandUpgradeForTestList</name>
+                <name>wristbandUpgradeForTestList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -174,7 +190,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/prod/list</url>
             <sub-directories>
-                <name>WristbandUpgradeForProdList</name>
+                <name>wristbandUpgradeForProdList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -182,15 +198,15 @@
     <navigation>
         <id>balanceOta</id>
         <title>
-            <title-name>体脂秤OTA升级</title-name>
-            <title-description>OTA升级</title-description>
+            <title-name>体脂秤Ota升级</title-name>
+            <title-description>Ota升级</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota</url>
             <sub-directories>
-                <name>BalanceOTA</name>
+                <name>balanceOta</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -198,15 +214,15 @@
     <navigation>
         <id>balanceOtaList</id>
         <title>
-            <title-name>体脂秤OTA固件列表</title-name>
-            <title-description>OTA固件列表</title-description>
+            <title-name>体脂秤Ota固件列表</title-name>
+            <title-description>Ota固件列表</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota/list</url>
             <sub-directories>
-                <name>BalanceOTAList</name>
+                <name>balanceOtaList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -222,7 +238,7 @@
             <name>Home</name>
             <url>$baseUrl/wristband/upgrade/page/trigger/config</url>
             <sub-directories>
-                <name>WristbandUpgradeForTriggerConfig</name>
+                <name>wristbandUpgradeForTriggerConfig</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -238,7 +254,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/ota/server/manage</url>
             <sub-directories>
-                <name>BalanceOTAServer</name>
+                <name>balanceOtaServer</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -246,15 +262,15 @@
     <navigation>
         <id>balanceOtaServerAdd</id>
         <title>
-            <title-name>添加OTA服务器地址</title-name>
-            <title-description>OTA服务器</title-description>
+            <title-name>添加Ota服务器地址</title-name>
+            <title-description>Ota服务器</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota/server/add</url>
             <sub-directories>
-                <name>BalanceOtaServerAdd</name>
+                <name>balanceOtaServerAdd</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -262,15 +278,15 @@
     <navigation>
         <id>balanceOtaMac</id>
         <title>
-            <title-name>体脂秤OTA测试Mac管理</title-name>
-            <title-description>MAC管理</title-description>
+            <title-name>体脂秤Ota测试Mac管理</title-name>
+            <title-description>Mac管理</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
             <url>$baseUrl/balance/ota/mac/manage</url>
             <sub-directories>
-                <name>BalanceOTAMac</name>
+                <name>balanceOtaMac</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -284,9 +300,9 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/statistic/page/user/analysis</url>
+            <url>$baseUrl/health/advertisement/add</url>
             <sub-directories>
-                <name>UserAnalysis</name>
+                <name>userAnalysis</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -302,7 +318,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu</url>
             <sub-directories>
-                <name>BalanceMcu</name>
+                <name>balanceMcu</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -318,7 +334,7 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu/list</url>
             <sub-directories>
-                <name>BalanceMcuList</name>
+                <name>balanceMcuList</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -334,104 +350,137 @@
             <name>Home</name>
             <url>$baseUrl/balance/mcu/mac/manage</url>
             <sub-directories>
-                <name>BalanceMcuMac</name>
+                <name>balanceMcuMac</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>userMangerCreate</id>
+        <id>advertisementHealthAdd</id>
         <title>
-            <title-name>用户管理</title-name>
-            <title-description>创建新用户</title-description>
+            <title-name>广告（健康）上传</title-name>
+            <title-description>广告（健康）上传</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/user/manger/page</url>
+            <url>$baseUrl/health/advertisement/add</url>
             <sub-directories>
-                <name>UserManger</name>
+                <name>advertisementHealthAdd</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>userMangerList</id>
+        <id>advertisementHealthManage</id>
         <title>
-            <title-name>用户管理</title-name>
-            <title-description>用户列表</title-description>
+            <title-name>广告（健康）管理</title-name>
+            <title-description>广告（健康）管理</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/user/manger/page</url>
+            <url>$baseUrl/health/advertisement/manage</url>
             <sub-directories>
-                <name>UserManger</name>
+                <name>advertisementHealthManage</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>userMangerModify</id>
+        <id>advertisementHealthLaunchMethod</id>
         <title>
-            <title-name>用户管理</title-name>
-            <title-description>用户信息修改</title-description>
+            <title-name>广告（健康）投放策略</title-name>
+            <title-description>广告（健康）投放策略</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/user/manger/page</url>
+            <url>$baseUrl/health/advertisement/launch/method</url>
             <sub-directories>
-                <name>UserManger</name>
+                <name>advertisementHealthLaunchMethod</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>permissionManger</id>
+        <id>advertisementHealthUpdateTrigger</id>
         <title>
-            <title-name>权限管理</title-name>
-            <title-description>权限管理</title-description>
+            <title-name>广告（健康）触发升级配置</title-name>
+            <title-description>广告（健康）触发升级配置</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/permission/manger/page</url>
+            <url>$baseUrl/health/advertisement/update</url>
             <sub-directories>
-                <name>PermissionManger</name>
+                <name>advertisementHealthUpdateTrigger</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>swaggerManager</id>
+        <id>essayAddProd</id>
         <title>
-            <title-name>在线文档管理</title-name>
-            <title-description>在线文档管理</title-description>
+            <title-name>文章新增</title-name>
+            <title-description>文章新增</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/swagger/project/manager</url>
+            <url>$baseUrl/essay/add/prod</url>
             <sub-directories>
-                <name>SwaggerManager</name>
+                <name>essayAddProd</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>swaggerEdit</id>
+        <id>essayAddTest</id>
         <title>
-            <title-name>在线文档编辑</title-name>
-            <title-description>项目编辑</title-description>
+            <title-name>文章新增</title-name>
+            <title-description>文章新增</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/swagger/project/edit</url>
+            <url>$baseUrl/essay/add/test</url>
             <sub-directories>
-                <name>SwaggerEdit</name>
+                <name>essayAddTest</name>
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>essayListProd</id>
+        <title>
+            <title-name>文章列表</title-name>
+            <title-description>文章列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/essay/list/prod</url>
+            <sub-directories>
+                <name>essayListProd</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>essayListTest</id>
+        <title>
+            <title-name>文章列表</title-name>
+            <title-description>文章列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/essay/list/test</url>
+            <sub-directories>
+                <name>essayListTest</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>

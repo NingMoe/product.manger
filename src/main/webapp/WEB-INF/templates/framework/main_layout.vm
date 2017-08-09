@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-    #set($baseUrl = $request.getScheme() + "://" + $request.getServerName() +
-        ":" + $request.getServerPort() + $request.getContextPath())
+    #set($baseUrl = $request.getScheme() + "://" + $request.getServerName() + ":" + $request.getServerPort() + $request.getContextPath())
 <html>
 <head>
     <meta charset="utf-8">
@@ -33,12 +32,12 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="$baseUrl/resources/ie/html5shiv.js"></script>
-    <script src="$baseUrl/resources/ie/respond.min.js"></script>
+        <script src="$baseUrl/resources/ie/html5shiv.js"></script>
+        <script src="$baseUrl/resources/ie/respond.min.js"></script>
     <![endif]-->
     <style>
-        * {
-            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        *{
+            font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
         }
     </style>
 </head>
@@ -64,9 +63,9 @@
                 #parse("framework/aside/feedback_manger_aside.vm")
                 #parse("framework/aside/firmware_upgrade_aside.vm")
                 #parse("framework/aside/card_manger_aside.vm")
-                #parse("framework/aside/advertisement_manger_aside.vm")
+                #parse("framework/aside/advertisement_health_manger_aside.vm")
+                #parse("framework/aside/essay_manger_aside.vm")
                 #parse("framework/aside/hermes_helper_aside.vm")
-                #parse("framework/aside/swagger_manager_aside.vm")
                 #parse("framework/aside/permession_manger_aside.vm")
             </ul>
         </section>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.EssayMapper">
+
+    <insert id="essayUpload"
+            parameterType="com.phicomm.product.manger.model.essay.EssayInfo">
+        INSERT INTO health_discovery_essay_info
+            (
+                essay_id, title, subtitle, summary, cover_url, content_url, create_time, update_time
+            )
+        VALUES
+            (
+                #{essayInfo.essayId, jdbcType=VARCHAR}, #{essayInfo.title, jdbcType=VARCHAR},
+                #{essayInfo.subtitle, jdbcType=VARCHAR}, #{essayInfo.summary, jdbcType=VARCHAR},
+                #{essayInfo.coverUrl, jdbcType=VARCHAR},#{essayInfo.contentUrl, jdbcType=VARCHAR},
+                #{essayInfo.createTime, jdbcType=TIMESTAMP},#{essayInfo.updateTime, jdbcType=TIMESTAMP}
+                );
+    </insert>
+
+    <select id="existEssay" resultType="java.lang.Boolean">
+        SELECT
+            count(1)
+        FROM
+            health_discovery_essay_info
+        WHERE
+            essay_id = #{essayId,jdbcType=VARCHAR};
+    </select>
+
+    <select id="essayList"
+            resultType="com.phicomm.product.manger.model.essay.EssayInfo">
+        SELECT
+            id AS id,
+            essay_id AS essayId,
+            title AS title,
+            subtitle AS subtitle,
+            summary AS summary,
+            cover_url AS coverUrl,
+            content_url AS contentUrl,
+            DATE_FORMAT(
+            create_time,
+            '%Y-%m-%d %H:%i:%s'
+            ) AS createTime,
+            DATE_FORMAT(
+            update_time,
+            '%Y-%m-%d %H:%i:%s'
+            ) AS updateTime
+        FROM
+            health_discovery_essay_info;
+    </select>
+
+    <delete id="essayDelete" parameterType="java.lang.String">
+        DELETE FROM
+            health_discovery_essay_info
+        WHERE
+            essay_id = #{essayId,jdbcType=VARCHAR};
+    </delete>
+
+    <update id="essayUpdate" parameterType="com.phicomm.product.manger.model.essay.EssayInfo">
+        UPDATE health_discovery_essay_info SET
+            title = #{essayInfo.title, jdbcType=VARCHAR},
+            subtitle = #{essayInfo.subtitle, jdbcType=VARCHAR},
+            summary = #{essayInfo.summary, jdbcType=VARCHAR},
+            cover_url = #{essayInfo.coverUrl, jdbcType=VARCHAR},
+            content_url = #{essayInfo.contentUrl, jdbcType=VARCHAR},
+            update_time = #{essayInfo.updateTime, jdbcType=TIMESTAMP}
+        WHERE
+            essay_id = #{essayInfo.essayId, jdbcType=VARCHAR}
+    </update>
+
+</mapper>
