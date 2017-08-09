@@ -344,7 +344,6 @@ function showMap(data) {
     statistic.sort(function (a, b) {
         return b.value - a.value;
     });
-
     for (var i = 0; i <= 3; i++) {
         var html = '';
         for (var j = 0; j <= 4; j++) {
@@ -363,7 +362,7 @@ function showMap(data) {
         },
         visualMap: {
             min: 200,
-            max: 3000,
+            max: statistic[4].value,
             right: '30px',
             top: '60%',
             inRange: {
