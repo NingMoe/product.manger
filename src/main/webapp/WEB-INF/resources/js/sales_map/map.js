@@ -363,11 +363,11 @@ function showMap(data) {
         },
         visualMap: {
             min: 200,
-            max: 2000,
+            max: 3000,
             right: '30px',
             top: '60%',
             inRange: {
-                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#eb7180', '#ff0006']
+                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#ff0006']
             },
             text: ['High', 'Low'],
             textStyle: {
