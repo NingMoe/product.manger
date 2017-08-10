@@ -66,6 +66,7 @@
                 #parse("framework/aside/advertisement_health_manger_aside.vm")
                 #parse("framework/aside/essay_manger_aside.vm")
                 #parse("framework/aside/hermes_helper_aside.vm")
+                #parse("framework/aside/swagger_manager_aside.vm")
                 #parse("framework/aside/permession_manger_aside.vm")
             </ul>
         </section>

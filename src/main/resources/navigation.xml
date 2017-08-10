@@ -20,22 +20,6 @@
     </navigation>
 
     <navigation>
-        <id>permissionManger</id>
-        <title>
-            <title-name>权限管理</title-name>
-            <title-description>权限管理</title-description>
-        </title>
-        <directory>
-            <icon>fa fa-dashboard</icon>
-            <name>Home</name>
-            <url>$baseUrl/permission</url>
-            <sub-directories>
-                <name>permission</name>
-            </sub-directories>
-        </directory>
-    </navigation>
-
-    <navigation>
         <id>salesLocationStatistic</id>
         <title>
             <title-name>统计</title-name>
@@ -479,6 +463,102 @@
             <url>$baseUrl/essay/list/test</url>
             <sub-directories>
                 <name>essayListTest</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>swaggerManager</id>
+        <title>
+            <title-name>在线文档管理</title-name>
+            <title-description>在线文档管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/swagger/project/manager</url>
+            <sub-directories>
+                <name>SwaggerManager</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>swaggerEdit</id>
+        <title>
+            <title-name>在线文档编辑</title-name>
+            <title-description>项目编辑</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/swagger/project/edit</url>
+            <sub-directories>
+                <name>SwaggerEdit</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userMangerCreate</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>创建新用户</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>UserManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userMangerList</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>UserManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>userMangerModify</id>
+        <title>
+            <title-name>用户管理</title-name>
+            <title-description>用户信息修改</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/user/manger/page</url>
+            <sub-directories>
+                <name>UserManger</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>permissionManger</id>
+        <title>
+            <title-name>权限管理</title-name>
+            <title-description>权限管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/permission/manger/page</url>
+            <sub-directories>
+                <name>PermissionManger</name>
             </sub-directories>
         </directory>
     </navigation>
