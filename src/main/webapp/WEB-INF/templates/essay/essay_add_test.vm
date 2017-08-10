@@ -20,11 +20,11 @@
                             <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="文章副标题">
                         </div>
                         <div class="form-group">
-                            <label for="coverUrl"><font style="color: red">*</font>封面URL</label>
+                            <label id="coverUrlLabel" for="coverUrl"><font style="color: red">*</font>封面URL</label>
                             <input type="text" class="form-control" id="coverUrl" name="coverUrl" placeholder="文章封面URL">
                         </div>
                         <div class="form-group">
-                            <label for="contentUrl"><font style="color: red">*</font>正文URL</label>
+                            <label id="contentUrlLabel" for="contentUrl"><font style="color: red">*</font>正文URL</label>
                             <input type="text" class="form-control" id="contentUrl" name="contentUrl" placeholder="文章正文URL">
                         </div>
                         <div class="form-group">
