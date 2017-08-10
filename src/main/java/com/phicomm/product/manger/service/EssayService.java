@@ -121,7 +121,6 @@ public class EssayService {
                 CustomerContextHolder.selectProdDataSource();
                 break;
             default:
-                CustomerContextHolder.selectTestDataSource();
                 break;
         }
     }
