@@ -4,16 +4,26 @@
 
     <insert id="essayUpload"
             parameterType="com.phicomm.product.manger.model.essay.EssayInfo">
-        INSERT INTO health_discovery_essay_info
-            (
-                essay_id, title, subtitle, summary, cover_url, content_url, create_time, update_time
-            )
-        VALUES
-            (
-                #{essayInfo.essayId, jdbcType=VARCHAR}, #{essayInfo.title, jdbcType=VARCHAR},
-                #{essayInfo.subtitle, jdbcType=VARCHAR}, #{essayInfo.summary, jdbcType=VARCHAR},
-                #{essayInfo.coverUrl, jdbcType=VARCHAR},#{essayInfo.contentUrl, jdbcType=VARCHAR},
-                #{essayInfo.createTime, jdbcType=TIMESTAMP},#{essayInfo.updateTime, jdbcType=TIMESTAMP}
+        INSERT INTO
+            health_discovery_essay_info(
+                essay_id,
+                title,
+                subtitle,
+                summary,
+                cover_url,
+                content_url,
+                create_time,
+                update_time
+                )
+        VALUES(
+                #{essayInfo.essayId, jdbcType=VARCHAR},
+                 #{essayInfo.title, jdbcType=VARCHAR},
+                #{essayInfo.subtitle, jdbcType=VARCHAR},
+                 #{essayInfo.summary, jdbcType=VARCHAR},
+                #{essayInfo.coverUrl, jdbcType=VARCHAR},
+                #{essayInfo.contentUrl, jdbcType=VARCHAR},
+                NOW(),
+                NOW()
                 );
     </insert>
 
@@ -62,7 +72,7 @@
             summary = #{essayInfo.summary, jdbcType=VARCHAR},
             cover_url = #{essayInfo.coverUrl, jdbcType=VARCHAR},
             content_url = #{essayInfo.contentUrl, jdbcType=VARCHAR},
-            update_time = #{essayInfo.updateTime, jdbcType=TIMESTAMP}
+            update_time = NOW()
         WHERE
             essay_id = #{essayInfo.essayId, jdbcType=VARCHAR}
     </update>

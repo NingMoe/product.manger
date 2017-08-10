@@ -24,15 +24,13 @@ public class EssayInfo {
 
     private String updateTime;
 
-    public EssayInfo(String essayId, String title, String subtitle, String summary, String coverUrl, String contentUrl, String createTime, String updateTime) {
+    public EssayInfo(String essayId, String title, String subtitle, String summary, String coverUrl, String contentUrl) {
         this.essayId = essayId;
         this.title = title;
         this.subtitle = subtitle;
         this.summary = summary;
         this.coverUrl = coverUrl;
         this.contentUrl = contentUrl;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
     }
 
     public EssayInfo() {

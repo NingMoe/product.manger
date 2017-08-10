@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,9 +49,7 @@ public class EssayService {
                             String coverUrl, String contentUrl, String type)
             throws DataFormatException, IdHasExistException {
         checkDataFormat(new String[]{essayId, title, subtitle, summary, coverUrl, contentUrl});
-        EssayInfo essayInfo = new EssayInfo(essayId, title, subtitle, summary, coverUrl, contentUrl,
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        EssayInfo essayInfo = new EssayInfo(essayId, title, subtitle, summary, coverUrl, contentUrl);
         selectDatabase(type);
         if (essayMapper.existEssay(essayId)) {
             throw new IdHasExistException();
@@ -78,9 +74,7 @@ public class EssayService {
                             String coverUrl, String contentUrl, String type)
             throws DataFormatException, IdHasExistException {
         checkDataFormat(new String[]{essayId, title, subtitle, summary, coverUrl, contentUrl});
-        EssayInfo essayInfo = new EssayInfo(essayId, title, subtitle, summary, coverUrl, contentUrl,
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        EssayInfo essayInfo = new EssayInfo(essayId, title, subtitle, summary, coverUrl, contentUrl);
         selectDatabase(type);
         essayMapper.essayUpdate(essayInfo);
         CustomerContextHolder.clearDataSource();
@@ -127,6 +121,7 @@ public class EssayService {
                 CustomerContextHolder.selectProdDataSource();
                 break;
             default:
+                CustomerContextHolder.selectTestDataSource();
                 break;
         }
     }
