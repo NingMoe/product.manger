@@ -26,6 +26,35 @@ $(function () {
         return {"dataAxis": dataAxis, "datay": datay}
     }
 
+    var storage = window.localStorage;
+
+    function detectmob() {
+        if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function print() {
+        html2canvas($(".contentinner"), {
+            height: $(".contentinner").height() + 20,
+            onrendered: function (canvas) {
+                var url = canvas.toDataURL("image/png");
+                /* //以下代码为下载此图片功能
+                 $("<a class=\"jietu\" id=\"down_button\">").attr("href", url).attr("download","your.png").text("截图").appendTo("body");*/
+                storage.setItem("imgurl", url);
+                $("<a class=\"jietu\" id=\"down_button\">").attr("href", baseUrl + "/statistic/sales/statistic/projection/download").text("去下载").appendTo("body");
+            }
+        });
+    }
+
+    if (detectmob()) {
+        setTimeout(function () {
+            print();
+        }, 2000);
+    }
     //左边地图
     ajaxData(baseUrl + '/balance/location/statistic', "", showMap);
     checkNum();
@@ -35,20 +64,20 @@ $(function () {
     var dataAxis = [];
     var datay = [];
     var myChart = echarts.init(document.getElementById('balanceone'));
-    setTimeout($.axpost(baseUrl + "/balance/location/day", {"day": 30, "type": "lianbi", "pageSize": 12}, function (a) {
+    $.axpost(baseUrl + "/balance/location/day", {"day": 30, "type": "lianbi", "pageSize": 12}, function (a) {
         var number = data(a.data, dataAxis, datay);
         setoption('体脂秤K码激活地区分布前12名(月)', ['#cf641c', '#fe6161', '#ff7708'], number.dataAxis.reverse(), number.datay.reverse());
         myChart.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c)
-    }), 3000);
+    });
 
 
     //第二个
     var dataAxis1 = [];
     var datay1 = [];
     var myChart1 = echarts.init(document.getElementById('balancetwo'));
-    setTimeout($.axpost(baseUrl + "/balance/location/month", {
+    $.axpost(baseUrl + "/balance/location/month", {
         "month": 12,
         "type": "lianbi",
         "pageSize": 12
@@ -58,7 +87,7 @@ $(function () {
         myChart1.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c)
-    }), 5000);
+    });
 
     //第三个
     var dataAxis2 = [];
@@ -91,7 +120,7 @@ $(function () {
     var myChart4 = echarts.init(document.getElementById('balancefive'));
     $.axpost(baseUrl + "/balance/statistic/day", {"day": 12, "type": "balance", "pageSize": 12}, function (a) {
         var number = data(a.data, dataAxis4, datay4);
-        setoption('体脂秤新增使用数(月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每天)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart4.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c);
@@ -103,7 +132,7 @@ $(function () {
     var myChart5 = echarts.init(document.getElementById('balancesix'));
     $.axpost(baseUrl + "/balance/statistic/month", {"month": 12, "type": "balance"}, function (a) {
         var number = data(a.data, dataAxis5, datay5);
-        setoption('体脂秤新增使用数(年)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart5.setOption(option);
     }, function (c) {
         //alert("接口出错了"+c);
@@ -315,7 +344,6 @@ function showMap(data) {
     statistic.sort(function (a, b) {
         return b.value - a.value;
     });
-
     for (var i = 0; i <= 3; i++) {
         var html = '';
         for (var j = 0; j <= 4; j++) {
@@ -334,11 +362,11 @@ function showMap(data) {
         },
         visualMap: {
             min: 200,
-            max: 2000,
+            max: statistic[4].value,
             right: '30px',
             top: '60%',
             inRange: {
-                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#eb7180', '#ff0006']
+                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#ff0006']
             },
             text: ['High', 'Low'],
             textStyle: {

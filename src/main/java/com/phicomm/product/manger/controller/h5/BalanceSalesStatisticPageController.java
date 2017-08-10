@@ -24,4 +24,14 @@ public class BalanceSalesStatisticPageController {
         return new ModelAndView("statistic/balance_sales_statistic_projection");
     }
 
+    /**
+     * 获取电子秤销售地理位置统计（大屏显示）下载页面
+     */
+    @RequestMapping(value = "statistic/sales/statistic/projection/download", method = RequestMethod.GET)
+    @ApiIgnore("获取电子秤销售地理位置统计（大屏显示）下载页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView publicSalesLocationDownload() {
+        return new ModelAndView("statistic/balance_statistic_projection_download_image");
+    }
+
 }

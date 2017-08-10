@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.controller.statistic;
 
-import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceLocationStatistic;

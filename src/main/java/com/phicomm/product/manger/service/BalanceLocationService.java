@@ -73,6 +73,7 @@ public class BalanceLocationService {
                 balanceLocations.add(balanceLocation);
             }
         });
+
         return balanceLocations;
     }
 

@@ -1,7 +1,12 @@
 package com.phicomm.product.manger.wei.yang;
 
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
+import org.springframework.util.DigestUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -155,21 +160,69 @@ public class SortTest {
     }
 
     @Test
-    public void test6(){
-        String[] datas=new String[10];
-        for (int i=0;i<10;i++){
-            datas[i]=getRandomKey(5);
+    public void test6() {
+        String[] datas = new String[10];
+        for (int i = 0; i < 10; i++) {
+            datas[i] = getRandomKey(5);
         }
-        List<String> stringList= new ArrayList<>(Arrays.asList(datas));
-        List<String> stringList1=Arrays.asList(datas);
+        List<String> stringList = new ArrayList<>(Arrays.asList(datas));
+        List<String> stringList1 = Arrays.asList(datas);
         System.out.println(stringList1.getClass());
         System.out.println(stringList);
         System.out.println(stringList1 instanceof ArrayList);
         System.out.println(stringList1 instanceof Arrays);
         System.out.println(stringList1 instanceof AbstractList);
         System.out.println(stringList1 instanceof Arrays);
-        List<String> stringList2=new ArrayList<>(stringList);
+        List<String> stringList2 = new ArrayList<>(stringList);
         System.out.println(stringList2 instanceof ArrayList);
         System.out.println(stringList2.getClass());
+    }
+
+    @Test
+    public void test7() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        System.out.println(getRandomKey(16));
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        System.out.println(Arrays.toString(md5.digest("wzan142857G".getBytes("UTF-8"))));
+        System.out.println(Hex.encodeHex(md5.digest("wzan142857G".getBytes("UTF-8"))));
+        System.out.println(DigestUtils.md5DigestAsHex("wzan142857G".getBytes("UTF-8")));
+        System.out.println(org.apache.commons.codec.digest.DigestUtils.md5Hex("wzan142857G"));
+        System.out.println(org.apache.commons.codec.digest.DigestUtils.sha1Hex("wzan142857G"));
+        System.out.println(toHex(md5.digest("wzan142857G".getBytes())));
+        System.out.println(toOtc(md5.digest("wzan142857G".getBytes())));
+    }
+
+    /**
+     * 转为16进制
+     *
+     * @param data 待转化数据
+     * @return 转化好的数据
+     */
+    private String toHex(byte[] data) {
+        char[] hex = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        StringBuilder builder = new StringBuilder();
+        for (byte aData : data) {
+            builder.append(hex[(aData >>> 4) & 0xf]).append(hex[aData & 0xf]);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 转为8进制
+     *
+     * @param data 待转化数据
+     * @return 转化好的数据
+     */
+    private String toOtc(byte[] data) {
+        char[] otc = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+        StringBuilder builder = new StringBuilder();
+        for (byte a : data) {
+            builder.append(otc[(a >>> 6) & 0x7]).append(otc[(a >>> 3) & 0x7]).append(otc[a & 0x7]);
+        }
+        return builder.toString();
+    }
+
+    @Test
+    public void test8() {
+        System.out.println(Integer.toOctalString(86));
     }
 }

@@ -9,7 +9,7 @@ button {
 }
 body * {
     -webkit-user-select: none;
-    font-family: Helvetica;
+    -font-family: Helvetica;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 a {
@@ -28,9 +28,11 @@ body {
     background-color: #091525;
 }
 .contentinner{
+    position: relative;
     min-width: 1300px;
     max-width: 1920px;
-    -min-height:1000px;
+    background-color:#0a1729;
+
 }
 .title{
     width: 71.25%;
@@ -60,7 +62,20 @@ body{
     background: url(../../image/sales_map/bg.jpg)  no-repeat;
     background-size: 100% 100%;
 }
-
+.jietu{
+    display: block;
+    position: fixed;
+    bottom: .1rem;
+    width: .65rem;
+    height: .65rem;
+    left: .6rem;
+    border-radius: 50%;
+    font-size: 0.16rem;
+    background-color: #224e85;
+    color: #FFFFFF;
+    line-height: .65rem;
+    text-align: center;
+}
 .content{
     width:94%;
     margin: auto;
@@ -153,7 +168,7 @@ body{
     background: -o-linear-gradient(left, rgba(4, 94, 163, 1), rgba(4, 94, 163, 0));
 }
 .data-rank{
-    font-size: 0.16rem;
+    font-size: 0.17rem;
     padding-top: 0.16rem;
     padding-left: 0.15rem;
 }

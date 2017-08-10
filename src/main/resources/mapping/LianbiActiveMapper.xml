@@ -59,34 +59,39 @@
             resultType="com.phicomm.product.manger.model.statistic.LocationCountBean"
             parameterType="java.lang.Integer">
         <![CDATA[
-
        SELECT
-            IF (
-                POSITION('自治区' IN province)>0,
-                LEFT (
-                    province,
-                    LOCATE('自治区', province) - 1
-                ),
-                province
-            ) AS province,
+            province AS province,
             COUNT(1) AS generateCount
         FROM
-            balance_lianbi_active_info
+            (
+                SELECT
+
+                IF (
+                    POSITION('自治区' IN province) > 0,
+                    LEFT (
+                        province,
+                        LOCATE('自治区', province) - 1
+                    ),
+                    province
+                ) AS province,
+                DATE_FORMAT(create_time, '%Y-%m-%d') AS createDay
+            FROM
+                balance_lianbi_active_info
+            )b
         WHERE
-            DATE_FORMAT(create_time, '%Y-%m') > DATE_FORMAT(
-                DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
+            DATE_FORMAT(createDay, '%Y-%m') > DATE_FORMAT(
+                DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER } MONTH),
                 '%Y-%m'
             )
-        AND DATE_FORMAT(create_time, '%Y-%m-%d') < DATE_FORMAT(NOW(), '%Y-%m-%d')
+        AND createDay < DATE_FORMAT(NOW(), '%Y-%m-%d')
         AND LENGTH(province) > 0
         AND province <> 'no_location'
         AND province <> 'Reserved Address'
         GROUP BY
-            province
+        	LEFT (province, 2)
         ORDER BY
             generateCount DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
-
         ]]>
     </select>
 
@@ -124,7 +129,7 @@
             AND province <> 'no_location'
             AND province <> 'Reserved Address'
             GROUP BY
-                province
+            	LEFT (province, 2)
             ORDER BY
                 generateCount DESC
             LIMIT #{pageSize,jdbcType=INTEGER}

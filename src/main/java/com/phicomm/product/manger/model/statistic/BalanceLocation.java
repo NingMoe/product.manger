@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.model.statistic;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 
 import java.util.Set;
@@ -44,14 +45,14 @@ public class BalanceLocation {
 
     public BalanceLocation format() {
         BalanceLocation balanceLocation = new BalanceLocation();
-        if(this.province == null) {
+        if (Strings.isNullOrEmpty(this.province)) {
             return null;
         }
         String key = this.province.substring(0, 2);
-        if(!PROVINCES.contains(key)) {
+        if (!PROVINCES.contains(key)) {
             return null;
         }
-        if("黑龙".equals(key)) {
+        if ("黑龙".equals(key)) {
             balanceLocation.setProvince("黑龙江");
         } else {
             balanceLocation.setProvince(key);
