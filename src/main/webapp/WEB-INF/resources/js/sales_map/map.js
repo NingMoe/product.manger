@@ -45,7 +45,7 @@ $(function () {
                 /* //以下代码为下载此图片功能
                  $("<a class=\"jietu\" id=\"down_button\">").attr("href", url).attr("download","your.png").text("截图").appendTo("body");*/
                 storage.setItem("imgurl", url);
-                $("<a class=\"jietu\" id=\"down_button\">").attr("href", "downloadImg.html").text("去下载").appendTo("body");
+                $("<a class=\"jietu\" id=\"down_button\">").attr("href", baseUrl + "/statistic/sales/statistic/projection/download").text("去下载").appendTo("body");
             }
         });
     }
@@ -120,7 +120,7 @@ $(function () {
     var myChart4 = echarts.init(document.getElementById('balancefive'));
     $.axpost(baseUrl + "/balance/statistic/day", {"day": 12, "type": "balance", "pageSize": 12}, function (a) {
         var number = data(a.data, dataAxis4, datay4);
-        setoption('体脂秤新增使用数(月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每天)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart4.setOption(option);
     }, function (c) {
         // alert("接口出错了"+c);
@@ -132,7 +132,7 @@ $(function () {
     var myChart5 = echarts.init(document.getElementById('balancesix'));
     $.axpost(baseUrl + "/balance/statistic/month", {"month": 12, "type": "balance"}, function (a) {
         var number = data(a.data, dataAxis5, datay5);
-        setoption('体脂秤新增使用数(年)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
+        setoption('体脂秤设备激活量(每月)', ['#34a7e8', '#58ffff'], number.dataAxis.reverse(), number.datay.reverse());
         myChart5.setOption(option);
     }, function (c) {
         //alert("接口出错了"+c);
@@ -363,11 +363,11 @@ function showMap(data) {
         },
         visualMap: {
             min: 200,
-            max: 2000,
+            max: statistic[4].value,
             right: '30px',
             top: '60%',
             inRange: {
-                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#eb7180', '#ff0006']
+                color: ['#e1ebfb', '#6ea5ff', '#f9e71e', '#eb7180', '#eb7180', '#ff0006']
             },
             text: ['High', 'Low'],
             textStyle: {
