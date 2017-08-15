@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.statistic.BalanceAccountInfo;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.service.BalanceStatisticService;
 import io.swagger.annotations.Api;
@@ -87,6 +88,23 @@ public class BalanceStatisticController {
     public Response<BalanceMacStatus> obtainBalanceMacInfo(@RequestParam String searchParam) throws DataFormatException {
         BalanceMacStatus balanceMacStatus = balanceStatisticService.obtainBalanceStatusInfo(searchParam);
         return new Response<BalanceMacStatus>().setData(balanceMacStatus);
+    }
+
+    /**
+     * 获取电子秤mac、成员、用户等相关数量
+     *
+     * @return 电子秤mac、成员、用户等相关数量
+     */
+    @RequestMapping(value = "balance/statistic/account", method = {RequestMethod.POST, RequestMethod.GET},
+            consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    @ApiOperation("获取电子秤mac、成员、用户等相关数量")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<BalanceAccountInfo> obtainBalanceAccountInfo() {
+        return new Response<BalanceAccountInfo>().setData(balanceStatisticService.obtainBalanceAccountInfo());
     }
 
     /**

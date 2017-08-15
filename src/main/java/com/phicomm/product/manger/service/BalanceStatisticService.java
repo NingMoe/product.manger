@@ -6,10 +6,7 @@ import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.LianbiActiveMapper;
 import com.phicomm.product.manger.dao.UserInfoMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
-import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
-import com.phicomm.product.manger.model.statistic.CountBean;
-import com.phicomm.product.manger.model.statistic.LianBiActiveBean;
+import com.phicomm.product.manger.model.statistic.*;
 import com.phicomm.product.manger.module.analysis.UserCacheImpl;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.RegexUtil;
@@ -157,6 +154,18 @@ public class BalanceStatisticService {
                 .setMemberCount(balanceUserManagerMapper.obtainMemberCount(mac));
         CustomerContextHolder.clearDataSource();
         return balanceMacStatus;
+    }
+
+    /**
+     * 获取相关数量信息
+     *
+     * @return 数量：电子秤mac、成员数、用户数
+     */
+    public BalanceAccountInfo obtainBalanceAccountInfo() {
+        CustomerContextHolder.selectProdDataSource();
+        BalanceAccountInfo accountInfo = balanceStatusMapper.obtainAccountInfo();
+        CustomerContextHolder.clearDataSource();
+        return accountInfo;
     }
 
     /**

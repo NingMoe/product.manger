@@ -563,4 +563,19 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceAccount</id>
+        <title>
+            <title-name>账户信息</title-name>
+            <title-description>账户信息</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/statistic/account/info/page</url>
+            <sub-directories>
+                <name>balanceAccount</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>

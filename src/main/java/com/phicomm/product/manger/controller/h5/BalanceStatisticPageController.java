@@ -76,6 +76,21 @@ public class BalanceStatisticPageController {
     }
 
     /**
+     * 获取电子秤账户信息
+     */
+    @RequestMapping(value = "balance/statistic/account/info/page", method = RequestMethod.GET)
+    @ApiIgnore("首页展示")
+    @FunctionPoint(value = "common")
+    public ModelAndView showBalanceAccountPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "statistic/balance_account_info.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceAccount"));
+        return modelAndView;
+    }
+
+    /**
      * 获取用户成分分析的页面
      */
     @RequestMapping(value = "statistic/page/user/analysis", method = RequestMethod.GET)
