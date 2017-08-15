@@ -109,4 +109,30 @@
     WHERE
          mac = #{mac,jdbcType=VARCHAR}
     </select>
+
+    <select id="obtainAccountInfo" resultType="com.phicomm.product.manger.model.statistic.BalanceAccountInfo">
+        SELECT
+            a.memberCount AS memberCount,
+            b.userCount AS userCount,
+            c.macCount AS macCount
+        FROM
+        (
+            SELECT
+                COUNT(member_id) AS memberCount
+            FROM
+                `balance_user_manger_info`
+        ) a,
+        (
+            SELECT
+                COUNT(user_id) AS userCount
+            FROM
+                `user_info`
+        ) b,
+        (
+            SELECT
+                COUNT(mac) AS macCount
+            FROM
+                `balance_status_info`
+        ) c
+    </select>
 </mapper>

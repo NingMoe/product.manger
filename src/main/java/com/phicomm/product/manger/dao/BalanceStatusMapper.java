@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.dao;
 
+import com.phicomm.product.manger.model.statistic.BalanceAccountInfo;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.model.statistic.CountBean;
 import org.apache.ibatis.annotations.Param;
@@ -43,4 +44,11 @@ public interface BalanceStatusMapper {
      * @return 第一次使用电子秤的时间
      */
     String obtainStatusCreateTime(@Param("mac") String mac);
+
+    /**
+     * 获取相关数量信息
+     *
+     * @return 数量信息
+     */
+    BalanceAccountInfo obtainAccountInfo();
 }
