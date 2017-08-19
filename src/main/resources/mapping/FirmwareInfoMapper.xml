@@ -133,7 +133,8 @@
             url AS url,
             `enable` AS `enable`,
             create_time AS createTime,
-            description AS description
+            description AS description,
+            md5 AS md5
         FROM
             firmware_info
         WHERE
