@@ -88,7 +88,7 @@ public class FileUtil {
                 }
             }
         }
-        return bigInt.toString(16);
+        return String.format("%32s", bigInt.toString(16)).replaceAll(" ", "0");
     }
 
     /**
