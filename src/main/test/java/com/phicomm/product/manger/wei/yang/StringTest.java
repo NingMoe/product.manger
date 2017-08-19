@@ -88,4 +88,10 @@ public class StringTest {
         }
         return builder.toString();
     }
+
+    @Test
+    public void test4(){
+        String a="a";
+        System.out.println(String.format("%32s",a).replaceAll(" ","0"));
+    }
 }
