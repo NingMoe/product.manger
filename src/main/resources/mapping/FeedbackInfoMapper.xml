@@ -22,7 +22,9 @@
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
             feedback_info.id >=  #{startId,jdbcType=INTEGER}
+        ORDER BY feedback_info.id DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
+
         ]]>
     </select>
 
