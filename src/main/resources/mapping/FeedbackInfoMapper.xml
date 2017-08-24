@@ -21,7 +21,7 @@
             `feedback_info`
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
-            feedback_info.id >=  #{startId,jdbcType=INTEGER}
+            feedback_info.id <=  #{startId,jdbcType=INTEGER}
         ORDER BY feedback_info.id DESC
         LIMIT #{pageSize,jdbcType=INTEGER}
 
@@ -47,10 +47,11 @@
             `feedback_info`
         JOIN user_info ON feedback_info.user_id = user_info.user_id
         WHERE
-            feedback_info.id >=  #{requestBean.startId,jdbcType=INTEGER}
+            feedback_info.id <=  #{requestBean.startId,jdbcType=INTEGER}
             AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{requestBean.startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
             AND DATE_FORMAT(feedback_info.create_time,'%Y-%m-%d') < DATE_FORMAT(#{requestBean.endTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
             AND app_id = #{requestBean.appType,jdbcType=VARCHAR}
+        ORDER BY feedback_info.id DESC
         LIMIT #{requestBean.pageSize,jdbcType=INTEGER}
 
         ]]>
