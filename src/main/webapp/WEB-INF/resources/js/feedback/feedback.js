@@ -1,5 +1,5 @@
 let firstLoad = true;
-let startId = 1;
+let startId = 2147483647;
 
 /**
  * 初始化  显示10条信息
@@ -117,8 +117,8 @@ function fetch(startTime, endTime, appType) {
             if (result.length !== 0) {
                 for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
+                    startId = startId > result[i].id ? result[i].id - 1 : startId - 1;
                 }
-                startId = result[result.length - 1].id + 1;
                 console.info(startId);
             }
         }
@@ -158,8 +158,8 @@ function fetchFeedback() {
             if (result.length !== 0) {
                 for (let i = 0; i < result.length; i++) {
                     loadItem(result[i]);
+                    startId = startId > result[i].id ? result[i].id - 1 : startId - 1;
                 }
-                startId = result[result.length - 1].id + 1;
             }
         }
     })

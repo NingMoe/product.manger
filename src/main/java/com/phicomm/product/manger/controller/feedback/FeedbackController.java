@@ -71,7 +71,8 @@ public class FeedbackController {
     @FunctionPoint(value = "common")
     public Response<List<FeedbackInfoWithBLOBs>> fetchFeedbackV2(@RequestBody FeedbackRequestBean feedbackRequestBean)
             throws DataFormatException {
-        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackService.fetchFeedbackV2(feedbackRequestBean));
+        List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBsList = feedbackService.fetchFeedbackV2(feedbackRequestBean);
+        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackInfoWithBLOBsList);
     }
 
     /**
