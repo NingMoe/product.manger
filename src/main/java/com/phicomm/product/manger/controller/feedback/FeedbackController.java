@@ -52,7 +52,8 @@ public class FeedbackController {
     @FunctionPoint(value = "common")
     public Response<List<FeedbackInfoWithBLOBs>> fetchFeedback(@RequestParam int pageSize,
                                                                @RequestParam int startId) {
-        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackService.fetchFeedback(pageSize, startId));
+        List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBsList = feedbackService.fetchFeedback(pageSize, startId);
+        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackInfoWithBLOBsList);
     }
 
     /**
