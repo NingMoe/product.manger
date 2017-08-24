@@ -134,7 +134,7 @@ function removeDiv() {
     for (let i = childs.length - 1; i >= 0; i--) {
         parent.removeChild(childs[i]);
     }
-    startId = 1;
+    startId = 2147483647;
 }
 
 /**
