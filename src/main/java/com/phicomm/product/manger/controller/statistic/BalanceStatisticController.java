@@ -7,12 +7,14 @@ import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.BalanceAccountInfo;
 import com.phicomm.product.manger.model.statistic.BalanceMacStatus;
 import com.phicomm.product.manger.service.BalanceStatisticService;
+import com.phicomm.product.manger.service.UserAgeSectionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +32,15 @@ public class BalanceStatisticController {
 
     private BalanceStatisticService balanceStatisticService;
 
+    private UserAgeSectionService userAgeSectionService;
+
     @Autowired
-    public BalanceStatisticController(BalanceStatisticService balanceStatisticService) {
+    public BalanceStatisticController(BalanceStatisticService balanceStatisticService,
+                                      UserAgeSectionService userAgeSectionService) {
         this.balanceStatisticService = balanceStatisticService;
+        this.userAgeSectionService = userAgeSectionService;
+        Assert.notNull(this.balanceStatisticService);
+        Assert.notNull(this.userAgeSectionService);
     }
 
     /**
@@ -80,7 +88,7 @@ public class BalanceStatisticController {
      */
     @RequestMapping(value = "balance/mac/info", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation("mac地址信息")
+    @ApiOperation("mac/sn地址信息")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
@@ -173,6 +181,36 @@ public class BalanceStatisticController {
     @FunctionPoint("common")
     public Response<Map<String, Integer>> statisticMember() {
         return new Response<Map<String, Integer>>().setData(balanceStatisticService.statisticMember());
+    }
+
+    /**
+     * 获取年龄段信息
+     *
+     * @return 年龄段与性别之间的关系
+     */
+    @RequestMapping(value = "balance/statistic/user/age/v2", method = RequestMethod.POST,
+            produces = "application/json", consumes = "application/json")
+    @ApiOperation("获取年龄段信息")
+    @ResponseBody
+    @FunctionPoint("common")
+    public Response<Map<String, Map>> userStatistic() {
+        Map<String, Map> objectMap = userAgeSectionService.obtainUserAgeSection();
+        return new Response<Map<String, Map>>().setData(objectMap);
+    }
+
+    /**
+     * 获取年龄段信息
+     *
+     * @return 年龄段与性别之间的关系
+     */
+    @RequestMapping(value = "balance/statistic/member/age/v2", method = RequestMethod.POST,
+            produces = "application/json", consumes = "application/json")
+    @ApiOperation("获取年龄段信息")
+    @ResponseBody
+    @FunctionPoint("common")
+    public Response<Map<String, Map>> memberStatistic() {
+        Map<String, Map> objectMap = userAgeSectionService.obtainMemberAgeSection();
+        return new Response<Map<String, Map>>().setData(objectMap);
     }
 }
 
