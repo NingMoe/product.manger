@@ -3,6 +3,8 @@ package com.phicomm.product.manger.service;
 import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.UserAgeSectionMapper;
 import com.phicomm.product.manger.dao.UserInfoMapper;
+import com.phicomm.product.manger.enumeration.GenderEnum;
+import com.phicomm.product.manger.enumeration.TypeEnum;
 import com.phicomm.product.manger.model.statistic.*;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;

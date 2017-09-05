@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.model.statistic;
+package com.phicomm.product.manger.enumeration;
 
 /**
  * gender
