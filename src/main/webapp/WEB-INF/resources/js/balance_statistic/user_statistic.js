@@ -55,7 +55,7 @@ $(function statisticUserByAge() {
             }
             let barChartCavas = $("#userAgeChart").get(0).getContext("2d");
             let barChart = new Chart(barChartCavas);
-            drawBarChart2(labels, boyData, girlData, barChart);
+            drawBarChart2(labels, girlData, boyData, barChart);
         }
     })
 });
@@ -113,7 +113,7 @@ $(function statisticMemberByAge() {
             }
             let barChartCavas = $("#memberAgeChart").get(0).getContext("2d");
             let barChart = new Chart(barChartCavas);
-            drawBarChart2(labels, boyData, girlData, barChart);
+            drawBarChart2(labels, girlData, boyData, barChart);
         }
     })
 });
