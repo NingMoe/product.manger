@@ -30,7 +30,7 @@ $(function statisticUserByAge() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/user/analysis/age",
+        url: baseUrl + "/balance/statistic/user/age/v2",
         dataType: "json",
         contentType: "application/json",
         error: function (req, status, err) {
@@ -38,18 +38,24 @@ $(function statisticUserByAge() {
         }, success: function (data) {
             console.info(JSON.stringify(data));
             let labels = [];
-            let date0 = [];
-            let date1 = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
+            let boyData = [];
+            let girlData = [];
+            let boyMap = data.data["boy"];
+            let girlMap = data.data["girl"];
+            for (let key in boyMap) {
+                if (boyMap.hasOwnProperty(key)) {
                     labels.push(key);
-                    date0.push(data.data[key][0]);
-                    date1.push(data.data[key][1]);
+                    boyData.push(boyMap[key]);
+                }
+            }
+            for (let key in girlMap) {
+                if (girlMap.hasOwnProperty(key)) {
+                    girlData.push(girlMap[key]);
                 }
             }
             let barChartCavas = $("#userAgeChart").get(0).getContext("2d");
             let barChart = new Chart(barChartCavas);
-            drawBarChart2(labels, date0, date1, barChart);
+            drawBarChart2(labels, boyData, girlData, barChart);
         }
     })
 });
@@ -82,7 +88,7 @@ $(function statisticMemberByAge() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/member/analysis/age",
+        url: baseUrl + "/balance/statistic/member/age/v2",
         dataType: "json",
         contentType: "application/json",
         error: function (req, status, err) {
@@ -90,21 +96,28 @@ $(function statisticMemberByAge() {
         }, success: function (data) {
             console.info(JSON.stringify(data.data));
             let labels = [];
-            let date0 = [];
-            let date1 = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
+            let boyData = [];
+            let girlData = [];
+            let boyMap = data.data["boy"];
+            let girlMap = data.data["girl"];
+            for (let key in boyMap) {
+                if (boyMap.hasOwnProperty(key)) {
                     labels.push(key);
-                    date0.push(data.data[key][0]);
-                    date1.push(data.data[key][1]);
+                    boyData.push(boyMap[key]);
+                }
+            }
+            for (let key in girlMap) {
+                if (girlMap.hasOwnProperty(key)) {
+                    girlData.push(girlMap[key]);
                 }
             }
             let barChartCavas = $("#memberAgeChart").get(0).getContext("2d");
             let barChart = new Chart(barChartCavas);
-            drawBarChart2(labels, date0, date1, barChart);
+            drawBarChart2(labels, boyData, girlData, barChart);
         }
     })
 });
+
 function drawBarChart2(labes, data0, data1, chart) {
     let chartDataArea = {
         labels: labes,
@@ -185,6 +198,7 @@ function drawBarChart2(labes, data0, data1, chart) {
     };
     chart.Bar(chartDataArea, chartOption);
 }
+
 function drawPieChart(labes, datas, chart) {
     let pieData = [
         {
@@ -195,7 +209,7 @@ function drawPieChart(labes, datas, chart) {
         },
         {
             value: datas[1],
-            color:  "#4096B5",
+            color: "#4096B5",
             text: labes[1]
         }
     ];
@@ -203,7 +217,7 @@ function drawPieChart(labes, datas, chart) {
         //Boolean - whether to make the chart responsive
         responsive: true,
         maintainAspectRatio: true,
-       //是否显示动画
+        //是否显示动画
         animation: true,
     };
     chart.Pie(pieData, chartOption);

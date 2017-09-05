@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.UserAgeSectionMapper">
+
+    <insert id="updateAgeGenderInfo" parameterType="com.phicomm.product.manger.model.statistic.UserAgeSectionBean">
+        INSERT INTO
+            user_age_section_info(
+              `type`,
+              `gender`,
+              `age_zero_section`,
+              `age_ten_section`,
+              `age_twenty_section`,
+              `age_thirty_section`,
+              `age_forty_section`,
+              `age_fifty_section`,
+              `age_sixty_section`,
+              `age_seventy_section`,
+              `age_eighty_section`,
+              `age_ninety_section`,
+              `age_hundred_section`,
+              `age_above_hundred_section`,
+              `update_time`
+            )VALUES (
+                #{userAgeSectionBean.type,jdbcType=VARCHAR},
+                #{userAgeSectionBean.gender,jdbcType=INTEGER},
+                #{userAgeSectionBean.zeroSection,jdbcType=INTEGER},
+                #{userAgeSectionBean.tenSection,jdbcType=INTEGER},
+                #{userAgeSectionBean.twentySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.thirtySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.fortySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.fiftySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.sixtySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.seventySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.eightySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.ninetySection,jdbcType=INTEGER},
+                #{userAgeSectionBean.hundredSection,jdbcType=INTEGER},
+                #{userAgeSectionBean.aboveHundredSection,jdbcType=INTEGER},
+                NOW()
+            )ON DUPLICATE KEY UPDATE
+                age_zero_section = #{userAgeSectionBean.zeroSection,jdbcType=INTEGER},
+                age_ten_section = #{userAgeSectionBean.tenSection,jdbcType=INTEGER},
+                age_twenty_section = #{userAgeSectionBean.twentySection,jdbcType=INTEGER},
+                age_thirty_section = #{userAgeSectionBean.thirtySection,jdbcType=INTEGER},
+                age_forty_section = #{userAgeSectionBean.fortySection,jdbcType=INTEGER},
+                age_fifty_section = #{userAgeSectionBean.fiftySection,jdbcType=INTEGER},
+                age_sixty_section = #{userAgeSectionBean.sixtySection,jdbcType=INTEGER},
+                age_seventy_section = #{userAgeSectionBean.seventySection,jdbcType=INTEGER},
+                age_eighty_section = #{userAgeSectionBean.eightySection,jdbcType=INTEGER},
+                age_ninety_section = #{userAgeSectionBean.ninetySection,jdbcType=INTEGER},
+                age_hundred_section = #{userAgeSectionBean.hundredSection,jdbcType=INTEGER},
+                age_above_hundred_section = #{userAgeSectionBean.aboveHundredSection,jdbcType=INTEGER},
+                update_time = NOW()
+    </insert>
+
+    <select id="obtainUserAgeSection" parameterType="com.phicomm.product.manger.model.statistic.AgeSectionRequestBean"
+            resultType="com.phicomm.product.manger.model.statistic.UserAgeSectionBean">
+        SELECT
+            `type` AS type,
+            `gender` AS gender,
+            `age_zero_section` AS zeroSection,
+            `age_ten_section` AS tenSection,
+            `age_twenty_section` AS twentySection,
+            `age_thirty_section` AS thirtySection,
+            `age_forty_section` AS fortySection,
+            `age_fifty_section` AS fiftySection,
+            `age_sixty_section` AS sixtySection,
+            `age_seventy_section` AS seventySection,
+            `age_eighty_section` AS eightySection,
+            `age_ninety_section` AS ninetySection,
+            `age_hundred_section` AS hundredSection,
+            `age_above_hundred_section` AS aboveHundredSection,
+            `update_time` AS updateTime
+        FROM
+            user_age_section_info
+        WHERE
+            `type` = #{requestBean.type,jdbcType=VARCHAR}
+        AND
+            gender = #{requestBean.gender,jdbcType=INTEGER}
+    </select>
+</mapper>
