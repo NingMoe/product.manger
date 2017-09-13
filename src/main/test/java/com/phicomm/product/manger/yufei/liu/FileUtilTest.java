@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.yufei.liu;
 
+import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.utils.FileUtil;
 import org.junit.Test;
 
@@ -22,8 +23,9 @@ public class FileUtilTest {
 
     @Test
     public void hermesTest() throws IOException {
-        File file = new File("C:\\Users\\yufei.liu\\Desktop\\test.jar");
-        FileUtil.uploadHermes(file, "test.jar");
+        File file = new File("C:\\Users\\yufei.liu\\Desktop\\a.war");
+        CommonResponse commonResponse = FileUtil.uploadHermes(file, "test.jar");
+        System.out.println(commonResponse);
     }
 
 }
