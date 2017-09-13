@@ -39,4 +39,33 @@
         AND
             sex = #{sex,jdbcType=INTEGER}
     </select>
+
+    <select id="obtainUserGenderInfo" parameterType="java.lang.Integer" resultType="com.phicomm.product.manger.model.statistic.UserAgeSectionOriginalBean">
+        <![CDATA[
+        SELECT
+            IF (
+            LEFT (age, LENGTH(age) - 1) = 0,
+            0,
+            LEFT (age, LENGTH(age) - 1)
+            ) AS ageSection,
+            COUNT(*) AS sectionNum
+        FROM
+            (
+            SELECT
+                ROUND(
+                DATEDIFF(CURDATE(), birthday) / 365.2422
+                ) AS age
+            FROM
+                balance_user_manger_info
+            WHERE
+                sex = #{gender,jdbcType=INTEGER}
+            AND create_time < CURRENT_DATE
+            HAVING
+            LENGTH(age) > 0
+            AND age < 130
+            ) b
+        GROUP BY
+            ageSection
+        ]]>
+    </select>
 </mapper>

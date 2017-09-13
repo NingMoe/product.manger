@@ -5,10 +5,12 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
+import com.phicomm.product.manger.enumeration.GenderEnum;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * test
@@ -93,5 +95,13 @@ public class StringTest {
     public void test4(){
         String a="a";
         System.out.println(String.format("%32s",a).replaceAll(" ","0"));
+        Map<Integer,Integer> map=new HashMap<>();
+        map.put(1,2);
+        System.out.println(map.get(2));
+        System.out.println(GenderEnum.BOY.name());
+        Date date=new Date();
+        System.out.println(LocalDateTime.fromDateFields(date).minusDays(1).getDayOfYear()<LocalDateTime.fromDateFields(date).getDayOfYear());
+        System.out.println(LocalDate.fromDateFields(date).minusDays(1));
+        System.out.println(LocalDate.fromDateFields(date).minusDays(1).isBefore(LocalDate.now()));
     }
 }

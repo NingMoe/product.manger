@@ -1,7 +1,10 @@
 package com.phicomm.product.manger.dao;
 
+import com.phicomm.product.manger.model.statistic.UserAgeSectionOriginalBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 电子秤成员信息
@@ -35,4 +38,12 @@ public interface BalanceUserManagerMapper {
      * @return 性别匹配的成员数量
      */
     int statisticMember(@Param("sex") int sex);
+
+    /**
+     * 获取用户性别与年龄段信息
+     *
+     * @param gender 性别
+     * @return 年龄段信息
+     */
+    List<UserAgeSectionOriginalBean> obtainUserGenderInfo(@Param("gender") int gender);
 }
