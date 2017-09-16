@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
-import com.phicomm.product.manger.model.statistic.GenderEnum;
+import com.phicomm.product.manger.enumeration.GenderEnum;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;

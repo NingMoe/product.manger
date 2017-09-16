@@ -3,6 +3,8 @@ package com.phicomm.product.manger.service;
 import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.UserAgeSectionMapper;
 import com.phicomm.product.manger.dao.UserInfoMapper;
+import com.phicomm.product.manger.enumeration.GenderEnum;
+import com.phicomm.product.manger.enumeration.TypeEnum;
 import com.phicomm.product.manger.model.statistic.*;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
@@ -136,7 +138,6 @@ public class UserAgeSectionService {
      * @return 格式化好的数据
      */
     private UserAgeSectionBean format(List<UserAgeSectionOriginalBean> originalBeans) {
-        logger.info(originalBeans);
         if (originalBeans.isEmpty()) {
             return new UserAgeSectionBean();
         }
@@ -144,7 +145,6 @@ public class UserAgeSectionService {
         Map<Integer, Integer> formatMap = new HashMap<>();
         originalBeans.forEach(originalBean -> formatMap.put(originalBean.getAgeSection(), originalBean.getSectionNum()));
         int aboveHundred = (formatMap.get(11) == null ? 0 : formatMap.get(11)) + (formatMap.get(12) == null ? 0 : formatMap.get(12));
-        logger.info(aboveHundred);
         return ageSectionBean.setZeroSection(formatMap.get(0) == null ? 0 : formatMap.get(0))
                 .setTenSection(formatMap.get(1) == null ? 0 : formatMap.get(1))
                 .setTwentySection(formatMap.get(2) == null ? 0 : formatMap.get(2))

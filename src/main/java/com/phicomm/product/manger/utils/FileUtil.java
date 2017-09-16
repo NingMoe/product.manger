@@ -27,7 +27,7 @@ public class FileUtil {
 
     private static final Logger logger = Logger.getLogger(FileUtil.class);
 
-    private static final String HERMES_FILE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/file/";
+    private static final String HERMES_FILE_HTTP_URL_PREFIX = "https://ihome.phicomm.com:2580/hermes/file/";
 
     /**
      * hermes文件上传的接口

@@ -71,6 +71,7 @@ public class MacFormat {
         return macList;
     }
 
+    @SuppressWarnings(value = "all")
     private List formatMacAbort(String macString){
         List<String> macList=new ArrayList<>();
         //去除所有空格

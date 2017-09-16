@@ -1,11 +1,13 @@
 package com.phicomm.product.manger.model.statistic;
 
+import com.phicomm.product.manger.enumeration.AgeSectionEnum;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * gen & gender
+ * age & gender
  * Created by wei.yang on 2017/9/4.
  */
 public class UserAgeSectionBean {

@@ -36,7 +36,6 @@ $(function statisticUserByAge() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            console.info(JSON.stringify(data));
             let labels = [];
             let boyData = [];
             let girlData = [];
@@ -94,7 +93,6 @@ $(function statisticMemberByAge() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            console.info(JSON.stringify(data.data));
             let labels = [];
             let boyData = [];
             let girlData = [];
