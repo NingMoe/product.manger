@@ -23,8 +23,8 @@ public class FileUtilTest {
 
     @Test
     public void hermesTest() throws IOException {
-        File file = new File("C:\\Users\\yufei.liu\\Desktop\\a.war");
-        CommonResponse commonResponse = FileUtil.uploadHermes(file, "test.jar");
+        File file = new File("C:\\Users\\yufei.liu\\Desktop\\a.txt");
+        CommonResponse commonResponse = FileUtil.uploadHermes(file, "test.war");
         System.out.println(commonResponse);
     }
 
