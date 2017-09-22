@@ -60,7 +60,7 @@ public class FeedbackInfoWithBLOBs extends FeedbackInfo {
                 "headerUrl='" + headerUrl + '\'' +
                 ", username='" + username + '\'' +
                 ", feedback='" + feedback + '\'' +
-                ", picture='" + picture + '\'' +
+                ", Picture='" + picture + '\'' +
                 ", imageUrl=" + Arrays.toString(imageUrl) +
                 '}';
     }

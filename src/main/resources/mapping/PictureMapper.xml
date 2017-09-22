@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.PictureMapper">
+
+    <insert id="pictureUpload"
+            parameterType="com.phicomm.product.manger.model.picture.PictureUpload">
+        INSERT INTO
+            picture_upload_manager(
+                pic_id,
+                pic_chi_name,
+                pic_eng_name,
+                pic_version,
+                pic_url,
+                create_time,
+                update_time
+                )
+        VALUES(
+                #{pictureUpload.picId, jdbcType=INTEGER},
+                #{pictureUpload.picChiName, jdbcType=VARCHAR},
+                #{pictureUpload.picEngName, jdbcType=VARCHAR},
+                #{pictureUpload.picVersion, jdbcType=VARCHAR},
+                #{pictureUpload.picUrl, jdbcType=VARCHAR},
+                now(),
+                now()
+                );
+    </insert>
+
+    <select id="pictureList"
+            resultType="com.phicomm.product.manger.model.picture.PictureUpload">
+        SELECT
+        pic_version AS picVersion,
+        pic_id      AS picId,
+        pic_chi_name AS picChiName,
+        pic_eng_name AS picEngName,
+        pic_url     AS picUrl,
+        pic_status  AS picStatus,
+        create_time AS createTime,
+        update_time AS UpdateTime
+       FROM
+        picture_upload_manager
+       WHERE
+      pic_version= #{picVersion, jdbcType=VARCHAR}
+
+    </select>
+
+    <update id="pictureUpdate" parameterType="com.phicomm.product.manger.model.picture.PictureUpload">
+        UPDATE picture_upload_manager SET
+        pic_status = #{pictureUpload.picStatus, jdbcType=VARCHAR},
+        update_time = NOW()
+        WHERE
+        pic_version=#{pictureUpload.picVerison, jdbcType=VARCHAR},
+        pic_id = #{pictureUpload.picId, jdbcType=INTEGER}
+    </update>
+
+<delete  id="pictureDelete" parameterType="java.lang.String">
+    DELETE
+    FROM
+    picture_upload_manager
+    WHERE
+     pic_version=#{picVerison, jdbcType=VARCHAR}
+</delete>
+
+</mapper>
