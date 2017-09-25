@@ -564,18 +564,69 @@
     </navigation>
 
     <navigation>
-        <id>balanceAccount</id>
+    <id>balanceAccount</id>
+    <title>
+        <title-name>账户信息</title-name>
+        <title-description>账户信息</title-description>
+    </title>
+    <directory>
+        <icon>fa fa-dashboard</icon>
+        <name>Home</name>
+        <url>$baseUrl/balance/statistic/account/info/page</url>
+        <sub-directories>
+            <name>balanceAccount</name>
+        </sub-directories>
+    </directory>
+</navigation>
+
+    <navigation>
+        <id>Picture</id>
         <title>
-            <title-name>账户信息</title-name>
-            <title-description>账户信息</title-description>
+            <title-name>图片上传</title-name>
+            <title-description>图片</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/statistic/account/info/page</url>
+            <url>$baseUrl/picture/page</url>
             <sub-directories>
-                <name>balanceAccount</name>
+                <name>pictureUpload</name>
             </sub-directories>
         </directory>
     </navigation>
+
+    <navigation>
+        <id>pictureUploadForConfig</id>
+        <title>
+            <title-name>图片配置</title-name>
+            <title-description>图片配置</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$base/Url/picture/upload/config</url>
+            <sub-directories>
+                <name>pictureUploadForConfig</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+
+    <navigation>
+        <id>pictureForList</id>
+        <title>
+            <title-name>图片列表</title-name>
+            <title-description>列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$base/Url/picture/list</url>
+            <sub-directories>
+                <name>pictureForList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+
 </navigations>

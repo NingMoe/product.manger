@@ -62,12 +62,16 @@
                 #parse("framework/aside/balance_statistic_aside.vm")
                 #parse("framework/aside/feedback_manger_aside.vm")
                 #parse("framework/aside/firmware_upgrade_aside.vm")
+                 #parse("framework/aside/picture_manager_aside.vm")
                 #parse("framework/aside/card_manger_aside.vm")
                 #parse("framework/aside/advertisement_health_manger_aside.vm")
                 #parse("framework/aside/essay_manger_aside.vm")
                 #parse("framework/aside/hermes_helper_aside.vm")
                 #parse("framework/aside/swagger_manager_aside.vm")
                 #parse("framework/aside/permession_manger_aside.vm")
+
+
+
             </ul>
         </section>
     </aside>

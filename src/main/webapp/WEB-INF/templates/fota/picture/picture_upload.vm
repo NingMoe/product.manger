@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/datatables/datatables.css">
+<section class="content">
+
+    <div class="form-group">
+        <input type="button" id="pictureDocumentAdd" value="添加记录" class="btn btn-primary"/>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">图片上传列表</h3>
+                </div>
+                <div class="box-body">
+                    <form role="form" enctype="multipart/form-data" id="uploadPictureForm">
+
+                        <div class="form-group">
+                            <label for="picVersion"><font style="color: red">*</font>图片版本</label>
+                            <input type="text" class="form-control" id="picVersion" name="picVersion" placeholder="图片对应版本">
+                        </div>
+
+                        <table id="pictureList" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>中文</th>
+                                <th>英文</th>
+                                <th>图片</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="type" name="type" value="test">
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-primary" onclick="uploadPicture()">上传</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/picture/picture.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>

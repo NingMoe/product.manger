@@ -24,7 +24,8 @@ public class EssayInfo {
 
     private String updateTime;
 
-    public EssayInfo(String essayId, String title, String subtitle, String summary, String coverUrl, String contentUrl) {
+    public EssayInfo(String essayId, String title, String subtitle, String summary,
+                     String coverUrl, String contentUrl) {
         this.essayId = essayId;
         this.title = title;
         this.subtitle = subtitle;

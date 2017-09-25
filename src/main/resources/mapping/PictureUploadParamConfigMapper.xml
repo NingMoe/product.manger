@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.PictureUploadParamConfigMapper" >
+
+    <select id="getPictureConfig" resultType="java.lang.String">
+        SELECT
+        param
+        FROM
+        picture_upload_param_config
+        LIMIT 1
+    </select>
+
+    <delete id="clean">
+        DELETE
+        FROM
+          picture_upload_param_config
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO   picture_upload_param_config (param, create_time)
+        VALUES
+        (#{param,jdbcType=VARCHAR},
+        now()
+        )
+    </insert>
+
+</mapper>
