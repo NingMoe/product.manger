@@ -17,11 +17,12 @@ public interface PictureUploadParamConfigMapper {
     /**
      * 清除
      */
-   void clean();
+    void clean();
+
     /**
      * 插入
      */
-    void insert(@Param("param") String param) ;
+    void insert(@Param("param") String param);
 
 
 }

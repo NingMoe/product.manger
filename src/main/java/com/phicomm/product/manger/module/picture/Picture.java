@@ -10,7 +10,6 @@ public interface Picture {
     
     /**
      * 保存文件到本地picture文件夹
-     *
      * @param
      * @return key
      */

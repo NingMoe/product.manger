@@ -91,12 +91,12 @@ public class PictureUpload {
 
     public void setPicId(Integer picId) {
 
-        this.picId= picId;
+        this.picId = picId;
     }
 
     public void setPicEngName(String picEngName) {
 
-        this.picEngName= picEngName;
+        this.picEngName = picEngName;
     }
 
     public void setPicChiName(String picChiName) {

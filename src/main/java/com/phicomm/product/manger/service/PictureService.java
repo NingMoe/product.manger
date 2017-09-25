@@ -35,23 +35,14 @@ public class PictureService {
 
     private PictureMapper pictureMapper;
 
-    private static final String MAIN_DATA_SOURCE = "localDataSource";
+    private static final String TEST = "test";
 
-    private static final String TEST_DATA_SOURCE = "testDataSource";
-
-    private static final String PROD_DATA_SOURCE = "prodDataSource";
-
-    private static final String type = TEST_DATA_SOURCE;
-
-    private static final String HERMES_FILE_HTTP_URL_PREFIX = "http://114.141.173.17:2580/hermes/file/";
-
-    private static String hermesTempDirPath = System.getProperty("java.io.tmpdir");
+    private static final String PROD = "prod";
 
     private PictureUploadParamConfigMapper pictureUploadParamConfigMapper;
 
-
     @Autowired
-    public PictureService(PictureMapper pictureMapper,  PictureUploadParamConfigMapper pictureUploadParamConfigMapper) {
+    public PictureService(PictureMapper pictureMapper, PictureUploadParamConfigMapper pictureUploadParamConfigMapper) {
         this.pictureMapper = pictureMapper;
         this.pictureUploadParamConfigMapper = pictureUploadParamConfigMapper;
         Assert.notNull(this.pictureMapper);
@@ -61,63 +52,56 @@ public class PictureService {
     /**
      * 图片上传
      */
-    public void pictureUpload(PictureUpload pictureUpload)
-            throws DataFormatException, IdHasExistException {
+    public void pictureUpload(PictureUpload pictureUpload, String type) {
         selectDatabase(type);
         pictureMapper.pictureUpload(pictureUpload);
     }
 
     /**
-     *图片压缩包保存
+     * 图片压缩包保存
      * @param file
      * @param picId
      * @param picChiName
      * @param picEngName
      * @param picVersion
+     * @param type
      * @throws DataFormatException
      * @throws IOException
-     * @throws IdHasExistException
+     * @throws NoSuchAlgorithmException
+     * @throws UploadFileException
+     * @throws KeyManagementException
      */
-    public void pictureUploadNumber(MultipartFile[] file, int[] picId, String[] picChiName, String[] picEngName, String picVersion) throws DataFormatException, IOException, IdHasExistException, KeyManagementException, NoSuchAlgorithmException, UploadFileException, SQLException {
+    public void pictureUploadNumber(MultipartFile[] file, int[] picId, String[] picChiName, String[] picEngName, String picVersion, String type) throws DataFormatException, IOException, NoSuchAlgorithmException, UploadFileException, KeyManagementException {
         List<PictureUpload> pictures = new LinkedList<PictureUpload>();
         HashSet set = new HashSet();
-
         for (int id : picId) {
             set.add(id);
         }
         if (set.size() != picId.length) {
             throw new DataFormatException();
-
         }
-
         selectDatabase(type);
         pictureMapper.pictureDelete(picVersion);
-
         for (int i = 0; i < file.length; i++) {
             PictureUpload pictureUpload = new PictureUpload(picId[i], picEngName[i], picChiName[i], picVersion);
             Map<String, String> map = FileUtil.uploadFileToHermes(file[i]);
             pictureUpload.setPicUrl(map.get("url"));
-            pictureUpload(pictureUpload);
+            pictureUpload(pictureUpload, type);
             pictures.add(pictureUpload);
         }
         CustomerContextHolder.selectLocalDataSource();
         String param = pictureUploadParamConfigMapper.getPictureConfig();
         CustomerContextHolder.clearDataSource();
         JSONObject jsonObject = JSON.parseObject(param);
-        String testCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.picture.testCallback")) + "/insert";
-        String data = JSON.toJSONString(pictures);
-        HttpsUtil.post(testCallbackUrl, data, Charsets.UTF_8.name());
-     }
-
-    /**
-     * 查看对应版本下图片信息
-     * @param picVerison
-     * @return
-     * @throws DataFormatException
-     */
-    public List<PictureUpload> pictureList(String picVerison) throws DataFormatException {
-        selectDatabase(type);
-        return pictureMapper.pictureList(picVerison);
+        if ("test".equals(type)) {
+            String testCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.picture.testCallback")) + "/insert";
+            String data = JSON.toJSONString(pictures);
+            HttpsUtil.post(testCallbackUrl, data, Charsets.UTF_8.name());
+        } else {
+            String prodCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.picture.prodCallback")) + "/insert";
+            String data = JSON.toJSONString(pictures);
+            HttpsUtil.post(prodCallbackUrl, data, Charsets.UTF_8.name());
+        }
     }
 
     /**
@@ -142,19 +126,16 @@ public class PictureService {
      * 环境选择
      */
     private void selectDatabase(String type) {
-
         switch (type) {
-            case TEST_DATA_SOURCE:
+            case TEST:
                 CustomerContextHolder.selectTestDataSource();
                 break;
-            case PROD_DATA_SOURCE:
+            case PROD:
                 CustomerContextHolder.selectProdDataSource();
-                break;
-            case MAIN_DATA_SOURCE:
-                CustomerContextHolder.selectLocalDataSource();
                 break;
             default:
                 break;
         }
     }
+
 }

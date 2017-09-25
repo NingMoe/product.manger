@@ -33,7 +33,7 @@ public class PicturePageController {
     @RequestMapping(value = "picture/page", method = RequestMethod.GET)
     @ApiIgnore("展示图片上传页面")
     @FunctionPoint(value = "common")
-    public ModelAndView showHomePage(HttpSession session) {
+    public ModelAndView showHomePagePage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "fota/picture/picture_upload.vm");
@@ -45,24 +45,12 @@ public class PicturePageController {
     @RequestMapping(value = "picture/upload/page/config", method = RequestMethod.GET)
     @ApiIgnore("展示图片配置页面")
     @FunctionPoint(value = "common")
-    public ModelAndView showPictureUploadForConfig(HttpSession session) {
+    public ModelAndView showWristbandUpgradeForTriggerConfig(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "fota/picture/picture_config.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("pictureUploadForConfig"));
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "picture/list", method = RequestMethod.GET)
-    @ApiIgnore("展示上传图片历史页面")
-    @FunctionPoint(value = "common")
-    public ModelAndView showPicrureForList(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
-        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "fota/picture/picture_list.vm");
-        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("pictureForList"));
         return modelAndView;
     }
 

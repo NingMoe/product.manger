@@ -45,78 +45,41 @@ public class PictureController {
      * @throws IdHasExistException
      * @throws IOException
      */
-
     @RequestMapping(value = "picture/upload/file", method = RequestMethod.POST)
     @ApiOperation("图片上传接口")
     @ResponseBody
     @FunctionPoint(value = "common")
     public CommonResponse pictureUpload(@RequestPart("file") MultipartFile[] file,
-                                        @RequestParam("picId")       int[] picId,
+                                        @RequestParam("picId") int[] picId,
                                         @RequestParam("picChiName") String[] picChiName,
                                         @RequestParam("picEngName") String[] picEngName,
-                                        @RequestParam("picVersion") String picVersion)
-            throws DataFormatException, IdHasExistException, IOException, UploadFileException, NoSuchAlgorithmException, KeyManagementException, SQLException {
-        pictureService.pictureUploadNumber(file,picId,picChiName,picEngName,picVersion);
+                                        @RequestParam("picVersion") String picVersion,
+                                        @RequestParam("type") String type)
+            throws DataFormatException, IdHasExistException, IOException, UploadFileException, NoSuchAlgorithmException, KeyManagementException {
+        pictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, type);
         return CommonResponse.ok();
     }
 
     /**
-     *"返回图片详情
-     * @param
-     * @param picVersion
-     * @return
-     * @throws DataFormatException
-     */
-    @RequestMapping(value = "/picture/profile", method = RequestMethod.POST,
-                    consumes = "multipart/form-data", produces = "application/json")
-    @ResponseBody
-    @ApiOperation(value = "返回图片详情")
-    @PublicInterface
-    public List<PictureUpload> pictureUpload(@RequestParam("picVersion") String picVersion) throws DataFormatException {
-        List<PictureUpload> pictureList = pictureService.pictureList(picVersion);
-        return pictureList;
-    }
-
-    /**
-     *返回图片文件压缩包
-     * @param picVersion
-     * @return
-     * @throws IOException
-     * @throws DataFormatException
-     */
-    @RequestMapping(value = "/picture/download/file",method = RequestMethod.POST)
-    @ApiOperation("图片文件压缩包返回")
-    @PublicInterface
-    public String downLoadFile(@RequestParam("picVersion") String picVersion) throws IOException, DataFormatException {
-
-        List<PictureUpload> pictureList = pictureService.pictureList(picVersion);
-        if (pictureList.size() == 0)
-            throw new FileNotFoundException();
-        return pictureList.get(0).getPicUrl();
-    }
-
-    /**
-     *获取接口配置信息
+     *
      * @return
      */
-    @RequestMapping(value = "picture/upload/config/get", method = {RequestMethod.POST, RequestMethod.GET},
-            produces = "application/json")
+    @RequestMapping(value = "picture/upload/config/get", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation("获取配置信息")
     @FunctionPoint(value = "common")
     public CommonResponse getFirmwareConfig() {
         String configuation = pictureService.getPictureConfig();
+        System.out.println(configuation);
         return CommonResponse.ok().setDescription(configuation);
     }
 
     /**
-     *设置接口配置信息
+     *
      * @param configuation
      * @return
      */
-
-    @RequestMapping(value = "picture/upload/config/set", method = {RequestMethod.POST, RequestMethod.GET},
-            produces = "application/json")
+    @RequestMapping(value = "picture/upload/config/set", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation("设置配置信息")
     @FunctionPoint(value = "common")

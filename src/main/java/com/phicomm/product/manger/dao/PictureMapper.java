@@ -2,7 +2,7 @@ package com.phicomm.product.manger.dao;
 
 
 import com.phicomm.product.manger.model.picture.PictureUpload;
-import jdk.nashorn.internal.objects.annotations.Where;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -25,20 +25,7 @@ public interface PictureMapper {
 
 
     /**
-     * 获取图片记录
-     * @return
-     */
-    List<PictureUpload> pictureList( @Param("picVersion") String picVersion);
-
-
-    /**
-     * 更新使用状态 “0”和“1”
-     * @param pictureUpload
-     */
-    void pictureUpdate(@Param("pictureUpload") PictureUpload pictureUpload);
-
-    /**
-     * 覆盖版本下所有图片信息
+     * 重新上传覆盖版本下所有图片信息
      * @param picVerison
      */
      void pictureDelete(@Param("picVerison") String picVerison);

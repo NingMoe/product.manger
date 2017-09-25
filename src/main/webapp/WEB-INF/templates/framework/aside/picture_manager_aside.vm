@@ -23,12 +23,5 @@
             </a>
         </li>
 
-        <li>
-            <a href="$baseUrl/picture/list"><i class="fa fa-file-archive-o"></i>
-                <span> 图片列表</span>
-            </a>
-        </li>
-
-
     </ul>
 </li>
