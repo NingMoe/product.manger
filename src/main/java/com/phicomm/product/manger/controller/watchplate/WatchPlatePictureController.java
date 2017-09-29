@@ -1,12 +1,11 @@
 package com.phicomm.product.manger.controller.watchplate;
 
-
-import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.IdHasExistException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
 import com.phicomm.product.manger.service.WatchPlatePictureService;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +18,6 @@ import java.io.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
 
 /**
  * Created by xiang.zhang on 2017/9/6.
@@ -37,20 +35,16 @@ public class WatchPlatePictureController {
 
     /**
      * 表盘图片上传
-     * @param file
-     * @param picId
-     * @param picChiName
-     * @param picEngName
-     * @param picVersion
-     * @param picResolution
-     * @param environment
-     * @return 上传成功
-     * @throws DataFormatException
-     * @throws IdHasExistException
-     * @throws IOException
-     * @throws UploadFileException
-     * @throws NoSuchAlgorithmException
-     * @throws KeyManagementException
+     * @param file 表盘图片
+     * @param picId 图片编号
+     * @param picChiName 图片中文名
+     * @param picEngName 图片英文名
+     * @param picVersion 图片版本号
+     * @param picResolution 图片分辨率
+     * @param environment  应用环境
+     * @return 图片上传成功
+     * @throws DataFormatException 数据格式错误
+     * @throws UploadFileException 上传失败
      */
     @RequestMapping(value = "watchplate/picture/upload/file", method = RequestMethod.POST)
     @ApiOperation("图片上传接口")
@@ -63,7 +57,7 @@ public class WatchPlatePictureController {
                                         @RequestParam("picVersion") String picVersion,
                                         @RequestParam("picResolution") String picResolution,
                                         @RequestParam("environment") String environment)
-            throws DataFormatException, IdHasExistException, IOException, UploadFileException, NoSuchAlgorithmException, KeyManagementException {
+            throws DataFormatException, UploadFileException{
         watchPlatePictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, picResolution, environment);
         return CommonResponse.ok();
     }
@@ -76,11 +70,12 @@ public class WatchPlatePictureController {
     @ApiOperation("获取图片列表")
     @ResponseBody
     @FunctionPoint(value = "common")
-    public JSONObject watchPlatePictureList() {
-        List<WatchPlatePictureUpload> list = watchPlatePictureService.watchPlatePictureList();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data", list);
-        return jsonObject;
+    public Response watchPlatePictureList() {
+        Response response = new Response();
+        List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList();
+        response.setData(watchPlatePictureList);
+        response.setStatus(0);
+        return response;
     }
 
     /**
@@ -92,21 +87,21 @@ public class WatchPlatePictureController {
     @ApiOperation("获取配置信息")
     @FunctionPoint(value = "common")
     public CommonResponse getWatchPlateConfig() {
-        String configuation = watchPlatePictureService.getWatchPlateConfig();
-        return CommonResponse.ok().setDescription(configuation);
+        String configuration = watchPlatePictureService.getWatchPlateConfig();
+        return CommonResponse.ok().setDescription(configuration);
     }
 
     /**
      * 设置表盘配置信息
-     * @param configuation
-     * @return
+     * @param configuration 配置参数
+     * @return 配置成功
      */
     @RequestMapping(value = "watchplate/upload/config/set", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation("设置配置信息")
     @FunctionPoint(value = "common")
-    public CommonResponse setWatchPlateConfig(@RequestParam("configuation") String configuation) {
-        watchPlatePictureService.setWatchPlateConfig(configuation);
+    public CommonResponse setWatchPlateConfig(@RequestParam("configuration") String configuration) {
+        watchPlatePictureService.setWatchPlateConfig(configuration);
         return CommonResponse.ok();
     }
 }
