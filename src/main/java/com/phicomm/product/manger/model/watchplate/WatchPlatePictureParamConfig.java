@@ -1,9 +1,9 @@
-package com.phicomm.product.manger.model.picture;
+package com.phicomm.product.manger.model.watchplate;
 
 /**
  * Created by xiang.zhang on 2017/9/15.
  */
-public class PictureUploadParamConfig {
+public class WatchPlatePictureParamConfig {
     private String param;
 
     public String getParam() {
@@ -18,7 +18,7 @@ public class PictureUploadParamConfig {
 
     @Override
     public String toString() {
-        return "PictureUploadParamConfig{" +
+        return "WatchPlatePictureParamConfig{" +
                 "param='" + param + '\'' +
                 '}';
     }

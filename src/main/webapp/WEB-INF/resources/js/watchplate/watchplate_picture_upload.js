@@ -1,8 +1,8 @@
 function uploadFileToServer() {
     var baseUrl = $("#baseUrl").val();
-    var url = baseUrl + "/picture/upload/file";
+    var url = baseUrl + "/watchplate/picture/upload/file";
     var formData = new FormData($("#uploadPictureForm")[0]);
-
+    formData.append("environment",$("#environment").val());
     $.ajax({
         type: "POST",
         url: url,
@@ -16,23 +16,25 @@ function uploadFileToServer() {
                 alert("上传图片失败请重试！");
                 return;
             }
-
         }
     });
-
 }
 $(document).ready(function () {
+    $("#environment").select2({
+        placeholder: "选择表盘应用环境",
+        multiple: false
+    });
     $("#pictureDocumentAdd").click(function () {
         var rowStr=  "<tr>" +
             "<td><input type='number' name='picId'></td> " +
             "<td><input type='text' name='picChiName'></td> " +
             "<td><input type='text' name='picEngName'></td>" +
+            "<td><input type='text' name='picResolution'></td>" +
             "<td><input type='file' name='file'></td>" +
             "<td><input type='button' id='btnDelete' value='删除' onclick='deleteRow(this)' class='btn btn-primary'></td>" +
             "</tr>";
         $("#pictureList tbody").append(rowStr);
     });
-
 });
 function isNotEmpty(str) {
     if (!str) {
@@ -42,7 +44,6 @@ function isNotEmpty(str) {
         return false;
     }
     return true;
-
 }
 function deleteRow(obj)
 {
@@ -53,8 +54,7 @@ function uploadPicture()
     $("input[type!='file']").css("border","1px solid #ddd");
     $("input[type='file']").css("border","0");
     var baseUrl = $("#baseUrl").val();
-    var url = baseUrl + "/picture/upload/file";
-
+    var url = baseUrl + "/watchplate/picture/upload/file";
     var formData = new FormData($("#uploadPictureForm")[0]);
     var paramsSuccess=true;
     for (var key of formData.keys()) {
@@ -75,9 +75,9 @@ function uploadPicture()
         }
     }
 
-
-
-
+     if(!isNotEmpty($("#environment").val())){
+         paramsSuccess = false;
+     }
     if(!paramsSuccess)
     {
         alert("请填写信息完整");

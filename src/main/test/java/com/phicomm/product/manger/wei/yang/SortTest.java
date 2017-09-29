@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -224,5 +225,11 @@ public class SortTest {
     @Test
     public void test8() {
         System.out.println(Integer.toOctalString(86));
+    }
+
+    @Test
+    public void distinct() {
+        int[] dataToFind = new int[]{1, 2, 1, 3, 4, 5};
+        System.out.println(IntStream.of(dataToFind).distinct().toArray().length);
     }
 }

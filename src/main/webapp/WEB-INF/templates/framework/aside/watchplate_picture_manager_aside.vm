@@ -1,0 +1,36 @@
+<li class="header">Watch Plate</li>
+<li>
+    <a href="#">
+        <i class="fa fa-upload"></i>
+        <span>表盘管理</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" >
+        <li>
+            <a href="$baseUrl/watchplate/picture/upload/page"><i class="fa fa-newspaper-o"></i>
+                <span>上传表盘图片</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green"></small>
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="$baseUrl/watchplate/picture/list/page"><i class="fa fa-edit"></i>
+                <span>表盘图片列表</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green"></small>
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="$baseUrl/watchplate/picture/config/page"><i class="fa fa-file-archive-o"></i>
+                <span> 表盘配置管理</span>
+            </a>
+        </li>
+
+    </ul>
+</li>
