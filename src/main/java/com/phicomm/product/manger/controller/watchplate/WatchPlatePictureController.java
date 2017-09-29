@@ -2,7 +2,6 @@ package com.phicomm.product.manger.controller.watchplate;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.IdHasExistException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.*;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.List;
 
 /**
@@ -70,12 +67,9 @@ public class WatchPlatePictureController {
     @ApiOperation("获取图片列表")
     @ResponseBody
     @FunctionPoint(value = "common")
-    public Response watchPlatePictureList() {
-        Response response = new Response();
+    public Response<List<WatchPlatePictureUpload>> watchPlatePictureList() {
         List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList();
-        response.setData(watchPlatePictureList);
-        response.setStatus(0);
-        return response;
+        return new Response<List<WatchPlatePictureUpload>>().setData(watchPlatePictureList);
     }
 
     /**

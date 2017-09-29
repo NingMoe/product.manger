@@ -1,16 +1,11 @@
 package com.phicomm.product.manger.service;
 
-import java.io.*;
-import java.lang.String;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Strings;
-import com.phicomm.product.manger.dao.WatchPlatePictureUploadMapper;
 import com.phicomm.product.manger.dao.WatchPlatePictureParamConfigMapper;
+import com.phicomm.product.manger.dao.WatchPlatePictureUploadMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
@@ -24,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 /**
  * Created by xiang.zhang on 2017/9/6.
@@ -53,11 +53,12 @@ public class WatchPlatePictureService {
 
     /**
      * 表盘图片详情保存
-     * @param file 图片文件
-     * @param picId 图片编号
-     * @param picChiName 图片中文名
-     * @param picEngName 图片英文名
-     * @param picVersion 图片版本
+     *
+     * @param file        图片文件
+     * @param picId       图片编号
+     * @param picChiName  图片中文名
+     * @param picEngName  图片英文名
+     * @param picVersion  图片版本
      * @param environment 表盘应用环境
      * @throws DataFormatException 数据格式错误
      * @throws UploadFileException 上传文件失败
@@ -70,12 +71,9 @@ public class WatchPlatePictureService {
                                     String picResolution,
                                     String environment)
             throws DataFormatException, UploadFileException {
-        List<WatchPlatePictureUpload> watchplatePictureList = new LinkedList<WatchPlatePictureUpload>();
-        Set<Integer> set = new HashSet<>();
-        for (int id : picId) {
-            set.add(id);
-        }
-        if (set.size() != picId.length) {
+        List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
+        int distinctLen = watchPlatePictureList.stream().distinct().toArray().length;
+        if (distinctLen != watchPlatePictureList.size()) {
             throw new DataFormatException();
         }
         selectDatabase(environment);
@@ -88,11 +86,11 @@ public class WatchPlatePictureService {
             watchPlatePictureUpload.setCreateTime(now);
             watchPlatePictureUpload.setUpdateTime(now);
             watchPlatePictureUploadMapper.watchPlatePictureUpload(watchPlatePictureUpload);
-            watchplatePictureList.add(watchPlatePictureUpload);
+            watchPlatePictureList.add(watchPlatePictureUpload);
         }
         String param = watchPlatePictureParamConfigMapper.getWatchPlateConfig();
         JSONObject jsonObject = JSON.parseObject(param);
-        String callbackUrl="";
+        String callbackUrl = "";
         switch (environment) {
             case "local":
                 callbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.watchplate.localCallback")) + "/insert";
@@ -106,7 +104,7 @@ public class WatchPlatePictureService {
             default:
                 break;
         }
-        String data = JSON.toJSONStringWithDateFormat(watchplatePictureList, "yyyy-MM-dd HH:mm:ss");
+        String data = JSON.toJSONStringWithDateFormat(watchPlatePictureList, "yyyy-MM-dd HH:mm:ss");
         try {
             HttpsUtil.post(callbackUrl, data, Charsets.UTF_8.name());
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
@@ -116,15 +114,16 @@ public class WatchPlatePictureService {
 
     /**
      * 获取表盘图片列表
+     *
      * @return 返回图片信息
      */
     public List<WatchPlatePictureUpload> watchPlatePictureList() {
-        System.out.println( watchPlatePictureUploadMapper.watchPlatePictureList());
-        return  watchPlatePictureUploadMapper.watchPlatePictureList();
+        return watchPlatePictureUploadMapper.watchPlatePictureList();
     }
 
     /**
-     *获取表盘配置信息
+     * 获取表盘配置信息
+     *
      * @return 返回配置详情
      */
     public String getWatchPlateConfig() {
@@ -133,7 +132,8 @@ public class WatchPlatePictureService {
     }
 
     /**
-     *设置表盘配置信息
+     * 设置表盘配置信息
+     *
      * @param configuration 配置参数
      */
     public void setWatchPlateConfig(String configuration) {
@@ -143,6 +143,7 @@ public class WatchPlatePictureService {
 
     /**
      * 表盘应用环境选择
+     *
      * @param environment 应用环境选择参数
      */
     private void selectDatabase(String environment) {
@@ -160,7 +161,6 @@ public class WatchPlatePictureService {
                 break;
         }
     }
-
 
 
 }
