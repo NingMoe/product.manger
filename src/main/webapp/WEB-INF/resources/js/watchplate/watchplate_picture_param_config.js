@@ -3,7 +3,7 @@ $(document).ready(function () {
     var baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/picture/upload/config/get",
+        url: baseUrl + "/watchplate/upload/config/get",
         dataType: "json",
         error: function (req, status, err) {
             console.log('Failed reason: ' + err);
@@ -14,7 +14,7 @@ $(document).ready(function () {
     $("#submit").click(function () {
         $.ajax({
             type: "POST",
-            url: baseUrl + "/picture/upload/config/set",
+            url: baseUrl + "/watchplate/upload/config/set",
             dataType: "json",
             data: {
                 configuation: $("#configuation").val()

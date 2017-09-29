@@ -564,69 +564,67 @@
     </navigation>
 
     <navigation>
-    <id>balanceAccount</id>
-    <title>
-        <title-name>账户信息</title-name>
-        <title-description>账户信息</title-description>
-    </title>
-    <directory>
-        <icon>fa fa-dashboard</icon>
-        <name>Home</name>
-        <url>$baseUrl/balance/statistic/account/info/page</url>
-        <sub-directories>
-            <name>balanceAccount</name>
-        </sub-directories>
-    </directory>
-</navigation>
-
-    <navigation>
-        <id>Picture</id>
+        <id>balanceAccount</id>
         <title>
-            <title-name>图片上传</title-name>
-            <title-description>图片</title-description>
+            <title-name>账户信息</title-name>
+            <title-description>账户信息</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/picture/page</url>
+            <url>$baseUrl/balance/statistic/account/info/page</url>
             <sub-directories>
-                <name>pictureUpload</name>
+                <name>balanceAccount</name>
             </sub-directories>
         </directory>
     </navigation>
 
     <navigation>
-        <id>pictureUploadForConfig</id>
+        <id>watchplatePictureUpload</id>
         <title>
-            <title-name>图片配置</title-name>
-            <title-description>图片配置</title-description>
+            <title-name>图片管理</title-name>
+            <title-description>图片管理</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$base/Url/picture/upload/config</url>
+            <url>$baseUrl/watchplate/picture/upload/page</url>
             <sub-directories>
-                <name>pictureUploadForConfig</name>
+                <name>watchplatePictureUpload</name>
             </sub-directories>
         </directory>
     </navigation>
-
 
     <navigation>
-        <id>pictureForList</id>
+        <id>watchplatePictureList</id>
         <title>
-            <title-name>图片列表</title-name>
-            <title-description>列表</title-description>
+            <title-name>表盘图片列表</title-name>
+            <title-description>表盘图片列表</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$base/Url/picture/list</url>
+            <url>$baseUrl/watchplate/picture/list/page</url>
             <sub-directories>
-                <name>pictureForList</name>
+                <name>watchplatePictureList</name>
             </sub-directories>
         </directory>
     </navigation>
 
+    <navigation>
+        <id>watchplatePictureParamForConfig</id>
+        <title>
+            <title-name>表盘应用配置</title-name>
+            <title-description>表盘配置</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/watchplate/picture/config/page</url>
+            <sub-directories>
+                <name>watchplatePictureParamForConfig</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 
 </navigations>

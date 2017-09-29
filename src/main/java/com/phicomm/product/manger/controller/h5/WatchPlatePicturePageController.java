@@ -18,11 +18,11 @@ import javax.servlet.http.HttpSession;
  * Created by xiang.zhang on 2017/9/6.
  */
 @Controller
-public class PicturePageController {
+public class WatchPlatePicturePageController {
     private NavigationManger navigationManger;
 
     @Autowired
-    public PicturePageController(NavigationManger navigationManger) {
+    public WatchPlatePicturePageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
@@ -30,27 +30,39 @@ public class PicturePageController {
     /**
      * 展示图片上传页面
      */
-    @RequestMapping(value = "picture/page", method = RequestMethod.GET)
+    @RequestMapping(value = "watchplate/picture/upload/page", method = RequestMethod.GET)
     @ApiIgnore("展示图片上传页面")
     @FunctionPoint(value = "common")
     public ModelAndView showHomePagePage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "fota/picture/picture_upload.vm");
+        modelAndView.getModel().put("context", "watchplate/watchplate_picture_upload.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("Picture"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("watchplatePictureUpload"));
         return modelAndView;
     }
 
-    @RequestMapping(value = "picture/upload/page/config", method = RequestMethod.GET)
+    @RequestMapping(value = "watchplate/picture/config/page", method = RequestMethod.GET)
     @ApiIgnore("展示图片配置页面")
     @FunctionPoint(value = "common")
-    public ModelAndView showWristbandUpgradeForTriggerConfig(HttpSession session) {
+    public ModelAndView showWatchplatePictureForConfig(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "fota/picture/picture_config.vm");
+        modelAndView.getModel().put("context", "watchplate/watchplate_picture_param_config.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("pictureUploadForConfig"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("watchplatePictureParamForConfig"));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "watchplate/picture/list/page", method = RequestMethod.GET)
+    @ApiIgnore("展示图片列表页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showWatchplatePictureList(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "watchplate/watchplate_picture_list.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("watchplatePictureList"));
         return modelAndView;
     }
 
