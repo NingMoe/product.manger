@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -64,20 +63,21 @@ public class WatchPlatePictureService {
      * @throws UploadFileException 上传文件失败
      */
     public void pictureUploadNumber(MultipartFile[] file,
-                                    int[] picId,
+                                    Integer[] picId,
                                     String[] picChiName,
                                     String[] picEngName,
                                     String picVersion,
                                     String picResolution,
                                     String environment)
             throws DataFormatException, UploadFileException {
-        List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
-        int distinctLen = watchPlatePictureList.stream().distinct().toArray().length;
-        if (distinctLen != watchPlatePictureList.size()) {
+        List<Integer> picIdList = Arrays.asList(picId);
+        int distinctLen = picIdList.stream().distinct().toArray().length;
+        if (distinctLen != picIdList.size()) {
             throw new DataFormatException();
         }
         selectDatabase(environment);
         watchPlatePictureUploadMapper.watchPlatePictureDelete(picVersion);
+        List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
         for (int i = 0; i < file.length; i++) {
             WatchPlatePictureUpload watchPlatePictureUpload = new WatchPlatePictureUpload(picId[i], picEngName[i], picChiName[i], picVersion, picResolution);
             Map<String, String> map = FileUtil.uploadFileToHermes(file[i]);
