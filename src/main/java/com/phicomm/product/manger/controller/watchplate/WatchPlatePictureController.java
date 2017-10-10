@@ -34,7 +34,6 @@ public class WatchPlatePictureController {
 
     /**
      * 表盘图片上传
-     *
      * @param file          表盘图片
      * @param picId         图片编号
      * @param picChiName    图片中文名
