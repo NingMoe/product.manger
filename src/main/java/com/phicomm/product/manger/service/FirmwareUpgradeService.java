@@ -230,17 +230,17 @@ public class FirmwareUpgradeService {
      * @return 获取配置信息
      */
     public String getFirmwareConfig() {
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
-        return Strings.nullToEmpty(configuation);
+        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        return Strings.nullToEmpty(configuration);
     }
 
     /**
      * 设置配置信息
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void setFirmwareConfig(String configuation) {
+    public void setFirmwareConfig(String configuration) {
         firmwareTriggerParamConfigMapper.clean();
-        firmwareTriggerParamConfigMapper.insert(configuation);
+        firmwareTriggerParamConfigMapper.insert(configuration);
     }
 
     /**
@@ -259,9 +259,9 @@ public class FirmwareUpgradeService {
         }
         firmwareInfoMapper.setEnable(id, 0);
         // 通知线上服务器对固件降级
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
-        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+        trigger.triggerFirmwareDowngrade(firmwareInfo, configuration);
     }
 
     /**
@@ -290,7 +290,7 @@ public class FirmwareUpgradeService {
         if (firmwareInfo.getEnable() != 1) {
             throw new FirmwareDisableException();
         }
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         new Thread(() -> {
             String firmwareType = firmwareInfo.getFirmwareType();
             String hardwareCode = firmwareInfo.getHardwareCode();
@@ -298,7 +298,7 @@ public class FirmwareUpgradeService {
                     ? FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
             int versionCode = firmwareInfo.getVersionCode();
             FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType, hardwareCode,
-                    firmwareEnvironmentEnum, versionCode, firmwareInfo, configuation);
+                    firmwareEnvironmentEnum, versionCode, firmwareInfo, configuration);
             DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
             try {
                 trigger.trigger(firmwareUpgradeContext);
