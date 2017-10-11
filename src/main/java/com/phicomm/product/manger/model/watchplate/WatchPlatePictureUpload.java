@@ -34,10 +34,11 @@ public class WatchPlatePictureUpload {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
+
     public WatchPlatePictureUpload() {
     }
 
-    public WatchPlatePictureUpload(Integer picId, String picEngName, String picChiName, String picVersion,String picResolution) {
+    public WatchPlatePictureUpload(Integer picId, String picEngName, String picChiName, String picVersion, String picResolution) {
         this.picId = picId;
         this.picEngName = picEngName;
         this.picChiName = picChiName;

@@ -2,6 +2,7 @@ package com.phicomm.product.manger.service;
 
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceMcuMapper;
+import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.mcu.BalanceMcuBean;
 import com.phicomm.product.manger.model.mcu.BalanceMcuStatus;
@@ -110,7 +111,7 @@ public class BalanceMcuService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceMcuStatus balanceMcuStatus) throws DataFormatException,
             IOException {
         updateBalanceMcuStatus(balanceMcuStatus);
-        return otaServerService.updateTrigger();
+        return otaServerService.updateTrigger(TriggerTypeEnum.MCU);
     }
 
     /**
