@@ -120,7 +120,7 @@ $(document).ready(function () {
             .replace("#url#", result.url)
             .replace("#gnssVersion#", result.gnssVersion)
             .replace("#md5#", result.md5)
-            .replace("#size#", result.size)
+            .replace("#size#", result.size>(1024*1024)? (result.size/(1024*1024)).toFixed(2)+" MB":(result.size/1024).toFixed(2)+" KB")
             .replace("#createTime#", result.createTime)
             .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
     }
