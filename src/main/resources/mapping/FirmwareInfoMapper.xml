@@ -29,6 +29,7 @@
             firmware_info
         WHERE
             app_name = #{appName,jdbcType=VARCHAR}
+            AND environment = #{environment,jdbcType=VARCHAR}
     </select>
 
     <select id="getAppNameList" resultType="java.lang.String">

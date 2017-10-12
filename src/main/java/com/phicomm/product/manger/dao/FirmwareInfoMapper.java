@@ -25,8 +25,9 @@ public interface FirmwareInfoMapper {
      * 查看数据库是否存在相对应的APP名字
      *
      * @param appName APP版本
+     * @param environment 环境
      */
-    boolean existApp(@Param("appName") String appName);
+    boolean existApp(@Param("appName") String appName, @Param("environment") String environment);
 
     /**
      * 向数据库中插入数据
