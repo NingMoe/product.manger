@@ -302,7 +302,6 @@ public class FirmwareUpgradeService {
                                           String appName) {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, Integer.parseInt(versionCode), appName);
-        logger.info("firmwareInfo:\t"+firmwareInfo);
         if (firmwareInfo == null) {
             return new FirmwareInfo();
         }
