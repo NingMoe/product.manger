@@ -92,10 +92,13 @@
                 </span>
             </a>
             <ul class="treeview-menu" id="firmware-upgrade-wristband-menu-node">
-                <li>
-                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-toggle-up"></i> 固件上传</a>
+                <li id="firmware-upgrade-wristband-update">
+                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-toggle-up"></i> 固件更新</a>
                 </li>
-                <li>
+                <li id="firmware-upgrade-wristband-add">
+                    <a href="$baseUrl/wristband/upgrade/page/file/add"><i class="fa fa-toggle-up"></i> 固件&APP上传</a>
+                </li>
+                <li id="firmware-upgrade-wristband-test-list">
                     <a href="$baseUrl/wristband/upgrade/page/test/list"><i class="fa fa-list"></i>
                         <span>固件列表</span>
                         <span class="pull-right-container">
@@ -103,7 +106,7 @@
                         </span>
                     </a>
                 </li>
-                <li>
+                <li id="firmware-upgrade-wristband-prod-list">
                     <a href="$baseUrl/wristband/upgrade/page/prod/list"><i class="fa fa-list"></i>
                         <span>固件列表</span>
                         <span class="pull-right-container">
@@ -111,7 +114,7 @@
                         </span>
                     </a>
                 </li>
-                <li><a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-file-archive-o"></i>
+                <li id="firmware-upgrade-wristband-trigger-config"><a href="$baseUrl/wristband/upgrade/page/trigger/config"><i class="fa fa-file-archive-o"></i>
                     配置管理</a></li>
             </ul>
         </li>

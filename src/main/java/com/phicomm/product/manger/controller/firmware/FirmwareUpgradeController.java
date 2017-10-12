@@ -36,13 +36,46 @@ public class FirmwareUpgradeController {
     }
 
     /**
-     * 固件升级下面手环项目文件上传接口
+     * 固件&APP上传接口
+     *
+     * @return 上传成功返回0，失败返回1
+     */
+    @RequestMapping(value = "firmware/upgrade/wristband/file/add", method = RequestMethod.POST,
+            consumes = "multipart/form-data", produces = "application/json")
+    @ApiOperation("固件&APP上传接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
+            @ApiResponse(code = 7, message = "文件上传失败", response = CommonResponse.class),
+            @ApiResponse(code = 8, message = "固件版本已经存在", response = CommonResponse.class)
+
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareUpgradeWristbandFileAdd(@RequestParam("firmwareType") String firmwareType,
+                                                             @RequestParam("hardwareVersion") String hardwareVersion,
+                                                             @RequestParam("firmwareVersion") String firmwareVersion,
+                                                             @RequestParam("gnssVersion") String gnssVersion,
+                                                             @RequestParam("environment") String environment,
+                                                             @RequestPart("file") MultipartFile file,
+                                                             @RequestParam("description") String description,
+                                                             @RequestParam("appName") String appName,
+                                                             @RequestParam("appPlatform") String appPlatform,
+                                                             @RequestParam("appVersionCode") String appVersionCode)
+            throws DataFormatException, UploadFileException, VersionHasExistException {
+        firmwareUpgradeService.firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion,
+                firmwareVersion, environment, gnssVersion, file, description, appName,appPlatform, appVersionCode);
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 固件更新接口
      *
      * @return 上传成功返回0，失败返回1
      */
     @RequestMapping(value = "firmware/upgrade/wristband/file/upload", method = RequestMethod.POST,
             consumes = "multipart/form-data", produces = "application/json")
-    @ApiOperation("固件升级下面手环项目文件上传接口")
+    @ApiOperation("固件更新接口")
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
@@ -58,10 +91,11 @@ public class FirmwareUpgradeController {
                                                              @RequestParam("gnssVersion") String gnssVersion,
                                                              @RequestParam("environment") String environment,
                                                              @RequestPart("file") MultipartFile file,
-                                                             @RequestParam("description") String description)
+                                                             @RequestParam("description") String description,
+                                                             @RequestParam("appName") String appName)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpload(firmwareType,
-                hardwareVersion, firmwareVersion, environment, gnssVersion, file, description);
+                hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appName);
         return CommonResponse.ok();
     }
 
@@ -85,6 +119,25 @@ public class FirmwareUpgradeController {
     }
 
     /**
+     * 获取APP名字列表接口
+     *
+     * @return APP名字列表
+     */
+    @RequestMapping(value = "firmware/upgrade/app/list", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("获取APP名字列表接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public JSONObject firmwareUpgradeAppList()
+            throws DataFormatException {
+        return firmwareUpgradeService.firmwareUpgradeAppList();
+    }
+
+    /**
      * 获取固件详情
      *
      * @return 获取固件详情
@@ -101,35 +154,11 @@ public class FirmwareUpgradeController {
     public FirmwareInfo getFirmwareDetail(@RequestParam("firmwareType") String firmwareType,
                                           @RequestParam("hardwareCode") String hardwareCode,
                                           @RequestParam("environment") String environment,
-                                          @RequestParam("versionCode") String versionCode)
+                                          @RequestParam("versionCode") String versionCode,
+                                          @RequestParam("appName") String appName)
             throws DataFormatException {
         return firmwareUpgradeService.getFirmwareDetail(
-                firmwareType, hardwareCode, environment, versionCode);
-    }
-
-    /**
-     * 修改当前固件版本
-     *
-     * @return 修改当前固件版本
-     */
-    @RequestMapping(value = "firmware/upgrade/modify/current/version", method = {RequestMethod.POST, RequestMethod.GET},
-            produces = "application/json")
-    @ApiOperation("修改当前固件版本")
-    @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
-            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
-            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class)
-    })
-    @FunctionPoint(value = "common")
-    public CommonResponse modifyCurrentFirmwareVersion(@RequestParam("firmwareType") String firmwareType,
-                                                       @RequestParam("hardwareCode") String hardwareCode,
-                                                       @RequestParam("environment") String environment,
-                                                       @RequestParam("versionCode") String versionCode)
-            throws DataFormatException, VersionNotExistException {
-        firmwareUpgradeService.modifyCurrentFirmwareVersion(
-                firmwareType, hardwareCode, environment, versionCode);
-        return CommonResponse.ok();
+                firmwareType, hardwareCode, environment, versionCode, appName);
     }
 
     /**
@@ -211,23 +240,22 @@ public class FirmwareUpgradeController {
     }
 
     /**
-     * 重新触发升级
+     * 触发升级
      *
-     * @return 重新触发升级
+     * @return 触发升级
      */
-    @RequestMapping(value = "firmware/repeat/trigger", method = {RequestMethod.POST, RequestMethod.GET},
+    @RequestMapping(value = "firmware/trigger", method = {RequestMethod.POST, RequestMethod.GET},
             produces = "application/json")
-    @ApiOperation("重新触发升级")
+    @ApiOperation("触发升级")
     @ResponseBody
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
-            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class),
-            @ApiResponse(code = 11, message = "该固件当前不可用", response = CommonResponse.class)
+            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class)
     })
     @FunctionPoint(value = "common")
-    public CommonResponse firmwareRepeatTrigger(@RequestParam("id") Integer id)
-            throws FirmwareDisableException, VersionNotExistException {
-        firmwareUpgradeService.firmwareRepeatTrigger(id);
+    public CommonResponse firmwareTrigger(@RequestParam("id") Integer id)
+            throws VersionNotExistException {
+        firmwareUpgradeService.firmwareTrigger(id);
         return CommonResponse.ok();
     }
 }

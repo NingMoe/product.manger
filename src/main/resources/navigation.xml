@@ -134,8 +134,8 @@
     <navigation>
         <id>wristbandUpgradeForFileUpload</id>
         <title>
-            <title-name>手环固件上传</title-name>
-            <title-description>手环固件上传</title-description>
+            <title-name>固件更新</title-name>
+            <title-description>固件更新</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -143,6 +143,22 @@
             <url>$baseUrl/wristband/upgrade/page/file/upload</url>
             <sub-directories>
                 <name>wristbandUpgradeForFileUpload</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>wristbandUpgradeForFileAdd</id>
+        <title>
+            <title-name>固件&amp;APP上传</title-name>
+            <title-description>固件&amp;APP上传</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/wristband/upgrade/page/file/add</url>
+            <sub-directories>
+                <name>wristbandUpgradeForFileAdd</name>
             </sub-directories>
         </directory>
     </navigation>

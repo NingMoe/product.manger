@@ -59,8 +59,8 @@ public class BalanceOtaService {
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
         int bFieCrc = CRC16Util.calcCrc16(bFile.getBytes(), 0, bFile.getBytes().length);
-        String aFileUrl = (String) hermesService.uploadFile(aFile).get("fileHttpUrl");
-        String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpUrl");
+        String aFileUrl = (String) hermesService.uploadFile(aFile).get("fileHttpsUrl");
+        String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpsUrl");
         if (Strings.isNullOrEmpty(aFileUrl) || Strings.isNullOrEmpty(bFileUrl)) {
             throw new IOException();
         }
