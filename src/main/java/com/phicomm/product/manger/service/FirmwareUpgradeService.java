@@ -91,7 +91,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppVersionCode(Integer.parseInt(appVersionCode));
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        if(firmwareInfoMapper.existApp(appName)){
+        if(firmwareInfoMapper.existApp(appName, environment)){
             firmwareInfoMapper.update(firmwareInfo);
         }else {
             firmwareInfoMapper.insert(firmwareInfo);
