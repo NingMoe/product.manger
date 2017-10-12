@@ -367,6 +367,7 @@ public class FirmwareUpgradeService {
             throw new FirmwareDisableException();
         }
         firmwareInfoMapper.setEnable(id, 0);
+        firmwareInfo.setEnable(0);
         // 通知线上服务器对固件降级
         String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
