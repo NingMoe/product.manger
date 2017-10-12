@@ -22,6 +22,22 @@
             )
     </select>
 
+    <select id="existApp" resultType="java.lang.Boolean">
+        SELECT
+            count(1)
+        FROM
+            firmware_info
+        WHERE
+            app_name = #{appName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAppNameList" resultType="java.lang.String">
+        SELECT
+            app_name
+        FROM
+            firmware_info
+    </select>
+
     <insert id="insert" parameterType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
         INSERT INTO firmware_info (
             firmware_type, version,
@@ -29,21 +45,44 @@
             gnss_version, md5,
             hardware_code, `enable`,
             create_time, url,
-            description
+            description, app_name,
+            app_platform, app_version_code,
+            size
         )
         VALUES (
             #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
             #{firmwareInfo.versionCode,jdbcType=INTEGER}, #{firmwareInfo.environment,jdbcType=VARCHAR},
             #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
             #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
-            now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR}
+            now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR},
+            #{firmwareInfo.appName,jdbcType=VARCHAR}, #{firmwareInfo.appPlatform,jdbcType=VARCHAR},
+            #{firmwareInfo.appVersionCode,jdbcType=INTEGER}, #{firmwareInfo.size,jdbcType=FLOAT}
         )
     </insert>
+
+    <update id="update" parameterType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
+        UPDATE firmware_info
+        SET
+            firmware_type = #{firmwareInfo.firmwareType,jdbcType=VARCHAR},
+            version = #{firmwareInfo.version,jdbcType=VARCHAR},
+            version_code = #{firmwareInfo.versionCode,jdbcType=INTEGER},
+            environment = #{firmwareInfo.environment,jdbcType=VARCHAR},
+            gnss_version = #{firmwareInfo.gnssVersion,jdbcType=INTEGER},
+            md5 = #{firmwareInfo.md5,jdbcType=VARCHAR},
+            hardware_code = #{firmwareInfo.hardwareCode,jdbcType=VARCHAR},
+            enable = #{firmwareInfo.enable,jdbcType=INTEGER},
+            url = #{firmwareInfo.url,jdbcType=LONGVARCHAR},
+            description = #{firmwareInfo.description,jdbcType=LONGVARCHAR},
+            size = #{firmwareInfo.size,jdbcType=FLOAT}
+        WHERE
+            app_name = #{firmwareInfo.appName,jdbcType=VARCHAR}
+    </update>
 
     <select id="getFirmwareInfoList" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
         (
             SELECT
                 id,
+                app_name AS appName,
                 firmware_type AS firmwareType,
                 version,
                 version_code AS versionCode,
@@ -61,6 +100,7 @@
         (
             SELECT
                 id,
+                app_name AS appName,
                 firmware_type AS firmwareType,
                 version,
                 version_code AS versionCode,
@@ -77,12 +117,16 @@
     <select id="getFirmwareDetail" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
         SELECT
             id AS id,
+            app_name AS appName,
+            app_platform AS appPlatform,
+            app_version_code AS appVersionCode,
             firmware_type AS firmwareType,
             version AS version,
             version_code AS versionCode,
             environment AS environment,
             gnss_version AS  gnssVersion,
             md5 AS md5,
+            size AS size,
             hardware_code AS hardwareCode,
             url AS url,
             `enable` AS `enable`,
@@ -95,6 +139,7 @@
             AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
             AND environment = #{environment,jdbcType=VARCHAR}
             AND version_code = #{versionCode,jdbcType=INTEGER}
+            AND app_name = #{appName,jdbcType=VARCHAR}
     </select>
 
     <update id="cleanFirmware">
@@ -125,6 +170,9 @@
     <select id="getFirmwareInfo" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
         SELECT
             id AS id,
+            app_name AS appName,
+            app_platform AS appPlatform,
+            app_version_code AS appVersionCode,
             firmware_type AS firmwareType,
             version AS version,
             version_code AS versionCode,
@@ -134,7 +182,8 @@
             `enable` AS `enable`,
             create_time AS createTime,
             description AS description,
-            md5 AS md5
+            md5 AS md5,
+            size AS size
         FROM
             firmware_info
         WHERE

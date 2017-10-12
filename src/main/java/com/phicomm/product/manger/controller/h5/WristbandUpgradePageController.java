@@ -31,10 +31,10 @@ public class WristbandUpgradePageController {
     }
 
     /**
-     * 获得手环固件升级的文件上传页面
+     * 获得固件更新上传页面
      */
     @RequestMapping(value = "wristband/upgrade/page/file/upload", method = RequestMethod.GET)
-    @ApiIgnore("手环固件升级的文件上传页面")
+    @ApiIgnore("固件更新上传页面")
     @FunctionPoint(value = "common")
     public ModelAndView showWristbandUpgradeForFileUpload(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
@@ -42,6 +42,21 @@ public class WristbandUpgradePageController {
         modelAndView.getModel().put("context", "fota/wristband/wristband_upgrade_file_upload.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForFileUpload"));
+        return modelAndView;
+    }
+
+    /**
+     * 获得固件&APP上传页面
+     */
+    @RequestMapping(value = "wristband/upgrade/page/file/add", method = RequestMethod.GET)
+    @ApiIgnore("固件&APP上传页面")
+    @FunctionPoint(value = "common")
+    public ModelAndView showWristbandUpgradeForFileAdd(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "fota/wristband/wristband_upgrade_file_add.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandUpgradeForFileAdd"));
         return modelAndView;
     }
 

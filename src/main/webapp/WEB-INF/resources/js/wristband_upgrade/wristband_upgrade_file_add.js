@@ -1,10 +1,10 @@
 $(document).ready(function() {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-wristband-li-node").addClass("active");
-    $("#firmware-upgrade-wristband-update").addClass("active");
-    $("#appName").select2({
-        placeholder: "选择兼容APP",
-        multiple: true
+    $("#firmware-upgrade-wristband-add").addClass("active");
+    $("#appPlatform").select2({
+        placeholder: "选择APP平台",
+        multiple: false
     });
     $("#firmwareType").select2({
         placeholder: "选择固件类型",
@@ -18,19 +18,12 @@ $(document).ready(function() {
         placeholder: "选择固件应用环境",
         multiple: false
     });
-    $.post($("#baseUrl").val() + "/firmware/upgrade/app/list", {}, function (data) {
-        var d = data;
-        var list = eval(data.data);
-        for (var i = 0; i < list.length; i++) {
-            $("#appName").append("<option value='" + list[i] + "'>" + list[i] + "</option>");
-        }
-    });
     $("#submit").click(function() {
         var baseUrl = $("#baseUrl").val();
         var formData = new FormData($("#form")[0]);
         $.ajax({
             type   : "POST",
-            url    : baseUrl + "/firmware/upgrade/wristband/file/upload",
+            url    : baseUrl + "/firmware/upgrade/wristband/file/add",
             data: formData,
             async: true,
             cache: false,

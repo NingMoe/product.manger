@@ -50,19 +50,22 @@ public class FirmwareUpgradeService {
     }
 
     /**
-     * 文件上传
+     * 固件&APP上传处理逻辑
      */
-    public void firmwareUpgradeWristbandFileUpload(String firmwareType,
-                                                   String hardwareVersion,
-                                                   String firmwareVersion,
-                                                   String environment,
-                                                   String gnssVersion,
-                                                   MultipartFile file,
-                                                   String description)
+    public void firmwareUpgradeWristbandFileAdd(String firmwareType,
+                                                String hardwareVersion,
+                                                String firmwareVersion,
+                                                String environment,
+                                                String gnssVersion,
+                                                MultipartFile file,
+                                                String description,
+                                                String appName,
+                                                String appPlatform,
+                                                String appVersionCode)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
-        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion,
-                environment, gnssVersion, file, description);
+        checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
+                environment, gnssVersion, file, description, appName, appPlatform, appVersionCode);
         int firmwareVersionCode = Integer.parseInt(firmwareVersion);
         if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode)) {
             throw new VersionHasExistException();
@@ -71,6 +74,7 @@ public class FirmwareUpgradeService {
         Map<String, String> result = FileUtil.uploadFileToHermes(file);
         String downloadUrl = result.get("url");
         String md5 = result.get("md5");
+        float size = file.getSize();
         FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
@@ -78,14 +82,123 @@ public class FirmwareUpgradeService {
         firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
-        firmwareInfo.setEnable(0);
+        firmwareInfo.setEnable(1);
         firmwareInfo.setUrl(downloadUrl);
         firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
+        firmwareInfo.setAppName(appName);
+        firmwareInfo.setAppPlatform(appPlatform);
+        firmwareInfo.setAppVersionCode(Integer.parseInt(appVersionCode));
+        firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        firmwareInfoMapper.insert(firmwareInfo);
+        if(firmwareInfoMapper.existApp(appName)){
+            firmwareInfoMapper.update(firmwareInfo);
+        }else {
+            firmwareInfoMapper.insert(firmwareInfo);
+        }
         // 触发升级
         // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+    }
+
+    /**
+     * 固件更新处理逻辑
+     */
+    public void firmwareUpgradeWristbandFileUpload(String firmwareType,
+                                                   String hardwareVersion,
+                                                   String firmwareVersion,
+                                                   String environment,
+                                                   String gnssVersion,
+                                                   MultipartFile file,
+                                                   String description,
+                                                   String appName)
+            throws DataFormatException, UploadFileException, VersionHasExistException {
+        // 校验参数
+        checkFirmwareUpgradeWristbandFileUpload(firmwareType, hardwareVersion, firmwareVersion,
+                environment, gnssVersion, file, description, appName);
+        int firmwareVersionCode = Integer.parseInt(firmwareVersion);
+        String[] appNames = appName.split(",");
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode)) {
+            throw new VersionHasExistException();
+        }
+        // 上传文件
+        Map<String, String> result = FileUtil.uploadFileToHermes(file);
+        String downloadUrl = result.get("url");
+        String md5 = result.get("md5");
+        float size = file.getSize();
+        FirmwareInfo firmwareInfo = new FirmwareInfo();
+        firmwareInfo.setFirmwareType(firmwareType);
+        firmwareInfo.setHardwareCode(hardwareVersion);
+        firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
+        firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
+        firmwareInfo.setEnvironment(environment);
+        firmwareInfo.setGnssVersion(gnssVersion);
+        firmwareInfo.setEnable(1);
+        firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setMd5(md5);
+        firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
+        firmwareInfo.setSize(size);
+        for (String name:appNames) {
+            firmwareInfo.setAppName(name);
+            logger.info(firmwareInfo);
+            firmwareInfoMapper.update(firmwareInfo);
+        }
+
+        // 触发升级
+        // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+    }
+
+    /**
+     * 校验参数
+     *
+     * @param firmwareType    固件类型
+     * @param hardwareVersion 硬件版本
+     * @param firmwareVersion 固件版本号
+     * @param environment     环境
+     * @param file            上传的文件
+     */
+    private void checkFirmwareUpgradeWristbandFileAdd(String firmwareType,
+                                                      String hardwareVersion,
+                                                      String firmwareVersion,
+                                                      String environment,
+                                                      String gnssVersion,
+                                                      MultipartFile file,
+                                                      String description,
+                                                      String appName,
+                                                      String appPlatform,
+                                                      String appVersionCode) throws DataFormatException {
+        logger.info(String.format("firmwareType = %s", firmwareType));
+        logger.info(String.format("hardwareVersion = %s", hardwareVersion));
+        logger.info(String.format("firmwareVersion = %s", firmwareVersion));
+        logger.info(String.format("environment = %s", environment));
+        logger.info(String.format("gnssVersion = %s", gnssVersion));
+        logger.info(String.format("description = %s", description));
+        logger.info(String.format("file = %s", file != null ? file.getOriginalFilename() : null));
+        logger.info(String.format("appName = %s", appName));
+        logger.info(String.format("appPlatform = %s", appPlatform));
+        logger.info(String.format("appVersionCode = %s", appVersionCode));
+        if (Strings.isNullOrEmpty(firmwareType)
+                || Strings.isNullOrEmpty(hardwareVersion)
+                || Strings.isNullOrEmpty(firmwareVersion)
+                || Strings.isNullOrEmpty(environment)
+                || Strings.isNullOrEmpty(gnssVersion)
+                || file == null
+                || file.isEmpty()
+                || Strings.isNullOrEmpty(appName)
+                || Strings.isNullOrEmpty(appPlatform)
+                || Strings.isNullOrEmpty(appVersionCode)) {
+            throw new DataFormatException();
+        }
+        try {
+            //noinspection ResultOfMethodCallIgnored
+            Integer.parseInt(firmwareVersion);
+            Integer.parseInt(appVersionCode);
+        } catch (Exception e) {
+            throw new DataFormatException();
+        }
+        if (!FirmwareEnvironmentEnum.TEST.getEnvironment().equals(environment) &&
+                !FirmwareEnvironmentEnum.PROD.getEnvironment().equals(environment)) {
+            throw new DataFormatException();
+        }
     }
 
     /**
@@ -103,19 +216,22 @@ public class FirmwareUpgradeService {
                                                          String environment,
                                                          String gnssVersion,
                                                          MultipartFile file,
-                                                         String description) throws DataFormatException {
+                                                         String description,
+                                                         String appName) throws DataFormatException {
         logger.info(String.format("firmwareType = %s", firmwareType));
         logger.info(String.format("hardwareVersion = %s", hardwareVersion));
         logger.info(String.format("firmwareVersion = %s", firmwareVersion));
         logger.info(String.format("environment = %s", environment));
         logger.info(String.format("gnssVersion = %s", gnssVersion));
         logger.info(String.format("description = %s", description));
+        logger.info(String.format("appName = %s", appName));
         logger.info(String.format("file = %s", file != null ? file.getOriginalFilename() : null));
         if (Strings.isNullOrEmpty(firmwareType)
                 || Strings.isNullOrEmpty(hardwareVersion)
                 || Strings.isNullOrEmpty(firmwareVersion)
                 || Strings.isNullOrEmpty(environment)
                 || Strings.isNullOrEmpty(gnssVersion)
+                || Strings.isNullOrEmpty(appName)
                 || file == null
                 || file.isEmpty()) {
             throw new DataFormatException();
@@ -145,6 +261,7 @@ public class FirmwareUpgradeService {
         if (firmwareInfoList != null) {
             firmwareInfoList.forEach((item) -> {
                 Map<String, String> map = Maps.newHashMap();
+                map.put("appName", item.getAppName());
                 map.put("firmwareType", item.getFirmwareType());
                 map.put("hardwareCode", item.getHardwareCode());
                 map.put("version", item.getVersion());
@@ -152,6 +269,21 @@ public class FirmwareUpgradeService {
                 map.put("enable", item.getEnable() == 0 ? "" : "<i class=\"fa fa-star\"></i>");
                 jsonArray.add(map);
             });
+        }
+        return result;
+    }
+
+    /**
+     * 获取APP名字列表处理逻辑
+     *
+     */
+    public JSONObject firmwareUpgradeAppList() {
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        result.put("data", jsonArray);
+        List<String> appNameList = firmwareInfoMapper.getAppNameList();
+        if (appNameList != null) {
+            jsonArray.addAll(appNameList);
         }
         return result;
     }
@@ -166,62 +298,14 @@ public class FirmwareUpgradeService {
     public FirmwareInfo getFirmwareDetail(String firmwareType,
                                           String hardwareCode,
                                           String environment,
-                                          String versionCode) {
+                                          String versionCode,
+                                          String appName) {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
-                hardwareCode, environment, Integer.parseInt(versionCode));
+                hardwareCode, environment, Integer.parseInt(versionCode), appName);
         if (firmwareInfo == null) {
             return new FirmwareInfo();
         }
         return firmwareInfo;
-    }
-
-    /**
-     * 修改当前最新的版本
-     *
-     * @param firmwareType 固件类型
-     * @param hardwareCode 硬件版本号
-     * @param versionCode  固件版本号
-     * @param environment  环境
-     */
-    @Transactional(rollbackFor = Throwable.class)
-    public void modifyCurrentFirmwareVersion(String firmwareType,
-                                             String hardwareCode,
-                                             String environment,
-                                             String versionCode) throws VersionNotExistException {
-        boolean exist = firmwareInfoMapper.exist(firmwareType, hardwareCode, environment, "", Integer.parseInt(versionCode));
-        if (!exist) {
-            throw new VersionNotExistException();
-        }
-        firmwareInfoMapper.cleanFirmware(firmwareType, hardwareCode, environment);
-        int affectRows = firmwareInfoMapper.enableFirmware(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
-        if (affectRows < 1) {
-            throw new VersionNotExistException();
-        }
-        // 通知其他项目版本变更
-        trigger(firmwareType, hardwareCode, environment, Integer.parseInt(versionCode));
-    }
-
-    /**
-     * 触发升级
-     */
-    private void trigger(String firmwareType,
-                         String hardwareCode,
-                         String environment,
-                         int versionCode) {
-        FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
-                FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
-        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
-                hardwareCode, environment, versionCode);
-        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
-        FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
-                hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
-        new Thread(() -> {
-            try {
-                new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext);
-            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
-                logger.info(ExceptionUtil.getErrorMessage(e));
-            }
-        }).start();
     }
 
     /**
@@ -279,16 +363,13 @@ public class FirmwareUpgradeService {
     }
 
     /**
-     * 重新触发升级
+     * 触发升级
      */
-    public void firmwareRepeatTrigger(Integer id)
-            throws VersionNotExistException, FirmwareDisableException {
+    public void firmwareTrigger(Integer id)
+            throws VersionNotExistException {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
         if (firmwareInfo == null) {
             throw new VersionNotExistException();
-        }
-        if (firmwareInfo.getEnable() != 1) {
-            throw new FirmwareDisableException();
         }
         String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         new Thread(() -> {

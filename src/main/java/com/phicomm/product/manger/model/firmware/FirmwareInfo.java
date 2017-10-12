@@ -8,6 +8,12 @@ public class FirmwareInfo {
 
     private Integer id;
 
+    private String appName;
+
+    private String appPlatform;
+
+    private Integer appVersionCode;
+
     private String firmwareType;
 
     private String version;
@@ -24,6 +30,8 @@ public class FirmwareInfo {
 
     private Integer enable;
 
+    private Float size;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
@@ -37,6 +45,38 @@ public class FirmwareInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public String getAppPlatform() {
+        return appPlatform;
+    }
+
+    public void setAppPlatform(String appPlatform) {
+        this.appPlatform = appPlatform;
+    }
+
+    public Integer getAppVersionCode() {
+        return appVersionCode;
+    }
+
+    public void setAppVersionCode(Integer appVersionCode) {
+        this.appVersionCode = appVersionCode;
+    }
+
+    public Float getSize() {
+        return size;
+    }
+
+    public void setSize(Float size) {
+        this.size = size;
     }
 
     public String getFirmwareType() {
@@ -131,6 +171,9 @@ public class FirmwareInfo {
     public String toString() {
         return "FirmwareInfo{" +
                 "id=" + id +
+                ", appName='" + appName + '\'' +
+                ", appPlatform='" + appPlatform + '\'' +
+                ", appVersionCode=" + appVersionCode +
                 ", firmwareType='" + firmwareType + '\'' +
                 ", version='" + version + '\'' +
                 ", versionCode=" + versionCode +
@@ -139,6 +182,7 @@ public class FirmwareInfo {
                 ", hardwareCode='" + hardwareCode + '\'' +
                 ", md5='" + md5 + '\'' +
                 ", enable=" + enable +
+                ", size=" + size +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
