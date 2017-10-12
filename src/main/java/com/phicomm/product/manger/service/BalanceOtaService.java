@@ -2,6 +2,7 @@ package com.phicomm.product.manger.service;
 
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
+import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
@@ -58,8 +59,8 @@ public class BalanceOtaService {
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
         int bFieCrc = CRC16Util.calcCrc16(bFile.getBytes(), 0, bFile.getBytes().length);
-        String aFileUrl = (String) hermesService.uploadFile(aFile).get("fileHttpUrl");
-        String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpUrl");
+        String aFileUrl = (String) hermesService.uploadFile(aFile).get("fileHttpsUrl");
+        String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpsUrl");
         if (Strings.isNullOrEmpty(aFileUrl) || Strings.isNullOrEmpty(bFileUrl)) {
             throw new IOException();
         }
@@ -114,7 +115,7 @@ public class BalanceOtaService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
             IOException {
         updateBalanceOtaStatus(balanceOtaStatus);
-        return otaServerService.updateTrigger();
+        return otaServerService.updateTrigger(TriggerTypeEnum.OTA);
     }
 
     /**

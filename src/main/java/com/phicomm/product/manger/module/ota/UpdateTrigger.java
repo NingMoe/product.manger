@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.module.ota;
 
+import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.utils.CRC16Util;
 import redis.clients.jedis.HostAndPort;
 
@@ -20,7 +21,9 @@ public class UpdateTrigger {
 
     private static final byte[] CLOSE_RESPONSE = new byte[]{(byte) 0xC0, (byte) 0x52};
 
-    private static final byte[] TRIGGER_DATA = new byte[]{(byte) 0xE0, 0};
+    private static final byte[] OTA_TRIGGER_DATA = new byte[]{(byte) 0xE0, (byte) 0x00};
+
+    private static final byte[] MCU_TRIGGER_DATA = new byte[]{(byte) 0xE0, (byte) 0x01};
 
     /**
      * socket trigger ,会返回无法连接的主机和能连接但是不能正确触发的主机；socket连接主机的超时时间设置成了3秒，
@@ -29,7 +32,7 @@ public class UpdateTrigger {
      * @param hostAndPort ip 和 port
      * @throws IOException io异常
      */
-    public HostAndPort balanceUpdateTrigger(HostAndPort hostAndPort) throws IOException {
+    public HostAndPort balanceUpdateTrigger(HostAndPort hostAndPort, TriggerTypeEnum triggerTypeEnum) throws IOException {
         Socket socket = new Socket();
         try {
             socket.connect(new InetSocketAddress(hostAndPort.getHost(), hostAndPort.getPort()), 3000);
@@ -38,15 +41,22 @@ public class UpdateTrigger {
         }
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
-        byte[] triggerResponse = obtainResponse(inputStream, outputStream, obtainTriggerData());
-        if (!Arrays.equals(TRIGGER_DATA, triggerResponse)) {
-            return hostAndPort;
+        if (TriggerTypeEnum.OTA == triggerTypeEnum) {
+            byte[] triggerResponse = obtainResponse(inputStream, outputStream, obtainOtaTriggerData());
+            if (!Arrays.equals(OTA_TRIGGER_DATA, triggerResponse)) {
+                return hostAndPort;
+            }
+        }
+        if (TriggerTypeEnum.MCU == triggerTypeEnum) {
+            byte[] triggerResponse = obtainResponse(inputStream, outputStream, obtainMcuTriggerData());
+            if (!Arrays.equals(MCU_TRIGGER_DATA, triggerResponse)) {
+                return hostAndPort;
+            }
         }
         byte[] closeResponse = obtainResponse(inputStream, outputStream, obtainCloseData());
         if (!Arrays.equals(CLOSE_RESPONSE, closeResponse)) {
             throw new IOException();
         }
-
         if (outputStream != null) {
             outputStream.flush();
             outputStream.close();
@@ -92,12 +102,35 @@ public class UpdateTrigger {
      *
      * @return 数据帧
      */
-    private byte[] obtainTriggerData() {
+    private byte[] obtainOtaTriggerData() {
         byte[] data = new byte[32];
         byte[] frameHeader = new byte[]{(byte) 0x55, (byte) 0xAA, 0, 32, (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0X01,
                 (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
                 (byte) 0xff, (byte) 0xff, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
                 (byte) 0x05, (byte) 0x06, 0, 0, (byte) 0x60, (byte) 0x00};
+        System.arraycopy(frameHeader, 0, data, 0, frameHeader.length);
+        int crc = CRC16Util.calcCrc16(data, 2, data.length - 6);
+        data[data.length - 4] = (byte) (crc >>> 24 & 0xff);
+        data[data.length - 3] = (byte) (crc >>> 16 & 0xff);
+        data[data.length - 2] = (byte) (crc >>> 8 & 0xff);
+        data[data.length - 1] = (byte) (crc & 0xff);
+        for (int i = 0; i < data.length; i++) {
+            data[i] ^= 0x55;
+        }
+        return data;
+    }
+
+    /**
+     * 获取frame
+     *
+     * @return 数据帧
+     */
+    private byte[] obtainMcuTriggerData() {
+        byte[] data = new byte[32];
+        byte[] frameHeader = new byte[]{(byte) 0x55, (byte) 0xAA, 0, 32, (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0X01,
+                (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0X01, (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
+                (byte) 0xff, (byte) 0xff, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
+                (byte) 0x05, (byte) 0x06, 0, 0, (byte) 0x60, (byte) 0x01};
         System.arraycopy(frameHeader, 0, data, 0, frameHeader.length);
         int crc = CRC16Util.calcCrc16(data, 2, data.length - 6);
         data[data.length - 4] = (byte) (crc >>> 24 & 0xff);
