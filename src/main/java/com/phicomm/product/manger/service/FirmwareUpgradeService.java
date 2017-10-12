@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
+import scala.util.parsing.combinator.testing.Str;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -97,7 +98,7 @@ public class FirmwareUpgradeService {
             firmwareInfoMapper.insert(firmwareInfo);
         }
         // 触发升级
-        // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appName);
     }
 
     /**
@@ -144,7 +145,31 @@ public class FirmwareUpgradeService {
         }
 
         // 触发升级
-        // trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode);
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appName);
+    }
+
+    /**
+     * 触发升级
+     */
+    private void trigger(String firmwareType,
+                         String hardwareCode,
+                         String environment,
+                         int versionCode,
+                         String appName) {
+        FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
+                FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
+                hardwareCode, environment, versionCode, appName);
+        String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
+                hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
+        new Thread(() -> {
+            try {
+                new DefaultFirmwareUpgradeTrigger().trigger(firmwareUpgradeContext);
+            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+                logger.info(ExceptionUtil.getErrorMessage(e));
+            }
+        }).start();
     }
 
     /**
