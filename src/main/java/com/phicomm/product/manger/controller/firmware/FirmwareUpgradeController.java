@@ -69,6 +69,38 @@ public class FirmwareUpgradeController {
     }
 
     /**
+     * 固件编辑接口
+     *
+     * @return 上传成功返回0，失败返回1
+     */
+    @RequestMapping(value = "firmware/upgrade/wristband/file/update", method = RequestMethod.POST,
+            consumes = "multipart/form-data", produces = "application/json")
+    @ApiOperation("固件编辑接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
+            @ApiResponse(code = 7, message = "文件上传失败", response = CommonResponse.class)
+
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareUpgradeWristbandFileUpdate(@RequestParam("firmwareType") String firmwareType,
+                                                          @RequestParam("hardwareVersion") String hardwareVersion,
+                                                          @RequestParam("firmwareVersion") String firmwareVersion,
+                                                          @RequestParam("gnssVersion") String gnssVersion,
+                                                          @RequestParam("environment") String environment,
+                                                          @RequestPart("file") MultipartFile file,
+                                                          @RequestParam("description") String description,
+                                                          @RequestParam("appName") String appName,
+                                                          @RequestParam("appPlatform") String appPlatform,
+                                                          @RequestParam("appVersionCode") String appVersionCode)
+            throws DataFormatException, UploadFileException {
+        firmwareUpgradeService.firmwareUpgradeWristbandFileUpdate(firmwareType, hardwareVersion,
+                firmwareVersion, environment, gnssVersion, file, description, appName,appPlatform, appVersionCode);
+        return CommonResponse.ok();
+    }
+
+    /**
      * 固件更新接口
      *
      * @return 上传成功返回0，失败返回1

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
-import scala.util.parsing.combinator.testing.Str;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -97,6 +96,50 @@ public class FirmwareUpgradeService {
         }else {
             firmwareInfoMapper.insert(firmwareInfo);
         }
+        // 触发升级
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appName);
+    }
+
+    /**
+     * 固件编辑处理逻辑
+     */
+    public void firmwareUpgradeWristbandFileUpdate(String firmwareType,
+                                                String hardwareVersion,
+                                                String firmwareVersion,
+                                                String environment,
+                                                String gnssVersion,
+                                                MultipartFile file,
+                                                String description,
+                                                String appName,
+                                                String appPlatform,
+                                                String appVersionCode)
+            throws DataFormatException, UploadFileException {
+        // 校验参数
+        checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
+                environment, gnssVersion, file, description, appName, appPlatform, appVersionCode);
+        int firmwareVersionCode = Integer.parseInt(firmwareVersion);
+        // 上传文件
+        Map<String, String> result = FileUtil.uploadFileToHermes(file);
+        String downloadUrl = result.get("url");
+        String md5 = result.get("md5");
+        float size = file.getSize();
+        FirmwareInfo firmwareInfo = new FirmwareInfo();
+        firmwareInfo.setFirmwareType(firmwareType);
+        firmwareInfo.setHardwareCode(hardwareVersion);
+        firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
+        firmwareInfo.setVersionCode(Integer.parseInt(firmwareVersion));
+        firmwareInfo.setEnvironment(environment);
+        firmwareInfo.setGnssVersion(gnssVersion);
+        firmwareInfo.setEnable(1);
+        firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setMd5(md5);
+        firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
+        firmwareInfo.setAppName(appName);
+        firmwareInfo.setAppPlatform(appPlatform);
+        firmwareInfo.setAppVersionCode(Integer.parseInt(appVersionCode));
+        firmwareInfo.setSize(size);
+        logger.info(firmwareInfo);
+        firmwareInfoMapper.update(firmwareInfo);
         // 触发升级
         trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appName);
     }

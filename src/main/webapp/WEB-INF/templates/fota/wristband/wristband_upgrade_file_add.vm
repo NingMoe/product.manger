@@ -16,8 +16,8 @@
                             <label for="appPlatform">APP平台</label>
                             <select id="appPlatform" class="form-control" name="appPlatform" style="width: 100%;">
                                 <option value=""></option>
-                                <option value="android">安卓</option>
-                                <option value="ios">苹果</option>
+                                <option value="android">android</option>
+                                <option value="ios">ios</option>
                             </select>
                         </div>
                         <div class="form-group">

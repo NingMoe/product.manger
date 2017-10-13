@@ -66,6 +66,53 @@ function activate(node) {
     });
 }
 
+function editWristband(node) {
+    $("#wristbandTestModalLabel").text("编辑");
+    var appName = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
+    var appPlatform = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[1].innerText;
+    var firmwareType = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
+    var hardwareVersion = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].innerText;
+    var environment = node.parentNode.parentNode.parentNode.childNodes[6].childNodes[1].innerText;
+    var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[1].innerText;
+    var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[1].innerText;
+    var description = node.parentNode.parentNode.parentNode.childNodes[10].childNodes[1].innerText;
+    $("#appName").val(appName);
+    $("#appPlatform").val(appPlatform);
+    $("#appVersionCode").val(appVersionCode);
+    $("#firmwareType").val(firmwareType);
+    $("#hardwareVersion").val(hardwareVersion);
+    $("#environment").val(environment);
+    $("#firmwareVersion").val(firmwareVersion);
+    $("#gnssVersion").val(gnssVersion);
+    $("#description").val(description);
+    $('#wristbandTestModal').modal();
+}
+
+function updateWristband() {
+    var baseUrl = $("#baseUrl").val();
+    var formData = new FormData($("#updateWristband")[0]);
+    $.ajax({
+        type   : "POST",
+        url    : baseUrl + "/firmware/upgrade/wristband/file/update",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            if(data.status === 0) {
+                alert("上传成功");
+                window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+            } else if(data.status === 2) {
+                alert("数据格式错误，请检查参数并重新上传！");
+            } else if(data.status === 7) {
+                alert("文件上传失败，请重新上传！");
+            }
+        }
+    });
+}
+
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-wristband-li-node").addClass("active");
@@ -129,7 +176,7 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr></table>'
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
             .replace("#id#", result.id)
             .replace("#appName#", result.appName)
             .replace("#appPlatform#", result.appPlatform)
