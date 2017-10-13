@@ -375,6 +375,28 @@ public class FirmwareUpgradeService {
     }
 
     /**
+     * 固件激活（enable为0设置为1，使其可用）
+     *
+     * @param id id
+     */
+    public void firmwareActivate(Integer id)
+            throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(id);
+        if (firmwareInfo == null) {
+            throw new VersionNotExistException();
+        }
+        if (firmwareInfo.getEnable() != 0) {
+            throw new FirmwareDisableException();
+        }
+        firmwareInfoMapper.setEnable(id, 1);
+        firmwareInfo.setEnable(1);
+        // 通知线上服务器对固件激活
+        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
+        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+    }
+
+    /**
      * 删除固件
      */
     public void firmwareDelete(Integer id) throws VersionNotExistException, FirmwareEnableException {
