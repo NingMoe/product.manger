@@ -28,4 +28,11 @@ public class FileUtilTest {
         System.out.println(commonResponse);
     }
 
+    @Test
+    public void hermesTest2() throws IOException {
+        File file = new File("C:\\Users\\Qiang\\Desktop\\firmware_info.sql");
+        CommonResponse commonResponse = FileUtil.uploadHermes(file, "test.war");
+        System.out.println(commonResponse);
+    }
+
 }
