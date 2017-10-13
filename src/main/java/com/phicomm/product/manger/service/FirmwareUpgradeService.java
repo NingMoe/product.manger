@@ -391,9 +391,7 @@ public class FirmwareUpgradeService {
         firmwareInfoMapper.setEnable(id, 1);
         firmwareInfo.setEnable(1);
         // 通知线上服务器对固件激活
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
-        DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
-        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+        trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppName());
     }
 
     /**
