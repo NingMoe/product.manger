@@ -219,6 +219,27 @@ public class FirmwareUpgradeController {
     }
 
     /**
+     * 固件激活
+     *
+     * @return 固件激活
+     */
+    @RequestMapping(value = "firmware/activate", method = {RequestMethod.POST, RequestMethod.GET},
+            produces = "application/json")
+    @ApiOperation("固件激活")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 9, message = "版本不存在", response = CommonResponse.class),
+            @ApiResponse(code = 11, message = "该固件当前不可用", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareActivate(@RequestParam("id") Integer id)
+            throws FirmwareDisableException, VersionNotExistException, NoSuchAlgorithmException, KeyManagementException, IOException {
+        firmwareUpgradeService.firmwareActivate(id);
+        return CommonResponse.ok();
+    }
+
+    /**
      * 删除固件
      *
      * @return 删除固件

@@ -21,6 +21,7 @@ function trigger(node) {
         }
     });
 }
+
 function downgrade(node) {
     var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
     var baseUrl = $("#baseUrl").val();
@@ -42,6 +43,29 @@ function downgrade(node) {
         }
     });
 }
+
+function activate(node) {
+    var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/activate",
+        dataType: "json",
+        data: {
+            "id": index
+        }, error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("操作成功！");
+            } else if(data.status === 11) {
+                alert("当前固件已经是可用状态");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+        }
+    });
+}
+
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-wristband-li-node").addClass("active");
@@ -105,7 +129,7 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr></table>'
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr></table>'
             .replace("#id#", result.id)
             .replace("#appName#", result.appName)
             .replace("#appPlatform#", result.appPlatform)
