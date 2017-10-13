@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.phicomm.product.manger.exception.UploadFileException;
@@ -175,11 +176,13 @@ public class FileUtil {
         Map<String, String> result = Maps.newHashMap();
         File tempFile = new File(hermesTempDirPath, UUID.randomUUID().toString());
         CommonResponse commonResponse;
+        String description;
         try {
             file.transferTo(tempFile);
             String md5 = md5(tempFile);
             result.put("md5", md5);
             commonResponse = uploadHermes(tempFile, file.getOriginalFilename());
+            description = commonResponse.getDescription();
         } catch (IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
             throw new UploadFileException();
@@ -187,8 +190,14 @@ public class FileUtil {
             //noinspection ResultOfMethodCallIgnored
             tempFile.delete();
         }
-        String url = HERMES_FILE_HTTP_URL_PREFIX + commonResponse.getDescription();
-        result.put("url", url);
+        if (!Strings.isNullOrEmpty(description)){
+            String url = HERMES_FILE_HTTP_URL_PREFIX + description;
+            result.put("url", url);
+        }else {
+            logger.info("description is null");
+            throw new UploadFileException();
+        }
+
         return result;
     }
 }

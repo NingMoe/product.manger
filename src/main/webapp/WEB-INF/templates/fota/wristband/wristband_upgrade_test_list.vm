@@ -37,35 +37,63 @@
                 <form role="form" enctype="multipart/form-data" id="updateWristband">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="id">ID</label>
-                            <input type="text" readonly="readonly" class="form-control" id="id" name="id" placeholder="ID">
-                        </div>
-                        <div class="form-group">
                             <label for="appName">APP名字</label>
-                            <input type="text" readonly="readonly" class="form-control" id="appName" name="appName" placeholder="APP名字">
+                            <input type="text" class="form-control" id="appName" name="appName" style="border-radius: 4px" placeholder="APP名字">
                         </div>
                         <div class="form-group">
                             <label for="appPlatform">APP平台</label>
-                            <input type="text" readonly="readonly" class="form-control" id="appPlatform" name="appPlatform" placeholder="APP平台">
+                            <select id="appPlatform" class="form-control" name="appPlatform" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="android">安卓</option>
+                                <option value="ios">苹果</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="appVersionCode">APP版本号</label>
-                            <input type="text" readonly="readonly" class="form-control" id="appVersionCode" name="appVersionCode" placeholder="APP版本号">
+                            <input type="number" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
                         </div>
                         <div class="form-group">
-                            <label id="coverUrlLabel" for="coverUrl"><font style="color: red">*</font>封面URL</label>
-                            <input type="text" class="form-control" id="coverUrl" name="coverUrl" placeholder="文章封面URL">
+                            <label for="firmwareType">固件类型</label>
+                            <select id="firmwareType" class="form-control" name="firmwareType" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="W1">手环</option>
+                                <option value="W2">手表</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label id="contentUrlLabel" for="contentUrl"><font style="color: red">*</font>正文URL</label>
-                            <input type="text" class="form-control" id="contentUrl" name="contentUrl" placeholder="文章正文URL">
+                            <label for="hardwareVersion">硬件版本号</label>
+                            <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="A0">A0</option>
+                                <option value="A0">A1</option>
+                                <option value="B0">B0</option>
+                                <option value="B1">B1</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="summary"><font style="color: red">*</font>简介</label>
-                            <textarea rows="3" cols="80" name="summary" class="form-control" id="summary" placeholder="文章简介"></textarea>
+                            <label for="firmwareVersion">固件版本号</label>
+                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
                         </div>
                         <div class="form-group">
-                            <input type="hidden" class="form-control" id="type" name="type" value="test">
+                            <label for="gnssVersion">GNSS版本号</label>
+                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <select id="environment" class="form-control" name="environment" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="test">测试</option>
+                                <option value="prod">生产</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">固件上传</label>
+                            <input type="file" name="file" id="file" class="form-control" style="border-radius: 4px">
+                            <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">说明</label>
+                            <textarea id="description" name="description" form="form" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
