@@ -68,6 +68,7 @@ function activate(node) {
 
 function editWristband(node) {
     $("#wristbandTestModalLabel").text("编辑");
+    var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
     var appName = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
     var appPlatform = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
     var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[1].innerText;
@@ -77,6 +78,7 @@ function editWristband(node) {
     var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[1].innerText;
     var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[1].innerText;
     var description = node.parentNode.parentNode.parentNode.childNodes[10].childNodes[1].innerText;
+    $("#id").val(id);
     $("#appName").val(appName);
     $("#appPlatform").val(appPlatform);
     $("#appVersionCode").val(appVersionCode);
@@ -157,7 +159,8 @@ $(document).ready(function () {
             {data: "firmwareType"},
             {data: "hardwareCode"},
             {data: "version"},
-            {data: "versionCode"}
+            {data: "versionCode"},
+            {data: "enable", "render": function(data){ return data === "1" ? "可用" : "不可用";}}
         ]
     });
     function format(d) {
@@ -169,6 +172,8 @@ $(document).ready(function () {
             async: false,
             data: {
                 "appName": d.appName,
+                "appPlatform": d.appPlatform,
+                "appVersionCode": d.appVersionCode,
                 "firmwareType": d.firmwareType,
                 "hardwareCode": d.hardwareCode,
                 "versionCode": d.versionCode,
@@ -180,7 +185,7 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
+        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP名字:</td><td>#appName#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
             .replace("#id#", result.id)
             .replace("#appName#", result.appName)
             .replace("#appPlatform#", result.appPlatform)
