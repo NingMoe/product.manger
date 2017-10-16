@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class FirmwareInfo {
 
-    private Long id;
+    private Integer id;
 
     private String appName;
 
@@ -39,11 +39,11 @@ public class FirmwareInfo {
 
     private String description;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

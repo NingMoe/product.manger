@@ -19,10 +19,15 @@ public interface FirmwareInfoMapper {
                   @Param("hardwareCode") String hardwareCode,
                   @Param("environment") String environment,
                   @Param("version") String version,
-                  @Param("versionCode") int versionCode,
-                  @Param("appName") String appName,
-                  @Param("appPlatform") String appPlatform,
-                  @Param("appVersionCode") int appVersionCode);
+                  @Param("versionCode") int versionCode);
+
+    /**
+     * 查看数据库是否存在相对应的APP名字
+     *
+     * @param appName APP版本
+     * @param environment 环境
+     */
+    boolean existApp(@Param("appName") String appName, @Param("environment") String environment);
 
     /**
      * 向数据库中插入数据
@@ -66,9 +71,31 @@ public interface FirmwareInfoMapper {
                                    @Param("hardwareCode") String hardwareCode,
                                    @Param("environment") String environment,
                                    @Param("versionCode") Integer versionCode,
-                                   @Param("appName") String appName,
-                                   @Param("appPlatform") String appPlatform,
-                                   @Param("appVersionCode") Integer appVersionCode);
+                                   @Param("appName") String appName);
+
+    /**
+     * 清理固件
+     *
+     * @param firmwareType 固件类型
+     * @param hardwareCode 硬件版本号
+     * @param environment  环境
+     */
+    void cleanFirmware(@Param("firmwareType") String firmwareType,
+                       @Param("hardwareCode") String hardwareCode,
+                       @Param("environment") String environment);
+
+    /**
+     * 修改当前的固件版本
+     *
+     * @param firmwareType 固件类型
+     * @param hardwareCode 硬件版本号
+     * @param environment  环境
+     * @param versionCode  固件版本号
+     */
+    int enableFirmware(@Param("firmwareType") String firmwareType,
+                       @Param("hardwareCode") String hardwareCode,
+                       @Param("environment") String environment,
+                       @Param("versionCode") Integer versionCode);
 
     /**
      * 获得固件信息

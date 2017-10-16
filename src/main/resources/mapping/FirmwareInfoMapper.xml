@@ -13,18 +13,12 @@
                 AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
                 AND environment = #{environment,jdbcType=VARCHAR}
                 AND version = #{version,jdbcType=VARCHAR}
-                AND app_name = #{appName,jdbcType=VARCHAR}
-                AND app_platform = #{appPlatform,jdbcType=VARCHAR}
-                AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
             )
             OR (
                 firmware_type = #{firmwareType,jdbcType=VARCHAR}
                 AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
                 AND environment = #{environment,jdbcType=VARCHAR}
                 AND version_code = #{versionCode,jdbcType=INTEGER}
-                AND app_name = #{appName,jdbcType=VARCHAR}
-                AND app_platform = #{appPlatform,jdbcType=VARCHAR}
-                AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
             )
     </select>
 
@@ -35,8 +29,6 @@
             firmware_info
         WHERE
             app_name = #{appName,jdbcType=VARCHAR}
-            AND app_platform = #{appPlatform,jdbcType=VARCHAR}
-            AND app_version_code = #{appVersion,jdbcType=INTEGER}
             AND environment = #{environment,jdbcType=VARCHAR}
     </select>
 
@@ -72,38 +64,55 @@
     <update id="update" parameterType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
         UPDATE firmware_info
         SET
-            app_platform = #{firmwareInfo.appPlatform,jdbcType=VARCHAR},
-            app_version_code = #{firmwareInfo.appVersionCode,jdbcType=INTEGER},
             firmware_type = #{firmwareInfo.firmwareType,jdbcType=VARCHAR},
+            version = #{firmwareInfo.version,jdbcType=VARCHAR},
             version_code = #{firmwareInfo.versionCode,jdbcType=INTEGER},
+            environment = #{firmwareInfo.environment,jdbcType=VARCHAR},
             gnss_version = #{firmwareInfo.gnssVersion,jdbcType=INTEGER},
             md5 = #{firmwareInfo.md5,jdbcType=VARCHAR},
             hardware_code = #{firmwareInfo.hardwareCode,jdbcType=VARCHAR},
+            enable = #{firmwareInfo.enable,jdbcType=INTEGER},
             url = #{firmwareInfo.url,jdbcType=LONGVARCHAR},
             description = #{firmwareInfo.description,jdbcType=LONGVARCHAR},
             size = #{firmwareInfo.size,jdbcType=FLOAT}
         WHERE
-            id = #{firmwareInfo.id,jdbcType=FLOAT}
+            app_name = #{firmwareInfo.appName,jdbcType=VARCHAR}
     </update>
 
     <select id="getFirmwareInfoList" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
-
-        SELECT
-            id,
-            app_name AS appName,
-            firmware_type AS firmwareType,
-            version,
-            version_code AS versionCode,
-            hardware_code AS hardwareCode,
-            `enable`
-        FROM
-            firmware_info
-        WHERE
-            environment = #{environment,jdbcType=VARCHAR}
-        ORDER BY
-            create_time DESC
-        LIMIT 200
-
+        (
+            SELECT
+                id,
+                app_name AS appName,
+                firmware_type AS firmwareType,
+                version,
+                version_code AS versionCode,
+                hardware_code AS hardwareCode,
+                `enable`
+            FROM
+                firmware_info
+            WHERE
+                environment = #{environment,jdbcType=VARCHAR}
+            ORDER BY
+                create_time DESC
+            LIMIT 200
+        )
+        UNION
+        (
+            SELECT
+                id,
+                app_name AS appName,
+                firmware_type AS firmwareType,
+                version,
+                version_code AS versionCode,
+                hardware_code AS hardwareCode,
+                `enable`
+            FROM
+                firmware_info
+            WHERE
+                environment = #{environment,jdbcType=VARCHAR}
+                AND `enable` = 1
+        )
     </select>
 
     <select id="getFirmwareDetail" resultType="com.phicomm.product.manger.model.firmware.FirmwareInfo">
@@ -132,8 +141,6 @@
             AND environment = #{environment,jdbcType=VARCHAR}
             AND version_code = #{versionCode,jdbcType=INTEGER}
             AND app_name = #{appName,jdbcType=VARCHAR}
-            AND app_platform = #{appPlatform,jdbcType=VARCHAR}
-            AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
     </select>
 
     <update id="cleanFirmware">
