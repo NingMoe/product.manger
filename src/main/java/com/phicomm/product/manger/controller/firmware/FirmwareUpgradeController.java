@@ -90,7 +90,7 @@ public class FirmwareUpgradeController {
                                                           @RequestParam("gnssVersion") String gnssVersion,
                                                           @RequestParam("environment") String environment,
                                                           @RequestPart("file") MultipartFile file,
-                                                          @RequestParam("description") String description,
+                                                          @RequestParam(value = "description", required = false) String description,
                                                           @RequestParam("appName") String appName,
                                                           @RequestParam("appPlatform") String appPlatform,
                                                           @RequestParam("appVersionCode") String appVersionCode)
