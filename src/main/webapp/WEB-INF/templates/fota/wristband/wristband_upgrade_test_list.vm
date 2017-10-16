@@ -12,11 +12,13 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th>APP名字</th>
+                            <th>APP平台</th>
+                            <th>APP最低版本</th>
                             <th>固件类型</th>
                             <th>硬件版本号</th>
                             <th>固件版本</th>
                             <th>固件版本号</th>
+                            <th>状态</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,8 +39,7 @@
                 <form role="form" enctype="multipart/form-data" id="updateWristband">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="appName">APP名字</label>
-                            <input type="text" readonly="readonly" class="form-control" id="appName" name="appName" style="border-radius: 4px" placeholder="APP名字">
+                            <input type="hidden" class="form-control" id="id" name="id" style="border-radius: 4px" placeholder="ID">
                         </div>
                         <div class="form-group">
                             <label for="appPlatform">APP平台</label>
@@ -78,7 +79,10 @@
                             <label for="gnssVersion">GNSS版本号</label>
                             <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
                         </div>
-
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <input type="text" readonly="readonly" class="form-control" id="environment" name="environment" style="border-radius: 4px" placeholder="环境（测试/生产）">
+                        </div>
                         <div class="form-group">
                             <label for="file">固件上传</label>
                             <input type="file" name="file" id="file" class="form-control" style="border-radius: 4px">
@@ -87,11 +91,6 @@
                         <div class="form-group">
                             <label for="description">说明</label>
                             <textarea name="description" id="description" form="form" class="form-control"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="environment">环境（测试/生产）</label>
-                            <input type="text" readonly="readonly" class="form-control" id="environment" name="environment" style="border-radius: 4px" placeholder="环境（测试/生产）">
                         </div>
                     </div>
                     <div class="modal-footer">

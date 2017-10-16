@@ -12,11 +12,13 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th>APP名字</th>
+                            <th>APP平台</th>
+                            <th>APP最低版本</th>
                             <th>固件类型</th>
                             <th>硬件版本号</th>
                             <th>固件版本</th>
                             <th>固件版本号</th>
+                            <th>状态</th>
                         </tr>
                         </thead>
                         <tbody>

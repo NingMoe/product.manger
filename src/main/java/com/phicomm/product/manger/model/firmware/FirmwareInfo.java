@@ -6,9 +6,7 @@ import java.util.Date;
 
 public class FirmwareInfo {
 
-    private Integer id;
-
-    private String appName;
+    private Long id;
 
     private String appPlatform;
 
@@ -39,20 +37,12 @@ public class FirmwareInfo {
 
     private String description;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
     }
 
     public String getAppPlatform() {
@@ -171,7 +161,6 @@ public class FirmwareInfo {
     public String toString() {
         return "FirmwareInfo{" +
                 "id=" + id +
-                ", appName='" + appName + '\'' +
                 ", appPlatform='" + appPlatform + '\'' +
                 ", appVersionCode=" + appVersionCode +
                 ", firmwareType='" + firmwareType + '\'' +

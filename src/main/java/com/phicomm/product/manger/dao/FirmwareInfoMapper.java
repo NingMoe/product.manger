@@ -22,14 +22,6 @@ public interface FirmwareInfoMapper {
                   @Param("versionCode") int versionCode);
 
     /**
-     * 查看数据库是否存在相对应的APP名字
-     *
-     * @param appName APP版本
-     * @param environment 环境
-     */
-    boolean existApp(@Param("appName") String appName, @Param("environment") String environment);
-
-    /**
      * 向数据库中插入数据
      *
      * @param firmwareInfo 记录
@@ -53,25 +45,18 @@ public interface FirmwareInfoMapper {
     List<FirmwareInfo> getFirmwareInfoList(@Param("environment") String environment);
 
     /**
-     * 获得APP名字列表
-     *
-     * @return APP名字列表
-     */
-    List<String> getAppNameList();
-
-    /**
      * 获取固件详情
      *
      * @param firmwareType 固件类型
      * @param hardwareCode 硬件版本
      * @param versionCode  版本号
-     * @param appName      APP名字
+     * @param appPlatform  APP平台
      */
     FirmwareInfo getFirmwareDetail(@Param("firmwareType") String firmwareType,
                                    @Param("hardwareCode") String hardwareCode,
                                    @Param("environment") String environment,
                                    @Param("versionCode") Integer versionCode,
-                                   @Param("appName") String appName);
+                                   @Param("appPlatform") String appPlatform);
 
     /**
      * 清理固件

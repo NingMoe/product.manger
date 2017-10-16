@@ -92,9 +92,6 @@
                 </span>
             </a>
             <ul class="treeview-menu" id="firmware-upgrade-wristband-menu-node">
-                <li id="firmware-upgrade-wristband-update">
-                    <a href="$baseUrl/wristband/upgrade/page/file/upload"><i class="fa fa-toggle-up"></i> 固件更新</a>
-                </li>
                 <li id="firmware-upgrade-wristband-add">
                     <a href="$baseUrl/wristband/upgrade/page/file/add"><i class="fa fa-toggle-up"></i> 固件&APP上传</a>
                 </li>

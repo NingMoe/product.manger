@@ -9,10 +9,6 @@
                 <form id="form" role="form" enctype="multipart/form-data">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="appName">APP名字</label>
-                            <input type="text" class="form-control" id="appName" name="appName" style="border-radius: 4px" placeholder="APP名字">
-                        </div>
-                        <div class="form-group">
                             <label for="appPlatform">APP平台</label>
                             <select id="appPlatform" class="form-control" name="appPlatform" style="width: 100%;">
                                 <option value=""></option>
@@ -21,7 +17,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="appVersionCode">APP版本号</label>
+                            <label for="appVersionCode">可支持的最低app版本号</label>
                             <input type="number" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
                         </div>
                         <div class="form-group">
@@ -44,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="firmwareVersion">固件版本号</label>
-                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
+                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="若固件为W1_A0_V1.00_A00_0615_WB.zip，则此处填1.00，即V后面的数字。">
                         </div>
                         <div class="form-group">
                             <label for="gnssVersion">GNSS版本号</label>
