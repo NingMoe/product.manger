@@ -13,12 +13,16 @@
                 AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
                 AND environment = #{environment,jdbcType=VARCHAR}
                 AND version = #{version,jdbcType=VARCHAR}
+                AND app_platform = #{appPlatform,jdbcType=VARCHAR}
+                AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
             )
             OR (
                 firmware_type = #{firmwareType,jdbcType=VARCHAR}
                 AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
                 AND environment = #{environment,jdbcType=VARCHAR}
                 AND version_code = #{versionCode,jdbcType=INTEGER}
+                AND app_platform = #{appPlatform,jdbcType=VARCHAR}
+                AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
             )
     </select>
 

@@ -19,7 +19,9 @@ public interface FirmwareInfoMapper {
                   @Param("hardwareCode") String hardwareCode,
                   @Param("environment") String environment,
                   @Param("version") String version,
-                  @Param("versionCode") int versionCode);
+                  @Param("versionCode") int versionCode,
+                  @Param("appPlatform") String appPlatform,
+                  @Param("appVersionCode") int appVersionCode);
 
     /**
      * 向数据库中插入数据
