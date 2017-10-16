@@ -91,24 +91,28 @@ function editWristband(node) {
 
 function updateWristband() {
     var baseUrl = $("#baseUrl").val();
+    var description = $("#description").val();
     var formData = new FormData($("#updateWristband")[0]);
+    formData.append("description", description);
+
     $.ajax({
-        type   : "POST",
-        url    : baseUrl + "/firmware/upgrade/wristband/file/update",
+        type: "POST",
+        url: baseUrl + "/firmware/upgrade/wristband/file/update",
         data: formData,
-        async: true,
-        cache: false,
         contentType: false,
         processData: false,
-        success: function(data) {
+        dataType: 'json',
+        error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
             if(data.status === 0) {
-                alert("上传成功");
-                window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
+                alert("操作成功！");
             } else if(data.status === 2) {
-                alert("数据格式错误，请检查参数并重新上传！");
+                alert("数据格式错误 !");
             } else if(data.status === 7) {
-                alert("文件上传失败，请重新上传！");
+                alert("文件上传失败 !");
             }
+            window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
         }
     });
 }
