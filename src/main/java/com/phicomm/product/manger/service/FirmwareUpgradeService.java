@@ -93,7 +93,7 @@ public class FirmwareUpgradeService {
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
         int appVersion = Integer.parseInt(appVersionCode);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersion, appPlatform, appVersion)) {
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersion)) {
             throw new VersionHasExistException();
         }
         // 上传文件
@@ -163,7 +163,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppVersionCode(Integer.parseInt(appVersionCode));
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersion, appPlatform, appVersion)) {
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersion)) {
             throw new VersionHasExistException();
         }
         firmwareInfoMapper.update(firmwareInfo);
