@@ -139,10 +139,11 @@ public class FirmwareUpgradeController {
                                           @RequestParam("hardwareCode") String hardwareCode,
                                           @RequestParam("environment") String environment,
                                           @RequestParam("versionCode") String versionCode,
-                                          @RequestParam("appPlatform") String appPlatform)
+                                          @RequestParam("appPlatform") String appPlatform,
+                                          @RequestParam("appVersionCode") String appVersionCode)
             throws DataFormatException {
         return firmwareUpgradeService.getFirmwareDetail(
-                firmwareType, hardwareCode, environment, versionCode, appPlatform);
+                firmwareType, hardwareCode, environment, versionCode, appPlatform, appVersionCode);
     }
 
     /**

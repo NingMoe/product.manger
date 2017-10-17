@@ -14,7 +14,7 @@
                 AND environment = #{environment,jdbcType=VARCHAR}
                 AND version_code = #{versionCode,jdbcType=VARCHAR}
                 AND app_platform = #{appPlatform,jdbcType=VARCHAR}
-                AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
+                AND app_version_code = #{appVersionCode,jdbcType=VARCHAR}
             )
     </select>
 
@@ -34,7 +34,7 @@
         #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
         #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
         now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR},
-        #{firmwareInfo.appPlatform,jdbcType=VARCHAR}, #{firmwareInfo.appVersionCode,jdbcType=INTEGER},
+        #{firmwareInfo.appPlatform,jdbcType=VARCHAR}, #{firmwareInfo.appVersionCode,jdbcType=VARCHAR},
         #{firmwareInfo.size,jdbcType=FLOAT}
         )
     </insert>
@@ -43,7 +43,7 @@
         UPDATE firmware_info
         SET
         app_platform = #{firmwareInfo.appPlatform,jdbcType=VARCHAR},
-        app_version_code = #{firmwareInfo.appVersionCode,jdbcType=INTEGER},
+        app_version_code = #{firmwareInfo.appVersionCode,jdbcType=VARCHAR},
         firmware_type = #{firmwareInfo.firmwareType,jdbcType=VARCHAR},
         version = #{firmwareInfo.version,jdbcType=VARCHAR},
         version_code = #{firmwareInfo.versionCode,jdbcType=VARCHAR},
@@ -102,6 +102,7 @@
         AND environment = #{environment,jdbcType=VARCHAR}
         AND version_code = #{versionCode,jdbcType=VARCHAR}
         AND app_platform = #{appPlatform,jdbcType=VARCHAR}
+        AND app_version_code = #{appVersionCode,jdbcType=VARCHAR}
     </select>
 
     <update id="cleanFirmware">

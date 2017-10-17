@@ -201,6 +201,7 @@ $(document).ready(function () {
             async: false,
             data: {
                 "appPlatform": d.appPlatform,
+                "appVersionCode": d.appVersionCode,
                 "firmwareType": d.firmwareType,
                 "hardwareCode": d.hardwareCode,
                 "versionCode": d.versionCode,
