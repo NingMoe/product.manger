@@ -66,7 +66,7 @@
                             <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
                                 <option value=""></option>
                                 <option value="A0">A0</option>
-                                <option value="A0">A1</option>
+                                <option value="A1">A1</option>
                                 <option value="B0">B0</option>
                                 <option value="B1">B1</option>
                             </select>

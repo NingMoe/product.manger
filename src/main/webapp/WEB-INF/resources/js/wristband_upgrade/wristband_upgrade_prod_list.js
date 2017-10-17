@@ -66,6 +66,61 @@ function activate(node) {
     });
 }
 
+function editWristband(node) {
+    $("#wristbandProdModalLabel").text("编辑");
+    var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var appPlatform = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    var firmwareType = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[1].innerText;
+    var hardwareVersion = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
+    var environment = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].innerText;
+    var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[7].childNodes[1].innerText;
+    var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[1].innerText;
+    var description = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[1].innerText;
+    var enable = node.parentNode.parentNode.parentNode.childNodes[14].childNodes[1].innerText;
+    $("#id").val(id);
+    $("#appPlatform").val(appPlatform);
+    $("#appVersionCode").val(appVersionCode);
+    $("#firmwareType").val(firmwareType);
+    $("#hardwareVersion").val(hardwareVersion);
+    $("#environment").val(environment);
+    $("#firmwareVersion").val(firmwareVersion);
+    $("#gnssVersion").val(gnssVersion);
+    $("#description").val(description);
+    $("#enable").val(enable);
+    $('#wristbandProdModal').modal();
+}
+
+function updateWristband() {
+    var baseUrl = $("#baseUrl").val();
+    var description = $("#description").val();
+    var formData = new FormData($("#updateWristband")[0]);
+    formData.append("description", description);
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/upgrade/wristband/file/update",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if(data.status === 0) {
+                alert("操作成功！");
+            } else if(data.status === 2) {
+                alert("数据格式错误 !");
+            } else if(data.status === 7) {
+                alert("文件上传失败 !");
+            } else if(data.status === 8) {
+                alert("固件版本已经存在 !");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+        }
+    });
+}
+
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-wristband-li-node").addClass("active");
@@ -131,23 +186,43 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>触发:</td><td><button onclick="trigger(this)">触发</button></td></tr><tr><td>失效:</td><td><button onclick="downgrade(this)">失效</button></td></tr><tr><td>激活:</td><td><button onclick="activate(this)">激活</button></td></tr></table>'
-            .replace("#id#", result.id)
-            .replace("#appPlatform#", result.appPlatform)
-            .replace("#appVersionCode#", result.appVersionCode)
-            .replace("#firmwareType#", result.firmwareType)
-            .replace("#hardwareCode#", result.hardwareCode)
-            .replace("#environment#", result.environment)
-            .replace("#version#", result.version)
-            .replace("#versionCode#", result.versionCode)
-            .replace("#description#", result.description)
-            .replace("#url#", result.url)
-            .replace("#url#", result.url)
-            .replace("#gnssVersion#", result.gnssVersion)
-            .replace("#md5#", result.md5)
-            .replace("#size#", result.size)
-            .replace("#createTime#", result.createTime)
-            .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
+        if("不可用" === d.enable){
+            return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>上线:</td><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
+                .replace("#id#", result.id)
+                .replace("#appPlatform#", result.appPlatform)
+                .replace("#appVersionCode#", result.appVersionCode)
+                .replace("#firmwareType#", result.firmwareType)
+                .replace("#hardwareCode#", result.hardwareCode)
+                .replace("#environment#", result.environment)
+                .replace("#version#", result.version)
+                .replace("#versionCode#", result.versionCode)
+                .replace("#description#", result.description)
+                .replace("#url#", result.url)
+                .replace("#url#", result.url)
+                .replace("#gnssVersion#", result.gnssVersion)
+                .replace("#md5#", result.md5)
+                .replace("#size#", result.size)
+                .replace("#createTime#", result.createTime)
+                .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
+        }else {
+            return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>下线:</td><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
+                .replace("#id#", result.id)
+                .replace("#appPlatform#", result.appPlatform)
+                .replace("#appVersionCode#", result.appVersionCode)
+                .replace("#firmwareType#", result.firmwareType)
+                .replace("#hardwareCode#", result.hardwareCode)
+                .replace("#environment#", result.environment)
+                .replace("#version#", result.version)
+                .replace("#versionCode#", result.versionCode)
+                .replace("#description#", result.description)
+                .replace("#url#", result.url)
+                .replace("#url#", result.url)
+                .replace("#gnssVersion#", result.gnssVersion)
+                .replace("#md5#", result.md5)
+                .replace("#size#", result.size)
+                .replace("#createTime#", result.createTime)
+                .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
+        }
     }
     $("#wristbandProdList tbody").on("click", "td.details-control", function () {
         var tr = $(this).closest("tr");
