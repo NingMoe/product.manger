@@ -232,12 +232,6 @@ public class FirmwareUpgradeService {
                 || Strings.isNullOrEmpty(appVersionCode)) {
             throw new DataFormatException();
         }
-        try {
-            //noinspection ResultOfMethodCallIgnored
-            Integer.parseInt(appVersionCode);
-        } catch (Exception e) {
-            throw new DataFormatException();
-        }
         if (!FirmwareEnvironmentEnum.TEST.getEnvironment().equals(environment) &&
                 !FirmwareEnvironmentEnum.PROD.getEnvironment().equals(environment)) {
             throw new DataFormatException();

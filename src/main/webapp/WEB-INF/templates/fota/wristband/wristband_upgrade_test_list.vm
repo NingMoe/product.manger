@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label for="appVersionCode">APP版本号</label>
-                            <input type="number" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
+                            <input type="text" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
                         </div>
                         <div class="form-group">
                             <label for="firmwareType">固件类型</label>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="firmwareVersion">固件版本号</label>
-                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
+                            <input type="text" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
                         </div>
                         <div class="form-group">
                             <label for="gnssVersion">GNSS版本号</label>
