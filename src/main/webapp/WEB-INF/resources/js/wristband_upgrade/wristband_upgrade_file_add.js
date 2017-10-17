@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("#firmware-upgrade-wristband-add").addClass("active");
     $("#appPlatform").select2({
         placeholder: "选择APP平台",
-        multiple: false
+        multiple: true
     });
     $("#firmwareType").select2({
         placeholder: "选择固件类型",
@@ -17,6 +17,24 @@ $(document).ready(function() {
     $("#environment").select2({
         placeholder: "选择固件应用环境",
         multiple: false
+    });
+    $("#appPlatform").change(function(){
+        var platForms = $("#appPlatform").val();
+        if (platForms !== null && 1 === platForms.length && "android" === platForms[0] && "none" === $("#appIos").css("display") && "none" === $("#appAndroid").css("display")){
+            $("#appAndroid").css("display", 'block');
+        }else if (platForms !== null && 1 === platForms.length && "ios" === platForms[0] && "none" === $("#appIos").css("display") && "none" === $("#appAndroid").css("display")){
+            $("#appIos").css("display", 'block');
+        }else if (platForms !== null && 2 === platForms.length){
+            $("#appAndroid").css("display", 'block');
+            $("#appIos").css("display", 'block');
+        }else if (platForms !== null && 1 === platForms.length && "android" === platForms[0] && "block" === $("#appIos").css("display")){
+            $("#appIos").css("display", 'none');
+        }else if (platForms !== null && 1 === platForms.length && "ios" === platForms[0] && "block" === $("#appAndroid").css("display")){
+            $("#appAndroid").css("display", 'none');
+        }else if (platForms === null){
+            $("#appAndroid").css("display", 'none');
+            $("#appIos").css("display", 'none');
+        }
     });
     $("#submit").click(function() {
         var baseUrl = $("#baseUrl").val();

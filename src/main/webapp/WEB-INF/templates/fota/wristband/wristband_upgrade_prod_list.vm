@@ -12,11 +12,13 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th>APP名字</th>
+                            <th>APP平台</th>
+                            <th>APP最低版本</th>
                             <th>固件类型</th>
                             <th>硬件版本号</th>
                             <th>固件版本</th>
                             <th>固件版本号</th>
+                            <th>状态</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -26,6 +28,83 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="wristbandProdModal" tabindex="-1" role="dialog" aria-labelledby="wristbandProdModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="wristbandProdModalLabel">编辑</h4>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="updateWristband">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="id" name="id" style="border-radius: 4px" placeholder="ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="appPlatform">APP平台</label>
+                            <select id="appPlatform" class="form-control" name="appPlatform" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="android">android</option>
+                                <option value="ios">ios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appVersionCode">APP版本号</label>
+                            <input type="number" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="firmwareType">固件类型</label>
+                            <select id="firmwareType" class="form-control" name="firmwareType" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="W1">手环</option>
+                                <option value="W2">手表</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hardwareVersion">硬件版本号</label>
+                            <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="A0">A0</option>
+                                <option value="A1">A1</option>
+                                <option value="B0">B0</option>
+                                <option value="B1">B1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="firmwareVersion">固件版本号</label>
+                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="gnssVersion">GNSS版本号</label>
+                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
+                        </div>
+                        <div class="form-group">
+                            <label for="environment">环境（测试/生产）</label>
+                            <input type="text" readonly="readonly" class="form-control" id="environment" name="environment" style="border-radius: 4px" placeholder="环境（测试/生产）">
+                        </div>
+                        <div class="form-group">
+                            <label for="file">固件上传</label>
+                            <input type="file" name="file" id="file" class="form-control" style="border-radius: 4px">
+                            <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">说明</label>
+                            <textarea name="description" id="description" form="form" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="enable" name="enable" style="border-radius: 4px" placeholder="Enable">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                        <button type="button" id="btn_submit" class="btn btn-primary" onclick="updateWristband();">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
