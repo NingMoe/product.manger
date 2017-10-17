@@ -30,7 +30,7 @@ public class FirmwareUpgradeContext {
     /**
      * 版本号
      */
-    private int versionCode;
+    private float versionCode;
 
     /**
      * 固件信息
@@ -45,7 +45,7 @@ public class FirmwareUpgradeContext {
     public FirmwareUpgradeContext(String firmwareType,
                                   String hardwareCode,
                                   FirmwareEnvironmentEnum firmwareEnvironmentEnum,
-                                  int versionCode,
+                                  float versionCode,
                                   FirmwareInfo firmwareInfo,
                                   String param) {
         this.firmwareType = firmwareType;

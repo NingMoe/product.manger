@@ -19,7 +19,7 @@ public interface FirmwareInfoMapper {
                   @Param("hardwareCode") String hardwareCode,
                   @Param("environment") String environment,
                   @Param("version") String version,
-                  @Param("versionCode") int versionCode,
+                  @Param("versionCode") float versionCode,
                   @Param("appPlatform") String appPlatform,
                   @Param("appVersionCode") int appVersionCode);
 
@@ -57,7 +57,7 @@ public interface FirmwareInfoMapper {
     FirmwareInfo getFirmwareDetail(@Param("firmwareType") String firmwareType,
                                    @Param("hardwareCode") String hardwareCode,
                                    @Param("environment") String environment,
-                                   @Param("versionCode") Integer versionCode,
+                                   @Param("versionCode") float versionCode,
                                    @Param("appPlatform") String appPlatform);
 
     /**

@@ -60,10 +60,11 @@ public class FirmwareUpgradeController {
                                                           @RequestPart("file") MultipartFile file,
                                                           @RequestParam("description") String description,
                                                           @RequestParam("appPlatform") String appPlatform,
-                                                          @RequestParam("appVersionCode") String appVersionCode)
+                                                          @RequestParam(value = "appVersionCodeAndroid", required = false) String appVersionCodeAndroid,
+                                                          @RequestParam(value = "appVersionCodeIos", required = false) String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException {
-        firmwareUpgradeService.firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCode);
+        firmwareUpgradeService.whichPlatform(firmwareType, hardwareVersion,
+                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
         return CommonResponse.ok();
     }
 
