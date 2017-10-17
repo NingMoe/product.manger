@@ -79,7 +79,7 @@ public class FirmwareUpgradeService {
     /**
      * 固件&APP上传处理逻辑
      */
-    public void firmwareUpgradeWristbandFileAdd(String firmwareType,
+    private void firmwareUpgradeWristbandFileAdd(String firmwareType,
                                                 String hardwareVersion,
                                                 String firmwareVersion,
                                                 String environment,
@@ -92,9 +92,8 @@ public class FirmwareUpgradeService {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
-        float firmwareVersionCode = Float.parseFloat(firmwareVersion);
         int appVersion = Integer.parseInt(appVersionCode);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode, appPlatform, appVersion)) {
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersion, appPlatform, appVersion)) {
             throw new VersionHasExistException();
         }
         // 上传文件
@@ -106,7 +105,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
         firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
-        firmwareInfo.setVersionCode(firmwareVersionCode);
+        firmwareInfo.setVersionCode(firmwareVersion);
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setEnable(1);
@@ -119,7 +118,7 @@ public class FirmwareUpgradeService {
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
         // 触发升级
-        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appPlatform);
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform);
     }
 
     /**
@@ -140,7 +139,6 @@ public class FirmwareUpgradeService {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
-        float firmwareVersionCode = Float.parseFloat(firmwareVersion);
         int appVersion = Integer.parseInt(appVersionCode);
         int enable = "可用".equals(enableString) ? 1 : 0;
         long longId = Long.parseLong(id);
@@ -155,7 +153,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
         firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
-        firmwareInfo.setVersionCode(firmwareVersionCode);
+        firmwareInfo.setVersionCode(firmwareVersion);
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setUrl(downloadUrl);
@@ -165,12 +163,12 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppVersionCode(Integer.parseInt(appVersionCode));
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersionCode, appPlatform, appVersion)) {
+        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, firmwareVersion, appPlatform, appVersion)) {
             throw new VersionHasExistException();
         }
         firmwareInfoMapper.update(firmwareInfo);
         // 触发升级
-        trigger(firmwareType, hardwareVersion, environment, firmwareVersionCode, appPlatform);
+        trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform);
     }
 
     /**
@@ -179,7 +177,7 @@ public class FirmwareUpgradeService {
     private void trigger(String firmwareType,
                          String hardwareCode,
                          String environment,
-                         float versionCode,
+                         String versionCode,
                          String appPlatform) {
         FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
@@ -237,7 +235,6 @@ public class FirmwareUpgradeService {
         }
         try {
             //noinspection ResultOfMethodCallIgnored
-            Float.parseFloat(firmwareVersion);
             Integer.parseInt(appVersionCode);
         } catch (Exception e) {
             throw new DataFormatException();
@@ -287,7 +284,7 @@ public class FirmwareUpgradeService {
                                           String versionCode,
                                           String appPlatform) {
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
-                hardwareCode, environment, Float.parseFloat(versionCode), appPlatform);
+                hardwareCode, environment, versionCode, appPlatform);
         if (firmwareInfo == null) {
             return new FirmwareInfo();
         }
@@ -384,7 +381,7 @@ public class FirmwareUpgradeService {
             String hardwareCode = firmwareInfo.getHardwareCode();
             FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(firmwareInfo.getEnvironment())
                     ? FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
-            float versionCode = firmwareInfo.getVersionCode();
+            String versionCode = firmwareInfo.getVersionCode();
             FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType, hardwareCode,
                     firmwareEnvironmentEnum, versionCode, firmwareInfo, configuation);
             DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();

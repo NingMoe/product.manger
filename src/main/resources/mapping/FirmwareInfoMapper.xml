@@ -20,7 +20,7 @@
                 firmware_type = #{firmwareType,jdbcType=VARCHAR}
                 AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
                 AND environment = #{environment,jdbcType=VARCHAR}
-                AND version_code = #{versionCode,jdbcType=FLOAT}
+                AND version_code = #{versionCode,jdbcType=VARCHAR}
                 AND app_platform = #{appPlatform,jdbcType=VARCHAR}
                 AND app_version_code = #{appVersionCode,jdbcType=INTEGER}
             )
@@ -38,7 +38,7 @@
         )
         VALUES (
         #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
-        #{firmwareInfo.versionCode,jdbcType=FLOAT}, #{firmwareInfo.environment,jdbcType=VARCHAR},
+        #{firmwareInfo.versionCode,jdbcType=VARCHAR}, #{firmwareInfo.environment,jdbcType=VARCHAR},
         #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
         #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
         now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR},
@@ -54,7 +54,7 @@
         app_version_code = #{firmwareInfo.appVersionCode,jdbcType=INTEGER},
         firmware_type = #{firmwareInfo.firmwareType,jdbcType=VARCHAR},
         version = #{firmwareInfo.version,jdbcType=VARCHAR},
-        version_code = #{firmwareInfo.versionCode,jdbcType=FLOAT},
+        version_code = #{firmwareInfo.versionCode,jdbcType=VARCHAR},
         environment = #{firmwareInfo.environment,jdbcType=VARCHAR},
         gnss_version = #{firmwareInfo.gnssVersion,jdbcType=INTEGER},
         md5 = #{firmwareInfo.md5,jdbcType=VARCHAR},
@@ -108,7 +108,7 @@
         firmware_type = #{firmwareType,jdbcType=VARCHAR}
         AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
         AND environment = #{environment,jdbcType=VARCHAR}
-        AND version_code = #{versionCode,jdbcType=FLOAT}
+        AND version_code = #{versionCode,jdbcType=VARCHAR}
         AND app_platform = #{appPlatform,jdbcType=VARCHAR}
     </select>
 
@@ -128,7 +128,7 @@
         firmware_type = #{firmwareType,jdbcType=VARCHAR}
         AND hardware_code = #{hardwareCode,jdbcType=VARCHAR}
         AND environment = #{environment,jdbcType=VARCHAR}
-        AND version_code = #{versionCode,jdbcType=FLOAT}
+        AND version_code = #{versionCode,jdbcType=VARCHAR}
     </update>
 
     <update id="setEnable">

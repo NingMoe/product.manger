@@ -16,7 +16,7 @@ public class FirmwareInfo {
 
     private String version;
 
-    private float versionCode;
+    private String versionCode;
 
     private String environment;
 
@@ -85,11 +85,11 @@ public class FirmwareInfo {
         this.version = version == null ? null : version.trim();
     }
 
-    public float getVersionCode() {
+    public String getVersionCode() {
         return versionCode;
     }
 
-    public void setVersionCode(float versionCode) {
+    public void setVersionCode(String versionCode) {
         this.versionCode = versionCode;
     }
 
