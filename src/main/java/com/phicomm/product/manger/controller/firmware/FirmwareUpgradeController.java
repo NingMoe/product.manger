@@ -79,7 +79,8 @@ public class FirmwareUpgradeController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
             @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
-            @ApiResponse(code = 7, message = "文件上传失败", response = CommonResponse.class)
+            @ApiResponse(code = 7, message = "文件上传失败", response = CommonResponse.class),
+            @ApiResponse(code = 8, message = "固件版本已经存在", response = CommonResponse.class)
 
     })
     @FunctionPoint(value = "common")
@@ -92,10 +93,11 @@ public class FirmwareUpgradeController {
                                                              @RequestParam(value = "description", required = false) String description,
                                                              @RequestParam("appPlatform") String appPlatform,
                                                              @RequestParam("appVersionCode") String appVersionCode,
-                                                             @RequestParam("id") String id)
-            throws DataFormatException, UploadFileException {
+                                                             @RequestParam("id") String id,
+                                                             @RequestParam("enable") String enable)
+            throws DataFormatException, UploadFileException, VersionHasExistException {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpdate(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCode, id);
+                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCode, id, enable);
         return CommonResponse.ok();
     }
 

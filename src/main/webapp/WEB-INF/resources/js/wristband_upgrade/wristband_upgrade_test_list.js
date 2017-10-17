@@ -77,6 +77,7 @@ function editWristband(node) {
     var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[7].childNodes[1].innerText;
     var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[1].innerText;
     var description = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[1].innerText;
+    var enable = node.parentNode.parentNode.parentNode.childNodes[14].childNodes[1].innerText;
     $("#id").val(id);
     $("#appPlatform").val(appPlatform);
     $("#appVersionCode").val(appVersionCode);
@@ -86,6 +87,7 @@ function editWristband(node) {
     $("#firmwareVersion").val(firmwareVersion);
     $("#gnssVersion").val(gnssVersion);
     $("#description").val(description);
+    $("#enable").val(enable);
     $('#wristbandTestModal').modal();
 }
 
@@ -111,6 +113,8 @@ function updateWristband() {
                 alert("数据格式错误 !");
             } else if(data.status === 7) {
                 alert("文件上传失败 !");
+            } else if(data.status === 8) {
+                alert("固件版本已经存在 !");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/test/list";
         }
