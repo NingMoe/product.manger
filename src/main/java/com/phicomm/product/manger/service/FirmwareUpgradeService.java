@@ -239,7 +239,7 @@ public class FirmwareUpgradeService {
     }
 
     /**
-     * 获取test、prod下面的数据（最多展示100条）
+     * 获取test、 prod下面的数据（最多展示100条）
      *
      * @param environment 环境
      */
