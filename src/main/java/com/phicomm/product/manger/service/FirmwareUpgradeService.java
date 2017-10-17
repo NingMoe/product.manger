@@ -62,7 +62,7 @@ public class FirmwareUpgradeService {
                               String appPlatform,
                               String appVersionCodeAndroid,
                               String appVersionCodeIos) throws UploadFileException, VersionHasExistException, DataFormatException {
-        if (Strings.isNullOrEmpty(appPlatform)){
+        if (!Strings.isNullOrEmpty(appPlatform)){
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2){
                 firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCodeAndroid);
