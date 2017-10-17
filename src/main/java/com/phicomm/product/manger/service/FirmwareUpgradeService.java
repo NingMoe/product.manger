@@ -65,12 +65,12 @@ public class FirmwareUpgradeService {
         if (!Strings.isNullOrEmpty(appPlatform)){
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appPlatforms[0], appVersionCodeAndroid);
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appPlatforms[1], appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
             }else if (appPlatforms.length == 1 && "android".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appPlatforms[0], appVersionCodeAndroid);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
             }else if (appPlatforms.length == 1 && "ios".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, appPlatforms[0], appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
             }
         }
 
