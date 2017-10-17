@@ -10,7 +10,7 @@ public class FirmwareInfo {
 
     private String appPlatform;
 
-    private Integer appVersionCode;
+    private String appVersionCode;
 
     private String firmwareType;
 
@@ -53,11 +53,11 @@ public class FirmwareInfo {
         this.appPlatform = appPlatform;
     }
 
-    public Integer getAppVersionCode() {
+    public String getAppVersionCode() {
         return appVersionCode;
     }
 
-    public void setAppVersionCode(Integer appVersionCode) {
+    public void setAppVersionCode(String appVersionCode) {
         this.appVersionCode = appVersionCode;
     }
 
