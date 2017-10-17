@@ -1,10 +1,14 @@
 package com.phicomm.product.manger.yufei.liu;
 
+import com.phicomm.product.manger.utils.FileUtil;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * url单元测试
@@ -21,5 +25,8 @@ public class UrlTest {
         System.out.println(URLEncoder.encode("刘宇飞", "gb2312"));
         System.out.println(new Date());
     }
+
+
+
 
 }

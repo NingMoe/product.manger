@@ -200,4 +200,19 @@ public class FileUtil {
 
         return result;
     }
+
+    //
+    public static void main(String[] args){
+        int count=10 ;
+        while(count>0) {
+            try {
+                File tempFile = new File("/home/rdadmin/my.py");
+                String str = FileUtil.uploadHermes(tempFile, "my.py").getDescription();
+                System.out.println(str);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            count -- ;
+        }
+    }
 }
