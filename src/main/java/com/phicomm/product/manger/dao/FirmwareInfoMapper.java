@@ -12,13 +12,11 @@ public interface FirmwareInfoMapper {
     /**
      * 查看数据库是否存在相对应的版本以及版本号
      *
-     * @param version     版本
      * @param versionCode 版本号
      */
     boolean exist(@Param("firmwareType") String firmwareType,
                   @Param("hardwareCode") String hardwareCode,
                   @Param("environment") String environment,
-                  @Param("version") String version,
                   @Param("versionCode") String versionCode,
                   @Param("appPlatform") String appPlatform,
                   @Param("appVersionCode") int appVersionCode);
@@ -59,30 +57,6 @@ public interface FirmwareInfoMapper {
                                    @Param("environment") String environment,
                                    @Param("versionCode") String versionCode,
                                    @Param("appPlatform") String appPlatform);
-
-    /**
-     * 清理固件
-     *
-     * @param firmwareType 固件类型
-     * @param hardwareCode 硬件版本号
-     * @param environment  环境
-     */
-    void cleanFirmware(@Param("firmwareType") String firmwareType,
-                       @Param("hardwareCode") String hardwareCode,
-                       @Param("environment") String environment);
-
-    /**
-     * 修改当前的固件版本
-     *
-     * @param firmwareType 固件类型
-     * @param hardwareCode 硬件版本号
-     * @param environment  环境
-     * @param versionCode  固件版本号
-     */
-    int enableFirmware(@Param("firmwareType") String firmwareType,
-                       @Param("hardwareCode") String hardwareCode,
-                       @Param("environment") String environment,
-                       @Param("versionCode") Integer versionCode);
 
     /**
      * 获得固件信息
