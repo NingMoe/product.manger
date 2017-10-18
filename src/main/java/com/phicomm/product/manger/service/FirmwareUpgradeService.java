@@ -118,7 +118,7 @@ public class FirmwareUpgradeService {
         firmwareInfoMapper.insert(firmwareInfo);
         if (!Strings.isNullOrEmpty(appVersionCodeIos)){
             firmwareInfo.setAppPlatform("ios");
-            firmwareInfo.setAppVersionCode(appVersionCode);
+            firmwareInfo.setAppVersionCode(appVersionCodeIos);
             firmwareInfoMapper.insert(firmwareInfo);
         }
         // 触发升级
