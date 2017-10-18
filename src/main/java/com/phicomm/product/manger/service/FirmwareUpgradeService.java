@@ -65,12 +65,11 @@ public class FirmwareUpgradeService {
         if (!Strings.isNullOrEmpty(appPlatform)){
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid, appVersionCodeIos);
             }else if (appPlatforms.length == 1 && "android".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid, null);
             }else if (appPlatforms.length == 1 && "ios".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos, null);
             }
         }
 
@@ -87,7 +86,8 @@ public class FirmwareUpgradeService {
                                                  MultipartFile file,
                                                  String description,
                                                  String appPlatform,
-                                                 String appVersionCode)
+                                                 String appVersionCode,
+                                                 String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
@@ -116,6 +116,11 @@ public class FirmwareUpgradeService {
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
         firmwareInfoMapper.insert(firmwareInfo);
+        if (!Strings.isNullOrEmpty(appVersionCodeIos)){
+            firmwareInfo.setAppPlatform("ios");
+            firmwareInfo.setAppVersionCode(appVersionCode);
+            firmwareInfoMapper.insert(firmwareInfo);
+        }
         // 触发升级
         trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
     }
