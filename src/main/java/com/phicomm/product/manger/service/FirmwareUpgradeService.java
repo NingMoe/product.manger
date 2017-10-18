@@ -198,6 +198,8 @@ public class FirmwareUpgradeService {
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode, appPlatform, appVersionCode);
+        logger.info(firmwareType+"     "+hardwareCode+"     "+environment+"     "+versionCode+"     "+appPlatform+"     "+appVersionCode);
+        logger.info(firmwareInfo);
         String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
