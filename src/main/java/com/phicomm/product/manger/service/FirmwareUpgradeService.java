@@ -62,15 +62,14 @@ public class FirmwareUpgradeService {
                               String appPlatform,
                               String appVersionCodeAndroid,
                               String appVersionCodeIos) throws UploadFileException, VersionHasExistException, DataFormatException {
-        if (!Strings.isNullOrEmpty(appPlatform)){
+        if (!Strings.isNullOrEmpty(appPlatform)) {
             String[] appPlatforms = appPlatform.split(",");
-            if (appPlatforms.length == 2){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
-            }else if (appPlatforms.length == 1 && "android".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid);
-            }else if (appPlatforms.length == 1 && "ios".equals(appPlatforms[0])){
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos);
+            if (appPlatforms.length == 2) {
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid, appVersionCodeIos);
+            } else if (appPlatforms.length == 1 && "android".equals(appPlatforms[0])) {
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "android", appVersionCodeAndroid, null);
+            } else if (appPlatforms.length == 1 && "ios".equals(appPlatforms[0])) {
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, file, description, "ios", appVersionCodeIos, null);
             }
         }
 
@@ -87,11 +86,14 @@ public class FirmwareUpgradeService {
                                                  MultipartFile file,
                                                  String description,
                                                  String appPlatform,
-                                                 String appVersionCode)
+                                                 String appVersionCode,
+                                                 String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
+        String[] appVersions = appVersionCode.trim().replaceAll(" ", "").split(",");
+        String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").split(",");
         if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode)) {
             throw new VersionHasExistException();
         }
@@ -112,12 +114,25 @@ public class FirmwareUpgradeService {
         firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
-        firmwareInfo.setAppVersionCode(appVersionCode);
         firmwareInfo.setSize(size);
-        logger.info(firmwareInfo);
-        firmwareInfoMapper.insert(firmwareInfo);
-        // 触发升级
-        trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+        for (String appVersion : appVersions) {
+            firmwareInfo.setAppVersionCode(appVersion);
+            logger.info(firmwareInfo);
+            firmwareInfoMapper.insert(firmwareInfo);
+            // 触发升级
+            trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+        }
+        if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
+            for (String appIosVersion :appIosVersions) {
+                firmwareInfo.setAppPlatform("ios");
+                firmwareInfo.setAppVersionCode(appIosVersion);
+                logger.info(firmwareInfo);
+                firmwareInfoMapper.insert(firmwareInfo);
+                // 触发升级
+                trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+            }
+
+        }
     }
 
     /**

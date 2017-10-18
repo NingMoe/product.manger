@@ -81,7 +81,11 @@
                         </div>
                         <div class="form-group">
                             <label for="environment">环境（测试/生产）</label>
-                            <input type="text" readonly="readonly" class="form-control" id="environment" name="environment" style="border-radius: 4px" placeholder="环境（测试/生产）">
+                            <select id="environment" class="form-control" name="environment" style="width: 100%;">
+                                <option value=""></option>
+                                <option value="test">测试</option>
+                                <option value="prod">生产</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="file">固件上传</label>
