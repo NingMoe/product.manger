@@ -115,7 +115,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setSize(size);
         for (String appVersion : appVersions) {
-            if (Strings.isNullOrEmpty(appVersion)){
+            if (!Strings.isNullOrEmpty(appVersion)) {
                 firmwareInfo.setAppVersionCode(appVersion);
                 logger.info(firmwareInfo);
                 firmwareInfoMapper.insert(firmwareInfo);
@@ -125,8 +125,8 @@ public class FirmwareUpgradeService {
         }
         if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
             String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
-            for (String appIosVersion :appIosVersions) {
-                if (Strings.isNullOrEmpty(appIosVersion)){
+            for (String appIosVersion : appIosVersions) {
+                if (!Strings.isNullOrEmpty(appIosVersion)) {
                     firmwareInfo.setAppPlatform("ios");
                     firmwareInfo.setAppVersionCode(appIosVersion);
                     logger.info(firmwareInfo);
@@ -409,9 +409,9 @@ public class FirmwareUpgradeService {
     /**
      * 添加新的APP版本号处理逻辑
      */
-    public void firmwareUpgradeWristbandAppAdd(String id,String appVersionCode)
+    public void firmwareUpgradeWristbandAppAdd(String id, String appVersionCode)
             throws DataFormatException, VersionHasExistException {
-        if (Strings.isNullOrEmpty(appVersionCode)){
+        if (Strings.isNullOrEmpty(appVersionCode)) {
             throw new DataFormatException();
         }
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));

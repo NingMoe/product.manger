@@ -10,7 +10,8 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="appPlatform">APP平台</label>
-                            <select id="appPlatform" class="form-control" multiple name="appPlatform" style="width: 100%;">
+                            <select id="appPlatform" class="form-control" multiple name="appPlatform"
+                                    style="width: 100%;">
                                 <option value=""></option>
                                 <option value="android">android</option>
                                 <option value="ios">ios</option>
@@ -18,11 +19,14 @@
                         </div>
                         <div class="form-group" id="appAndroid" style="display:none;">
                             <label for="appVersionCodeAndroid">Android可支持的版本号</label>
-                            <input type="text" class="form-control" id="appVersionCodeAndroid" name="appVersionCodeAndroid" style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
+                            <input type="text" class="form-control" id="appVersionCodeAndroid"
+                                   name="appVersionCodeAndroid" style="border-radius: 4px"
+                                   placeholder="若存在多个版本，各版本之间请以','分隔">
                         </div>
                         <div class="form-group" id="appIos" style="display:none;">
                             <label for="appVersionCodeIos">Ios可支持的版本号</label>
-                            <input type="text" class="form-control" id="appVersionCodeIos" name="appVersionCodeIos" style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
+                            <input type="text" class="form-control" id="appVersionCodeIos" name="appVersionCodeIos"
+                                   style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
                         </div>
                         <div class="form-group">
                             <label for="firmwareType">固件类型</label>
@@ -34,7 +38,8 @@
                         </div>
                         <div class="form-group">
                             <label for="hardwareVersion">硬件版本号</label>
-                            <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
+                            <select id="hardwareVersion" class="form-control" name="hardwareVersion"
+                                    style="width: 100%;">
                                 <option value=""></option>
                                 <option value="A0">A0</option>
                                 <option value="A1">A1</option>
@@ -44,11 +49,14 @@
                         </div>
                         <div class="form-group">
                             <label for="firmwareVersion">固件版本号</label>
-                            <input type="text" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="若固件为W1_A0_V1.00_A00_0615_WB.zip，则此处填1.00，即V后面的数字。">
+                            <input type="text" class="form-control" id="firmwareVersion" name="firmwareVersion"
+                                   style="border-radius: 4px"
+                                   placeholder="若固件为W1_A0_V1.00_A00_0615_WB.zip，则此处填1.00，即V后面的数字。">
                         </div>
                         <div class="form-group">
                             <label for="gnssVersion">GNSS版本号</label>
-                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
+                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion"
+                                   style="border-radius: 4px" placeholder="GNSS版本号">
                         </div>
                         <div class="form-group">
                             <label for="environment">环境（测试/生产）</label>
