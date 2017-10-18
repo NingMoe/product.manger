@@ -139,6 +139,7 @@
             version AS version,
             version_code AS versionCode,
             environment AS environment,
+            gnss_version AS  gnssVersion,
             hardware_code AS hardwareCode,
             url AS url,
             `enable` AS `enable`,

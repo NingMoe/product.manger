@@ -115,21 +115,25 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setSize(size);
         for (String appVersion : appVersions) {
-            firmwareInfo.setAppVersionCode(appVersion);
-            logger.info(firmwareInfo);
-            firmwareInfoMapper.insert(firmwareInfo);
-            // 触发升级
-            trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
-        }
-        if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
-            String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
-            for (String appIosVersion :appIosVersions) {
-                firmwareInfo.setAppPlatform("ios");
-                firmwareInfo.setAppVersionCode(appIosVersion);
+            if (!Strings.isNullOrEmpty(appVersion)) {
+                firmwareInfo.setAppVersionCode(appVersion);
                 logger.info(firmwareInfo);
                 firmwareInfoMapper.insert(firmwareInfo);
                 // 触发升级
                 trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+            }
+        }
+        if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
+            String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
+            for (String appIosVersion : appIosVersions) {
+                if (!Strings.isNullOrEmpty(appIosVersion)) {
+                    firmwareInfo.setAppPlatform("ios");
+                    firmwareInfo.setAppVersionCode(appIosVersion);
+                    logger.info(firmwareInfo);
+                    firmwareInfoMapper.insert(firmwareInfo);
+                    // 触发升级
+                    trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+                }
             }
 
         }
@@ -400,6 +404,25 @@ public class FirmwareUpgradeService {
                 logger.info(ExceptionUtil.getErrorMessage(e));
             }
         }).start();
+    }
+
+    /**
+     * 添加新的APP版本号处理逻辑
+     */
+    public void firmwareUpgradeWristbandAppAdd(String id, String appVersionCode)
+            throws DataFormatException, VersionHasExistException {
+        if (Strings.isNullOrEmpty(appVersionCode)) {
+            throw new DataFormatException();
+        }
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));
+        firmwareInfo.setAppVersionCode(appVersionCode);
+        if (firmwareInfoMapper.exist(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode)) {
+            throw new VersionHasExistException();
+        }
+        logger.info(firmwareInfo);
+        firmwareInfoMapper.insert(firmwareInfo);
+        // 触发升级
+        trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode);
     }
 
 
