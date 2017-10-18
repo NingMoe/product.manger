@@ -361,7 +361,7 @@ public class FirmwareUpgradeService {
         firmwareInfoMapper.setEnable(id, 1);
         firmwareInfo.setEnable(1);
         // 通知线上服务器对固件激活
-        trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), firmwareInfo.getVersionCode());
+        trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), firmwareInfo.getAppVersionCode());
     }
 
     /**
