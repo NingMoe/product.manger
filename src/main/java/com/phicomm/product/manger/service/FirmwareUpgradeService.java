@@ -180,9 +180,6 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppVersionCode(appVersionCode);
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode)) {
-            throw new VersionHasExistException();
-        }
         firmwareInfoMapper.update(firmwareInfo);
         // 触发升级
         trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
