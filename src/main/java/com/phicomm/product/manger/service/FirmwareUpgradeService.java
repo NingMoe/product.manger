@@ -180,9 +180,6 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppVersionCode(appVersionCode);
         firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode)) {
-            throw new VersionHasExistException();
-        }
         firmwareInfoMapper.update(firmwareInfo);
         // 触发升级
         trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
@@ -201,6 +198,8 @@ public class FirmwareUpgradeService {
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode, appPlatform, appVersionCode);
+        logger.info(firmwareType+"     "+hardwareCode+"     "+environment+"     "+versionCode+"     "+appPlatform+"     "+appVersionCode);
+        logger.info(firmwareInfo);
         String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
                 hardwareCode, firmwareEnvironmentEnum, versionCode, firmwareInfo, param);
