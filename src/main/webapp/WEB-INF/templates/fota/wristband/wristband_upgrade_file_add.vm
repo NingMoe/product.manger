@@ -17,12 +17,12 @@
                             </select>
                         </div>
                         <div class="form-group" id="appAndroid" style="display:none;">
-                            <label for="appVersionCodeAndroid">Android可支持的最低app版本号</label>
-                            <input type="text" class="form-control" id="appVersionCodeAndroid" name="appVersionCodeAndroid" style="border-radius: 4px" placeholder="Android可支持的最低app版本号">
+                            <label for="appVersionCodeAndroid">Android可支持的版本号</label>
+                            <input type="text" class="form-control" id="appVersionCodeAndroid" name="appVersionCodeAndroid" style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
                         </div>
                         <div class="form-group" id="appIos" style="display:none;">
-                            <label for="appVersionCodeIos">Ios可支持的最低app版本号</label>
-                            <input type="text" class="form-control" id="appVersionCodeIos" name="appVersionCodeIos" style="border-radius: 4px" placeholder="Ios可支持的最低app版本号">
+                            <label for="appVersionCodeIos">Ios可支持的版本号</label>
+                            <input type="text" class="form-control" id="appVersionCodeIos" name="appVersionCodeIos" style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
                         </div>
                         <div class="form-group">
                             <label for="firmwareType">固件类型</label>
