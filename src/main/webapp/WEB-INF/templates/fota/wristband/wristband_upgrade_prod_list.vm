@@ -39,11 +39,11 @@
                 <form role="form" enctype="multipart/form-data" id="addAppVersion">
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="hidden" class="form-control" id="id" name="id" style="border-radius: 4px" placeholder="ID">
+                            <input type="hidden" class="form-control" id="idAdd" name="idAdd" style="border-radius: 4px" placeholder="ID">
                         </div>
                         <div class="form-group">
-                            <label for="appVersionCode">APP版本号</label>
-                            <input type="text" class="form-control" id="appVersionCode" name="appVersionCode" style="border-radius: 4px" placeholder="APP版本号">
+                            <label for="appVersionCodeAdd">APP版本号</label>
+                            <input type="text" class="form-control" id="appVersionCodeAdd" name="appVersionCodeAdd" style="border-radius: 4px" placeholder="APP版本号">
                         </div>
                     </div>
                     <div class="modal-footer">

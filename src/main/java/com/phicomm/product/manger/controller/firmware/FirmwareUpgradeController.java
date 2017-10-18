@@ -281,8 +281,8 @@ public class FirmwareUpgradeController {
 
     })
     @FunctionPoint(value = "common")
-    public CommonResponse firmwareUpgradeWristbandAppAdd(@RequestParam("id") String id,
-                                                         @RequestParam("appVersionCode") String appVersionCode)
+    public CommonResponse firmwareUpgradeWristbandAppAdd(@RequestParam("idAdd") String id,
+                                                         @RequestParam("appVersionCodeAdd") String appVersionCode)
             throws DataFormatException, VersionHasExistException {
         firmwareUpgradeService.firmwareUpgradeWristbandAppAdd(id, appVersionCode);
         return CommonResponse.ok();
