@@ -115,21 +115,25 @@ public class FirmwareUpgradeService {
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setSize(size);
         for (String appVersion : appVersions) {
-            firmwareInfo.setAppVersionCode(appVersion);
-            logger.info(firmwareInfo);
-            firmwareInfoMapper.insert(firmwareInfo);
-            // 触发升级
-            trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
-        }
-        if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
-            String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
-            for (String appIosVersion :appIosVersions) {
-                firmwareInfo.setAppPlatform("ios");
-                firmwareInfo.setAppVersionCode(appIosVersion);
+            if (Strings.isNullOrEmpty(appVersion)){
+                firmwareInfo.setAppVersionCode(appVersion);
                 logger.info(firmwareInfo);
                 firmwareInfoMapper.insert(firmwareInfo);
                 // 触发升级
                 trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+            }
+        }
+        if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
+            String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
+            for (String appIosVersion :appIosVersions) {
+                if (Strings.isNullOrEmpty(appIosVersion)){
+                    firmwareInfo.setAppPlatform("ios");
+                    firmwareInfo.setAppVersionCode(appIosVersion);
+                    logger.info(firmwareInfo);
+                    firmwareInfoMapper.insert(firmwareInfo);
+                    // 触发升级
+                    trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+                }
             }
 
         }

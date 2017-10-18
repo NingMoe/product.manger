@@ -150,8 +150,9 @@ function deleteFirmware(node) {
 function showAddAppVersion(node) {
     $("#appVersionAddModalLabel").text("添加新的APP版本号");
     var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
     $("#idAdd").val(id);
-    $("#appVersionCodeAdd").val("");
+    $("#appVersionCodeAdd").val(appVersionCode);
     $('#appVersionAddModal').modal();
 }
 
