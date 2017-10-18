@@ -264,4 +264,28 @@ public class FirmwareUpgradeController {
         firmwareUpgradeService.firmwareTrigger(id);
         return CommonResponse.ok();
     }
+
+    /**
+     * 添加新的APP版本号
+     *
+     * @return 上传成功返回0
+     */
+    @RequestMapping(value = "firmware/upgrade/wristband/app/add", method = RequestMethod.POST,
+            consumes = "multipart/form-data", produces = "application/json")
+    @ApiOperation("添加新的APP版本号")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
+            @ApiResponse(code = 8, message = "固件版本已经存在", response = CommonResponse.class)
+
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse firmwareUpgradeWristbandAppAdd(@RequestParam("id") String id,
+                                                         @RequestParam("appVersionCode") String appVersionCode)
+            throws DataFormatException, VersionHasExistException {
+        firmwareUpgradeService.firmwareUpgradeWristbandAppAdd(id, appVersionCode);
+        return CommonResponse.ok();
+    }
+
 }

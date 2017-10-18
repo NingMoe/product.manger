@@ -402,5 +402,24 @@ public class FirmwareUpgradeService {
         }).start();
     }
 
+    /**
+     * 添加新的APP版本号处理逻辑
+     */
+    public void firmwareUpgradeWristbandAppAdd(String id,String appVersionCode)
+            throws DataFormatException, VersionHasExistException {
+        if (Strings.isNullOrEmpty(appVersionCode)){
+            throw new DataFormatException();
+        }
+        FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));
+        firmwareInfo.setAppVersionCode(appVersionCode);
+        if (firmwareInfoMapper.exist(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode)) {
+            throw new VersionHasExistException();
+        }
+        logger.info(firmwareInfo);
+        firmwareInfoMapper.insert(firmwareInfo);
+        // 触发升级
+        trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode);
+    }
+
 
 }
