@@ -93,7 +93,6 @@ public class FirmwareUpgradeService {
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
         String[] appVersions = appVersionCode.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
-        String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
         if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode)) {
             throw new VersionHasExistException();
         }
@@ -123,6 +122,7 @@ public class FirmwareUpgradeService {
             trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
         }
         if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
+            String[] appIosVersions = appVersionCodeIos.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
             for (String appIosVersion :appIosVersions) {
                 firmwareInfo.setAppPlatform("ios");
                 firmwareInfo.setAppVersionCode(appIosVersion);
