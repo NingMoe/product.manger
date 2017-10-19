@@ -22,7 +22,8 @@ import java.security.NoSuchAlgorithmException;
 /**
  * 固件文件上传
  * <p>
- * Created by yufei.liu on 2017/7/10.
+ * @author yufei.liu
+ * @date 2017/7/10.
  */
 @Controller
 public class FirmwareUpgradeController {
