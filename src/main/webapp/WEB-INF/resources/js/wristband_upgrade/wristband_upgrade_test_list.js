@@ -189,8 +189,8 @@ $(document).ready(function () {
     var baseUrl = $("#baseUrl").val();
     var table = $("#wristbandTestList").DataTable({
         paging: true,
-        searching: false,
-        ordering: false,
+        searching: true,
+        ordering: true,
         processing: true,
         aLengthMenu: [10],
         iDisplayLength: 10,
