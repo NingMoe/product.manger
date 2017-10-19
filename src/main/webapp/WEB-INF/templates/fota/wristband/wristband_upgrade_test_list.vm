@@ -48,6 +48,7 @@
                             <label for="appVersionCodeAdd">APP版本号</label>
                             <input type="text" class="form-control" id="appVersionCodeAdd" name="appVersionCodeAdd"
                                    style="border-radius: 4px" placeholder="APP版本号">
+                            <p class="help-block">注意：此处禁止同时添加多个APP版本号，每次仅限添加一个版本号</p>
                         </div>
                     </div>
                     <div class="modal-footer">

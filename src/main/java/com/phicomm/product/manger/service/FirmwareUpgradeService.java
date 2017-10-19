@@ -29,7 +29,9 @@ import java.util.Map;
 /**
  * 固件升级处理逻辑
  * <p>
- * Created by yufei.liu on 2017/7/10.
+ *
+ * @author yufei.liu
+ * @date 2017/7/10
  */
 @Service
 public class FirmwareUpgradeService {
