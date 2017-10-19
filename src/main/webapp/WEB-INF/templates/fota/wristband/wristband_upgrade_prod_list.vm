@@ -131,7 +131,7 @@
                         <div class="form-group">
                             <label for="file">固件上传</label>
                             <input type="file" name="file" id="file" class="form-control" style="border-radius: 4px">
-                            <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
+                            <p class="help-block">注意：若固件未改变，此处不需要上传</p>
                         </div>
                         <div class="form-group">
                             <label for="description">说明</label>
