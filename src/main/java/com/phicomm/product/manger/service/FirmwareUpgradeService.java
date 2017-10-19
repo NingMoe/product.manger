@@ -156,31 +156,41 @@ public class FirmwareUpgradeService {
                                                    String id,
                                                    String enableString)
             throws DataFormatException, UploadFileException, VersionHasExistException {
-        // 校验参数
-        checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
-                environment, gnssVersion, file, description, appPlatform, appVersionCode);
+        if (Strings.isNullOrEmpty(firmwareType)
+                || Strings.isNullOrEmpty(hardwareVersion)
+                || Strings.isNullOrEmpty(firmwareVersion)
+                || Strings.isNullOrEmpty(environment)
+                || Strings.isNullOrEmpty(gnssVersion)
+                || Strings.isNullOrEmpty(appPlatform)
+                || Strings.isNullOrEmpty(appVersionCode)) {
+            throw new DataFormatException();
+        }
+        FirmwareInfo firmwareInfo = new FirmwareInfo();
+        if (file==null || file.isEmpty()){
+            firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));
+        }else {
+            // 上传文件
+            Map<String, String> result = FileUtil.uploadFileToHermes(file);
+            String downloadUrl = result.get("url");
+            String md5 = result.get("md5");
+            float size = file.getSize();
+            firmwareInfo.setUrl(downloadUrl);
+            firmwareInfo.setMd5(md5);
+            firmwareInfo.setSize(size);
+            firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
+        }
         int enable = "可用".equals(enableString) ? 1 : 0;
         long longId = Long.parseLong(id);
-        // 上传文件
-        Map<String, String> result = FileUtil.uploadFileToHermes(file);
-        String downloadUrl = result.get("url");
-        String md5 = result.get("md5");
-        float size = file.getSize();
-        FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setId(longId);
         firmwareInfo.setEnable(enable);
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
-        firmwareInfo.setVersion(file.getOriginalFilename().replace(".zip", ""));
         firmwareInfo.setVersionCode(firmwareVersion);
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
-        firmwareInfo.setUrl(downloadUrl);
-        firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setAppVersionCode(appVersionCode);
-        firmwareInfo.setSize(size);
         logger.info(firmwareInfo);
         firmwareInfoMapper.update(firmwareInfo);
         // 触发升级
