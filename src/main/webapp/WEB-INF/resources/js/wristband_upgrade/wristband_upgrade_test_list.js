@@ -69,15 +69,15 @@ function activate(node) {
 function editWristband(node) {
     $("#wristbandTestModalLabel").text("编辑");
     var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
-    var appPlatform = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
-    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
-    var firmwareType = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[1].innerText;
-    var hardwareVersion = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
-    var environment = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].innerText;
-    var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[7].childNodes[1].innerText;
-    var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[1].innerText;
-    var description = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[1].innerText;
-    var enable = node.parentNode.parentNode.parentNode.childNodes[14].childNodes[1].innerText;
+    var appPlatform = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[3].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
+    var firmwareType = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerText;
+    var hardwareVersion = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    var environment = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[3].innerText;
+    var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[3].innerText;
+    var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
+    var description = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].lastChild.innerHTML;
+    var enable = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[3].innerText;
     $("#id").val(id);
     $("#appPlatform").val(appPlatform);
     $("#appVersionCode").val(appVersionCode);
@@ -150,7 +150,7 @@ function deleteFirmware(node) {
 function showAddAppVersion(node) {
     $("#appVersionAddModalLabel").text("添加新的APP版本号");
     var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
-    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
     $("#idAdd").val(id);
     $("#appVersionCodeAdd").val(appVersionCode);
     $('#appVersionAddModal').modal();
@@ -249,7 +249,7 @@ $(document).ready(function () {
         });
         console.log(JSON.stringify(result));
         if("不可用" === d.enable){
-            return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>上线:</td><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr><tr><td>删除:</td><td><button onclick="deleteFirmware(this)">删除</button></td></tr></table>'
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td colspan="3">#gnssVersion#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td><td><button style="background-color: slategray" onclick="deleteFirmware(this)">删除</button></td></tr></table>'
                 .replace("#id#", result.id)
                 .replace("#appPlatform#", result.appPlatform)
                 .replace("#appVersionCode#", result.appVersionCode)
@@ -267,7 +267,7 @@ $(document).ready(function () {
                 .replace("#createTime#", result.createTime)
                 .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
         }else {
-            return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>APP平台:</td><td>#appPlatform#</td></tr><tr><td>APP版本号:</td><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>文件大小:</td><td>#size#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>状态:</td><td>#enable#</td><tr><td>下线:</td><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td></tr><td>编辑:</td><td><button onclick="editWristband(this)">编辑</button></td></tr></table>'
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td colspan="3">#gnssVersion#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td></tr></table>'
                 .replace("#id#", result.id)
                 .replace("#appPlatform#", result.appPlatform)
                 .replace("#appVersionCode#", result.appVersionCode)
