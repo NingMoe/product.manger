@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigger {
 
-    private static final String CONTENT_TYPE = "application/json";
+    private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
 
     @Override
     public void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException,
@@ -57,11 +57,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         boolean isProdEnvironment = FirmwareEnvironmentEnum.PROD.getEnvironment().equals(firmwareInfo.getEnvironment());
         if (isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
             getLogger().info(String.format("testDowngradeCallback is %s.", testDowngradeCallback));
-            HttpUtil.openUrl(testDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSON.toJSON(firmwareInfo));
+            HttpUtil.openUrl(testDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSONObject.toJSON(firmwareInfo));
         }
         if (isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
             getLogger().info(String.format("prodDowngradeCallback is %s.", prodDowngradeCallback));
-            HttpUtil.openUrl(prodDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSON.toJSON(firmwareInfo));
+            HttpUtil.openUrl(prodDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSONObject.toJSON(firmwareInfo));
         }
     }
 
