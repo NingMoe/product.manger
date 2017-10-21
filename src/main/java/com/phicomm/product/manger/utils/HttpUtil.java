@@ -53,7 +53,7 @@ public class HttpUtil {
             httpURLConnection.getOutputStream().write(datas);
         }
         int responseCode = httpURLConnection.getResponseCode();
-        if (200 == responseCode) {
+        if (HttpURLConnection.HTTP_OK == responseCode) {
             inputStream = httpURLConnection.getInputStream();
         } else {
             inputStream = httpURLConnection.getErrorStream();
