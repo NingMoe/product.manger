@@ -43,7 +43,7 @@ public class HttpUtil {
         String ctype = "application/x-www-form-urlencoded";
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
-        if (method.equals("GET")) {
+        if ("GET".equalsIgnoreCase(method)) {
             url = url + "?" + encodeUrl(params);
             httpURLConnection = getUrlConnection(url, method, ctype);
         } else {
@@ -101,7 +101,7 @@ public class HttpUtil {
             conn = urlObj.openConnection();
         }
         ((HttpURLConnection) conn).setRequestMethod(method);
-        if (method.equals("POST")) {
+        if ("POST".equalsIgnoreCase(method)) {
             ((HttpURLConnection) conn).setDoOutput(true);
             ((HttpURLConnection) conn).setDoInput(true);
         }
@@ -165,13 +165,16 @@ public class HttpUtil {
         private DefaultTrustManager() {
         }
 
+        @Override
         public X509Certificate[] getAcceptedIssuers() {
             return null;
         }
 
+        @Override
         public void checkClientTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
         }
 
+        @Override
         public void checkServerTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
         }
     }
