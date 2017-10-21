@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
+import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -28,6 +29,8 @@ import java.util.Set;
  * Created by wei.yang on 2017/5/31.
  */
 public class HttpUtil {
+
+    private static final Logger logger = Logger.getLogger(HttpUtil.class);
 
     /**
      * 请求url
@@ -59,6 +62,7 @@ public class HttpUtil {
             inputStream = httpURLConnection.getErrorStream();
         }
         String response = getResult(inputStream);
+        logger.info("network request result is:\t" + response);
         if (inputStream != null) {
             inputStream.close();
         }
