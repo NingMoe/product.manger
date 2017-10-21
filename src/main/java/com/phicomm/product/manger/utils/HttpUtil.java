@@ -56,6 +56,7 @@ public class HttpUtil {
         } else {
             httpURLConnection = getUrlConnection(url, method, ctype);
             String data = encodeUrl(params);
+            logger.info("decode data:\t" + data);
             byte[] datas = data.getBytes(CHART_SET);
             httpURLConnection.getOutputStream().write(datas);
         }
