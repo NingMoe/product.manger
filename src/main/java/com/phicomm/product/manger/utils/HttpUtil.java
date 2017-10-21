@@ -40,7 +40,7 @@ public class HttpUtil {
     private static final Logger logger = Logger.getLogger(HttpUtil.class);
 
     /**
-     * 请求url
+     * 请求url:非requestBody限制的数据格式
      *
      * @param url    url
      * @param method 请求方法
@@ -77,7 +77,7 @@ public class HttpUtil {
 
 
     /**
-     * 请求url
+     * 请求url:requestBody限制的数据格式
      *
      * @param url    url
      * @param method 请求方法
@@ -85,6 +85,7 @@ public class HttpUtil {
      * @return 请求结果
      * @throws IOException io异常
      */
+    @SuppressWarnings("all")
     public static String openPostRequest(String url, String method, JSONObject params) throws IOException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
@@ -106,7 +107,7 @@ public class HttpUtil {
     }
 
     /**
-     * 带有授权的请求
+     * 带有授权的请求;post请求仅限于非requestBody限制的数据
      *
      * @param url    url
      * @param method 请求方法
@@ -118,6 +119,7 @@ public class HttpUtil {
      * @throws NoSuchAlgorithmException 算法不支持
      * @throws KeyManagementException   keyManager错误
      */
+    @SuppressWarnings("unused")
     public static String openUrlWithAuth(String url, String method, JSONObject params, String ctype, JSONObject auths)
             throws IOException, NoSuchAlgorithmException, KeyManagementException {
         InputStream inputStream;
