@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Strings;
+import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
+import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.utils.HttpUtil;
 
@@ -13,10 +15,12 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * 默认的操作
- * <p>
- * Created by yufei.liu on 2017/7/12.
+ *
+ * @author yufei.liu on 2017/7/12.
  */
 public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigger {
+
+    private static final String CONTENT_TYPE = "application/json";
 
     @Override
     public void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException,
@@ -31,11 +35,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         getLogger().info(data);
         if (firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
             getLogger().info(String.format("testCallbackUrl is %s.", testCallbackUrl));
-            HttpUtil.openUrl(testCallbackUrl, "POST", JSONObject.parseObject(data));
+            HttpUtil.openUrl(testCallbackUrl, RequestType.POST.getKeyName(), CONTENT_TYPE, JSONObject.parseObject(data));
         }
         if (firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
             getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
-            HttpUtil.openUrl(prodCallbackUrl, "POST", JSONObject.parseObject(data));
+            HttpUtil.openUrl(prodCallbackUrl, RequestType.POST.getKeyName(), CONTENT_TYPE, JSONObject.parseObject(data));
         }
     }
 
@@ -49,15 +53,15 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         JSONObject jsonObject = JSON.parseObject(param);
         String testDowngradeCallback = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.testDowngradeCallback"));
         String prodDowngradeCallback = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.prodDowngradeCallback"));
-        boolean isTestEnvironment = "test".equals(firmwareInfo.getEnvironment());
-        boolean isProdEnvironment = "prod".equals(firmwareInfo.getEnvironment());
+        boolean isTestEnvironment = FirmwareEnvironmentEnum.TEST.getEnvironment().equals(firmwareInfo.getEnvironment());
+        boolean isProdEnvironment = FirmwareEnvironmentEnum.PROD.getEnvironment().equals(firmwareInfo.getEnvironment());
         if (isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
             getLogger().info(String.format("testDowngradeCallback is %s.", testDowngradeCallback));
-            HttpUtil.openUrl(testDowngradeCallback, "POST", (JSONObject) JSON.toJSON(firmwareInfo));
+            HttpUtil.openUrl(testDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSON.toJSON(firmwareInfo));
         }
         if (isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
             getLogger().info(String.format("prodDowngradeCallback is %s.", prodDowngradeCallback));
-            HttpUtil.openUrl(prodDowngradeCallback, "POST", (JSONObject) JSON.toJSON(firmwareInfo));
+            HttpUtil.openUrl(prodDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSON.toJSON(firmwareInfo));
         }
     }
 
