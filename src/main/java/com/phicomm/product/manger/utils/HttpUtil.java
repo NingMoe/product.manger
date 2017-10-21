@@ -55,8 +55,8 @@ public class HttpUtil {
             httpURLConnection = getUrlConnection(url, method, ctype);
         } else {
             httpURLConnection = getUrlConnection(url, method, ctype);
-            /*String data = encodeUrl(params);*/
-            byte[] datas = params.toJSONString().getBytes(CHART_SET);
+            String data = encodeUrl(params);
+            byte[] datas = data.getBytes(CHART_SET);
             httpURLConnection.getOutputStream().write(datas);
         }
         int responseCode = httpURLConnection.getResponseCode();
