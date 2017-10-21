@@ -40,7 +40,7 @@ public class HttpUtil {
     private static final Logger logger = Logger.getLogger(HttpUtil.class);
 
     /**
-     * 请求url:非requestBody限制的数据格式
+     * 请求url
      *
      * @param url    url
      * @param method 请求方法
@@ -77,7 +77,7 @@ public class HttpUtil {
 
 
     /**
-     * 请求url:requestBody限制的数据格式
+     * 请求url
      *
      * @param url    url
      * @param method 请求方法
@@ -107,7 +107,7 @@ public class HttpUtil {
     }
 
     /**
-     * 带有授权的请求;post请求仅限于非requestBody限制的数据
+     * 带有授权的请求
      *
      * @param url    url
      * @param method 请求方法
