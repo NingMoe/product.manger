@@ -3,11 +3,9 @@ package com.phicomm.product.manger.module.fota;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
-import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.utils.HttpUtil;
-import com.phicomm.product.manger.utils.HttpsUtil;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -33,11 +31,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         getLogger().info(data);
         if (firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
             getLogger().info(String.format("testCallbackUrl is %s.", testCallbackUrl));
-            HttpsUtil.post(testCallbackUrl, data, Charsets.UTF_8.name());
+            HttpUtil.openUrl(testCallbackUrl, "POST", JSONObject.parseObject(data));
         }
         if (firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
             getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
-            HttpsUtil.post(prodCallbackUrl, data, Charsets.UTF_8.name());
+            HttpUtil.openUrl(prodCallbackUrl, "POST", JSONObject.parseObject(data));
         }
     }
 
