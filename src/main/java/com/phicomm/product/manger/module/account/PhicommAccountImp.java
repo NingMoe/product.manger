@@ -56,7 +56,7 @@ public class PhicommAccountImp implements PhicommAccount {
         params.put("client_secret", CLIENT_SECRET);
         params.put("response_type", RESPONSE_TYPE);
         params.put("scope", SCOPE);
-        String response = HttpUtil.openUrl(AUTHORITY_CODE, RequestType.POST.getKeyName(), CONTENT_TYPE, params);
+        String response = HttpUtil.openUrl(AUTHORITY_CODE, RequestType.GET.getKeyName(), CONTENT_TYPE, params);
         JSONObject result = JSONObject.parseObject(response);
         return result.getString("authorizationcode");
     }
