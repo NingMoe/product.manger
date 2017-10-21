@@ -20,8 +20,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigger {
 
-    private static final String CONTENT_TYPE = "application/json";
-
     @Override
     public void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException,
             KeyManagementException, IOException {
@@ -35,11 +33,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         getLogger().info(data);
         if (firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
             getLogger().info(String.format("testCallbackUrl is %s.", testCallbackUrl));
-            HttpUtil.openRequestUrl(testCallbackUrl, RequestType.POST.getKeyName(), CONTENT_TYPE, JSONObject.parseObject(data));
+            HttpUtil.openPostRequest(testCallbackUrl, RequestType.POST.getKeyName(), JSONObject.parseObject(data));
         }
         if (firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
             getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
-            HttpUtil.openRequestUrl(prodCallbackUrl, RequestType.POST.getKeyName(), CONTENT_TYPE, JSONObject.parseObject(data));
+            HttpUtil.openPostRequest(prodCallbackUrl, RequestType.POST.getKeyName(), JSONObject.parseObject(data));
         }
     }
 
@@ -57,11 +55,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         boolean isProdEnvironment = FirmwareEnvironmentEnum.PROD.getEnvironment().equals(firmwareInfo.getEnvironment());
         if (isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
             getLogger().info(String.format("testDowngradeCallback is %s.", testDowngradeCallback));
-            HttpUtil.openRequestUrl(testDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSONObject.toJSON(firmwareInfo));
+            HttpUtil.openPostRequest(testDowngradeCallback, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(firmwareInfo));
         }
         if (isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
             getLogger().info(String.format("prodDowngradeCallback is %s.", prodDowngradeCallback));
-            HttpUtil.openRequestUrl(prodDowngradeCallback, RequestType.POST.getKeyName(), CONTENT_TYPE, (JSONObject) JSONObject.toJSON(firmwareInfo));
+            HttpUtil.openPostRequest(prodDowngradeCallback, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(firmwareInfo));
         }
     }
 

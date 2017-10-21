@@ -33,6 +33,8 @@ import java.util.Set;
  */
 public class HttpUtil {
 
+    private static final String CONTENT_TYPE = "application/json";
+
     private static final String CHART_SET = "UTF-8";
 
     private static final Logger logger = Logger.getLogger(HttpUtil.class);
@@ -56,7 +58,6 @@ public class HttpUtil {
         } else {
             httpURLConnection = getUrlConnection(url, method, ctype);
             String data = encodeUrl(params);
-            logger.info("decode data:\t" + data);
             byte[] datas = data.getBytes(CHART_SET);
             httpURLConnection.getOutputStream().write(datas);
         }
@@ -81,21 +82,15 @@ public class HttpUtil {
      * @param url    url
      * @param method 请求方法
      * @param params 参数
-     * @param ctype  content-type
      * @return 请求结果
      * @throws IOException io异常
      */
-    public static String openRequestUrl(String url, String method, String ctype, JSONObject params) throws IOException {
+    public static String openPostRequest(String url, String method, JSONObject params) throws IOException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
-        if (RequestType.GET.getKeyName().equalsIgnoreCase(method)) {
-            url = url + "?" + encodeUrl(params);
-            httpURLConnection = getUrlConnection(url, method, ctype);
-        } else {
-            httpURLConnection = getUrlConnection(url, method, ctype);
-            byte[] datas = params.toJSONString().getBytes(CHART_SET);
-            httpURLConnection.getOutputStream().write(datas);
-        }
+        httpURLConnection = getUrlConnection(url, method, CONTENT_TYPE);
+        byte[] datas = params.toJSONString().getBytes(CHART_SET);
+        httpURLConnection.getOutputStream().write(datas);
         int responseCode = httpURLConnection.getResponseCode();
         if (HttpURLConnection.HTTP_OK == responseCode) {
             inputStream = httpURLConnection.getInputStream();
