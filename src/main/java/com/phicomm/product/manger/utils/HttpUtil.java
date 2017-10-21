@@ -74,6 +74,42 @@ public class HttpUtil {
         return response;
     }
 
+
+    /**
+     * 请求url
+     *
+     * @param url    url
+     * @param method 请求方法
+     * @param params 参数
+     * @param ctype  content-type
+     * @return 请求结果
+     * @throws IOException io异常
+     */
+    public static String openRequestUrl(String url, String method, String ctype, JSONObject params) throws IOException {
+        InputStream inputStream;
+        HttpURLConnection httpURLConnection;
+        if (RequestType.GET.getKeyName().equalsIgnoreCase(method)) {
+            url = url + "?" + encodeUrl(params);
+            httpURLConnection = getUrlConnection(url, method, ctype);
+        } else {
+            httpURLConnection = getUrlConnection(url, method, ctype);
+            byte[] datas = params.toJSONString().getBytes(CHART_SET);
+            httpURLConnection.getOutputStream().write(datas);
+        }
+        int responseCode = httpURLConnection.getResponseCode();
+        if (HttpURLConnection.HTTP_OK == responseCode) {
+            inputStream = httpURLConnection.getInputStream();
+        } else {
+            inputStream = httpURLConnection.getErrorStream();
+        }
+        String response = getResult(inputStream);
+        logger.info("network request result is:\t" + response);
+        if (inputStream != null) {
+            inputStream.close();
+        }
+        return response;
+    }
+
     /**
      * 带有授权的请求
      *
