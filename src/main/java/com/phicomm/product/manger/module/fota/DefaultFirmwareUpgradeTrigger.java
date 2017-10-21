@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
+import com.phicomm.product.manger.utils.HttpUtil;
 import com.phicomm.product.manger.utils.HttpsUtil;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * 默认的操作
- *
+ * <p>
  * Created by yufei.liu on 2017/7/12.
  */
 public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigger {
@@ -30,11 +31,11 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         String prodCallbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.prodCallback"));
         String data = firmwareUpgradeContext.getFirmwareData();
         getLogger().info(data);
-        if(firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
+        if (firmwareUpgradeContext.isTestEnvironment() && !Strings.isNullOrEmpty(testCallbackUrl)) {
             getLogger().info(String.format("testCallbackUrl is %s.", testCallbackUrl));
             HttpsUtil.post(testCallbackUrl, data, Charsets.UTF_8.name());
         }
-        if(firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
+        if (firmwareUpgradeContext.isProdEnvironment() && !Strings.isNullOrEmpty(prodCallbackUrl)) {
             getLogger().info(String.format("prodCallbackUrl is %s.", prodCallbackUrl));
             HttpsUtil.post(prodCallbackUrl, data, Charsets.UTF_8.name());
         }
@@ -52,14 +53,13 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
         String prodDowngradeCallback = String.valueOf(JSONPath.eval(jsonObject, "$.wristband.prodDowngradeCallback"));
         boolean isTestEnvironment = "test".equals(firmwareInfo.getEnvironment());
         boolean isProdEnvironment = "prod".equals(firmwareInfo.getEnvironment());
-        String data = JSON.toJSONString(firmwareInfo);
-        if(isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
+        if (isTestEnvironment && !Strings.isNullOrEmpty(testDowngradeCallback)) {
             getLogger().info(String.format("testDowngradeCallback is %s.", testDowngradeCallback));
-            HttpsUtil.post(testDowngradeCallback, data, Charsets.UTF_8.name());
+            HttpUtil.openUrl(testDowngradeCallback, "POST", (JSONObject) JSON.toJSON(firmwareInfo));
         }
-        if(isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
+        if (isProdEnvironment && !Strings.isNullOrEmpty(prodDowngradeCallback)) {
             getLogger().info(String.format("prodDowngradeCallback is %s.", prodDowngradeCallback));
-            HttpsUtil.post(prodDowngradeCallback, data, Charsets.UTF_8.name());
+            HttpUtil.openUrl(prodDowngradeCallback, "POST", (JSONObject) JSON.toJSON(firmwareInfo));
         }
     }
 
