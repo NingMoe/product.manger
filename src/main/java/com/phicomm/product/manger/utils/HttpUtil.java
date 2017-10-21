@@ -2,6 +2,8 @@ package com.phicomm.product.manger.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
+import com.phicomm.product.manger.enumeration.HttpProtocolType;
+import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.apache.log4j.Logger;
@@ -26,9 +28,12 @@ import java.util.Set;
 
 /**
  * 网络请求
- * Created by wei.yang on 2017/5/31.
+ *
+ * @author wei.yang on 2017/5/31.
  */
 public class HttpUtil {
+
+    private static final String CHART_SET = "UTF-8";
 
     private static final Logger logger = Logger.getLogger(HttpUtil.class);
 
@@ -38,21 +43,20 @@ public class HttpUtil {
      * @param url    url
      * @param method 请求方法
      * @param params 参数
+     * @param ctype  content-type
      * @return 请求结果
      * @throws IOException io异常
      */
-    public static String openUrl(String url, String method, JSONObject params) throws IOException {
-        String charset = "UTF-8";
-        String ctype = "application/x-www-form-urlencoded";
+    public static String openUrl(String url, String method, String ctype, JSONObject params) throws IOException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
-        if ("GET".equalsIgnoreCase(method)) {
+        if (RequestType.GET.getKeyName().equalsIgnoreCase(method)) {
             url = url + "?" + encodeUrl(params);
             httpURLConnection = getUrlConnection(url, method, ctype);
         } else {
             httpURLConnection = getUrlConnection(url, method, ctype);
             String data = encodeUrl(params);
-            byte[] datas = data.getBytes(charset);
+            byte[] datas = data.getBytes(CHART_SET);
             httpURLConnection.getOutputStream().write(datas);
         }
         int responseCode = httpURLConnection.getResponseCode();
@@ -67,6 +71,45 @@ public class HttpUtil {
             inputStream.close();
         }
         return response;
+    }
+
+    /**
+     * 带有授权的请求
+     *
+     * @param url    url
+     * @param method 请求方法
+     * @param params 参数
+     * @param ctype  content-type
+     * @param auths  授权字段
+     * @return 请求结果
+     * @throws IOException              io异常
+     * @throws NoSuchAlgorithmException 算法不支持
+     * @throws KeyManagementException   keyManager错误
+     */
+    public static String openUrlWithAuth(String url, String method, JSONObject params, String ctype, JSONObject auths)
+            throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        InputStream inputStream;
+        HttpURLConnection httpURLConnection;
+        if (RequestType.GET.getKeyName().equalsIgnoreCase(method)) {
+            url = url + "?" + encodeUrl(params);
+            httpURLConnection = getUrlConnectionWithAuth(url, method, ctype, auths);
+        } else {
+            httpURLConnection = getUrlConnectionWithAuth(url, method, ctype, auths);
+            String data = encodeUrl(params);
+            byte[] datas = data.getBytes(CHART_SET);
+            httpURLConnection.getOutputStream().write(datas);
+        }
+        int responseCode = httpURLConnection.getResponseCode();
+        if (HttpURLConnection.HTTP_OK == responseCode) {
+            inputStream = httpURLConnection.getInputStream();
+        } else {
+            inputStream = httpURLConnection.getErrorStream();
+        }
+        String result = getResult(inputStream);
+        if (inputStream != null) {
+            inputStream.close();
+        }
+        return result;
     }
 
     /**
@@ -88,7 +131,7 @@ public class HttpUtil {
     private static HttpURLConnection getUrlConnection(String url, String method, String ctype) throws IOException {
         URL urlObj = new URL(url);
         Object conn;
-        if ("https".equalsIgnoreCase(urlObj.getProtocol())) {
+        if (HttpProtocolType.HTTPS.getKeyName().equalsIgnoreCase(urlObj.getProtocol())) {
             SSLContext ctx = null;
             try {
                 ctx = SSLContext.getInstance("TLS");
@@ -105,12 +148,41 @@ public class HttpUtil {
             conn = urlObj.openConnection();
         }
         ((HttpURLConnection) conn).setRequestMethod(method);
-        if ("POST".equalsIgnoreCase(method)) {
+        if (RequestType.POST.getKeyName().equalsIgnoreCase(method)) {
             ((HttpURLConnection) conn).setDoOutput(true);
             ((HttpURLConnection) conn).setDoInput(true);
         }
         ((HttpURLConnection) conn).setRequestProperty("Content-Type", ctype);
         return ((HttpURLConnection) conn);
+    }
+
+
+    /**
+     * 带有授权的请求
+     *
+     * @param url    链接
+     * @param method 请求方法
+     * @param ctype  content-type
+     * @param auths  授权
+     * @return 链接
+     * @throws NoSuchAlgorithmException 算法不支持
+     * @throws IOException              io异常
+     * @throws KeyManagementException   keyManager异常
+     */
+    private static HttpURLConnection getUrlConnectionWithAuth(String url, String method, String ctype, JSONObject auths)
+            throws NoSuchAlgorithmException, IOException, KeyManagementException {
+        HttpURLConnection httpURLConnection = getUrlConnection(url, method, ctype);
+        if (auths == null) {
+            return httpURLConnection;
+        }
+        Set<String> keys = auths.keySet();
+        for (String key : keys) {
+            String value = auths.getString(key);
+            if (!Strings.isNullOrEmpty(value)) {
+                httpURLConnection.setRequestProperty(key, value);
+            }
+        }
+        return httpURLConnection;
     }
 
     /**
@@ -132,8 +204,8 @@ public class HttpUtil {
                 } else {
                     builder.append("&");
                 }
-                builder.append(URLEncoder.encode(set.toString(), "UTF-8")).append("=")
-                        .append(URLEncoder.encode(value, "UTF-8"));
+                builder.append(URLEncoder.encode(set.toString(), CHART_SET)).append("=")
+                        .append(URLEncoder.encode(value, CHART_SET));
             }
         }
         return builder.toString();

@@ -7,8 +7,14 @@ package com.phicomm.product.manger.enumeration;
  */
 public enum FirmwareEnvironmentEnum {
 
+    /**
+     * 测试环境
+     */
     TEST("test"),
 
+    /**
+     * 生产环境
+     */
     PROD("prod");
 
     private String environment;

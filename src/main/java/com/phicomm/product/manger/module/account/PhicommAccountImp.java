@@ -2,6 +2,7 @@ package com.phicomm.product.manger.module.account;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.config.SwaggerPropertiesConfig;
+import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.utils.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class PhicommAccountImp implements PhicommAccount {
     private static final String AUTHORITY_CODE = "https://account.phicomm.com/v1/authorization";
 
     private static final String PHONE_LOGIN = "https://account.phicomm.com/v1/login";
+
+    private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
 
     private static final String CLIENT_SECRET = "feixun*123";
 
@@ -53,7 +56,7 @@ public class PhicommAccountImp implements PhicommAccount {
         params.put("client_secret", CLIENT_SECRET);
         params.put("response_type", RESPONSE_TYPE);
         params.put("scope", SCOPE);
-        String response = HttpUtil.openUrl(AUTHORITY_CODE, "GET", params);
+        String response = HttpUtil.openUrl(AUTHORITY_CODE, RequestType.POST.getKeyName(), CONTENT_TYPE, params);
         JSONObject result = JSONObject.parseObject(response);
         return result.getString("authorizationcode");
     }
@@ -75,7 +78,7 @@ public class PhicommAccountImp implements PhicommAccount {
             params.put("phonenumber", phoneNumber);
             params.put("password", getMD5(password));
             params.put("authorizationcode", getAuthCode());
-            String response = HttpUtil.openUrl(PHONE_LOGIN, "POST", params);
+            String response = HttpUtil.openUrl(PHONE_LOGIN, RequestType.POST.getKeyName(), CONTENT_TYPE, params);
             Map<String, String> result = getResult(response);
             if (!"0".equals(result.get("error"))) {
                 return null;
