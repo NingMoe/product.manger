@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigger {
 
-    private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+    private static final String CONTENT_TYPE = "application/json";
 
     @Override
     public void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException,
