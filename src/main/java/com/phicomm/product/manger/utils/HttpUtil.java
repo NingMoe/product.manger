@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
+import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -29,6 +30,8 @@ import java.util.Set;
  */
 public class HttpUtil {
 
+    private static final Logger logger = Logger.getLogger(HttpUtil.class);
+
     /**
      * 请求url
      *
@@ -43,7 +46,7 @@ public class HttpUtil {
         String ctype = "application/x-www-form-urlencoded";
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
-        if (method.equals("GET")) {
+        if ("GET".equalsIgnoreCase(method)) {
             url = url + "?" + encodeUrl(params);
             httpURLConnection = getUrlConnection(url, method, ctype);
         } else {
@@ -53,12 +56,13 @@ public class HttpUtil {
             httpURLConnection.getOutputStream().write(datas);
         }
         int responseCode = httpURLConnection.getResponseCode();
-        if (200 == responseCode) {
+        if (HttpURLConnection.HTTP_OK == responseCode) {
             inputStream = httpURLConnection.getInputStream();
         } else {
             inputStream = httpURLConnection.getErrorStream();
         }
         String response = getResult(inputStream);
+        logger.info("network request result is:\t" + response);
         if (inputStream != null) {
             inputStream.close();
         }
@@ -101,7 +105,7 @@ public class HttpUtil {
             conn = urlObj.openConnection();
         }
         ((HttpURLConnection) conn).setRequestMethod(method);
-        if (method.equals("POST")) {
+        if ("POST".equalsIgnoreCase(method)) {
             ((HttpURLConnection) conn).setDoOutput(true);
             ((HttpURLConnection) conn).setDoInput(true);
         }
@@ -165,13 +169,16 @@ public class HttpUtil {
         private DefaultTrustManager() {
         }
 
+        @Override
         public X509Certificate[] getAcceptedIssuers() {
             return null;
         }
 
+        @Override
         public void checkClientTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
         }
 
+        @Override
         public void checkServerTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
         }
     }
