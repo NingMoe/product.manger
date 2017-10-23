@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.phicomm.product.manger.enumeration.HttpProtocolType;
 import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
+import com.phicomm.product.manger.exception.FirmwareTriggerFailException;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -86,7 +87,7 @@ public class HttpUtil {
      * @throws IOException io异常
      */
     @SuppressWarnings("all")
-    public static String openPostRequest(String url, String method, JSONObject params) throws IOException {
+    public static String openPostRequest(String url, String method, JSONObject params) throws IOException, FirmwareTriggerFailException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
         httpURLConnection = getUrlConnection(url, method, CONTENT_TYPE);
@@ -96,7 +97,7 @@ public class HttpUtil {
         if (HttpURLConnection.HTTP_OK == responseCode) {
             inputStream = httpURLConnection.getInputStream();
         } else {
-            inputStream = httpURLConnection.getErrorStream();
+            throw new FirmwareTriggerFailException();
         }
         String response = getResult(inputStream);
         logger.info("network request result is:\t" + response);

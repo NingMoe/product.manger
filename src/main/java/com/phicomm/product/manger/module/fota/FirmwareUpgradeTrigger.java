@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.module.fota;
 
+import com.phicomm.product.manger.exception.FirmwareTriggerFailException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import org.apache.log4j.Logger;
 
@@ -21,12 +22,12 @@ public interface FirmwareUpgradeTrigger {
      *
      * @param firmwareUpgradeContext 上下文
      */
-    void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException, KeyManagementException, IOException;
+    void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException, KeyManagementException, IOException, FirmwareTriggerFailException;
 
     /**
      * 触发固件降级
      */
-    void triggerFirmwareDowngrade(FirmwareInfo firmwareInfo, String param) throws NoSuchAlgorithmException, KeyManagementException, IOException;
+    void triggerFirmwareDowngrade(FirmwareInfo firmwareInfo, String param) throws NoSuchAlgorithmException, KeyManagementException, IOException, FirmwareTriggerFailException;
 
     /**
      * 获得日志对象
