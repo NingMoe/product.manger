@@ -59,8 +59,10 @@ $(document).ready(function () {
                     alert("数据格式错误，请检查参数并重新上传！");
                 } else if (data.status === 7) {
                     alert("文件上传失败，请重新上传！");
-                } else {
-                    alert("版本已经存在，请重新上传！");
+                } else if (data.status === 8){
+                    alert("固件版本已经存在，请更改后重新上传！");
+                } else if (data.status === 19){
+                    alert("固件触发失败，请再试一次！");
                 }
             }
         });
