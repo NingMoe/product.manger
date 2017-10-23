@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONPath;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.enumeration.FirmwareEnvironmentEnum;
 import com.phicomm.product.manger.enumeration.RequestType;
+import com.phicomm.product.manger.exception.FirmwareTriggerFailException;
 import com.phicomm.product.manger.model.firmware.FirmwareInfo;
 import com.phicomm.product.manger.utils.HttpUtil;
 
@@ -22,7 +23,7 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
 
     @Override
     public void trigger(FirmwareUpgradeContext firmwareUpgradeContext) throws NoSuchAlgorithmException,
-            KeyManagementException, IOException {
+            KeyManagementException, IOException, FirmwareTriggerFailException {
         getLogger().info("trigger fota firmware upgrade.");
         getLogger().info(firmwareUpgradeContext);
         String param = firmwareUpgradeContext.getParam();
@@ -45,7 +46,8 @@ public class DefaultFirmwareUpgradeTrigger extends AbstractFirmwareUpgradeTrigge
      * 触发固件降级
      */
     @Override
-    public void triggerFirmwareDowngrade(FirmwareInfo firmwareInfo, String param) throws NoSuchAlgorithmException, KeyManagementException, IOException {
+    public void triggerFirmwareDowngrade(FirmwareInfo firmwareInfo, String param) throws NoSuchAlgorithmException,
+            KeyManagementException, IOException, FirmwareTriggerFailException {
         getLogger().info("trigger fota firmware downgrade.");
         getLogger().info(firmwareInfo);
         JSONObject jsonObject = JSON.parseObject(param);

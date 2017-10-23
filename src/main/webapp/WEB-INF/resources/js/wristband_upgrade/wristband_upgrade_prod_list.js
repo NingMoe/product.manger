@@ -1,27 +1,3 @@
-function trigger(node) {
-    var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
-    var baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/firmware/trigger",
-        dataType: "json",
-        data: {
-            "id": index
-        }, error: function (req, status, err) {
-            console.log('Failed reason: ' + err);
-        }, success: function (data) {
-            if (data.status === 0) {
-                alert("操作成功！");
-            } else if (data.status === 9) {
-                alert("当前固件不存在");
-            } else if (data.status === 11) {
-                alert("当前固件不是可用状态");
-            }
-            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
-        }
-    });
-}
-
 function downgrade(node) {
     var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
     var baseUrl = $("#baseUrl").val();
@@ -38,6 +14,8 @@ function downgrade(node) {
                 alert("下线成功！");
             } else if (data.status === 11) {
                 alert("当前固件不是可用状态");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
@@ -60,6 +38,8 @@ function activate(node) {
                 alert("上线成功！");
             } else if (data.status === 11) {
                 alert("当前固件已经是可用状态");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
@@ -115,6 +95,8 @@ function updateWristband() {
                 alert("文件上传失败 !");
             } else if (data.status === 8) {
                 alert("固件版本已经存在 !");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
@@ -176,6 +158,8 @@ function saveAppVersion() {
                 alert("数据格式错误 !");
             } else if (data.status === 8) {
                 alert("APP版本已经存在 !");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }

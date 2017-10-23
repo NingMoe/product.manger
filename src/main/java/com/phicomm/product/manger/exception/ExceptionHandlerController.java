@@ -37,6 +37,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception16;
     private static JSONObject exception17;
     private static JSONObject exception18;
+    private static JSONObject exception19;
 
     static {
         exception1001 = new JSONObject();
@@ -150,6 +151,12 @@ public class ExceptionHandlerController {
         exception18 = new JSONObject();
         exception18.put("status", 18);
         exception18.put("description", "id has exist.");
+    }
+
+    static {
+        exception19 = new JSONObject();
+        exception19.put("status", 19);
+        exception19.put("description", "firmware trigger failed.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -300,5 +307,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(IdHasExistException.class)
     public ModelAndView processIdHasExistException(){
         return new ModelAndView(new MappingJackson2JsonView(),exception18);
+    }
+
+    /**
+     * 固件触发失败
+     */
+    @ExceptionHandler(FirmwareTriggerFailException.class)
+    public ModelAndView processFirmwareTriggerFailException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception19);
     }
 }
