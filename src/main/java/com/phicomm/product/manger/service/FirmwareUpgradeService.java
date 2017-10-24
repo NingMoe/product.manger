@@ -95,9 +95,6 @@ public class FirmwareUpgradeService {
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
         String[] appVersions = appVersionCode.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
-        if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode)) {
-            throw new VersionHasExistException();
-        }
         // 上传文件
         Map<String, String> result = FileUtil.uploadFileToHermes(file);
         String downloadUrl = result.get("url");
@@ -119,6 +116,9 @@ public class FirmwareUpgradeService {
         for (String appVersion : appVersions) {
             if (!Strings.isNullOrEmpty(appVersion)) {
                 firmwareInfo.setAppVersionCode(appVersion);
+                if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersion)) {
+                    throw new VersionHasExistException();
+                }
                 logger.info(firmwareInfo);
                 firmwareInfoMapper.insert(firmwareInfo);
                 // 触发升级
@@ -131,6 +131,9 @@ public class FirmwareUpgradeService {
                 if (!Strings.isNullOrEmpty(appIosVersion)) {
                     firmwareInfo.setAppPlatform("ios");
                     firmwareInfo.setAppVersionCode(appIosVersion);
+                    if (firmwareInfoMapper.exist(firmwareType, hardwareVersion, environment, firmwareVersion, "ios", appIosVersion)) {
+                        throw new VersionHasExistException();
+                    }
                     logger.info(firmwareInfo);
                     firmwareInfoMapper.insert(firmwareInfo);
                     // 触发升级
