@@ -122,7 +122,7 @@ public class FirmwareUpgradeService {
                 logger.info(firmwareInfo);
                 firmwareInfoMapper.insert(firmwareInfo);
                 // 触发升级
-                trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersionCode);
+                trigger(firmwareType, hardwareVersion, environment, firmwareVersion, appPlatform, appVersion);
             }
         }
         if (!Strings.isNullOrEmpty(appVersionCodeIos)) {
