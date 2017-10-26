@@ -3,9 +3,12 @@ package com.phicomm.product.manger.wei.yang;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.model.statistic.BalanceLocationBean;
 import com.phicomm.product.manger.enumeration.GenderEnum;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -103,5 +106,46 @@ public class StringTest {
         System.out.println(LocalDateTime.fromDateFields(date).minusDays(1).getDayOfYear()<LocalDateTime.fromDateFields(date).getDayOfYear());
         System.out.println(LocalDate.fromDateFields(date).minusDays(1));
         System.out.println(LocalDate.fromDateFields(date).minusDays(1).isBefore(LocalDate.now()));
+    }
+
+    /**
+     * 慢
+     */
+    @Test
+    public void testGetMac() {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
+            StringBuilder builder = new StringBuilder(value);
+            builder.insert(4, ":").insert(2, ":");
+            System.out.println(builder.toString());
+        }
+        System.out.println(System.currentTimeMillis() - startTime);
+    }
+
+    /**
+     * 好慢
+     */
+    @Test
+    public void getMacTest() {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
+            System.out.println(value.replaceAll(".{2}(?!$)", "$0:"));
+        }
+        System.out.println(System.currentTimeMillis() - startTime);
+    }
+
+    /**
+     * 巨慢
+     */
+    @Test
+    public void getMac() {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
+            System.out.println(Joiner.on(",").join(Splitter.fixedLength(2).split(value)).replaceAll(",", ":"));
+        }
+        System.out.println(System.currentTimeMillis() - startTime);
     }
 }
