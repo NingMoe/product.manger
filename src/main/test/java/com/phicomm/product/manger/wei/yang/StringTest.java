@@ -21,6 +21,8 @@ import java.util.*;
  */
 public class StringTest {
 
+    private static final String MAC_HEADER = "2c:cf:7f:";
+
     @Test
     public void test() {
         System.out.println("5c:cf:7f:41:77:cf".length());
@@ -118,7 +120,7 @@ public class StringTest {
             String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
             StringBuilder builder = new StringBuilder(value);
             builder.insert(4, ":").insert(2, ":");
-            System.out.println(builder.toString());
+            System.out.println(MAC_HEADER + builder.toString());
         }
         System.out.println(System.currentTimeMillis() - startTime);
     }
@@ -131,7 +133,7 @@ public class StringTest {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
-            System.out.println(value.replaceAll(".{2}(?!$)", "$0:"));
+            System.out.println(MAC_HEADER + value.replaceAll(".{2}(?!$)", "$0:"));
         }
         System.out.println(System.currentTimeMillis() - startTime);
     }
@@ -144,7 +146,7 @@ public class StringTest {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             String value = StringUtils.leftPad(Integer.toHexString(i), 6, "0");
-            System.out.println(Joiner.on(",").join(Splitter.fixedLength(2).split(value)).replaceAll(",", ":"));
+            System.out.println(MAC_HEADER + Joiner.on(",").join(Splitter.fixedLength(2).split(value)).replaceAll(",", ":"));
         }
         System.out.println(System.currentTimeMillis() - startTime);
     }
