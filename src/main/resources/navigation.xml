@@ -119,7 +119,7 @@
         <id>showBalanceFeedback</id>
         <title>
             <title-name>反馈信息</title-name>
-            <title-description>反馈信息展示</title-description>
+            <title-description>反馈信息</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
