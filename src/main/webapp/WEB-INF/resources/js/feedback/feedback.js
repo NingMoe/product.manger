@@ -1,5 +1,6 @@
 let firstLoad = true;
 let startId = 2147483647;
+let feedbackUrl = "http://localhost:8081";
 
 /**
  * 初始化  显示10条信息
@@ -141,14 +142,12 @@ function removeDiv() {
  * 请求获取反馈信息
  */
 function fetchFeedback() {
-    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/feedback/fetch",
+        url: feedbackUrl + "/feedback/list",
         dataType: "json",
         data: {
-            "pageSize": "10",
-            "startId": startId
+            "maxId": "-1"
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -171,14 +170,14 @@ function fetchFeedback() {
  */
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
-        loadUserHeader(itemData.headerUrl) + loadUsername(itemData.username) + loadAppType(itemData.appId) +
-        loadUserId(itemData.userId) + loadFeedback(itemData.feedback);
-    let imgDiv = loadFeedbackImg(itemData.imageUrl, itemData.id);
+        loadUserHeader(itemData.imageUrl) + loadUserId(itemData.userId) + loadUsername(itemData.username) +
+    loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData.dialogBeans.dialogText);
+    let imgDiv = loadFeedbackImg(itemData.dialogPictures, itemData.id);
     if (imgDiv !== null) {
         src = src + imgDiv;
     }
     /* src = src + loadCommonDiv() + loadTime(itemData.createTime);*/
-    src = src + loadTime(itemData.createTime);
+    src = src + loadTime(itemData.createTime) + loadReviewBun();
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
     const element = el.getElementById("childDiv");
@@ -186,66 +185,57 @@ function loadItem(itemData) {
     parentDiv.appendChild(element);
 }
 
-function loadUserHeader(headerUrl) {
-    return `<div class="product-img"><img src=${headerUrl} alt="Header"></div>`;
+function loadUserHeader(imageUrl) {
+    return `<div class="product-img"><img src=imageUrl alt="Header"></div>`;
 }
 
 /**
- * 获取用户昵称模块
- * @param username 昵称
- * @returns {string} 用户昵称模块
+ * 加载用户名
  */
 function loadUsername(username) {
-    return `<div class="product-info"><a href="javascript:void(0)" class="product-title">${username}`;
+    return `<a href="javascript:void(0)" class="product-title" style="margin-left: 5px">username</a>`;
 }
 
 /**
- * 获取用户id显示模块
- * @param userId 用户id
- * @returns {string} 用户id模块
+ * 加载电话号码
+ */
+function loadPhoneNumber(phoneNumber) {
+    return `<span class="product-description">` + "手机号：" + phoneNumber + `</span>`;
+    /*${userId}*/
+}
+
+/**
+ * 获取手机系统及APP版本号
+ */
+function loadAppInfo(platform, appVersion) {
+    return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `</span>`;
+}
+
+/**
+ * 加载用户ID
  */
 function loadUserId(userId) {
-    return `<span class="product-description">${userId}</span>`;
-}
-
-/**
- * appId：目前有balance和Link
- * @param appId app类别
- * @returns {*} app类别
- */
-function loadAppType(appId) {
-    let src;
-    if (appId === 'balance') {
-        src = `<span class="label label-success pull-right">` + 'Balance' + `</span></a>`;
-    } else if (appId === 'Link') {
-        src = `<span class="label label-info pull-right">` + 'Link' + `</span></a>`;
-    }
-    return src;
+    return `<div class="product-info"><span class="product-description pull-left">userId</span>`;
 }
 
 /**
  * 获取反馈正文模块
- * @param feedback 反馈
- * @returns {string} 反馈信息
  */
-function loadFeedback(feedback) {
-    return `<p style="margin-left: 40px;word-wrap: break-word">${feedback}</p>`;
+function loadFeedback(dialogText) {
+    return `<p style="word-wrap: break-word;margin-top: 15px">dialogText</p>`;
 }
 
 /**
- * 获取反馈图片模块
- * @param images 图片
- * @param id 反馈id
- * @returns {*} 图片gallery
+ * 加载反馈图片
  */
 function loadFeedbackImg(images, id) {
     if (images === null) {
         return null;
     }
-    let src = ` <div class="row" style="margin-left: 40px"><div id='page'><div class='demonstrations'>`;
+    let src = ` <div class="row" style="margin-left: 0px"><div id='page'><div class='demonstrations'>`;
     for (let i = 0; i < images.length; i++) {
-        src = src + `<a href=${images[i]} class='fresco' data-fresco-group=${id} >
-                        <img src=${images[i]} style="width: 80px;height: 80px " alt='img'/></a>`;
+        src = src + `<a href=${images[i]} class='fresco' data-fresco-group=id >
+                        <img src=images[i] style="width: 80px;height: 80px " alt='img'/></a>`;
     }
     return src + `</div></div></div>`;
 }
@@ -264,11 +254,16 @@ function loadCommonDiv() {
 /**
  * 获取反馈时间模块
  * @param createTime 时间
- * @returns {string} div
  */
 function loadTime(createTime) {
-    return `<div style="margin-left: 40px;margin-top: 10px">
+    return `<div style="margin-top: 15px">
                   <span>提交于:</span>
-                  <span>${createTime}</span>
-             </div>`;
+                  <span>createTime</span>`;
+}
+
+/**
+ * 加载回复按钮
+ */
+function loadReviewBun() {
+    return `<span style="margin-left: 200px"><a href="#">回复</a> </span></div>`;
 }
