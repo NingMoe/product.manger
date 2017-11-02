@@ -9,7 +9,9 @@ public class BalanceActiveQueryResultModel {
 
     private String[] dates;
 
-    private int[] values;
+    private int[] pvs;
+
+    private int[] uvs;
 
     public String[] getDates() {
         return dates;
@@ -19,11 +21,19 @@ public class BalanceActiveQueryResultModel {
         this.dates = dates;
     }
 
-    public int[] getValues() {
-        return values;
+    public int[] getPvs() {
+        return pvs;
     }
 
-    public void setValues(int[] values) {
-        this.values = values;
+    public void setPvs(int[] pvs) {
+        this.pvs = pvs;
+    }
+
+    public int[] getUvs() {
+        return uvs;
+    }
+
+    public void setUvs(int[] uvs) {
+        this.uvs = uvs;
     }
 }

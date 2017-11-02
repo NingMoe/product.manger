@@ -9,7 +9,9 @@ public class BalanceActiveQueryModel {
 
     private String date;
 
-    private int activeCount;
+    private int activeCountPv;
+
+    private int activeCountUv;
 
     public String getDate() {
         return date;
@@ -19,11 +21,19 @@ public class BalanceActiveQueryModel {
         this.date = date;
     }
 
-    public int getActiveCount() {
-        return activeCount;
+    public int getActiveCountPv() {
+        return activeCountPv;
     }
 
-    public void setActiveCount(int activeCount) {
-        this.activeCount = activeCount;
+    public void setActiveCountPv(int activeCountPv) {
+        this.activeCountPv = activeCountPv;
+    }
+
+    public int getActiveCountUv() {
+        return activeCountUv;
+    }
+
+    public void setActiveCountUv(int activeCountUv) {
+        this.activeCountUv = activeCountUv;
     }
 }

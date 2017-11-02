@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * 统计体脂秤活跃数
  *
@@ -68,6 +70,24 @@ public class BalanceActiveStatisticController {
     @FunctionPoint("common")
     public CommonResponse statisticOneDay(@RequestBody StatisticDateModel statisticDateModel) {
         balanceActiveStatisticService.statisticOneDay(statisticDateModel);
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 统计确定某几天的数据
+     *
+     * @return 响应
+     */
+    @RequestMapping(value = "balance/statistic/balance/active/statistic/some/day", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("统计某一天的体脂秤活跃量")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @FunctionPoint("common")
+    public CommonResponse statisticSomeDay(@RequestBody List<StatisticDateModel> statisticDateModels) {
+        balanceActiveStatisticService.statisticSomeDay(statisticDateModels);
         return CommonResponse.ok();
     }
 
