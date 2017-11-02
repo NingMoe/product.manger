@@ -7,24 +7,15 @@ $(function statisticBalanceActive() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/month",
+        url: baseUrl + "/balance/statistic/balance/active/query",
+        contentType: "application/json",
         dataType: "json",
-        data: {
-            "month": 12,
-            "type": "mac"
-        },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            let labels = [];
-            let dates = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
-                    labels.push(key);
-                    dates.push(data.data[key]);
-                }
-            }
-            drawBarChart(labels, dates, new Chart($("#balanceActiveStatisticChart").get(0).getContext("2d")));
+            let labels = data.data.values;
+            let dates = data.data.dates;
+            drawBarChart(dates, labels, new Chart($("#balanceActiveStatisticChart").get(0).getContext("2d")));
         }
     })
 });

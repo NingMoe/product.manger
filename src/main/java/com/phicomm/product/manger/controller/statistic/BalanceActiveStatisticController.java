@@ -1,6 +1,9 @@
 package com.phicomm.product.manger.controller.statistic;
 
+import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
+import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.statistic.BalanceActiveQueryResultModel;
 import com.phicomm.product.manger.model.statistic.StatisticDateModel;
 import com.phicomm.product.manger.service.BalanceActiveStatisticService;
 import io.swagger.annotations.Api;
@@ -44,6 +47,7 @@ public class BalanceActiveStatisticController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
+    @FunctionPoint("common")
     public CommonResponse startCronTask() {
         balanceActiveStatisticService.cronTask();
         return CommonResponse.ok();
@@ -61,9 +65,28 @@ public class BalanceActiveStatisticController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
+    @FunctionPoint("common")
     public CommonResponse statisticOneDay(@RequestBody StatisticDateModel statisticDateModel) {
         balanceActiveStatisticService.statisticOneDay(statisticDateModel);
         return CommonResponse.ok();
+    }
+
+    /**
+     * 统计确定某一天的数据
+     *
+     * @return 响应
+     */
+    @RequestMapping(value = "balance/statistic/balance/active/query", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ApiOperation("体脂秤活跃量柱状图展示")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @FunctionPoint("common")
+    public Response<BalanceActiveQueryResultModel> getDrawChartData() {
+        BalanceActiveQueryResultModel result = balanceActiveStatisticService.getDrawChartData();
+        return new Response<BalanceActiveQueryResultModel>().setData(result);
     }
 
 }

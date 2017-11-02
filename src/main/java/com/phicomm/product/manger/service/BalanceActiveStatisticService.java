@@ -1,6 +1,8 @@
 package com.phicomm.product.manger.service;
 
 import com.phicomm.product.manger.dao.BalanceActiveStatisticMapper;
+import com.phicomm.product.manger.model.statistic.BalanceActiveQueryModel;
+import com.phicomm.product.manger.model.statistic.BalanceActiveQueryResultModel;
 import com.phicomm.product.manger.model.statistic.StatisticDateModel;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.util.Assert;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 体脂秤激活数量统计统计业务
@@ -24,6 +27,8 @@ public class BalanceActiveStatisticService {
     private static final Logger logger = Logger.getLogger(BalanceActiveStatisticService.class);
 
     private static final int BALANCE_MAC_MEASURE_SPLIT_TABLE = 5;
+
+    private static final int SHOW_BALANCE_MEASURE_DATE_NUMBER = 20;
 
     private BalanceActiveStatisticMapper balanceActiveStatisticMapper;
 
@@ -94,6 +99,26 @@ public class BalanceActiveStatisticService {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         logger.info(String.format("startTime = %s, endTime = %s, balance active count is %s.",
                 simpleDateFormat.format(startTime), simpleDateFormat.format(endTime), sum));
+    }
+
+    /**
+     * 获得画图的数据
+     *
+     * @return 统计结果集
+     */
+    public BalanceActiveQueryResultModel getDrawChartData() {
+        List<BalanceActiveQueryModel> balanceActiveQueryModelList = balanceActiveStatisticMapper.getDrawChartData(SHOW_BALANCE_MEASURE_DATE_NUMBER);
+        int size = balanceActiveQueryModelList.size();
+        String[] dates = new String[size];
+        int[] values = new int[size];
+        for (int i = 0; i < size; i++) {
+            dates[i] = balanceActiveQueryModelList.get(i).getDate();
+            values[i] = balanceActiveQueryModelList.get(i).getActiveCount();
+        }
+        BalanceActiveQueryResultModel balanceActiveQueryResultModel = new BalanceActiveQueryResultModel();
+        balanceActiveQueryResultModel.setDates(dates);
+        balanceActiveQueryResultModel.setValues(values);
+        return balanceActiveQueryResultModel;
     }
 
 }

@@ -1,11 +1,13 @@
 package com.phicomm.product.manger.dao;
 
+import com.phicomm.product.manger.model.statistic.BalanceActiveQueryModel;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 体脂秤日活统计
@@ -31,10 +33,21 @@ public interface BalanceActiveStatisticMapper {
 
     /**
      * 保存
+     *
      * @param statisticDate 统计的日期
-     * @param sum 和
+     * @param sum           和
      */
     @Insert("INSERT IGNORE INTO balance_active_statistic_info(`date`, `active_count`) VALUES (#{statisticDate,jdbcType=TIMESTAMP},#{sum,jdbcType=BIGINT})")
     void insert(@Param("statisticDate") Date statisticDate,
                 @Param("sum") long sum);
+
+    /**
+     * 获取画图表的数据
+     *
+     * @param showBalanceMeasureDateNumber 需要统计最近的天数
+     * @return 获取画图表的数据
+     */
+    @Select("SELECT active_count AS `activeCount`, `date` AS `date` FROM balance_active_statistic_info ORDER BY `date` DESC LIMIT #{showBalanceMeasureDateNumber,jdbcType=INTEGER}")
+    List<BalanceActiveQueryModel> getDrawChartData(@Param("showBalanceMeasureDateNumber") int showBalanceMeasureDateNumber);
+
 }
