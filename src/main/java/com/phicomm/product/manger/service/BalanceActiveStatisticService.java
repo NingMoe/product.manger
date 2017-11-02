@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.service;
 
 import com.phicomm.product.manger.dao.BalanceActiveStatisticMapper;
+import com.phicomm.product.manger.model.statistic.StatisticDateModel;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
@@ -69,6 +70,30 @@ public class BalanceActiveStatisticService {
             CustomerContextHolder.clearDataSource();
         }
         return sum;
+    }
+
+    /**
+     * 统计确定某一天的数据
+     *
+     * @param statisticDateModel 统计某一天的数据
+     */
+    public void statisticOneDay(StatisticDateModel statisticDateModel) {
+        Date startDate = statisticDateModel.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startTime = calendar.getTime();
+        LocalDateTime localDateTime = new LocalDateTime(startTime);
+        Date endTime = localDateTime.plusDays(1).toDate();
+        long sum = statistic(startTime, endTime);
+        CustomerContextHolder.selectLocalDataSource();
+        balanceActiveStatisticMapper.insert(startTime, sum);
+        CustomerContextHolder.clearDataSource();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        logger.info(String.format("startTime = %s, endTime = %s, balance active count is %s.",
+                simpleDateFormat.format(startTime), simpleDateFormat.format(endTime), sum));
     }
 
 }

@@ -24,7 +24,7 @@ public interface BalanceActiveStatisticMapper {
      * @param tableIndex 表索引
      * @return 单表的count
      */
-    @Select("SELECT count(1) FROM balance_mac_measure_info_${tableIndex} WHERE create_time >= #{startTime,jdbcType=TIMESTAMP} AND create_time < #{startTime,jdbcType=TIMESTAMP}")
+    @Select("SELECT count(1) FROM balance_mac_measure_info_${tableIndex} WHERE create_time >= #{startTime,jdbcType=TIMESTAMP} AND create_time < #{endTime,jdbcType=TIMESTAMP}")
     long statistic(@Param("startTime") Date startTime,
                    @Param("endTime") Date endTime,
                    @Param("tableIndex") int tableIndex);
