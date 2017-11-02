@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.controller.statistic;
 
-import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.service.BalanceActiveStatisticService;
 import io.swagger.annotations.Api;
