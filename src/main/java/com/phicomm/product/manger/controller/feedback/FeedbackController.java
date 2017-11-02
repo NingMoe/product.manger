@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 接收客户端发送的反馈信息
  * <p>
- * Created by yufei.liu on 2017/2/22.
+ * @author yufei.liu on 2017/2/22.
  */
 @Controller
 @Api(value = "接收客户端发送的反馈信息", description = "接收客户端发送的反馈信息")
