@@ -23,10 +23,16 @@ import java.util.List;
 
 
 /**
+<<<<<<< HEAD
  * 反馈信息接口
  *
  * @author qiang.ren
  * @date 2017/11/2
+=======
+ * 接收客户端发送的反馈信息
+ * <p>
+ * @author yufei.liu on 2017/2/22.
+>>>>>>> 9264c0aace9959e42d0d4eda5f45177c0c442a19
  */
 @Controller
 @Api(value = "反馈信息接口", description = "反馈信息接口")

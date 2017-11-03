@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 /**
  * 体脂秤统计页面接口
  * <p>
- * Created by yufei.liu on 2017/7/1.
+ * @author yufei.liu on 2017/7/1.
  */
 @Controller
 public class BalanceStatisticPageController {
@@ -102,6 +102,21 @@ public class BalanceStatisticPageController {
         modelAndView.getModel().put("context", "statistic/user_analysis.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userAnalysis"));
+        return modelAndView;
+    }
+
+    /**
+     * 统计每日体脂秤活跃量
+     */
+    @RequestMapping(value = "statistic/page/balance/active/statistic", method = RequestMethod.GET)
+    @ApiIgnore("统计每日体脂秤活跃量")
+    @FunctionPoint(value = "common")
+    public ModelAndView showBalanceActiveStatistic(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModelMap().put("context", "statistic/balance_active_statistic.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceActiveStatistic"));
         return modelAndView;
     }
 

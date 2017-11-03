@@ -4,10 +4,12 @@ import com.phicomm.product.manger.service.UserAgeSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  * 自动更新
- * Created by wei.yang on 2017/9/5.
+ *
+ * @author wei.yang on 2017/9/5.
  */
 @Component
 public class UserAgeSectionCron {
@@ -17,6 +19,7 @@ public class UserAgeSectionCron {
     @Autowired
     public UserAgeSectionCron(UserAgeSectionService userAgeSectionService) {
         this.userAgeSectionService = userAgeSectionService;
+        Assert.notNull(this.userAgeSectionService);
     }
 
     /**
