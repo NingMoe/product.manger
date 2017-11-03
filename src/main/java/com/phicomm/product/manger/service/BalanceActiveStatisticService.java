@@ -124,7 +124,7 @@ public class BalanceActiveStatisticService {
         String[] dates = new String[size];
         int[] pvs = new int[size];
         int[] uvs = new int[size];
-        for (int i = size - 1; i >= 0; i--) {
+        for (int i = 0; i < size; i++) {
             dates[i] = balanceActiveQueryModelList.get(i).getDate();
             pvs[i] = balanceActiveQueryModelList.get(i).getActiveCountPv();
             uvs[i] = balanceActiveQueryModelList.get(i).getActiveCountUv();

@@ -13,9 +13,9 @@ $(function statisticBalanceActive() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            let pvs = data.data.pvs;
-            let uvs = data.data.uvs;
-            let dates = data.data.dates;
+            let pvs = data.data.pvs.reverse();
+            let uvs = data.data.uvs.reverse();
+            let dates = data.data.dates.reverse();
             drawBarChart(dates, pvs, new Chart($("#balanceActiveStatisticChartPv").get(0).getContext("2d")));
             drawBarChart(dates, uvs, new Chart($("#balanceActiveStatisticChartUv").get(0).getContext("2d")));
         }
