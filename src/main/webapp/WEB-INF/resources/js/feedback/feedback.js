@@ -1,7 +1,5 @@
 let firstLoad = true;
 let startId = 2147483647;
-let feedbackUrl = "http://localhost:8081";
-
 /**
  * 初始化  显示10条信息
  */
@@ -142,13 +140,15 @@ function removeDiv() {
  * 请求获取反馈信息
  */
 function fetchFeedback() {
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: feedbackUrl + "/feedback/list",
+        url: baseUrl + "/feedback/list",
         dataType: "json",
-        data: {
-            "maxId": "-1"
-        },
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({
+            "maxId": -1
+        }),
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
@@ -171,13 +171,7 @@ function fetchFeedback() {
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
         loadUserHeader(itemData.imageUrl) + loadUserId(itemData.userId) + loadUsername(itemData.username) +
-    loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData.dialogBeans.dialogText);
-    let imgDiv = loadFeedbackImg(itemData.dialogPictures, itemData.id);
-    if (imgDiv !== null) {
-        src = src + imgDiv;
-    }
-    /* src = src + loadCommonDiv() + loadTime(itemData.createTime);*/
-    src = src + loadTime(itemData.createTime) + loadReviewBun();
+    loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
     const element = el.getElementById("childDiv");
@@ -186,14 +180,14 @@ function loadItem(itemData) {
 }
 
 function loadUserHeader(imageUrl) {
-    return `<div class="product-img"><img src=imageUrl alt="Header"></div>`;
+    return `<div class="product-img"><img src=${imageUrl} alt="Header"></div>`;
 }
 
 /**
  * 加载用户名
  */
 function loadUsername(username) {
-    return `<a href="javascript:void(0)" class="product-title" style="margin-left: 5px">username</a>`;
+    return `<a href="javascript:void(0)" class="product-title" style="margin-left: 5px">${username}</a>`;
 }
 
 /**
@@ -201,7 +195,6 @@ function loadUsername(username) {
  */
 function loadPhoneNumber(phoneNumber) {
     return `<span class="product-description">` + "手机号：" + phoneNumber + `</span>`;
-    /*${userId}*/
 }
 
 /**
@@ -215,55 +208,29 @@ function loadAppInfo(platform, appVersion) {
  * 加载用户ID
  */
 function loadUserId(userId) {
-    return `<div class="product-info"><span class="product-description pull-left">userId</span>`;
+    return `<div class="product-info"><span class="product-description pull-left">${userId}</span>`;
 }
 
 /**
  * 获取反馈正文模块
  */
-function loadFeedback(dialogText) {
-    return `<p style="word-wrap: break-word;margin-top: 15px">dialogText</p>`;
-}
-
-/**
- * 加载反馈图片
- */
-function loadFeedbackImg(images, id) {
-    if (images === null) {
-        return null;
+function loadFeedback(itemData) {
+    let src = ``;
+    let dialog = itemData.dialogBeans;
+    let id = itemData.id;
+    for(let i = 0; i < dialog.length; i++){
+        src = src + `<p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p>`
+        let images = dialog[i].dialogPictures;
+        if (images !== null){
+            src = src + ` <div class="row" style="margin-left: 0px"><div id='page'><div class='demonstrations'>`;
+            for (let j = 0; j < images.length; j++) {
+                src = src + `<a href=${images[j]} class='fresco' data-fresco-group=id >
+                   <img src=${images[j]} style="width: 80px;height: 80px " alt='img'/></a>`;
+            }
+            src = src + `</div></div></div>`;
+        }
+        src = src + `<div style="margin-top: 15px"><span>提交于:</span><span>${dialog[i].createTime}</span>`;
+        src = src + `<span style="margin-left: 200px"><a href="#">回复</a> </span></div>`;
     }
-    let src = ` <div class="row" style="margin-left: 0px"><div id='page'><div class='demonstrations'>`;
-    for (let i = 0; i < images.length; i++) {
-        src = src + `<a href=${images[i]} class='fresco' data-fresco-group=id >
-                        <img src=images[i] style="width: 80px;height: 80px " alt='img'/></a>`;
-    }
-    return src + `</div></div></div>`;
-}
-
-/**
- * 获取共同模块：目前未使用
- * @returns {string} 共同模块
- */
-function loadCommonDiv() {
-    return `<div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>`;
-}
-
-/**
- * 获取反馈时间模块
- * @param createTime 时间
- */
-function loadTime(createTime) {
-    return `<div style="margin-top: 15px">
-                  <span>提交于:</span>
-                  <span>createTime</span>`;
-}
-
-/**
- * 加载回复按钮
- */
-function loadReviewBun() {
-    return `<span style="margin-left: 200px"><a href="#">回复</a> </span></div>`;
+    return src;
 }

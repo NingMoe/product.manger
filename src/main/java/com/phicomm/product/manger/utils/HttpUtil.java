@@ -155,7 +155,7 @@ public class HttpUtil {
         byte[] data = new byte[1024];
         int len;
         while ((len = inputStream.read(data)) > 0) {
-            builder.append(new String(data, 0, len));
+            builder.append(new String(data, 0, len,CHART_SET));
         }
         return builder.toString();
     }
