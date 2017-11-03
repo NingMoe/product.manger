@@ -87,8 +87,8 @@ public class HttpUtil {
      * @return 请求结果
      * @throws IOException io异常
      */
-    @SuppressWarnings("all")
-    public static String openPostRequest(String url, String method, JSONObject params) throws IOException, FirmwareTriggerFailException {
+    public static String openPostRequest(String url, String method, JSONObject params)
+            throws IOException, FirmwareTriggerFailException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
         httpURLConnection = getUrlConnection(url, method, CONTENT_TYPE);
