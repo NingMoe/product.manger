@@ -60,7 +60,7 @@ public interface BalanceActiveStatisticMapper {
      * @param showBalanceMeasureDateNumber 需要统计最近的天数
      * @return 获取画图表的数据
      */
-    @Select("SELECT active_count_uv AS `activeCountUv`, active_count_pv AS `activeCountPv`, `date` AS `date` FROM balance_active_statistic_info ORDER BY `date` LIMIT #{showBalanceMeasureDateNumber,jdbcType=INTEGER}")
+    @Select("SELECT active_count_uv AS `activeCountUv`, active_count_pv AS `activeCountPv`, `date` AS `date` FROM balance_active_statistic_info ORDER BY `date` DESC LIMIT #{showBalanceMeasureDateNumber,jdbcType=INTEGER}")
     List<BalanceActiveQueryModel> getDrawChartData(@Param("showBalanceMeasureDateNumber") int showBalanceMeasureDateNumber);
 
 }
