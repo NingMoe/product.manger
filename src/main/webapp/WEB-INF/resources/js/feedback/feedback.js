@@ -230,7 +230,11 @@ function loadFeedback(itemData) {
             src = src + `</div></div></div>`;
         }
         src = src + `<div style="margin-top: 15px"><span>提交于:</span><span>${dialog[i].createTime}</span>`;
-        src = src + `<span style="margin-left: 200px"><a href="#">回复</a> </span></div>`;
+        if ("c2b" === dialog[i].dialogType){
+            src = src + `<span style="margin-left: 200px"><a href="#">回复</a></span></div>`;
+        }else if ("b2c" === dialog[i].dialogType){
+            src = src + `<span style="margin-left: 200px"><a href="#">回复</a></span><span style="margin-left: 50px"><a href="#">删除</a></span></div>`;
+        }
     }
     return src;
 }
