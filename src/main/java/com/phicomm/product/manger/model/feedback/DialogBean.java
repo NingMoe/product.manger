@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.model.feedback;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DialogBean {
 
     private Long dialogId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     private String dialogType;

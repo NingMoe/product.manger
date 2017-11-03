@@ -27,7 +27,7 @@ public class BalanceFeedbackService {
 
     private static final Logger logger = Logger.getLogger(BalanceFeedbackService.class);
 
-    private static final String BASE_URL = "http://localhost:8081/";
+    private static final String BASE_URL = "http://114.141.173.27:16816/phicomm-account/";
 
     private static final String FEEDBACK_WITHOUT_FILTER_URL = BASE_URL + "feedback/list";
 
@@ -58,6 +58,7 @@ public class BalanceFeedbackService {
         }
         if (!Strings.isNullOrEmpty(result)){
             String data = JSONObject.toJSONString(JSONObject.parseObject(result).get("data"));
+            logger.info(data);
             List<FeedbackWithUserInfo> feedbackWithUserInfos = JSON.parseArray(data, FeedbackWithUserInfo.class);
             logger.info(feedbackWithUserInfos);
             return feedbackWithUserInfos;
