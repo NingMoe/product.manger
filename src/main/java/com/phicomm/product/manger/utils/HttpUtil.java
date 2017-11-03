@@ -8,6 +8,7 @@ import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.exception.FirmwareTriggerFailException;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.Contract;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -150,12 +151,16 @@ public class HttpUtil {
     /**
      * 解析结果
      */
+    @Contract("null -> null")
     private static String getResult(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            return null;
+        }
         StringBuilder builder = new StringBuilder();
         byte[] data = new byte[1024];
         int len;
         while ((len = inputStream.read(data)) > 0) {
-            builder.append(new String(data, 0, len,CHART_SET));
+            builder.append(new String(data, 0, len, CHART_SET));
         }
         return builder.toString();
     }
