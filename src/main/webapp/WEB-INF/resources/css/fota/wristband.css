@@ -1,0 +1,19 @@
+.btn1{
+    border:none;
+    height:1.8em;
+    background-color:#c7254e;
+    font-size:1.2em;
+    width:150px;
+    color: white;
+
+}
+
+.btn2{
+    border:none;
+    height:1.8em;
+    background-color:#db8b0b;
+    font-size:1.2em;
+    margin-left:0.5em;
+    width: 150px;
+    color: white;
+}

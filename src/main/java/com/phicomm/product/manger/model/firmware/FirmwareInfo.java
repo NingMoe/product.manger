@@ -6,13 +6,17 @@ import java.util.Date;
 
 public class FirmwareInfo {
 
-    private Integer id;
+    private Long id;
+
+    private String appPlatform;
+
+    private String appVersionCode;
 
     private String firmwareType;
 
     private String version;
 
-    private Integer versionCode;
+    private String versionCode;
 
     private String environment;
 
@@ -24,19 +28,45 @@ public class FirmwareInfo {
 
     private Integer enable;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Float size;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     private String url;
 
     private String description;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAppPlatform() {
+        return appPlatform;
+    }
+
+    public void setAppPlatform(String appPlatform) {
+        this.appPlatform = appPlatform;
+    }
+
+    public String getAppVersionCode() {
+        return appVersionCode;
+    }
+
+    public void setAppVersionCode(String appVersionCode) {
+        this.appVersionCode = appVersionCode;
+    }
+
+    public Float getSize() {
+        return size;
+    }
+
+    public void setSize(Float size) {
+        this.size = size;
     }
 
     public String getFirmwareType() {
@@ -55,11 +85,11 @@ public class FirmwareInfo {
         this.version = version == null ? null : version.trim();
     }
 
-    public Integer getVersionCode() {
+    public String getVersionCode() {
         return versionCode;
     }
 
-    public void setVersionCode(Integer versionCode) {
+    public void setVersionCode(String versionCode) {
         this.versionCode = versionCode;
     }
 
@@ -131,6 +161,8 @@ public class FirmwareInfo {
     public String toString() {
         return "FirmwareInfo{" +
                 "id=" + id +
+                ", appPlatform='" + appPlatform + '\'' +
+                ", appVersionCode=" + appVersionCode +
                 ", firmwareType='" + firmwareType + '\'' +
                 ", version='" + version + '\'' +
                 ", versionCode=" + versionCode +
@@ -139,6 +171,7 @@ public class FirmwareInfo {
                 ", hardwareCode='" + hardwareCode + '\'' +
                 ", md5='" + md5 + '\'' +
                 ", enable=" + enable +
+                ", size=" + size +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +

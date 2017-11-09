@@ -37,6 +37,11 @@ public class ExceptionHandlerController {
     private static JSONObject exception16;
     private static JSONObject exception17;
     private static JSONObject exception18;
+    private static JSONObject exception19;
+    private static JSONObject exception20;
+    private static JSONObject exception21;
+    private static JSONObject exception22;
+    private static JSONObject exception23;
 
     static {
         exception1001 = new JSONObject();
@@ -150,6 +155,36 @@ public class ExceptionHandlerController {
         exception18 = new JSONObject();
         exception18.put("status", 18);
         exception18.put("description", "id has exist.");
+    }
+
+    static {
+        exception19 = new JSONObject();
+        exception19.put("status", 19);
+        exception19.put("description", "firmware trigger failed.");
+    }
+
+    static {
+        exception20 = new JSONObject();
+        exception20.put("status", 20);
+        exception20.put("description", "feedback message is empty.");
+    }
+
+    static {
+        exception21 = new JSONObject();
+        exception21.put("status", 21);
+        exception21.put("description", "feedback lock error.");
+    }
+
+    static {
+        exception22 = new JSONObject();
+        exception22.put("status", 22);
+        exception22.put("description", "feedback not found.");
+    }
+
+    static {
+        exception23 = new JSONObject();
+        exception23.put("status", 23);
+        exception23.put("description", "feedback upload failure.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -300,5 +335,44 @@ public class ExceptionHandlerController {
     @ExceptionHandler(IdHasExistException.class)
     public ModelAndView processIdHasExistException(){
         return new ModelAndView(new MappingJackson2JsonView(),exception18);
+    }
+
+    /**
+     * 固件触发失败
+     */
+    @ExceptionHandler(FirmwareTriggerFailException.class)
+    public ModelAndView processFirmwareTriggerFailException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception19);
+    }
+    /**
+     * 反馈为空
+     */
+    @ExceptionHandler(FeedbackEmptyException.class)
+    public ModelAndView processFeedbackEmptyException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception20);
+    }
+
+    /**
+     * 反馈回复锁定
+     */
+    @ExceptionHandler(FeedbackLockException.class)
+    public ModelAndView processFeedbackLockException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception21);
+    }
+
+    /**
+     * 反馈不存在
+     */
+    @ExceptionHandler(FeedbackNotFoundException.class)
+    public ModelAndView processFeedbackNotFoundException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception22);
+    }
+
+    /**
+     * 反馈上传失败
+     */
+    @ExceptionHandler(FeedbackUploadException.class)
+    public ModelAndView processFeedbackUploadException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception23);
     }
 }

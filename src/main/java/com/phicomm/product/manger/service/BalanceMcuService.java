@@ -2,6 +2,7 @@ package com.phicomm.product.manger.service;
 
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceMcuMapper;
+import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.mcu.BalanceMcuBean;
 import com.phicomm.product.manger.model.mcu.BalanceMcuStatus;
@@ -57,7 +58,7 @@ public class BalanceMcuService {
         checkMcuParamFormat(file, version);
         BalanceMcuBean balanceMcuBean = new BalanceMcuBean();
         int aFileCrc = CRC16Util.calcCrc16(file.getBytes(), 0, file.getBytes().length);
-        String fileUrl = (String) hermesService.uploadFile(file).get("fileHttpUrl");
+        String fileUrl = (String) hermesService.uploadFile(file).get("fileHttpsUrl");
         if (Strings.isNullOrEmpty(fileUrl)) {
             throw new IOException();
         }
@@ -110,7 +111,7 @@ public class BalanceMcuService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceMcuStatus balanceMcuStatus) throws DataFormatException,
             IOException {
         updateBalanceMcuStatus(balanceMcuStatus);
-        return otaServerService.updateTrigger();
+        return otaServerService.updateTrigger(TriggerTypeEnum.MCU);
     }
 
     /**

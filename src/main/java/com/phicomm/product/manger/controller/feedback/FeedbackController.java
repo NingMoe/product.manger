@@ -2,11 +2,10 @@ package com.phicomm.product.manger.controller.feedback;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
+import com.phicomm.product.manger.exception.FeedbackNotFoundException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
-import com.phicomm.product.manger.model.table.FeedbackInfoWithBLOBs;
-import com.phicomm.product.manger.model.table.FeedbackRequestBean;
-import com.phicomm.product.manger.model.table.FeedbackReview;
+import com.phicomm.product.manger.model.feedback.*;
 import com.phicomm.product.manger.service.BalanceFeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,19 +14,28 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
+
 /**
+<<<<<<< HEAD
+ * 反馈信息接口
+ *
+ * @author qiang.ren
+ * @date 2017/11/2
+=======
  * 接收客户端发送的反馈信息
  * <p>
- * Created by yufei.liu on 2017/2/22.
+ * @author yufei.liu on 2017/2/22.
+>>>>>>> 9264c0aace9959e42d0d4eda5f45177c0c442a19
  */
 @Controller
-@Api(value = "接收客户端发送的反馈信息", description = "接收客户端发送的反馈信息")
+@Api(value = "反馈信息接口", description = "反馈信息接口")
 public class FeedbackController {
 
     private BalanceFeedbackService feedbackService;
@@ -39,115 +47,68 @@ public class FeedbackController {
     }
 
     /**
-     * 接收用户的反馈数据，直接插到数据库
+     * 获取反馈列表(带条件)
      *
-     * @return 响应
+     * @param historyRequestBean 要请求的数据
+     * @return 反馈列表
+     * @throws DataFormatException 数据格式错误
      */
-    @RequestMapping(value = "balance/feedback/fetch", method = RequestMethod.POST, produces = "application/json")
-    @ApiOperation("用户反馈信息")
-    @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
-    })
-    @FunctionPoint(value = "common")
-    public Response<List<FeedbackInfoWithBLOBs>> fetchFeedback(@RequestParam int pageSize,
-                                                               @RequestParam int startId) {
-        List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBsList = feedbackService.fetchFeedback(pageSize, startId);
-        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackInfoWithBLOBsList);
-    }
-
-    /**
-     * 接收用户的反馈数据，直接插到数据库
-     *
-     * @return 响应
-     */
-    @RequestMapping(value = "balance/feedback/fetch/v2", method = RequestMethod.POST,
+    @RequestMapping(value = "feedback/list/filter", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
-    @ApiOperation("用户反馈信息")
-    @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = CommonResponse.class)
     })
+    @ResponseBody
+    @ApiOperation("后台管理获取反馈列表:maxId为-1的时候表示获取最新数据")
     @FunctionPoint(value = "common")
-    public Response<List<FeedbackInfoWithBLOBs>> fetchFeedbackV2(@RequestBody FeedbackRequestBean feedbackRequestBean)
+    public Response<List<FeedbackWithUserInfo>> fetchFeedbackList(@RequestBody HistoryRequestBean historyRequestBean)
             throws DataFormatException {
-        List<FeedbackInfoWithBLOBs> feedbackInfoWithBLOBsList = feedbackService.fetchFeedbackV2(feedbackRequestBean);
-        return new Response<List<FeedbackInfoWithBLOBs>>().setData(feedbackInfoWithBLOBsList);
+        List<FeedbackWithUserInfo> feedbackWithUserInfoList = feedbackService.fetchFeedbackList(historyRequestBean);
+        return new Response<List<FeedbackWithUserInfo>>().setData(feedbackWithUserInfoList);
     }
 
     /**
-     * 创建用户反馈的回复
-     */
-    @RequestMapping(value = "balance/feedback/review/create", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation("创建回复")
-    @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
-    })
-    @FunctionPoint(value = "common")
-    public void createFeedbackReview(@RequestParam long userId,
-                                     @RequestParam long feedbackId,
-                                     @RequestParam String reply) {
-        FeedbackReview feedbackReview = new FeedbackReview(userId, feedbackId, reply, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        feedbackService.createFeedbackReview(feedbackReview);
-    }
-
-    /**
-     * 查看用户反馈的回复
+     * 获取反馈列表（不带条件）
      *
-     * @return 响应
+     * @param maxIdBean 要请求的数据
+     * @return 反馈列表
      */
-    @RequestMapping(value = "balance/feedback/review/list", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation("查看回复")
-    @ResponseBody
+    @RequestMapping(value = "feedback/list", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = CommonResponse.class)
     })
+    @ResponseBody
+    @ApiOperation("后台管理获取反馈列表:maxId为-1的时候表示获取最新数据")
     @FunctionPoint(value = "common")
-    public Response<List<FeedbackReview>> listFeedbackReview(@RequestParam long feedbackId) {
-        return new Response<List<FeedbackReview>>().setData(feedbackService.listFeedbackReview(feedbackId));
+    public Response<List<FeedbackWithUserInfo>> fetchFeedbackListWithoutFilter(@RequestBody MaxIdBean maxIdBean) {
+        List<FeedbackWithUserInfo> feedbackWithUserInfoList = feedbackService.fetchFeedbackWithoutFilter(maxIdBean);
+        return new Response<List<FeedbackWithUserInfo>>().setData(feedbackWithUserInfoList);
     }
 
     /**
-     * 删除用户反馈的回复
+     * 客服去获取某个问题的锁定状态
+     *
+     * @param requestBean 请求数据
+     * @return 反馈的状态
+     * @throws DataFormatException       数据格式异常
+     * @throws FeedbackNotFoundException 反馈意见不存在
      */
-    @RequestMapping(value = "balance/feedback/review/delete", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation("删除回复")
-    @ResponseBody
+    @RequestMapping(value = "feedback/status", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式异常", response = CommonResponse.class),
+            @ApiResponse(code = 24, message = "反馈意见不存在", response = CommonResponse.class)
     })
-    @FunctionPoint(value = "common")
-    public void deleteFeedbackReview(@RequestParam long feedbackReviewId) {
-        feedbackService.deleteFeedbackReview(feedbackReviewId);
-    }
-
-    /**
-     * 收藏用户反馈
-     */
-    @RequestMapping(value = "balance/feedback/collect", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation("收藏用户反馈")
     @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
-    })
+    @ApiOperation("获取反馈意见的状态:客服")
     @FunctionPoint(value = "common")
-    public void collectFeedback(@RequestParam long feedbackId) {
-        feedbackService.collectFeedback(feedbackId);
+    public Response<FeedbackLockStatusBean> obtainFeedbackStatus(@RequestBody FeedbackStatusRequestBean requestBean)
+            throws DataFormatException, FeedbackNotFoundException {
+        FeedbackLockStatusBean feedbackLockStatusBean = feedbackService.obtainFeedbackStatus(requestBean);
+        return new Response<FeedbackLockStatusBean>().setData(feedbackLockStatusBean);
     }
-
-    /**
-     * 取消收藏用户反馈
-     */
-    @RequestMapping(value = "balance/feedback/unCollect", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation("取消收藏用户反馈")
-    @ResponseBody
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
-    })
-    @FunctionPoint(value = "common")
-    public void unCollectFeedback(@RequestParam long feedbackId) {
-        feedbackService.unCollectFeedback(feedbackId);
-    }
-
 }

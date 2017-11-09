@@ -12,14 +12,14 @@ public interface FirmwareInfoMapper {
     /**
      * 查看数据库是否存在相对应的版本以及版本号
      *
-     * @param version     版本
      * @param versionCode 版本号
      */
     boolean exist(@Param("firmwareType") String firmwareType,
                   @Param("hardwareCode") String hardwareCode,
                   @Param("environment") String environment,
-                  @Param("version") String version,
-                  @Param("versionCode") int versionCode);
+                  @Param("versionCode") String versionCode,
+                  @Param("appPlatform") String appPlatform,
+                  @Param("appVersionCode") String appVersionCode);
 
     /**
      * 向数据库中插入数据
@@ -28,6 +28,13 @@ public interface FirmwareInfoMapper {
      * @return 影响的行数
      */
     int insert(@Param("firmwareInfo") FirmwareInfo firmwareInfo);
+
+    /**
+     * 更新数据
+     *
+     * @param firmwareInfo 记录
+     */
+    void update(@Param("firmwareInfo") FirmwareInfo firmwareInfo);
 
     /**
      * 获得固件列表
@@ -43,35 +50,14 @@ public interface FirmwareInfoMapper {
      * @param firmwareType 固件类型
      * @param hardwareCode 硬件版本
      * @param versionCode  版本号
+     * @param appPlatform  APP平台
      */
     FirmwareInfo getFirmwareDetail(@Param("firmwareType") String firmwareType,
                                    @Param("hardwareCode") String hardwareCode,
                                    @Param("environment") String environment,
-                                   @Param("versionCode") Integer versionCode);
-
-    /**
-     * 清理固件
-     *
-     * @param firmwareType 固件类型
-     * @param hardwareCode 硬件版本号
-     * @param environment  环境
-     */
-    void cleanFirmware(@Param("firmwareType") String firmwareType,
-                       @Param("hardwareCode") String hardwareCode,
-                       @Param("environment") String environment);
-
-    /**
-     * 修改当前的固件版本
-     *
-     * @param firmwareType 固件类型
-     * @param hardwareCode 硬件版本号
-     * @param environment  环境
-     * @param versionCode  固件版本号
-     */
-    int enableFirmware(@Param("firmwareType") String firmwareType,
-                       @Param("hardwareCode") String hardwareCode,
-                       @Param("environment") String environment,
-                       @Param("versionCode") Integer versionCode);
+                                   @Param("versionCode") String versionCode,
+                                   @Param("appPlatform") String appPlatform,
+                                   @Param("appVersionCode") String appVersionCode);
 
     /**
      * 获得固件信息

@@ -8,6 +8,8 @@ import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
 import com.phicomm.product.manger.service.WatchPlatePictureService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -32,7 +34,6 @@ public class WatchPlatePictureController {
 
     /**
      * 表盘图片上传
-     *
      * @param file          表盘图片
      * @param picId         图片编号
      * @param picChiName    图片中文名
@@ -47,9 +48,13 @@ public class WatchPlatePictureController {
     @RequestMapping(value = "watchplate/picture/upload/file", method = RequestMethod.POST)
     @ApiOperation("图片上传接口")
     @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
     @FunctionPoint(value = "common")
     public CommonResponse pictureUpload(@RequestPart("file") MultipartFile[] file,
-                                        @RequestParam("picId") int[] picId,
+                                        @RequestParam("picId") Integer[] picId,
                                         @RequestParam("picChiName") String[] picChiName,
                                         @RequestParam("picEngName") String[] picEngName,
                                         @RequestParam("picVersion") String picVersion,

@@ -60,7 +60,7 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/statistic/count</url>
+            <url>$baseUrl/balance/statistic/measureCount</url>
             <sub-directories>
                 <name>BalanceStatisticCount</name>
             </sub-directories>
@@ -82,6 +82,40 @@
             </sub-directories>
         </directory>
     </navigation>
+
+<!--BPM 统计 by Yafei.Hou-->
+    <navigation>
+        <id>bpmSaleCountStatistic</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>销售统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/bpm/statistic/saleCount</url>
+            <sub-directories>
+                <name>BPM-Statistic</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>bpmMeasureStatistic</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>测量数据统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/bpm/statistic/measure</url>
+            <sub-directories>
+                <name>BPM-Measure-Statistic</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+<!--BPM 统计 by Yafei.Hou-->
 
     <navigation>
         <id>hermes</id>
@@ -119,7 +153,7 @@
         <id>showBalanceFeedback</id>
         <title>
             <title-name>反馈信息</title-name>
-            <title-description>反馈信息展示</title-description>
+            <title-description>反馈信息</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -132,17 +166,17 @@
     </navigation>
 
     <navigation>
-        <id>wristbandUpgradeForFileUpload</id>
+        <id>wristbandUpgradeForFileAdd</id>
         <title>
-            <title-name>手环固件上传</title-name>
-            <title-description>手环固件上传</title-description>
+            <title-name>固件&amp;APP上传</title-name>
+            <title-description>固件&amp;APP上传</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/wristband/upgrade/page/file/upload</url>
+            <url>$baseUrl/wristband/upgrade/page/file/add</url>
             <sub-directories>
-                <name>wristbandUpgradeForFileUpload</name>
+                <name>wristbandUpgradeForFileAdd</name>
             </sub-directories>
         </directory>
     </navigation>
@@ -287,6 +321,22 @@
             <url>$baseUrl/health/advertisement/add</url>
             <sub-directories>
                 <name>userAnalysis</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceActiveStatistic</id>
+        <title>
+            <title-name>体脂秤S7每日活跃量统计</title-name>
+            <title-description>每日活跃量统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/health/advertisement/add</url>
+            <sub-directories>
+                <name>balanceActiveStatistic</name>
             </sub-directories>
         </directory>
     </navigation>

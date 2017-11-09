@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.service;
 
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
+import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
@@ -16,6 +17,8 @@ import sun.net.util.IPAddressUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 处理Ota服务器地址
@@ -37,7 +40,7 @@ public class OtaServerService {
      * @return 触发失败的主机
      * @throws IOException IO异常
      */
-    public List<HostAndPort> updateTrigger() throws IOException {
+    public List<HostAndPort> updateTrigger(TriggerTypeEnum triggerTypeEnum) throws IOException {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
         List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
@@ -47,12 +50,13 @@ public class OtaServerService {
         }
         UpdateTrigger trigger = new UpdateTrigger();
         for (BalanceServerAddressBean balanceServerAddressBean : addressBeans) {
-            hostAndPort = trigger.balanceUpdateTrigger(HostAndPort.parseString(balanceServerAddressBean.getHostAndPort()));
+            hostAndPort = trigger.balanceUpdateTrigger(HostAndPort.parseString(balanceServerAddressBean.getHostAndPort()),
+                    triggerTypeEnum);
             if (hostAndPort != null) {
                 hostAndPortList.add(hostAndPort);
             }
         }
-        return hostAndPortList;
+        return hostAndPortList.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
     /**

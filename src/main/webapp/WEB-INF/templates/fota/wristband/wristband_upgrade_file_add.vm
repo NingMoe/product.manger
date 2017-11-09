@@ -4,10 +4,30 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">手环固件上传</h3>
+                    <h3 class="box-title">固件&APP上传</h3>
                 </div>
                 <form id="form" role="form" enctype="multipart/form-data">
                     <div class="box-body">
+                        <div class="form-group">
+                            <label for="appPlatform">APP平台</label>
+                            <select id="appPlatform" class="form-control" multiple name="appPlatform"
+                                    style="width: 100%;">
+                                <option value=""></option>
+                                <option value="android">android</option>
+                                <option value="ios">ios</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="appAndroid" style="display:none;">
+                            <label for="appVersionCodeAndroid">Android可支持的版本号</label>
+                            <input type="text" class="form-control" id="appVersionCodeAndroid"
+                                   name="appVersionCodeAndroid" style="border-radius: 4px"
+                                   placeholder="若存在多个版本，各版本之间请以','分隔">
+                        </div>
+                        <div class="form-group" id="appIos" style="display:none;">
+                            <label for="appVersionCodeIos">Ios可支持的版本号</label>
+                            <input type="text" class="form-control" id="appVersionCodeIos" name="appVersionCodeIos"
+                                   style="border-radius: 4px" placeholder="若存在多个版本，各版本之间请以','分隔">
+                        </div>
                         <div class="form-group">
                             <label for="firmwareType">固件类型</label>
                             <select id="firmwareType" class="form-control" name="firmwareType" style="width: 100%;">
@@ -18,21 +38,25 @@
                         </div>
                         <div class="form-group">
                             <label for="hardwareVersion">硬件版本号</label>
-                            <select id="hardwareVersion" class="form-control" name="hardwareVersion" style="width: 100%;">
+                            <select id="hardwareVersion" class="form-control" name="hardwareVersion"
+                                    style="width: 100%;">
                                 <option value=""></option>
                                 <option value="A0">A0</option>
-                                <option value="A0">A1</option>
+                                <option value="A1">A1</option>
                                 <option value="B0">B0</option>
                                 <option value="B1">B1</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="firmwareVersion">固件版本号</label>
-                            <input type="number" class="form-control" id="firmwareVersion" name="firmwareVersion" style="border-radius: 4px" placeholder="固件版本号">
+                            <input type="text" class="form-control" id="firmwareVersion" name="firmwareVersion"
+                                   style="border-radius: 4px"
+                                   placeholder="若固件为W1_A0_V1.00_A00_0615_WB.zip，则此处填1.00，即V后面的数字。">
                         </div>
                         <div class="form-group">
-                            <label for="firmwareVersion">GNSS版本号</label>
-                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion" style="border-radius: 4px" placeholder="GNSS版本号">
+                            <label for="gnssVersion">GNSS版本号</label>
+                            <input type="text" class="form-control" id="gnssVersion" name="gnssVersion"
+                                   style="border-radius: 4px" placeholder="GNSS版本号">
                         </div>
                         <div class="form-group">
                             <label for="environment">环境（测试/生产）</label>
@@ -48,7 +72,7 @@
                             <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
                         </div>
                         <div class="form-group">
-                            <label for="description">固件说明</label>
+                            <label for="description">说明</label>
                             <textarea id="description" name="description" form="form" class="form-control"></textarea>
                         </div>
                     </div>
@@ -62,4 +86,4 @@
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/wristband_upgrade/wristband_upgrade_file_upload.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_upgrade/wristband_upgrade_file_add.js"></script>

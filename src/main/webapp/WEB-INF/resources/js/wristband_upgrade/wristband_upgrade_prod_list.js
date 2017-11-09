@@ -1,63 +1,3 @@
-function upgradeFirmware(node) {
-    if(!confirm("确认是否将该固件作为最新固件？")) {
-        return;
-    }
-
-    var firmwareType = node.parentNode.parentNode.childNodes[1].innerText;
-    var hardwareCode = node.parentNode.parentNode.childNodes[2].innerText;
-    var environment = node.parentNode.parentNode.childNodes[3].innerText;
-    var versionCode = node.parentNode.parentNode.childNodes[4].innerText;
-
-    console.info("firmwareType = " + firmwareType);
-    console.info("hardwareCode = " + hardwareCode);
-    console.info("environment = " + environment);
-    console.info("versionCode = " + versionCode);
-
-    var baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/firmware/upgrade/modify/current/version",
-        dataType: "json",
-        data: {
-            "firmwareType": firmwareType,
-            "hardwareCode": hardwareCode,
-            "environment": "prod",
-            "versionCode": versionCode
-        }, error: function (req, status, err) {
-            console.log('Failed reason: ' + err);
-        }, success: function (data) {
-            if(data.status === 0) {
-                alert("操作成功！");
-            } else {
-                alert("操作失败！");
-            }
-            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
-        }
-    });
-}
-function repeatTrigger(node) {
-    var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
-    var baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/firmware/repeat/trigger",
-        dataType: "json",
-        data: {
-            "id": index
-        }, error: function (req, status, err) {
-            console.log('Failed reason: ' + err);
-        }, success: function (data) {
-            if(data.status === 0) {
-                alert("操作成功！");
-            } else if(data.status === 9) {
-                alert("当前固件不存在");
-            } else if(data.status === 11) {
-                alert("当前固件不是可用状态");
-            }
-            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
-        }
-    });
-}
 function downgrade(node) {
     var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
     var baseUrl = $("#baseUrl").val();
@@ -70,48 +10,171 @@ function downgrade(node) {
         }, error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
-            if(data.status === 0) {
-                alert("操作成功！");
-            } else if(data.status === 11) {
+            if (data.status === 0) {
+                alert("下线成功！");
+            } else if (data.status === 11) {
                 alert("当前固件不是可用状态");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
     });
 }
-function deleteFirmware(node) {
+
+function activate(node) {
     var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
     var baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/firmware/delete",
+        url: baseUrl + "/firmware/activate",
         dataType: "json",
         data: {
             "id": index
         }, error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
-            if(data.status === 0) {
-                alert("操作成功！");
-            } else if(data.status === 9) {
-                alert("需要删除的固件不存在");
-            } else if(data.status === 12) {
-                alert("该固件当前正在使用");
+            if (data.status === 0) {
+                alert("上线成功！");
+            } else if (data.status === 11) {
+                alert("当前固件已经是可用状态");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
             }
             window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
         }
     });
 }
+
+function editWristband(node) {
+    $("#wristbandProdModalLabel").text("编辑");
+    var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var appPlatform = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[3].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
+    var firmwareType = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerText;
+    var hardwareVersion = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+    var environment = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[3].innerText;
+    var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[3].innerText;
+    var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
+    var description = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].lastChild.innerHTML;
+    var enable = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[3].innerText;
+    $("#id").val(id);
+    $("#appPlatform").val(appPlatform);
+    $("#appVersionCode").val(appVersionCode);
+    $("#firmwareType").val(firmwareType);
+    $("#hardwareVersion").val(hardwareVersion);
+    $("#environment").val(environment);
+    $("#firmwareVersion").val(firmwareVersion);
+    $("#gnssVersion").val(gnssVersion);
+    $("#description").val(description);
+    $("#enable").val(enable);
+    $('#wristbandProdModal').modal();
+}
+
+function updateWristband() {
+    var baseUrl = $("#baseUrl").val();
+    var description = $("#description").val();
+    var formData = new FormData($("#updateWristband")[0]);
+    formData.append("description", description);
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/upgrade/wristband/file/update",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if (data.status === 0) {
+                alert("操作成功！");
+            } else if (data.status === 2) {
+                alert("数据格式错误 !");
+            } else if (data.status === 7) {
+                alert("文件上传失败 !");
+            } else if (data.status === 8) {
+                alert("固件版本已经存在 !");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+        }
+    });
+}
+
+function deleteFirmware(node) {
+    if (confirm("确定删除？")) {
+        var index = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+        var baseUrl = $("#baseUrl").val();
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "/firmware/delete",
+            dataType: "json",
+            data: {
+                "id": index
+            }, error: function (req, status, err) {
+                console.log('Failed reason: ' + err);
+            }, success: function (data) {
+                if (data.status === 0) {
+                    alert("删除成功！");
+                } else if (data.status === 9) {
+                    alert("需要删除的固件不存在");
+                } else if (data.status === 12) {
+                    alert("该固件当前正在使用");
+                }
+                window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+            }
+        });
+    }
+}
+
+function showAddAppVersion(node) {
+    $("#appVersionAddModalLabel").text("添加新的APP版本号");
+    var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
+    var appVersionCode = node.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText;
+    $("#idAdd").val(id);
+    $("#appVersionCodeAdd").val(appVersionCode);
+    $('#appVersionAddModal').modal();
+}
+
+function saveAppVersion() {
+    var baseUrl = $("#baseUrl").val();
+    var formData = new FormData($("#addAppVersion")[0]);
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/firmware/upgrade/wristband/app/add",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            if (data.status === 0) {
+                alert("添加成功！");
+            } else if (data.status === 2) {
+                alert("数据格式错误 !");
+            } else if (data.status === 8) {
+                alert("APP版本已经存在 !");
+            } else if(data.status === 19) {
+                alert("固件触发失败，请重试！");
+            }
+            window.location.href = baseUrl + "/wristband/upgrade/page/prod/list";
+        }
+    });
+}
+
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
-    $("#firmware-upgrade-menu-node").addClass("active");
     $("#firmware-upgrade-wristband-li-node").addClass("active");
-    $("#firmware-upgrade-wristband-menu-node").addClass("active");
+    $("#firmware-upgrade-wristband-prod-list").addClass("active");
     var baseUrl = $("#baseUrl").val();
     var table = $("#wristbandProdList").DataTable({
         paging: true,
-        searching: false,
-        ordering: false,
+        searching: true,
+        ordering: true,
         processing: true,
         aLengthMenu: [10],
         iDisplayLength: 10,
@@ -129,19 +192,6 @@ $(document).ready(function () {
                 sLast: "尾页"
             }
         },
-        drawCallback: function () {
-            var nodes = $(".table_enable_upgrade");
-            nodes.mouseover(function () {
-                if(this.innerHTML !== "当前版本" && this.getElementsByTagName("i").length === 0) {
-                    this.innerHTML = '<i class="fa fa-arrow-up" style="cursor: pointer" onclick="upgradeFirmware(this)"></i>';
-                }
-            });
-            nodes.mouseleave(function () {
-                if(this.innerHTML !== "当前版本" && this.getElementsByClassName("fa fa-arrow-up").length !== 0) {
-                    this.innerHTML = "";
-                }
-            });
-        },
         ajax: {
             url: baseUrl + "/firmware/upgrade/list?environment=prod",
         },
@@ -152,16 +202,16 @@ $(document).ready(function () {
                 data: null,
                 defaultContent: ""
             },
+            {data: "appPlatform"},
+            {data: "appVersionCode"},
             {data: "firmwareType"},
             {data: "hardwareCode"},
             {data: "version"},
             {data: "versionCode"},
-            {
-                data: "enable",
-                className: "table_enable_upgrade"
-            }
+            {data: "enable"}
         ]
     });
+
     function format(d) {
         var result = null;
         $.ajax({
@@ -170,6 +220,8 @@ $(document).ready(function () {
             dataType: "json",
             async: false,
             data: {
+                "appPlatform": d.appPlatform,
+                "appVersionCode": d.appVersionCode,
                 "firmwareType": d.firmwareType,
                 "hardwareCode": d.hardwareCode,
                 "versionCode": d.versionCode,
@@ -181,21 +233,45 @@ $(document).ready(function () {
             }
         });
         console.log(JSON.stringify(result));
-        return '<table class="table" style="margin-left: 50px"><tr><td>ID:</td><td>#id#</td></tr><tr><td>固件类型:</td><td>#firmwareType#</td></tr><tr><td>硬件版本:</td><td>#hardwareCode#</td></tr><tr><td>环境:</td><td>#environment#</td></tr><tr><td>固件版本:</td><td>#version#</td></tr><tr><td>固件版本号:</td><td>#versionCode#</td></tr><tr><td>GNSS版本:</td><td>#gnssVersion#</td></tr><tr><td>固件说明:</td><td>#description#</td></tr><tr><td>下载链接:</td><td><a href="#url#">#url#</a></td></tr><tr><td>MD5:</td><td>#md5#</td></tr><tr><td>上传时间:</td><td>#createTime#</td></tr><tr><td>是否可用:</td><td>#enable#</td><tr><td>重新触发:</td><td><button onclick="repeatTrigger(this)">重新触发</button></td></tr><tr><td>降级:</td><td><button onclick="downgrade(this)">降级</button></td></tr><tr><td>删除:</td><td><button onclick="deleteFirmware(this)">删除</button></td></tr></table>'
-            .replace("#id#", result.id)
-            .replace("#firmwareType#", result.firmwareType)
-            .replace("#hardwareCode#", result.hardwareCode)
-            .replace("#environment#", result.environment)
-            .replace("#version#", result.version)
-            .replace("#versionCode#", result.versionCode)
-            .replace("#description#", result.description)
-            .replace("#url#", result.url)
-            .replace("#url#", result.url)
-            .replace("#gnssVersion#", result.gnssVersion)
-            .replace("#md5#", result.md5)
-            .replace("#createTime#", result.createTime)
-            .replace("#enable#", result.enable);
+        if ("不可用" === d.enable) {
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td colspan="3">#gnssVersion#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td><td><button style="background-color: slategray" onclick="deleteFirmware(this)">删除</button></td></tr></table>'
+                .replace("#id#", result.id)
+                .replace("#appPlatform#", result.appPlatform)
+                .replace("#appVersionCode#", result.appVersionCode)
+                .replace("#firmwareType#", result.firmwareType)
+                .replace("#hardwareCode#", result.hardwareCode)
+                .replace("#environment#", result.environment)
+                .replace("#version#", result.version)
+                .replace("#versionCode#", result.versionCode)
+                .replace("#description#", result.description)
+                .replace("#url#", result.url)
+                .replace("#url#", result.url)
+                .replace("#gnssVersion#", result.gnssVersion)
+                .replace("#md5#", result.md5)
+                .replace("#size#", result.size)
+                .replace("#createTime#", result.createTime)
+                .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
+        } else {
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td colspan="3">#gnssVersion#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td></tr></table>'
+                .replace("#id#", result.id)
+                .replace("#appPlatform#", result.appPlatform)
+                .replace("#appVersionCode#", result.appVersionCode)
+                .replace("#firmwareType#", result.firmwareType)
+                .replace("#hardwareCode#", result.hardwareCode)
+                .replace("#environment#", result.environment)
+                .replace("#version#", result.version)
+                .replace("#versionCode#", result.versionCode)
+                .replace("#description#", result.description)
+                .replace("#url#", result.url)
+                .replace("#url#", result.url)
+                .replace("#gnssVersion#", result.gnssVersion)
+                .replace("#md5#", result.md5)
+                .replace("#size#", result.size)
+                .replace("#createTime#", result.createTime)
+                .replace("#enable#", result.enable == 1 ? "可用" : "不可用");
+        }
     }
+
     $("#wristbandProdList tbody").on("click", "td.details-control", function () {
         var tr = $(this).closest("tr");
         var row = table.row(tr);
