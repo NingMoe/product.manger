@@ -4,7 +4,7 @@ $(document).ready(function () {
 });
 
 /**
- * 获取过去15天的血压计统计信息
+ * 获取过去12天的血压计统计信息
  */
 $(function getMeasureStatisticLast15Day() {
     const baseUrl = $("#baseUrl").val();
