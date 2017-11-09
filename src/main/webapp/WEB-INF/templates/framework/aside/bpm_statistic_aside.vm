@@ -1,0 +1,14 @@
+<li class="header">BloodPressureMeter Sales Stistic</li>
+<li class="treeview" id="bpm-statistic-1">
+    <a href="#">
+        <i class="fa fa-heart-o"></i>
+        <span>血压计相关统计</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="bpm-statistic-2">
+        <li><a href="$baseUrl/bpm/statistic/saleCount"><i class="fa fa-bar-chart"></i> 血压计销售统计</a></li>
+        <li><a href="$baseUrl/bpm/statistic/measure"><i class="fa fa-line-chart"></i> 血压计测量数据统计</a></li>
+    </ul>
+</li>

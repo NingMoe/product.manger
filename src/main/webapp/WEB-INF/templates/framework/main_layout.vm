@@ -60,6 +60,7 @@
             #parse("framework/user_info/user_info_left.vm")
             <ul class="sidebar-menu">
                 #parse("framework/aside/balance_statistic_aside.vm")
+                #parse("framework/aside/bpm_statistic_aside.vm")
                 #parse("framework/aside/feedback_manger_aside.vm")
                 #parse("framework/aside/firmware_upgrade_aside.vm")
                 #parse("framework/aside/watchplate_picture_manager_aside.vm")
