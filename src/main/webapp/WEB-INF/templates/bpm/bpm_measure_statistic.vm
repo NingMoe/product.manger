@@ -9,7 +9,7 @@
                     <i class="fa fa-5x fa-edit" > </i>
                 </div>
                 <div class="col-md-8 ">
-                    <h4>测量数据总计</h4>
+                    <h4>测量数据总数</h4>
                     <h3 id="allNum">13,500</h3>
                     <p >（条）</p>
                 </div>
