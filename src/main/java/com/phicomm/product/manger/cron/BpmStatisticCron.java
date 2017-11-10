@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.cron;
 
+import com.phicomm.product.manger.service.BpmMeasureStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -7,15 +8,16 @@ import org.springframework.stereotype.Component;
 /**
  *
  * Created by yafei.hou on 2017/11/8.
+ * @author yafei.hou
  */
 @Component
-public class BloodPressureMeasureDataSizeCron {
+public class BpmStatisticCron {
 
-    private BloodPressureMeasureDataSizeService bloodPressureMeasureDataSizeService;
+    private BpmMeasureStatisticService bpmMeasureStatisticService;
 
     @Autowired
-    public BloodPressureMeasureDataSizeCron(BloodPressureMeasureDataSizeService bloodPressureMeasureDataSizeService) {
-        this.bloodPressureMeasureDataSizeService = bloodPressureMeasureDataSizeService;
+    public BpmStatisticCron(BpmMeasureStatisticService bpmMeasureStatisticService) {
+        this.bpmMeasureStatisticService = bpmMeasureStatisticService;
     }
 
     /**
@@ -23,6 +25,6 @@ public class BloodPressureMeasureDataSizeCron {
      */
     @Scheduled(cron = "0 0 2 * * ?")
     public void startCron(){
-        bloodPressureMeasureDataSizeService.cronTask();
+        bpmMeasureStatisticService.cronTask();
     }
 }

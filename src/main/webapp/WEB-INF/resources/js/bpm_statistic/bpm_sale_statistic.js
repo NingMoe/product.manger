@@ -13,7 +13,7 @@ $(function bpmMeasureCountSaleByDay() {
         url: baseUrl + "/bpm/statistic/sale/byDay",
         dataType: "json",
         data: {
-            "day": 15
+            "day": 12
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);

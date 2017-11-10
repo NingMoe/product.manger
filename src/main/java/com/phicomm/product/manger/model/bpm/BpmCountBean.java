@@ -1,19 +1,19 @@
-package com.phicomm.product.manger.model.bpmstatistic;
+package com.phicomm.product.manger.model.bpm;
 
 /**
  * 每天被绑定的血压计的数量
  * Created by yafei.hou on 2017/11/6.
  */
-public class BPMCountBean {
+public class BpmCountBean {
 
     private int bindPBMCount;
 
     private String bindPBMTime;
 
-    public BPMCountBean() {
+    public BpmCountBean() {
     }
 
-    public BPMCountBean(int bindPBMCount, String bindPBMTime) {
+    public BpmCountBean(int bindPBMCount, String bindPBMTime) {
         this.bindPBMCount = bindPBMCount;
         this.bindPBMTime = bindPBMTime;
     }
@@ -36,7 +36,7 @@ public class BPMCountBean {
 
     @Override
     public String toString() {
-        return "BPMCountBean{" +
+        return "BpmCountBean{" +
                 "bindPBMCount=" + bindPBMCount +
                 ", bindPBMTime='" + bindPBMTime + '\'' +
                 '}';

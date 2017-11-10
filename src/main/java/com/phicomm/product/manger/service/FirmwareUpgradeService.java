@@ -404,29 +404,11 @@ public class FirmwareUpgradeService {
         if (firmwareInfoMapper.exist(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode)) {
             throw new VersionHasExistException();
         }
-<<<<<<< HEAD
-        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
-        new Thread(() -> {
-            String firmwareType = firmwareInfo.getFirmwareType();
-            String hardwareCode = firmwareInfo.getHardwareCode();
-            FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(firmwareInfo.getEnvironment())
-                    ? FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
-            int versionCode = firmwareInfo.getVersionCode();
-            FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType, hardwareCode,
-                    firmwareEnvironmentEnum, versionCode, firmwareInfo, configuration);
-            DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
-            try {
-                trigger.trigger(firmwareUpgradeContext);
-            } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
-                logger.info(ExceptionUtil.getErrorMessage(e));
-            }
-        }).start();
-=======
         firmwareInfoMapper.insert(firmwareInfo);
         logger.info(firmwareInfo);
         // 触发升级
         trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode);
->>>>>>> beeade7b108446c330aea03c4fc68c65bb81f1f2
+
     }
 
 

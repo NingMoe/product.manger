@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BpmMeasureStatisticMapper">
+
+    <!--保存数据-->
+    <insert id="insertMonth" >
+        insert blood_pressure_measure_data_size_every_month(data_size,month)
+        value(#{bpmMeasureBean.measureCount,jdbcType=INTEGER},#{bpmMeasureBean.measureTime,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertDay" >
+        insert blood_pressure_measure_data_size_every_day(data_size,day)
+        value(#{bpmMeasureBean.measureCount,jdbcType=INTEGER},#{bpmMeasureBean.measureTime,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertHour" >
+        insert blood_pressure_measure_data_size_every_hour(data_size,hour)
+        value(#{bpmMeasureBean.measureCount,jdbcType=INTEGER},#{bpmMeasureBean.measureTime,jdbcType=VARCHAR})
+    </insert>
+
+    <!--查询数据-->
+    <select id="selectMonth" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
+        select data_size AS measureCount, month as measureTime from blood_pressure_measure_data_size_every_month
+        order by create_time DESC
+        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectDay" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
+        select data_size AS measureCount, day as measureTime from blood_pressure_measure_data_size_every_day
+        order by create_time DESC
+        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectHour" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
+        SELECT
+            data_size AS measureCount,
+            HOUR AS measureTime
+        FROM
+            blood_pressure_measure_data_size_every_hour
+        ORDER BY
+            create_time DESC
+        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+    </select>
+
+
+
+
+</mapper>
