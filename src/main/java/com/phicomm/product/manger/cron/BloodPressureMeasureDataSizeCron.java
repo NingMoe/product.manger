@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.cron;
 
-import com.phicomm.product.manger.service.BloodPressureMeasureDataSizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
