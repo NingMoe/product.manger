@@ -1,19 +1,19 @@
-package com.phicomm.product.manger.model.bpmstatistic;
+package com.phicomm.product.manger.model.bpm;
 
 /**
  *
  * Created by yafei.hou on 2017/11/8.
  */
-public class BPMMeasureBean {
+public class BpmMeasureBean {
 
     private int measureCount;
 
     private String measureTime;
 
-    public BPMMeasureBean() {
+    public BpmMeasureBean() {
     }
 
-    public BPMMeasureBean( String measureTime,int measureCount) {
+    public BpmMeasureBean(String measureTime, int measureCount) {
         this.measureCount = measureCount;
         this.measureTime = measureTime;
     }
@@ -36,7 +36,7 @@ public class BPMMeasureBean {
 
     @Override
     public String toString() {
-        return "BPMMeasureBean{" +
+        return "BpmMeasureBean{" +
                 "measureCount=" + measureCount +
                 ", measureTime='" + measureTime + '\'' +
                 '}';

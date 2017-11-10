@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.phicomm.product.manger.dao.BloodPressureMeasureDataSizeMapper">
+<mapper namespace="com.phicomm.product.manger.dao.BpmMeasureStatisticMapper">
 
     <!--保存数据-->
     <insert id="insertMonth" >
@@ -19,19 +19,19 @@
     </insert>
 
     <!--查询数据-->
-    <select id="selectMonth" resultType="com.phicomm.product.manger.model.bpmstatistic.BPMMeasureBean">
+    <select id="selectMonth" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         select data_size AS measureCount, month as measureTime from blood_pressure_measure_data_size_every_month
         order by create_time DESC
         LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
     </select>
 
-    <select id="selectDay" resultType="com.phicomm.product.manger.model.bpmstatistic.BPMMeasureBean">
+    <select id="selectDay" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         select data_size AS measureCount, day as measureTime from blood_pressure_measure_data_size_every_day
         order by create_time DESC
         LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
     </select>
 
-    <select id="selectHour" resultType="com.phicomm.product.manger.model.bpmstatistic.BPMMeasureBean">
+    <select id="selectHour" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         SELECT
             data_size AS measureCount,
             HOUR AS measureTime

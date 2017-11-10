@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.phicomm.product.manger.dao.BPMSaleStatisticMapper">
+<mapper namespace="com.phicomm.product.manger.dao.BpmSaleStatisticMapper">
 
     <!--统计销售的血压计的数量，前n个月-->
-    <select id="obtainBPMSaleNumByMonth" resultType="com.phicomm.product.manger.model.bpmstatistic.BPMCountBean">
+    <select id="obtainBpmSaleByMonth" resultType="com.phicomm.product.manger.model.bpm.BpmCountBean">
         <![CDATA[
             SELECT
                 DATE_FORMAT(create_time, '%y-%m') AS bindPBMTime,
@@ -24,10 +24,10 @@
     </select>
 
     <!--统计销售的血压计的数量，最近n天-->
-    <select id="obtainBPMSaleNumByDay" resultType="com.phicomm.product.manger.model.bpmstatistic.BPMCountBean">
+    <select id="obtainBpmSaleNumByDay" resultType="com.phicomm.product.manger.model.bpm.BpmCountBean">
         <![CDATA[
             SELECT
-                DATE_FORMAT(create_time, '%y-%m-%d') AS bindPBMTime,
+                DATE_FORMAT(create_time, '%m-%d') AS bindPBMTime,
                 count(DISTINCT device_id) AS bindPBMCount
             FROM
                 blood_pressure_meter_location_info
@@ -36,16 +36,16 @@
             HAVING
                 bindPBMTime > DATE_FORMAT(
                     DATE_ADD(NOW(), INTERVAL - #{days,jdbcType=INTEGER}  DAY),
-                    '%y-%m-%d'
+                    '%m-%d'
                 )
-            AND bindPBMTime <= DATE_FORMAT(NOW(), '%y-%m-%d')
+            AND bindPBMTime <= DATE_FORMAT(NOW(), '%m-%d')
             ORDER BY
                 bindPBMTime DESC
         ]]>
     </select>
 
     <!--统计血压计 销售总量-->
-    <select id="obtainBPMSaleNumAll" resultType="int">
+    <select id="obtainBpmSaleNumAll" resultType="int">
         SELECT
             COUNT(DISTINCT device_id) AS number
         FROM
@@ -53,7 +53,7 @@
     </select>
 
     <!--统计血压计 今日销量总量-->
-    <select id="obtainBPMSaleNumToday" resultType="int">
+    <select id="obtainBpmSaleNumToday" resultType="int">
         SELECT
             COUNT(DISTINCT device_id) AS number
         FROM

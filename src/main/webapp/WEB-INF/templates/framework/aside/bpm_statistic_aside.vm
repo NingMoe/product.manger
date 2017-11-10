@@ -8,7 +8,7 @@
         </span>
     </a>
     <ul class="treeview-menu" id="bpm-statistic-2">
-        <li><a href="$baseUrl/bpm/statistic/saleCount"><i class="fa fa-bar-chart"></i> 血压计销售统计</a></li>
+        <li><a href="$baseUrl/bpm/statistic/saleCount"><i class="fa fa-bar-chart"></i> 血压计使用量统计</a></li>
         <li><a href="$baseUrl/bpm/statistic/measure"><i class="fa fa-line-chart"></i> 血压计测量数据统计</a></li>
     </ul>
 </li>

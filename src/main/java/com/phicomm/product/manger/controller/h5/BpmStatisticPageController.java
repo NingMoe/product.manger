@@ -17,16 +17,17 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * Created by yafei.hou on 2017/11/6.
+ * @author yafei.hou
  */
 @Controller
-public class BPMStatisticPageController {
+public class BpmStatisticPageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public BPMStatisticPageController(NavigationManger navigationManger) {
+    public BpmStatisticPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
-        Assert.notNull(navigationManger);
+        Assert.notNull(this.navigationManger);
     }
 
     /**
@@ -38,7 +39,7 @@ public class BPMStatisticPageController {
     public ModelAndView showBPMStatisticCount(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "bpmstatistic/bpm_sale_statistic.vm");
+        modelAndView.getModel().put("context", "bpm/bpm_sale_statistic.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("bpmSaleCountStatistic"));
         return modelAndView;
@@ -54,7 +55,7 @@ public class BPMStatisticPageController {
     public ModelAndView showBPMMeasureStatisticCount(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "bpmstatistic/bpm_measure_statistic.vm");
+        modelAndView.getModel().put("context", "bpm/bpm_measure_statistic.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("bpmMeasureStatistic"));
         return modelAndView;

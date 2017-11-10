@@ -1,8 +1,8 @@
-package com.phicomm.product.manger.controller.bpmstatistic;
+package com.phicomm.product.manger.controller.bpm.statistic;
 
 import com.phicomm.product.manger.annotation.PublicInterface;
 import com.phicomm.product.manger.model.common.Response;
-import com.phicomm.product.manger.service.BPMStatisticService;
+import com.phicomm.product.manger.service.BpmStatisticService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -20,19 +20,21 @@ import java.util.Map;
 
 /**
  * 血压计的绑定数量，以及查询数据
- * Created by yafei.hou on 2017/11/6.
+ *
+ * @author yafei.hou
+ *         Created by yafei.hou on 2017/11/6.
  */
 @Controller
 @Api(value = "统计血压计绑定的数量", description = "统计血压计绑定的数量")
-public class BPMStatisticController {
+public class BpmBindController {
 
-    private BPMStatisticService bpmStatisticService ;
+    private BpmStatisticService bpmStatisticService;
 
 
     @Autowired
-    public BPMStatisticController(BPMStatisticService bpmStatisticService) {
+    public BpmBindController(BpmStatisticService bpmStatisticService) {
         this.bpmStatisticService = bpmStatisticService;
-        Assert.notNull(bpmStatisticService);
+        Assert.notNull(this.bpmStatisticService);
     }
 
     /**
@@ -40,7 +42,7 @@ public class BPMStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "bpm/statistic/bind/day" ,method = RequestMethod.POST)
+    @RequestMapping(value = "bpm/statistic/bind/day", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("最近N天的血压计绑定的数量 最近N天")
     @ApiResponses(value = {
@@ -57,7 +59,7 @@ public class BPMStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "bpm/statistic/bind/month" ,method = RequestMethod.POST)
+    @RequestMapping(value = "bpm/statistic/bind/month", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("最近N月的血压计绑定的数量 最近N月")
     @ApiResponses(value = {
@@ -65,7 +67,7 @@ public class BPMStatisticController {
     })
     @PublicInterface
     public Response<Map<String, Integer>> obtainCountByMonth(@RequestParam int month) {
-        Map<String, Integer> statisticData = bpmStatisticService.obtainBPMCountByMonth(month);
+        Map<String, Integer> statisticData = bpmStatisticService.obtainBpmCountByMonth(month);
         return new Response<Map<String, Integer>>().setData(statisticData);
     }
 
@@ -74,7 +76,7 @@ public class BPMStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "bpm/statistic/bind/all" ,method = RequestMethod.POST)
+    @RequestMapping(value = "bpm/statistic/bind/all", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("被绑定的血压计总数")
     @ApiResponses(value = {
@@ -82,10 +84,9 @@ public class BPMStatisticController {
     })
     @PublicInterface
     public Response<Integer> obtainCountBindAll() {
-        Integer statisticData = bpmStatisticService.obtainBPMCountBindAll();
+        Integer statisticData = bpmStatisticService.obtainBpmCountBindAll();
         return new Response<Integer>().setData(statisticData);
     }
-
 
 
     /**
@@ -93,7 +94,7 @@ public class BPMStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "bpm/statistic/measure/all" ,method = RequestMethod.GET)
+    @RequestMapping(value = "bpm/statistic/measure/all", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation("血压计测量数据量统计（总量）")
     @ApiResponses(value = {
@@ -101,7 +102,7 @@ public class BPMStatisticController {
     })
     @PublicInterface
     public Response<Integer> obtainMeasureCountAll() {
-        Integer statisticData = bpmStatisticService.obtainBPMeasureCounts();
+        Integer statisticData = bpmStatisticService.obtainBpmMeasureCounts();
         return new Response<Integer>().setData(statisticData);
     }
 
@@ -110,7 +111,7 @@ public class BPMStatisticController {
      *
      * @return 数据
      */
-    @RequestMapping(value = "bpm/statistic/measure/todayOrMonth" ,method = RequestMethod.POST)
+    @RequestMapping(value = "bpm/statistic/measure/todayOrMonth", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("血压计测量数据量统计（当前月份和当天总量）")
     @ApiResponses(value = {
@@ -118,7 +119,7 @@ public class BPMStatisticController {
     })
     @PublicInterface
     public Response<Map<String, Integer>> obtainMeasureCountTodayOrMonthAll() throws ParseException {
-        Map<String, Integer> statisticData = bpmStatisticService.obtainBPMeasureCountsThisMonthOrToday();
+        Map<String, Integer> statisticData = bpmStatisticService.obtainBpmMeasureThisDayOrMonth();
         return new Response<Map<String, Integer>>().setData(statisticData);
     }
 }
