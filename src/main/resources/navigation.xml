@@ -88,7 +88,7 @@
         <id>bpmSaleCountStatistic</id>
         <title>
             <title-name>统计</title-name>
-            <title-description>销售统计</title-description>
+            <title-description>使用量统计统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
