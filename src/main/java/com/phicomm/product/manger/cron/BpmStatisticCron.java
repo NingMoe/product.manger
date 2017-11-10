@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  *
  * Created by yafei.hou on 2017/11/8.
+ * @author yafei.hou
  */
 @Component
 public class BpmStatisticCron {

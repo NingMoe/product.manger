@@ -19,6 +19,7 @@ import java.util.*;
 /**
  * 血压测量数据 相关统计
  * Created by yafei.hou on 2017/11/6.
+ *
  * @author yafei.hou
  */
 @Service
@@ -126,7 +127,7 @@ public class BpmStatisticService {
         Map<String, Integer> result = new TreeMap<>();
         list2map(countBeans, result);
         addZero(day, dateFormat, result);
-        logger.info("day--\n"+result);
+        logger.info("day--\n" + result);
         return result;
     }
 
@@ -241,7 +242,7 @@ public class BpmStatisticService {
         for (int i = 0; i < TABLES; i++) {
             sum += bpmBindStatisticMapper.obtainBpmMeasureCounts(i);
         }
-        logger.info("-----------------总计测量数据数量------------------" + sum);
+        logger.info(sum);
         CustomerContextHolder.clearDataSource();
         return sum;
     }
@@ -261,8 +262,7 @@ public class BpmStatisticService {
         }
         CustomerContextHolder.clearDataSource();
         map.put(MONTH_KEY, list.size());
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DAY_PATTERN_MM_DD);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
         String dateStr = simpleDateFormat.format(new Date());
         int todayNUm = 0;
         for (String str : list) {
