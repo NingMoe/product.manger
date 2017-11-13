@@ -42,6 +42,8 @@ public class ExceptionHandlerController {
     private static JSONObject exception21;
     private static JSONObject exception22;
     private static JSONObject exception23;
+    private static JSONObject exception24;
+    private static JSONObject exception25;
 
     static {
         exception1001 = new JSONObject();
@@ -185,6 +187,18 @@ public class ExceptionHandlerController {
         exception23 = new JSONObject();
         exception23.put("status", 23);
         exception23.put("description", "feedback upload failure.");
+    }
+
+    static {
+        exception24 = new JSONObject();
+        exception24.put("status", 24);
+        exception24.put("description", "会话撤回失败.");
+    }
+
+    static {
+        exception25 = new JSONObject();
+        exception25.put("status", 25);
+        exception25.put("description", "app type not found.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -374,5 +388,21 @@ public class ExceptionHandlerController {
     @ExceptionHandler(FeedbackUploadException.class)
     public ModelAndView processFeedbackUploadException(){
         return new ModelAndView(new MappingJackson2JsonView(),exception23);
+    }
+
+    /**
+     * 会话撤回失败
+     */
+    @ExceptionHandler(DialogRevokeException.class)
+    public ModelAndView processDialogRevokeException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception24);
+    }
+
+    /**
+     * appType找不到
+     */
+    @ExceptionHandler(AppTypeNotFoundException.class)
+    public ModelAndView processAppTypeNotFoundException(){
+        return new ModelAndView(new MappingJackson2JsonView(),exception25);
     }
 }
