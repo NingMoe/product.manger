@@ -42,31 +42,31 @@ public class BpmMeasureStatisticService {
         this.bpmMeasureStatisticMapper = bpmMeasureStatisticMapper;
         Assert.notNull(this.bpmStatisticService);
         Assert.notNull(this.bpmMeasureStatisticMapper);
+        //cronTask();
     }
 
     /**
      * 每天自动执行统计信息
      */
     public void cronTask() {
+        List<BpmMeasureBean> monthList = msp2List(statisticMeasureMonth());
+        List<BpmMeasureBean> dayList = msp2List(statisticMeasureDay());
+        List<BpmMeasureBean> hourList = msp2List(statisticMeasureHour());
 
-        for (BpmMeasureBean beanMonth : msp2List(statisticMeasureMonth())) {
-            CustomerContextHolder.selectLocalDataSource();
+        CustomerContextHolder.selectLocalDataSource();
+        for (BpmMeasureBean beanMonth : monthList) {
             bpmMeasureStatisticMapper.insertMonth(beanMonth);
-            CustomerContextHolder.clearDataSource();
         }
-        logger.info("更新blood_pressure_measure_data_size_every_month表");
-        for (BpmMeasureBean beanDay : msp2List(statisticMeasureDay())) {
-            CustomerContextHolder.selectLocalDataSource();
+        logger.info("update table blood_pressure_measure_data_size_every_month");
+        for (BpmMeasureBean beanDay : dayList) {
             bpmMeasureStatisticMapper.insertDay(beanDay);
-            CustomerContextHolder.clearDataSource();
         }
-        logger.info("更新blood_pressure_measure_data_size_every_day表");
-        for (BpmMeasureBean beanHour : msp2List(statisticMeasureHour())) {
-            CustomerContextHolder.selectLocalDataSource();
+        logger.info("update table blood_pressure_measure_data_size_every_day");
+        for (BpmMeasureBean beanHour : hourList) {
             bpmMeasureStatisticMapper.insertHour(beanHour);
-            CustomerContextHolder.clearDataSource();
         }
-        logger.info("更新blood_pressure_measure_data_size_every_hour表");
+        CustomerContextHolder.clearDataSource();
+        logger.info("update table blood_pressure_measure_data_size_every_hour");
 
     }
 
