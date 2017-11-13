@@ -102,21 +102,21 @@ public class BpmMeasureStatisticService {
      */
     public Map<String, Integer> bpmMeasureDataSizeByMonth() {
         CustomerContextHolder.selectLocalDataSource();
-        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectMonth(LIMIT_MONTH_NUM);
+        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectMonth();
         CustomerContextHolder.clearDataSource();
         return getStringIntegerMap(list);
     }
 
     public Map<String, Integer> bpmMeasureDataSizeByDay() {
         CustomerContextHolder.selectLocalDataSource();
-        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectDay(LIMIT_DAY_NUM);
+        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectDay();
         CustomerContextHolder.clearDataSource();
         return getStringIntegerMap(list);
     }
 
     public Map<String, Integer> bpmMeasureDataSizeByHour() {
         CustomerContextHolder.selectLocalDataSource();
-        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectHour(HOURS);
+        List<BpmMeasureBean> list = bpmMeasureStatisticMapper.selectHour();
         CustomerContextHolder.clearDataSource();
         return getStringIntegerMap(list);
     }
@@ -128,7 +128,10 @@ public class BpmMeasureStatisticService {
             return new HashMap<>(0);
         }
         for (BpmMeasureBean bean : list) {
-            map.put(bean.getMeasureTime(), bean.getMeasureCount());
+            String key = bean.getMeasureTime();
+            if (!map.containsKey(key)) {
+                map.put(key, bean.getMeasureCount());
+            }
         }
         logger.info(map);
         return map;

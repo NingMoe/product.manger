@@ -18,17 +18,45 @@
         value(#{bpmMeasureBean.measureCount,jdbcType=INTEGER},#{bpmMeasureBean.measureTime,jdbcType=VARCHAR})
     </insert>
 
-    <!--查询数据-->
+    <!--查询数据,最近一天插入的数据-->
     <select id="selectMonth" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
-        select data_size AS measureCount, month as measureTime from blood_pressure_measure_data_size_every_month
-        order by create_time DESC
-        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+        SELECT
+            data_size AS measureCount,
+            MONTH AS measureTime
+        FROM
+            blood_pressure_measure_data_size_every_month
+        WHERE
+            DATE_FORMAT(create_time, '%y-%m-%d') = DATE_FORMAT(
+                (
+                    SELECT
+                        MAX(create_time)
+                    FROM
+                        blood_pressure_measure_data_size_every_month
+                ),
+                '%y-%m-%d'
+            )
+        ORDER BY
+            measureTime DESC
     </select>
 
     <select id="selectDay" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
-        select data_size AS measureCount, day as measureTime from blood_pressure_measure_data_size_every_day
-        order by create_time DESC
-        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+        SELECT
+            data_size AS measureCount,
+            day AS measureTime
+        FROM
+            blood_pressure_measure_data_size_every_day
+        WHERE
+            DATE_FORMAT(create_time, '%y-%m-%d') = DATE_FORMAT(
+                (
+                    SELECT
+                        MAX(create_time)
+                    FROM
+                        blood_pressure_measure_data_size_every_day
+                ),
+                '%y-%m-%d'
+            )
+        ORDER BY
+            measureTime DESC
     </select>
 
     <select id="selectHour" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
@@ -37,9 +65,18 @@
             HOUR AS measureTime
         FROM
             blood_pressure_measure_data_size_every_hour
+        WHERE
+            DATE_FORMAT(create_time, '%y-%m-%d') = DATE_FORMAT(
+                (
+                    SELECT
+                        MAX(create_time)
+                    FROM
+                        blood_pressure_measure_data_size_every_hour
+                ),
+                '%y-%m-%d'
+            )
         ORDER BY
-            create_time DESC
-        LIMIT #{showBPMMeasureNumber,jdbcType=INTEGER}
+            measureTime DESC
     </select>
 
 
