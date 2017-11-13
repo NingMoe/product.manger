@@ -34,22 +34,19 @@ public interface BpmMeasureStatisticMapper {
 
     /**
      * 查询最近N个月的测量数据
-     * @param showBPMMeasureNumber 测量数据bean
      * @return List<BpmMeasureBean> 查询数据列表
      */
-    List<BpmMeasureBean> selectMonth(@Param("showBPMMeasureNumber")int  showBPMMeasureNumber);
+    List<BpmMeasureBean> selectMonth();
     /**
      * 查询最近N个天的测量数据
-     * @param showBPMMeasureNumber 测量数据bean
      * @return List<BpmMeasureBean> 查询数据列表
      */
-    List<BpmMeasureBean> selectDay(@Param("showBPMMeasureNumber")int  showBPMMeasureNumber);
+    List<BpmMeasureBean> selectDay();
     /**
      * 查询24小时的测量数据分布
-     * @param showBPMMeasureNumber 测量数据bean
      * @return List<BpmMeasureBean> 查询数据列表
      */
-    List<BpmMeasureBean> selectHour(@Param("showBPMMeasureNumber")int  showBPMMeasureNumber);
+    List<BpmMeasureBean> selectHour();
 
 
 

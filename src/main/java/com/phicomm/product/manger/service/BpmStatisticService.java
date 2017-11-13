@@ -34,7 +34,6 @@ public class BpmStatisticService {
     private static final String DAY_PATTERN_MM_DD = "MM-dd";
     private static final String MONTH_PATTERN_YY_MM = "yy-MM";
     private static final String HOUR_PATTERN_HH = "HH";
-
     private BpmBindStatisticMapper bpmBindStatisticMapper;
 
 
@@ -152,7 +151,7 @@ public class BpmStatisticService {
      * 对于日期为key的map， 如果某个日期没有值，则在该日期下添加value=0
      */
     private void addZeroByMonth(int months, SimpleDateFormat dateFormat, Map<String, Integer> result) {
-        DateTime dateTime = new DateTime(DateTime.now()).minusDays(1);
+        DateTime dateTime = new DateTime(DateTime.now());
         for (int i = months; i > 0; i--) {
             String bindPBMTime = dateFormat.format(dateTime.toDate());
             if (!result.containsKey(bindPBMTime)) {
@@ -211,6 +210,7 @@ public class BpmStatisticService {
             }
             dateTime = dateTime.minusHours(1);
         }
+        logger.info("hour_data:"+result);
         return result;
     }
 
