@@ -29,7 +29,6 @@ public class BpmMeasureStatisticService {
 
     private static final int LIMIT_MONTH_NUM = 12;
     private static final int LIMIT_DAY_NUM = 12;
-    private static final int HOURS = 24;
 
     private BpmMeasureStatisticMapper bpmMeasureStatisticMapper;
 

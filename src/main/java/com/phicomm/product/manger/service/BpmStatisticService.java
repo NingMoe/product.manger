@@ -34,8 +34,6 @@ public class BpmStatisticService {
     private static final String DAY_PATTERN_MM_DD = "MM-dd";
     private static final String MONTH_PATTERN_YY_MM = "yy-MM";
     private static final String HOUR_PATTERN_HH = "HH";
-    private static final String[] HOURS_KEY = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13",
-            "14","15","16","17","18","19","20","21","22","23"};
     private BpmBindStatisticMapper bpmBindStatisticMapper;
 
 
