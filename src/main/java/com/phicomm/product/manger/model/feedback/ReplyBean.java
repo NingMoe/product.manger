@@ -59,6 +59,14 @@ public class ReplyBean {
         this.dialogPictures = dialogPictures;
     }
 
+    public ReplyBean(String appId, String sessionId, String userId, String dialogText, List<String> dialogPictures) {
+        this.appId = appId;
+        this.sessionId = sessionId;
+        this.userId = userId;
+        this.dialogText = dialogText;
+        this.dialogPictures = dialogPictures;
+    }
+
     @Override
     public String toString() {
         return "ReplyBean{" +

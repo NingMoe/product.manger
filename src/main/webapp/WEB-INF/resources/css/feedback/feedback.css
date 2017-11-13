@@ -9,3 +9,77 @@
 .phicomm_button_go {
     margin-right: 18px
 }
+
+/*** feedback start ***/
+html,body,ul,ol,li,a,p{margin: 0; padding: 0;}
+ul,li{list-style:none;}
+a,button{cursor:pointer;}
+a,a:hover{text-decoration:none;}
+a:focus,input:focus,img:focus,textarea:focus,span:focus{outline:none;}
+li{display: block;}
+a:focus,input{outline:none;}
+area, a, a img,input{blr:expression_r(this.onFocus=this.blur());}
+a, input, textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+
+#input02, #input03, #input04{display:none;}
+#form{
+    overflow:hidden;
+}
+.box-form{
+    display:block;
+    margin: 2px 0;
+    padding: 26px 3px;
+    background: #fff;
+}
+.icoDown{
+    float:right;
+    width:3px;
+    margin-top:5px;
+}
+.box-form textarea{
+    width: 100%;
+    margin: auto;
+    font-family: "micsoft yahei";
+    font-size: 22px;
+    color: #333;
+    background: #fff;
+    border: none;
+    resize: none;
+}
+.box-form p{
+    text-align: left;
+}
+#inputList{
+    overflow: hidden;
+}
+#inputList li{
+    position: relative;
+    float: left;
+    margin-top: 18px;
+    width: 100px;
+    height: 100px;
+    margin-right: 26px;
+}
+#inputList li img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.btn-close{
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 32px;
+    height: 32px;
+    background: url("../../image/icon_delete.png") no-repeat;
+    background-size: 100% 100%;
+}
+.album{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
