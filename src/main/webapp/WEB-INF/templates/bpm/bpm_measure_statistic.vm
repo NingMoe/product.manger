@@ -1,0 +1,125 @@
+<section class="content">
+    <!-- //四个标签 开始-->
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="box box-primary"
+                 onmouseover="this.className='box box-danger'" onmouseout="this.className='box box-primary'">
+                <div class="box-header with-border">
+                <div class="col-md-4 ">
+                    <i class="fa fa-5x fa-edit" > </i>
+                </div>
+                <div class="col-md-8 ">
+                    <h4>测量数据总数</h4>
+                    <h3 id="allNum">13,500</h3>
+                    <p >（条）</p>
+                </div>
+                <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="box box-primary"
+                 onmouseover="this.className='box box-danger'" onmouseout="this.className='box box-primary'">
+                <div class="box-header with-border">
+                <div class="col-md-4 ">
+                    <i class="fa fa-5x fa-edit" ></i>
+                </div>
+                <div class="col-md-8 ">
+                    <h4>当月测量数据总数</h4>
+                    <h3 id="monthNum">1,250</h3>
+                    <p >（条）</p>
+                </div>
+                <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4" >
+            <div class="box box-primary"
+                 onmouseover="this.className='box box-danger'" onmouseout="this.className='box box-primary'">
+                <div class="box-header with-border">
+                <div class="col-md-4 ">
+                    <i class="fa fa-5x fa-edit"></i>
+                </div>
+                <div class="col-md-8">
+                    <h4>当天测量数据总数</h4>
+                    <h3 id="todayNum" >1,500</h3>
+                    <p >（条）</p>
+                </div>
+                <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //三个标签 结束-->
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">血压计测量数据(最近12个月)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="bpmMeasureMonthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">血压计测量数据(最近12天)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="bpmMeasureDayChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">用户测量时间24小时分布</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="bpmMeasureHourChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/chartjs/Chart.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/bpm_statistic/bpm_measure_statistic.js"></script>

@@ -60,7 +60,7 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/statistic/count</url>
+            <url>$baseUrl/balance/statistic/measureCount</url>
             <sub-directories>
                 <name>BalanceStatisticCount</name>
             </sub-directories>
@@ -82,6 +82,40 @@
             </sub-directories>
         </directory>
     </navigation>
+
+<!--BPM 统计 by Yafei.Hou-->
+    <navigation>
+        <id>bpmSaleCountStatistic</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>使用量统计统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/bpm/statistic/saleCount</url>
+            <sub-directories>
+                <name>BPM-Statistic</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>bpmMeasureStatistic</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>测量数据统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/bpm/statistic/measure</url>
+            <sub-directories>
+                <name>BPM-Measure-Statistic</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+<!--BPM 统计 by Yafei.Hou-->
 
     <navigation>
         <id>hermes</id>

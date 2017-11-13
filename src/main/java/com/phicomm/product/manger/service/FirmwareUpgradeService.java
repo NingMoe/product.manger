@@ -322,17 +322,17 @@ public class FirmwareUpgradeService {
      * @return 获取配置信息
      */
     public String getFirmwareConfig() {
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
-        return Strings.nullToEmpty(configuation);
+        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        return Strings.nullToEmpty(configuration);
     }
 
     /**
      * 设置配置信息
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void setFirmwareConfig(String configuation) {
+    public void setFirmwareConfig(String configuration) {
         firmwareTriggerParamConfigMapper.clean();
-        firmwareTriggerParamConfigMapper.insert(configuation);
+        firmwareTriggerParamConfigMapper.insert(configuration);
     }
 
     /**
@@ -352,9 +352,9 @@ public class FirmwareUpgradeService {
         firmwareInfoMapper.setEnable(id, 0);
         firmwareInfo.setEnable(0);
         // 通知线上服务器对固件降级
-        String configuation = firmwareTriggerParamConfigMapper.getFirmwareConfig();
+        String configuration = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         DefaultFirmwareUpgradeTrigger trigger = new DefaultFirmwareUpgradeTrigger();
-        trigger.triggerFirmwareDowngrade(firmwareInfo, configuation);
+        trigger.triggerFirmwareDowngrade(firmwareInfo, configuration);
     }
 
     /**
@@ -408,6 +408,7 @@ public class FirmwareUpgradeService {
         logger.info(firmwareInfo);
         // 触发升级
         trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode);
+
     }
 
 
