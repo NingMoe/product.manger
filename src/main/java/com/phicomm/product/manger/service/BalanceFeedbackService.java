@@ -36,7 +36,7 @@ public class BalanceFeedbackService {
 
     private static final Logger logger = Logger.getLogger(BalanceFeedbackService.class);
 
-    private static final String BASE_URL = "http://114.141.173.15:10010/phicomm-account/";
+    private static final String BASE_URL = "http://192.168.40.14:8080/phicomm-account/";
     //private static final String BASE_URL = "http://localhost:8081/";
 
     private static final String FEEDBACK_WITHOUT_FILTER_URL = BASE_URL + "feedback/list";
