@@ -36,8 +36,8 @@ public class BalanceFeedbackService {
 
     private static final Logger logger = Logger.getLogger(BalanceFeedbackService.class);
 
-    private static final String BASE_URL = "http://192.168.40.14:8080/phicomm-account/";
-    //private static final String BASE_URL = "http://localhost:8081/";
+    //private static final String BASE_URL = "http://192.168.40.14:8080/phicomm-account/";
+    private static final String BASE_URL = "http://localhost:8081/";
 
     private static final String FEEDBACK_WITHOUT_FILTER_URL = BASE_URL + "feedback/list";
 
@@ -93,10 +93,14 @@ public class BalanceFeedbackService {
      * @return 用户的权限列表
      */
     public List<Permission> getPermissionList() {
-        /*ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        List<Permission> permissions = Lists.newArrayList();
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attrs.getRequest().getSession();
-        Set<String> permissions = (Set<String>) session.getAttribute(SessionKeyEnum.USER_PERMISSIONS.getKeyName());*/
-        return null;
+        Set<String> permissionSet = (Set<String>) session.getAttribute(SessionKeyEnum.USER_PERMISSIONS.getKeyName());
+        for (String permission:permissionSet) {
+            permissions.add(new Permission(permission));
+        }
+        return permissions;
     }
 
     /**

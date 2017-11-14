@@ -8,10 +8,8 @@ let isAll = true;
  * 初始化  显示10条信息
  */
 $(function init() {
-    fetchFeedback(1);
+    fetchFeedback(currentPage);
     statistics();
-    paging(pageNum);
-    checkIdentity();
 });
 
 /**
@@ -62,6 +60,9 @@ $(function () {
     });
 });
 
+/**
+ * 只让有处理意见反馈权限的客服看见操作按键
+ */
 function getPermissionList() {
     let baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -72,18 +73,11 @@ function getPermissionList() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let result = data.data;
-            let totalCount = result.totalCount;
-            $("#totalCount")[0].innerHTML = totalCount;
-            $("#newFeedbackCount")[0].innerHTML = result.newFeedbackCount;
-            pageNum = totalCount % 5 === 0 ? parseInt(totalCount / 5) : parseInt(totalCount / 5) + 1;
+            if (JSON.stringify(result).indexOf("feedbackManger") === -1){
+                $(".identity").css("display", "none");
+            }
         }
     });
-
-
-    let permissions=$.session.get("FEEDBACK_PERMISSIONS");
-    if (permissions.indexOf("feedbackManger") !== -1){
-        $(".identity").css("display", "none");
-    }
 }
 
 /**
@@ -302,6 +296,7 @@ function getSearchFeedback(n) {
                     }
                 }
                 $("#pageId"+n)[0].className = "active";
+                getPermissionList();
             }
         });
     }
@@ -484,9 +479,11 @@ function fetchFeedback(n) {
                     loadItem(result[i]);
                     startId = startId > result[i].id ? result[i].id - 1 : startId - 1;
                 }
+                paging(pageNum);
             }else{
                 $("#parentDiv").empty();
             }
+            getPermissionList();
             $("#timeRangeSelected").val("");
             $("#pageId"+n)[0].className = "active";
         }
