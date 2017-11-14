@@ -22,7 +22,7 @@
     <select id="selectMonth" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         SELECT
             data_size AS measureCount,
-            MONTH AS measureTime
+            month AS measureTime
         FROM
             blood_pressure_measure_data_size_every_month
         WHERE
@@ -62,7 +62,7 @@
     <select id="selectHour" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         SELECT
             data_size AS measureCount,
-            HOUR AS measureTime
+            hour AS measureTime
         FROM
             blood_pressure_measure_data_size_every_hour
         WHERE
