@@ -51,7 +51,6 @@ public class BpmMeasureStatisticService {
         List<BpmMeasureBean> monthList = msp2List(statisticMeasureMonth());
         List<BpmMeasureBean> dayList = msp2List(statisticMeasureDay());
         List<BpmMeasureBean> hourList = msp2List(statisticMeasureHour());
-
         CustomerContextHolder.selectLocalDataSource();
         for (BpmMeasureBean beanMonth : monthList) {
             bpmMeasureStatisticMapper.insertMonth(beanMonth);
@@ -66,7 +65,6 @@ public class BpmMeasureStatisticService {
         }
         CustomerContextHolder.clearDataSource();
         logger.info("update table blood_pressure_measure_data_size_every_hour");
-
     }
 
     private Map<String, Integer> statisticMeasureMonth() {
@@ -81,11 +79,10 @@ public class BpmMeasureStatisticService {
         return bpmStatisticService.obtainBpmMeasureByHour();
     }
 
-    @Contract("null -> null")
     private List<BpmMeasureBean> msp2List(Map<String, Integer> map) {
         List<BpmMeasureBean> list = Lists.newArrayList();
         if (map == null) {
-            return null;
+            return list;
         }
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             list.add(new BpmMeasureBean(entry.getKey(), entry.getValue()));
