@@ -6,15 +6,20 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.enumeration.RequestType;
+import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.feedback.*;
+import com.phicomm.product.manger.model.permission.Permission;
 import com.phicomm.product.manger.utils.ExceptionUtil;
 import com.phicomm.product.manger.utils.FileUtil;
 import com.phicomm.product.manger.utils.HttpUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +36,8 @@ public class BalanceFeedbackService {
 
     private static final Logger logger = Logger.getLogger(BalanceFeedbackService.class);
 
-    private static final String BASE_URL = "http://114.141.173.27:16816/phicomm-account/";
+    private static final String BASE_URL = "http://114.141.173.15:10010/phicomm-account/";
+    //private static final String BASE_URL = "http://localhost:8081/";
 
     private static final String FEEDBACK_WITHOUT_FILTER_URL = BASE_URL + "feedback/list";
 
@@ -82,6 +88,18 @@ public class BalanceFeedbackService {
     }
 
     /**
+     * 获取用户的权限列表
+     *
+     * @return 用户的权限列表
+     */
+    public List<Permission> getPermissionList() {
+        /*ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpSession session = attrs.getRequest().getSession();
+        Set<String> permissions = (Set<String>) session.getAttribute(SessionKeyEnum.USER_PERMISSIONS.getKeyName());*/
+        return null;
+    }
+
+    /**
      * 客服回复：
      * 1.核对参数格式；
      * 2.查看意见状态（是否已经有人锁定了，且未超过有效时间）
@@ -109,13 +127,13 @@ public class BalanceFeedbackService {
         try {
             result = HttpUtil.openPostRequest(FEEDBACK_REPLY, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(replyBean));
             exceptionNum = Integer.parseInt(JSONObject.parseObject(result).get("status").toString());
-            if (DATA_FORMAT_EXCEPTION == exceptionNum){
+            if (DATA_FORMAT_EXCEPTION == exceptionNum) {
                 throw new DataFormatException();
-            }else if (FEEDBACK_EMPTY_EXCEPTION == exceptionNum){
+            } else if (FEEDBACK_EMPTY_EXCEPTION == exceptionNum) {
                 throw new FeedbackEmptyException();
-            }else if (FEEDBACK_NOT_FOUND_EXCEPTION == exceptionNum){
+            } else if (FEEDBACK_NOT_FOUND_EXCEPTION == exceptionNum) {
                 throw new FeedbackNotFoundException();
-            }else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum){
+            } else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum) {
                 throw new FeedbackLockException();
             }
         } catch (IOException | FirmwareTriggerFailException e) {
@@ -125,13 +143,14 @@ public class BalanceFeedbackService {
 
     /**
      * 上传文件
+     *
      * @param files 文件列表
      * @return url
      */
-    private List<String> uploadFile(MultipartFile[] files){
+    private List<String> uploadFile(MultipartFile[] files) {
         List<String> result = Lists.newArrayList();
-        for (MultipartFile file:files) {
-            if (file.getSize() != 0){
+        for (MultipartFile file : files) {
+            if (file.getSize() != 0) {
                 try {
                     result.add(FileUtil.uploadFileToHermes(file).get("url"));
                 } catch (UploadFileException e) {
@@ -163,11 +182,11 @@ public class BalanceFeedbackService {
             exceptionNum = Integer.parseInt(JSONObject.parseObject(result).get("status").toString());
             logger.info(exceptionNum);
         }
-        if (DATA_FORMAT_EXCEPTION == exceptionNum){
+        if (DATA_FORMAT_EXCEPTION == exceptionNum) {
             throw new DataFormatException();
-        }else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum){
+        } else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum) {
             throw new FeedbackLockException();
-        }else if (DIALOG_REVOKE_EXCEPTION == exceptionNum){
+        } else if (DIALOG_REVOKE_EXCEPTION == exceptionNum) {
             throw new DialogRevokeException();
         }
     }
@@ -212,9 +231,9 @@ public class BalanceFeedbackService {
         }
         if (!Strings.isNullOrEmpty(result)) {
             exceptionNum = Integer.parseInt(JSONObject.parseObject(result).get("status").toString());
-            if (DATA_FORMAT_EXCEPTION == exceptionNum){
+            if (DATA_FORMAT_EXCEPTION == exceptionNum) {
                 throw new DataFormatException();
-            }else if (APP_TYPE_NOT_FOUND_EXCEPTION == exceptionNum){
+            } else if (APP_TYPE_NOT_FOUND_EXCEPTION == exceptionNum) {
                 throw new AppTypeNotFoundException();
             }
             JSONObject data = (JSONObject) JSONObject.parseObject(result).get("data");
@@ -243,7 +262,7 @@ public class BalanceFeedbackService {
         }
         if (!Strings.isNullOrEmpty(result)) {
             exceptionNum = Integer.parseInt(JSONObject.parseObject(result).get("status").toString());
-            if (DATA_FORMAT_EXCEPTION == exceptionNum){
+            if (DATA_FORMAT_EXCEPTION == exceptionNum) {
                 throw new DataFormatException();
             }
             String data = JSONObject.toJSONString(JSONObject.parseObject(result).get("data"));
@@ -278,20 +297,21 @@ public class BalanceFeedbackService {
             exceptionNum = Integer.parseInt(JSONObject.parseObject(result).get("status").toString());
             logger.info(exceptionNum);
         }
-        if (DATA_FORMAT_EXCEPTION == exceptionNum){
+        if (DATA_FORMAT_EXCEPTION == exceptionNum) {
             throw new DataFormatException();
-        }else if (FEEDBACK_NOT_FOUND_EXCEPTION == exceptionNum){
+        } else if (FEEDBACK_NOT_FOUND_EXCEPTION == exceptionNum) {
             throw new FeedbackNotFoundException();
-        }else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum){
+        } else if (FEEDBACK_LOCK_EXCEPTION == exceptionNum) {
             throw new FeedbackLockException();
         }
     }
 
     /**
      * 通过网络获取反馈数据
+     *
      * @return 反馈数据列表
      */
-    private List<FeedbackWithUserInfo> getFeedbackData(Object obj, String url){
+    private List<FeedbackWithUserInfo> getFeedbackData(Object obj, String url) {
         logger.info(obj);
         String result = null;
         try {
@@ -311,10 +331,11 @@ public class BalanceFeedbackService {
 
     /**
      * 获取设备关系数据
+     *
      * @param jsonObject json对象
      * @return 设备关系数据
      */
-    private Map<String, List<TerminalBean>> getTerminalInfo(JSONObject jsonObject){
+    private Map<String, List<TerminalBean>> getTerminalInfo(JSONObject jsonObject) {
         Map<String, List<TerminalBean>> map = Maps.newHashMap();
         Set<String> set = jsonObject.keySet();
         for (String key : set) {
