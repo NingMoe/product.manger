@@ -4,6 +4,7 @@ import com.phicomm.product.manger.service.BpmMeasureStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -18,6 +19,7 @@ public class BpmStatisticCron {
     @Autowired
     public BpmStatisticCron(BpmMeasureStatisticService bpmMeasureStatisticService) {
         this.bpmMeasureStatisticService = bpmMeasureStatisticService;
+        Assert.notNull(this.bpmMeasureStatisticService);
     }
 
     /**
