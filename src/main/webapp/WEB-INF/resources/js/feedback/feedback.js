@@ -11,6 +11,7 @@ $(function init() {
     fetchFeedback(1);
     statistics();
     paging(pageNum);
+    checkIdentity();
 });
 
 /**
@@ -60,6 +61,30 @@ $(function () {
         "maxDate": "2020/11/20"
     });
 });
+
+function getPermissionList() {
+    let baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: baseUrl + "/feedback/permission/list",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let result = data.data;
+            let totalCount = result.totalCount;
+            $("#totalCount")[0].innerHTML = totalCount;
+            $("#newFeedbackCount")[0].innerHTML = result.newFeedbackCount;
+            pageNum = totalCount % 5 === 0 ? parseInt(totalCount / 5) : parseInt(totalCount / 5) + 1;
+        }
+    });
+
+
+    let permissions=$.session.get("FEEDBACK_PERMISSIONS");
+    if (permissions.indexOf("feedbackManger") !== -1){
+        $(".identity").css("display", "none");
+    }
+}
 
 /**
  * 获取反馈信息的同时，移除之前的反馈显示信息组件
@@ -248,7 +273,7 @@ function getSearchFeedback(n) {
         startTime = "2016-08-16";
         endTime = "2020-11-20";
     }
-    if (appIdSelected !== ""){
+    if (appIdSelected !== "" || timeRange !== ""){
         isAll = false;
         let baseUrl = $("#baseUrl").val();
         $("#parentDiv").empty();
@@ -567,11 +592,11 @@ function loadFeedback(itemData) {
         }
         src = src + `<div style="margin-top: 15px;color: #9999A6;"><span hidden id="dialogId">${dialog[i].dialogId}</span><span>提交于：${dialog[i].createTime}</span>`;
         if ("c2b" === dialog[i].dialogType) {
-            src = src + `<span style="margin-left: 297px"><a href="javascript:void(0)" name =` + i + ` onclick="replayShow(this, this.name);">回复</a></span></div>`;
+            src = src + `<span class="identity" style="margin-left: 297px"><a href="javascript:void(0)" name =` + i + ` onclick="replayShow(this, this.name);">回复</a></span></div>`;
         } else if ("b2c" === dialog[i].dialogType) {
-            src = src + `<span style="margin-left: 250px"><a href="javascript:void(0)" name =` + i + ` onclick="replayShow(this, this.name);">回复</a></span>` +
-                `<span style="height:10px;width:2px;background-color: #9d9d9d;display: inline-block;margin-left: 10px"></span>` +
-                `<span style="margin-left: 10px"><a style="color: red" href="javascript:void(0)" name =` + i + ` onclick="deleteReplay(this, this.name);">删除</a></span></div>`;
+            src = src + `<span class="identity" style="margin-left: 250px"><a href="javascript:void(0)" name =` + i + ` onclick="replayShow(this, this.name);">回复</a></span>` +
+                `<span class="identity" style="height:10px;width:2px;background-color: #9d9d9d;display: inline-block;margin-left: 10px"></span>` +
+                `<span class="identity" style="margin-left: 10px"><a style="color: red" href="javascript:void(0)" name =` + i + ` onclick="deleteReplay(this, this.name);">删除</a></span></div>`;
         }
         src = src + `<div><span style="height:1px;width:515px;background-color: #ECF0F5;display: inline-block;"></span></div>`;
     }
@@ -635,7 +660,7 @@ function replayShow(node, i) {
             "userId": "",
             "sessionId": sessionId
         }),error: function (req, status, err) {
-            alert('Failed reason: ' + err);
+            console.log('Failed reason: ' + err);
         }, success: function (data) {
             if (data.status === 0) {
                 $("#dialogTextReplay").val("");

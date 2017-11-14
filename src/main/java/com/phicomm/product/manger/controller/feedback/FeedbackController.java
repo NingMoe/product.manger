@@ -5,6 +5,7 @@ import com.phicomm.product.manger.exception.*;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.feedback.*;
+import com.phicomm.product.manger.model.permission.Permission;
 import com.phicomm.product.manger.service.BalanceFeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -81,7 +82,7 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("客服回复某个反馈意见")
-    @FunctionPoint(value = "common")
+    @FunctionPoint(value = "feedbackManger")
     public CommonResponse customerReply(@RequestParam("appIdReplay") String appId,
                                         @RequestParam("sessionIdReplay") String sessionId,
                                         @RequestParam("dialogTextReplay") String dialogText,
@@ -109,7 +110,7 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("后台管理撤回用户未读的消息")
-    @FunctionPoint(value = "common")
+    @FunctionPoint(value = "feedbackManger")
     public CommonResponse revokeDialog(@RequestBody RevokeDialogBean revokeDialogBean)
             throws DataFormatException, DialogRevokeException, FeedbackLockException {
         feedbackService.customerRevoker(revokeDialogBean);
@@ -216,10 +217,27 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("锁定反馈意见:客服")
-    @FunctionPoint(value = "common")
+    @FunctionPoint(value = "feedbackManger")
     public CommonResponse obtainFeedbackStatus(@RequestBody LockRequestBean lockRequestBean)
             throws DataFormatException, FeedbackNotFoundException, FeedbackLockException {
         feedbackService.lockFeedback(lockRequestBean);
         return CommonResponse.ok();
+    }
+
+    /**
+     * 获取用户的权限列表
+     *
+     * @return 状态
+     */
+    @RequestMapping(value = "feedback/permission/list", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @ApiOperation("获取用户的权限列表")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @FunctionPoint("common")
+    public Response<List<Permission>> getPermissionList(){
+        List<Permission> permissions = feedbackService.getPermissionList();
+        return new Response<List<Permission>>().setData(permissions);
     }
 }
