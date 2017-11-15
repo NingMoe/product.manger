@@ -41,7 +41,7 @@ $(document).ready(function () {
                 } else if(data.status === 7) {
                     alert("上传文件失败！");
                 } else if(data.status === 16) {
-                    alert("权限不够！");
+                    alert("您的权限不够，请联系管理员！");
                 } else if(data.status === 17) {
                     alert("用户不见了！");
                 }

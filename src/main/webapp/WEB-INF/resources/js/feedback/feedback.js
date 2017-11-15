@@ -579,7 +579,7 @@ function loadFeedback(itemData) {
         }
         if (images !== null) {
             for (let j = 0; j < images.length; j++) {
-                src = src + `<a href=${images[j]} class='fresco' data-fresco-group=id >
+                src = src + `<a href=${images[j]} class='fresco' data-fresco-group=${dialog[i].dialogId} >
                    <img src=${images[j]} style="width: 80px;height: 80px " alt='img'/></a>`;
             }
         }

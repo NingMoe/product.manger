@@ -16,9 +16,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu" id="user-manger-node-3">
-                <li><a href="$baseUrl/user/manger/page/list"><i class="fa fa-futbol-o"></i> 用户列表</a></li>
-                <li><a href="$baseUrl/user/manger/page/create/user"><i class="fa fa-puzzle-piece"></i> 添加用户</a></li>
+            <ul class="treeview-menu">
+                <li id="user-manger-node-3"><a href="$baseUrl/user/manger/page/list"><i class="fa fa-futbol-o"></i> 用户列表</a></li>
+                <li id="user-manger-node-4"><a href="$baseUrl/user/manger/page/create/user"><i class="fa fa-puzzle-piece"></i> 添加用户</a></li>
             </ul>
         </li>
         <li>

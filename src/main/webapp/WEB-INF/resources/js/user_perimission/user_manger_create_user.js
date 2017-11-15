@@ -1,8 +1,7 @@
 $(document).ready(function () {
     $("#user-manger-node-1").addClass("active");
-    $("#user-manger-node-2").addClass("active");
-    $("#user-manger-node-3").addClass("active");
     $("#user-manger-node-li-1").addClass("active");
+    $("#user-manger-node-4").addClass("active");
     $("#sex").select2({multiple: false});
     $("#role").select2({multiple: false});
     $("#submit").click(function () {
@@ -22,9 +21,12 @@ $(document).ready(function () {
                     alert("上传头像失败！");
                 } else if(data.status === 15) {
                     alert("手机号已经存在！");
+                } else if(data.status === 16) {
+                    alert("您的权限不够，请联系管理员！");
                 } else if(data.status === 2) {
                     alert("数据格式错误！");
                 }
+                window.location.href = baseUrl + "/user/manger/page/list";
             }
         });
     });

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.phicomm.product.manger.config.FeedbackPropertiesConfig;
 import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.exception.*;
@@ -14,7 +15,9 @@ import com.phicomm.product.manger.utils.ExceptionUtil;
 import com.phicomm.product.manger.utils.FileUtil;
 import com.phicomm.product.manger.utils.HttpUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,24 +39,21 @@ public class BalanceFeedbackService {
 
     private static final Logger logger = Logger.getLogger(BalanceFeedbackService.class);
 
-    private static final String BASE_URL = "http://192.168.40.14:8080/phicomm-account/";
-    //private static final String BASE_URL = "http://localhost:8081/";
+    private final String FEEDBACK_WITHOUT_FILTER_URL;
 
-    private static final String FEEDBACK_WITHOUT_FILTER_URL = BASE_URL + "feedback/list";
+    private final String FEEDBACK_PAGE_WITHOUT_FILTER_URL;
 
-    private static final String FEEDBACK_PAGE_WITHOUT_FILTER_URL = BASE_URL + "feedback/page/list";
+    private final String FEEDBACK_PAGE_FILTER_URL;
 
-    private static final String FEEDBACK_PAGE_FILTER_URL = BASE_URL + "feedback/page/list/filter";
+    private final String FEEDBACK_REPLY;
 
-    private static final String FEEDBACK_REPLY = BASE_URL + "feedback/customer/reply";
+    private final String FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL;
 
-    private static final String FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL = BASE_URL + "feedback/dialog/customer/revoke";
+    private final String FEEDBACK_STATIC;
 
-    private static final String FEEDBACK_STATIC = BASE_URL + "feedback/statistic";
+    private final String FEEDBACK_TERMINAL_LIST;
 
-    private static final String FEEDBACK_TERMINAL_LIST = BASE_URL + "feedback/terminal/list";
-
-    private static final String FEEDBACK_LOCK = BASE_URL + "feedback/lock";
+    private final String FEEDBACK_LOCK;
 
     private static final int DATA_FORMAT_EXCEPTION = 2;
 
@@ -66,6 +66,28 @@ public class BalanceFeedbackService {
     private static final int FEEDBACK_LOCK_EXCEPTION = 25;
 
     private static final int DIALOG_REVOKE_EXCEPTION = 26;
+
+    @Autowired
+    public BalanceFeedbackService(FeedbackPropertiesConfig propertiesConfig){
+        String baseUrl = propertiesConfig.getBaseUrl();
+        this.FEEDBACK_WITHOUT_FILTER_URL = baseUrl + "feedback/list";
+        this.FEEDBACK_PAGE_WITHOUT_FILTER_URL = baseUrl + "feedback/page/list";
+        this.FEEDBACK_PAGE_FILTER_URL = baseUrl + "feedback/page/list/filter";
+        this.FEEDBACK_REPLY = baseUrl + "feedback/customer/reply";
+        this.FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL = baseUrl + "feedback/dialog/customer/revoke";
+        this.FEEDBACK_STATIC = baseUrl + "feedback/statistic";
+        this.FEEDBACK_TERMINAL_LIST = baseUrl + "feedback/terminal/list";
+        this.FEEDBACK_LOCK = baseUrl + "feedback/lock";
+        Assert.notNull(baseUrl);
+        Assert.notNull(this.FEEDBACK_WITHOUT_FILTER_URL);
+        Assert.notNull(this.FEEDBACK_PAGE_WITHOUT_FILTER_URL);
+        Assert.notNull(this.FEEDBACK_PAGE_FILTER_URL);
+        Assert.notNull(this.FEEDBACK_REPLY);
+        Assert.notNull(this.FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL);
+        Assert.notNull(this.FEEDBACK_STATIC);
+        Assert.notNull(this.FEEDBACK_TERMINAL_LIST);
+        Assert.notNull(this.FEEDBACK_LOCK);
+    }
 
     /**
      * 获取反馈列表（不带条件）

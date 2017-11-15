@@ -51,7 +51,8 @@ public class UserMangerController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
             @ApiResponse(code = 7, message = "文件上传失败", response = Response.class),
-            @ApiResponse(code = 15, message = "手机号已经存在", response = Response.class)
+            @ApiResponse(code = 15, message = "手机号已经存在", response = Response.class),
+            @ApiResponse(code = 16, message = "您的权限不够，请联系管理员", response = Response.class)
     })
     @FunctionPoint("common")
     public CommonResponse createUser(@RequestParam("phoneNumber") String phoneNumber,
@@ -60,7 +61,7 @@ public class UserMangerController {
                                      @RequestParam("sex") String sex,
                                      @RequestParam("role") String role,
                                      @RequestParam("headPicture") MultipartFile headPicture)
-            throws UploadFileException, UserHasExistException, DataFormatException {
+            throws UploadFileException, UserHasExistException, DataFormatException, PermissionHasNotEnoughException {
         userMangerService.createUser(phoneNumber, email, username, sex, role, headPicture);
         return CommonResponse.ok();
     }
@@ -111,7 +112,7 @@ public class UserMangerController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
-            @ApiResponse(code = 16, message = "权限不够", response = Response.class)
+            @ApiResponse(code = 16, message = "您的权限不够，请联系管理员", response = Response.class)
     })
     @FunctionPoint("common")
     public CommonResponse deleteUser(@Param("phoneNumber") String phoneNumber)
@@ -132,7 +133,7 @@ public class UserMangerController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
             @ApiResponse(code = 2, message = "数据格式异常", response = Response.class),
             @ApiResponse(code = 7, message = "文件上传失败", response = Response.class),
-            @ApiResponse(code = 16, message = "权限不够", response = Response.class),
+            @ApiResponse(code = 16, message = "您的权限不够，请联系管理员", response = Response.class),
             @ApiResponse(code = 17, message = "用户找不到", response = Response.class),
     })
     @FunctionPoint("common")
