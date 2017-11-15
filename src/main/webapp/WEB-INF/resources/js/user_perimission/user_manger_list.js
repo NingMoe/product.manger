@@ -1,8 +1,7 @@
 $(document).ready(function () {
     $("#user-manger-node-1").addClass("active");
-    $("#user-manger-node-2").addClass("active");
-    $("#user-manger-node-3").addClass("active");
     $("#user-manger-node-li-1").addClass("active");
+    $("#user-manger-node-3").addClass("active");
     var baseUrl = $("#baseUrl").val();
     var table = $("#userList").DataTable({
         paging: true,
@@ -92,24 +91,26 @@ function modifyUserInfo(node) {
 }
 
 function deleteUser(node) {
-    var phoneNumber = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
-    console.log(phoneNumber);
-    var baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/user/manger/delete",
-        dataType: "json",
-        data: {
-            "phoneNumber": phoneNumber
-        }, error: function (req, status, err) {
-            console.log('Failed reason: ' + err);
-        }, success: function (data) {
-            if(data.status === 0) {
-                alert("删除成功！");
-                window.location.href = baseUrl + "/user/manger/page/list";
-            } else if(data.status === 16) {
-                alert("权限不够！");
+    if (confirm("确定删除？")){
+        var phoneNumber = node.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].innerText;
+        console.log(phoneNumber);
+        var baseUrl = $("#baseUrl").val();
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "/user/manger/delete",
+            dataType: "json",
+            data: {
+                "phoneNumber": phoneNumber
+            }, error: function (req, status, err) {
+                console.log('Failed reason: ' + err);
+            }, success: function (data) {
+                if(data.status === 0) {
+                    alert("删除成功！");
+                    window.location.href = baseUrl + "/user/manger/page/list";
+                } else if(data.status === 16) {
+                    alert("您的权限不够，请联系管理员！");
+                }
             }
-        }
-    });
+        });
+    }
 }

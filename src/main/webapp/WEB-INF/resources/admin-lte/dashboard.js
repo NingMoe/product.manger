@@ -18,6 +18,8 @@ $(function () {
         });
     });
     $(".setting").bind("click", function () {
-        alert("setting");
+        let baseUrl = $("#baseUrl").val();
+        let phoneNumber = $(this).attr("name");
+        window.location.href = baseUrl + "/user/manger/page/modify?phoneNumber=" + phoneNumber;
     });
 });

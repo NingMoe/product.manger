@@ -16,7 +16,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                     <div class="pull-left">
-                        <a href="#" class="btn btn-default btn-flat setting">Setting</a>
+                        <a href="#" name="$adminUserInfo.phoneNumber" class="btn btn-default btn-flat setting">Setting</a>
                     </div>
                     <div class="pull-right">
                         <a href="#" class="btn btn-default btn-flat sign-out">Sign out</a>

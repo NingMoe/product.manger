@@ -32,6 +32,10 @@ public class UserMangerService {
 
     private AdminUserInfoMapper adminUserInfoMapper;
 
+    private static final String ADMINISTRATOR = "administrator";
+
+    private static final String USER = "user";
+
     @Autowired
     public UserMangerService(AdminUserInfoMapper adminUserInfoMapper) {
         this.adminUserInfoMapper = adminUserInfoMapper;
@@ -53,7 +57,11 @@ public class UserMangerService {
                            String username,
                            String sex,
                            String role,
-                           MultipartFile headPicture) throws UploadFileException, UserHasExistException, DataFormatException {
+                           MultipartFile headPicture) throws UploadFileException, UserHasExistException, DataFormatException, PermissionHasNotEnoughException {
+        AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
+        if (adminUserInfo == null || !ADMINISTRATOR.equalsIgnoreCase(adminUserInfo.getRole())) {
+            throw new PermissionHasNotEnoughException();
+        }
         check(phoneNumber, email, username, sex, role, headPicture);
         Map<String, String> result = FileUtil.uploadFileToHermes(headPicture);
         String hermesUrl = result.get("url");
@@ -84,7 +92,7 @@ public class UserMangerService {
         if (!"boy".equalsIgnoreCase(sex) && !"girl".equalsIgnoreCase(sex)) {
             throw new DataFormatException();
         }
-        if (!"administrator".equalsIgnoreCase(role) && !"user".equalsIgnoreCase(role)) {
+        if (!ADMINISTRATOR.equalsIgnoreCase(role) && !USER.equalsIgnoreCase(role)) {
             throw new DataFormatException();
         }
         AdminUserInfo adminUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
@@ -143,11 +151,11 @@ public class UserMangerService {
      */
     public void deleteUser(String phoneNumber) throws PermissionHasNotEnoughException {
         AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
-        if (!"user".equalsIgnoreCase(adminUserInfo.getRole())) {
+        if (adminUserInfo == null || !ADMINISTRATOR.equalsIgnoreCase(adminUserInfo.getRole())) {
             throw new PermissionHasNotEnoughException();
         }
         AdminUserInfo targetUserInfo = adminUserInfoMapper.getUserInfo(phoneNumber);
-        if (!"user".equalsIgnoreCase(targetUserInfo.getRole())) {
+        if (!USER.equalsIgnoreCase(targetUserInfo.getRole())) {
             throw new PermissionHasNotEnoughException();
         }
         if (targetUserInfo.getPhoneNumber().equals(adminUserInfo.getPhoneNumber())) {
@@ -173,20 +181,20 @@ public class UserMangerService {
                                String role,
                                MultipartFile headPicture)
             throws PermissionHasNotEnoughException, UserNotFoundException, UploadFileException {
-        AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
-        if (adminUserInfo == null || !"administrator".equalsIgnoreCase(adminUserInfo.getRole())) {
-            throw new PermissionHasNotEnoughException();
-        }
         AdminUserInfo target = adminUserInfoMapper.getUserInfo(phoneNumber);
-        if(target == null) {
+        if (target == null) {
             throw new UserNotFoundException();
+        }
+        AdminUserInfo adminUserInfo = HttpUtil.getCurrentUserInfo();
+        if (adminUserInfo == null || (!ADMINISTRATOR.equalsIgnoreCase(adminUserInfo.getRole()) && !target.getPhoneNumber().equals(adminUserInfo.getPhoneNumber()))) {
+            throw new PermissionHasNotEnoughException();
         }
         target.setPhoneNumber(phoneNumber);
         target.setEmail(email);
         target.setUsername(username);
         target.setSex("boy".equalsIgnoreCase(sex) ? 1 : 0);
         target.setRole(role);
-        if(!headPicture.isEmpty()) {
+        if (!headPicture.isEmpty()) {
             Map<String, String> hermesResult = FileUtil.uploadFileToHermes(headPicture);
             String url = hermesResult.get("url");
             target.setHeadPicture(url);

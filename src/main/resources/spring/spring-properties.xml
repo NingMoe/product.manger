@@ -6,6 +6,6 @@
 
     <!-- 引入属性文件 -->
     <context:property-placeholder
-            location="classpath:swagger.properties,classpath:log4j.properties,classpath:datasource.properties,classpath:hermes.properties"/>
+            location="classpath:swagger.properties,classpath:log4j.properties,classpath:datasource.properties,classpath:hermes.properties,classpath:feedback.properties"/>
 
 </beans>
