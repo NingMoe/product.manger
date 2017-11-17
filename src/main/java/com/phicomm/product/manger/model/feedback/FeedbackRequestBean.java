@@ -11,6 +11,8 @@ public class FeedbackRequestBean {
 
     private String sessionId;
 
+    private String deviceType;
+
     public String getUserId() {
         return userId;
     }
@@ -35,12 +37,21 @@ public class FeedbackRequestBean {
         this.sessionId = sessionId;
     }
 
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
     @Override
     public String toString() {
         return "FeedbackRequestBean{" +
                 "userId='" + userId + '\'' +
                 ", appId='" + appId + '\'' +
                 ", sessionId='" + sessionId + '\'' +
+                ", deviceType='" + deviceType + '\'' +
                 '}';
     }
 }

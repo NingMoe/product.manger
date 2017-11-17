@@ -13,10 +13,16 @@ import java.util.List;
  */
 public class DialogBean {
 
+    private String userId;
+
     private Long dialogId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    private String username;
+
+    private String imageUrl;
 
     private String dialogType;
 
@@ -25,6 +31,30 @@ public class DialogBean {
     private String dialogPicture;
 
     private List dialogPictures;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Long getDialogId() {
         return dialogId;
@@ -77,8 +107,11 @@ public class DialogBean {
     @Override
     public String toString() {
         return "DialogBean{" +
-                "dialogId=" + dialogId +
+                "userId='" + userId + '\'' +
+                ", dialogId=" + dialogId +
                 ", createTime=" + createTime +
+                ", username='" + username + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", dialogType='" + dialogType + '\'' +
                 ", dialogText='" + dialogText + '\'' +
                 ", dialogPicture='" + dialogPicture + '\'' +

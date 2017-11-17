@@ -496,7 +496,7 @@ function fetchFeedback(n) {
  */
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
-        loadUserHeader(itemData.imageUrl) + loadUserId(itemData.userId) + loadUsername(itemData.username) +
+        loadUserHeader(itemData.dialogBeans[0].imageUrl) + loadUserId(itemData.dialogBeans[0].userId) + loadUsername(itemData.dialogBeans[0].username) +
         loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
@@ -562,17 +562,17 @@ function loadFeedback(itemData) {
     let dialog = itemData.dialogBeans;
     let id = itemData.id;
     let deviceType = translateDeviceType(itemData.deviceType);
-    let phicomm = "resources/image/xiaofei.png";
     let appId = itemData.appId;
     let src = `<div hidden><span id="appId">${appId}</span></div><div hidden><span id="sessionId">${dialog[0].sessionId}</span></div>`;
     for (let i = 0; i < dialog.length; i++) {
         let images = dialog[i].dialogPictures;
+        let headImage = dialog[i].imageUrl;
         if (i === 2) {
             let moreInfo = "moreInfo" + dialog[0].sessionId;
             src = src + `<div id=${moreInfo} hidden>`
         }
         if ("b2c" === dialog[i].dialogType) {
-            src = src + `<div style="float: left;margin-top: 15px"><img src=${phicomm} style="width: 30px;height: 30px " alt='img'/></a></div>`;
+            src = src + `<div style="float: left;margin-top: 15px"><img src=${headImage} style="width: 30px;height: 30px " alt='img'/></a></div>`;
             src = src + ` <div class="row" style="margin-left: 50px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
         } else {
             src = src + ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;

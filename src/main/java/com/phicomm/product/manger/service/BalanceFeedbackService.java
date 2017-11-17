@@ -69,7 +69,8 @@ public class BalanceFeedbackService {
 
     @Autowired
     public BalanceFeedbackService(FeedbackPropertiesConfig propertiesConfig){
-        String baseUrl = propertiesConfig.getBaseUrl();
+        //String baseUrl = propertiesConfig.getBaseUrl();
+        String baseUrl = "http://localhost:8081/";
         this.FEEDBACK_WITHOUT_FILTER_URL = baseUrl + "feedback/list";
         this.FEEDBACK_PAGE_WITHOUT_FILTER_URL = baseUrl + "feedback/page/list";
         this.FEEDBACK_PAGE_FILTER_URL = baseUrl + "feedback/page/list/filter";
