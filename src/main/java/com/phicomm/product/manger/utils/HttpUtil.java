@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -274,6 +275,15 @@ public class HttpUtil {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attributes.getRequest().getSession();
         return (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+    }
+
+    /**
+     * 获取同一账号中的用户信息
+     */
+    public static Map<String, String> getAccountUserInfo() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        return (Map<String, String>) session.getAttribute(SessionKeyEnum.USER_INFO_ACCOUNT.getKeyName());
     }
 
 
