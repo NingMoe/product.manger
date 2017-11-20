@@ -178,7 +178,7 @@ $(document).ready(function () {
         searching: true,
         ordering: true,
         processing: true,
-        aLengthMenu: [10],
+        aLengthMenu: [[10, 20, 40], ["10", "20", "40"]],
         iDisplayLength: 10,
         autoWidth: false,
         oLanguage: {
