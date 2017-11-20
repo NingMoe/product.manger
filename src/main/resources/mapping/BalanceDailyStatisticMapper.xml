@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BalanceDailyStatisticMapper">
+
+    <select id="getBalanceStatisticHourUnitTimeRange" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+            DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
+            count(1) AS measure_count
+        FROM
+            balance_measure_info_${tableIndex}
+        WHERE
+            create_time BETWEEN #{startTime, jdbcType=TIMESTAMP}
+        AND #{endTime, jdbcType=TIMESTAMP}
+        GROUP BY
+            measure_time
+        ORDER BY
+            measure_time
+    </select>
+
+    <select id="getBalanceStatisticHourUnitOneDay" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+            DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
+            count(1) AS measure_count
+        FROM
+            balance_measure_info_${tableIndex}
+        WHERE
+          UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%y-%m-%d'))=UNIX_TIMESTAMP(#{date, jdbcType=TIMESTAMP})
+        GROUP BY
+            measure_time
+        ORDER BY
+            measure_time
+    </select>
+
+    <select id="getBalanceStatisticHourUnitAll" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+        DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
+        count(1) AS measure_count
+        FROM
+        balance_measure_info_${tableIndex}
+        GROUP BY
+        measure_time
+        ORDER BY
+        measure_time
+    </select>
+
+
+    <select id="getBalanceStatistic24HourDisplay" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+        DATE_FORMAT(create_time, '%H') AS timeAsHour,
+        count(1) AS count
+        FROM
+        balance_measure_info_${tableIndex}
+        GROUP BY
+        timeAsHour
+        ORDER BY
+        timeAsHour
+    </select>
+
+    <insert id="setBalanceStatisticHourUnit">
+        INSERT balance_measure_count_hour_unit(`count`, `time`)
+        VALUE (#{count,jdbcType=BIGINT},#{time, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getBalance24HourcCount" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+        time AS timeAsHour,
+        count as count
+        FROM
+        balance_measure_count_hour_unit
+        ORDER BY
+        timeAsHour
+    </select>
+</mapper>

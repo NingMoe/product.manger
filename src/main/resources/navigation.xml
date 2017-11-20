@@ -342,6 +342,22 @@
     </navigation>
 
     <navigation>
+        <id>balance24HourDisplay</id>
+        <title>
+            <title-name>体脂秤24小时分布统计</title-name>
+            <title-description>体脂称24小时分布统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/health/advertisement/add</url>
+            <sub-directories>
+                <name>balance24HourDisplay</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>balanceMcu</id>
         <title>
             <title-name>体脂秤MCU升级</title-name>
