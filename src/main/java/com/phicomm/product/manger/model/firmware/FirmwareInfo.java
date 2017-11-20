@@ -37,6 +37,8 @@ public class FirmwareInfo {
 
     private String description;
 
+    private boolean forceUpgrade;
+
     public Long getId() {
         return id;
     }
@@ -157,15 +159,23 @@ public class FirmwareInfo {
         this.md5 = md5;
     }
 
+    public boolean getForceUpgrade() {
+        return forceUpgrade;
+    }
+
+    public void setForceUpgrade(boolean forceUpgrade) {
+        this.forceUpgrade = forceUpgrade;
+    }
+
     @Override
     public String toString() {
         return "FirmwareInfo{" +
                 "id=" + id +
                 ", appPlatform='" + appPlatform + '\'' +
-                ", appVersionCode=" + appVersionCode +
+                ", appVersionCode='" + appVersionCode + '\'' +
                 ", firmwareType='" + firmwareType + '\'' +
                 ", version='" + version + '\'' +
-                ", versionCode=" + versionCode +
+                ", versionCode='" + versionCode + '\'' +
                 ", environment='" + environment + '\'' +
                 ", gnssVersion='" + gnssVersion + '\'' +
                 ", hardwareCode='" + hardwareCode + '\'' +
@@ -175,6 +185,7 @@ public class FirmwareInfo {
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
+                ", forceUpgrade=" + forceUpgrade +
                 '}';
     }
 }

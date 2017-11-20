@@ -58,6 +58,7 @@ public class FirmwareUpgradeController {
                                                           @RequestParam("hardwareVersion") String hardwareVersion,
                                                           @RequestParam("firmwareVersion") String firmwareVersion,
                                                           @RequestParam("gnssVersion") String gnssVersion,
+                                                          @RequestParam("forceUpgrade") boolean forceUpgrade,
                                                           @RequestParam("environment") String environment,
                                                           @RequestPart("file") MultipartFile file,
                                                           @RequestParam("description") String description,
@@ -66,7 +67,7 @@ public class FirmwareUpgradeController {
                                                           @RequestParam(value = "appVersionCodeIos", required = false) String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         firmwareUpgradeService.whichPlatform(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
         return CommonResponse.ok();
     }
 
@@ -92,6 +93,7 @@ public class FirmwareUpgradeController {
                                                              @RequestParam("hardwareVersion") String hardwareVersion,
                                                              @RequestParam("firmwareVersion") String firmwareVersion,
                                                              @RequestParam("gnssVersion") String gnssVersion,
+                                                             @RequestParam("forceUpgrade") boolean forceUpgrade,
                                                              @RequestParam("environment") String environment,
                                                              @RequestPart("file") MultipartFile file,
                                                              @RequestParam(value = "description", required = false) String description,
@@ -101,7 +103,7 @@ public class FirmwareUpgradeController {
                                                              @RequestParam("enable") String enable)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpdate(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, file, description, appPlatform, appVersionCode, id, enable);
+                firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, appPlatform, appVersionCode, id, enable);
         return CommonResponse.ok();
     }
 
