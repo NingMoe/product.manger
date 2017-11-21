@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 配置本地mysql数据源 -->
+    <!-- {product_manager库} 配置本地mysql数据源 -->
     <bean id="localDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${local.mysql.url}"/>
@@ -32,7 +32,7 @@
         <property name="filters" value="stat"/>
     </bean>
 
-    <!-- 配置线上mysql数据源 -->
+    <!--{smart_hardware库} 配置线上mysql数据源 -->
     <bean id="prodDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${smart.hardware.mysql.url}"/>
@@ -61,7 +61,7 @@
         <property name="filters" value="stat"/>
     </bean>
 
-    <!-- 配置线上mysql数据源 -->
+    <!-- {smart_hardware库} 配置线上mysql数据源 -->
     <bean id="testDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${test.mysql.url}"/>
