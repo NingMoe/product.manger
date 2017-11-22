@@ -2,72 +2,125 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.BalanceDailyStatisticMapper">
 
-    <select id="getBalanceStatisticHourUnitTimeRange" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+    <!--
+            index:
+            performance: good
+            check-time:2017-11-22
+            从原始测量表中获取24小时统计信息，用于写入到表balance_measue_24_hour_counts中
+     -->
+    <select id="getBalanceStatistic24HourDisplay"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
         SELECT
-            DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
-            count(1) AS measure_count
+            DATE_FORMAT(create_time, '%H') AS timeAsHour,
+            count(1) AS count
         FROM
             balance_measure_info_${tableIndex}
-        WHERE
-            create_time BETWEEN #{startTime, jdbcType=TIMESTAMP}
-        AND #{endTime, jdbcType=TIMESTAMP}
         GROUP BY
-            measure_time
-        ORDER BY
-            measure_time
+            timeAsHour
     </select>
 
-    <select id="getBalanceStatisticHourUnitOneDay" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
-        SELECT
-            DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
-            count(1) AS measure_count
-        FROM
-            balance_measure_info_${tableIndex}
-        WHERE
-          UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%y-%m-%d'))=UNIX_TIMESTAMP(#{date, jdbcType=TIMESTAMP})
-        GROUP BY
-            measure_time
-        ORDER BY
-            measure_time
-    </select>
-
-    <select id="getBalanceStatisticHourUnitAll" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
-        SELECT
-        DATE_FORMAT(create_time, '%y-%m-%d %H') AS measure_time,
-        count(1) AS measure_count
-        FROM
-        balance_measure_info_${tableIndex}
-        GROUP BY
-        measure_time
-        ORDER BY
-        measure_time
-    </select>
-
-
-    <select id="getBalanceStatistic24HourDisplay" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
-        SELECT
-        DATE_FORMAT(create_time, '%H') AS timeAsHour,
-        count(1) AS count
-        FROM
-        balance_measure_info_${tableIndex}
-        GROUP BY
-        timeAsHour
-        ORDER BY
-        timeAsHour
-    </select>
-
-    <insert id="setBalanceStatisticHourUnit">
-        INSERT balance_measure_count_hour_unit(`count`, `time`)
+    <!--
+        将数据写入到表balance_measure_24_hour_count中
+     -->
+    <insert id="setBalance24HourCount">
+        INSERT IGNORE INTO balance_measure_24_hour_count(`count`, `time`)
         VALUE (#{count,jdbcType=BIGINT},#{time, jdbcType=VARCHAR})
     </insert>
 
-    <select id="getBalance24HourcCount" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+    <!--
+        将balance_measure_24_hour_count中的数据删除
+    -->
+    <delete id="deleteBalance24HourCount">
+        DELETE FROM `balance_measure_24_hour_count`
+    </delete>
+
+    <!--
+        将24小时统计数据从表balance_measure_24_hour_count中获取，用于页面展示
+    -->
+    <select id="getBalance24HourCount" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
         SELECT
-        time AS timeAsHour,
-        count as count
+            time AS timeAsHour,
+            count as count
         FROM
-        balance_measure_count_hour_unit
+            balance_measure_24_hour_count
         ORDER BY
-        timeAsHour
+            CAST(timeAsHour AS SIGNED)
+    </select>
+
+    <!--
+            index:
+            performance: good
+            check-time: 2017-11-21
+            获取某一天的体脂称数据电极数信息
+      -->
+    <select id="getBalanceElectrodeInfoOnedayFromOriginal"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeModel">
+        SELECT
+            DATE_FORMAT(create_time, '%y-%m-%d') AS date,
+            electrode_number AS electrodeNumber,
+            count(1) AS counts
+        FROM
+            `balance_measure_info_${tableIndex}`
+        WHERE
+            UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%y-%m-%d')) = UNIX_TIMESTAMP(#{oneDay, jdbcType=TIMESTAMP})
+        GROUP BY
+            electrode_number
+    </select>
+
+    <!--
+        将体脂称电极数信息写入到表balance_measure_electrode_statistic_each_day中
+    -->
+    <insert id="setBalanceElectrodeStatistic">
+        INSERT IGNORE INTO balance_measure_electrode_statistic_each_day (
+            `date`,
+            electrode_0_count,
+            electrode_4_count,
+            electrode_8_count
+        )
+        VALUE
+            (#{statisticDate,jdbcType=TIMESTAMP}, #{electrode0Number,jdbcType=BIGINT}, #{electrode4Number,jdbcType=BIGINT}, #{electrode8Number,jdbcType=BIGINT})
+    </insert>
+
+    <!--
+            index:
+            performance: good
+            check-time: 2017-11-21
+         -->
+    <!-- 1. 从表balance_measure_electrode_statistic_each_day获取数据，用于页面的显示
+         2. 时间范围：左闭右闭
+    -->
+    <select id="getBalanceElectrodeInfoDayFrame"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeOutModel">
+        SELECT
+            DATE_FORMAT(date,'%Y-%m-%d') AS date,
+            electrode_0_count AS electrode0Count,
+            electrode_4_count AS electrode4Count,
+            electrode_8_count AS electrode8Count
+        FROM
+            `balance_measure_electrode_statistic_each_day`
+        WHERE
+            date BETWEEN DATE_SUB(#{baseDay, jdbcType=TIMESTAMP}, INTERVAL #{dayRange, jdbcType=INTEGER} DAY)
+        AND #{baseDay, jdbcType=TIMESTAMP}
+        ORDER BY date
+    </select>
+
+    <select id="getBalanceElectrodeInfoAlldayFromOriginal" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+            DATE_FORMAT(create_time, '%y-%m-%d') AS date,
+            electrode_number AS electrodeNumber,
+            count(1) AS counts
+        FROM
+            `balance_measure_info_${tableIndex}`
+        GROUP BY
+            date,
+            electrode_number
+    </select>
+
+    <select id="getBalanceMaxMinDates" resultType="com.phicomm.product.manger.model.statistic.BalanceMaxMinDatesModel">
+        SELECT
+            max(DATE_FORMAT(create_date, '%Y-%m-%d')) AS maxDate,
+            min(DATE_FORMAT(create_date,'%Y-%m-%d')) AS minDate
+        FROM
+            `balance_measure_info_${tableIndex}`
     </select>
 </mapper>

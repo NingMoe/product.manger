@@ -5,6 +5,8 @@ import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.statistic.Balance24HourDisplayQueryResultModel;
 import com.phicomm.product.manger.model.statistic.BalanceAsHourModel;
+import com.phicomm.product.manger.model.statistic.BalanceElectrodeQueryResultModel;
+import com.phicomm.product.manger.model.statistic.StatisticDateModel;
 import com.phicomm.product.manger.service.BalanceDailyStatisticService;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.sun.tools.doclint.Entity.or;
+import static com.sun.tools.doclint.Entity.sim;
 
 
 /**
@@ -47,10 +53,25 @@ public class BalanceDailyStatisticController {
     })
     @FunctionPoint("common")
     public Response<Balance24HourDisplayQueryResultModel> get24HourDisplay() {
-        Balance24HourDisplayQueryResultModel balance24HourDisplayQueryResultModel = balanceDailyStatisticService.get24HourDisplay();
+        Balance24HourDisplayQueryResultModel balance24HourDisplayQueryResultModel = balanceDailyStatisticService.getBalance24HourCount();
         return new Response<Balance24HourDisplayQueryResultModel>().setData(balance24HourDisplayQueryResultModel);
     }
 
+    @RequestMapping(value = "balance/statistic/balance/electrode/display", method = RequestMethod.POST,
+            consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    @ApiOperation(value = "体脂称测量电极数每日统计")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+    })
+    @FunctionPoint("common")
+    public Response<BalanceElectrodeQueryResultModel> get20DaysElectrodeStatistic() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = simpleDateFormat.format(new Date());
+        Date date = simpleDateFormat.parse(dateString);
+        BalanceElectrodeQueryResultModel balanceElectrodeQueryResultModel = balanceDailyStatisticService.get20DaysBalanceElectrodeStatistic(date);
+        return new Response<BalanceElectrodeQueryResultModel>().setData(balanceElectrodeQueryResultModel);
+    }
 }
     
  

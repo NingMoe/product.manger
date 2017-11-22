@@ -121,7 +121,7 @@ public class BalanceStatisticPageController {
     }
 
     @RequestMapping(value = "statistic/page/balance/24hour/display", method = RequestMethod.GET)
-    @ApiIgnore("统计每日体脂秤活跃量")
+    @ApiIgnore("统计24小时统计分布")
     @FunctionPoint(value = "common")
     public ModelAndView showBalance24hourDisplay(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
@@ -129,6 +129,17 @@ public class BalanceStatisticPageController {
         modelAndView.getModelMap().put("context", "statistic/balance_24hour_display.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balance24HourDisplay"));
+        return modelAndView;
+    }
+    @RequestMapping(value = "statistic/page/balance/electrode/display", method = RequestMethod.GET)
+    @ApiIgnore("统计24小时统计分布")
+    @FunctionPoint(value = "common")
+    public ModelAndView showBalanceElectrodeDisplay(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModelMap().put("context", "statistic/balance_electrode_display.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceElectrodeDisplay"));
         return modelAndView;
     }
 }
