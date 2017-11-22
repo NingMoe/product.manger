@@ -68,7 +68,7 @@ public class BalanceFeedbackService {
     private static final int DIALOG_REVOKE_EXCEPTION = 26;
 
     @Autowired
-    public BalanceFeedbackService(FeedbackPropertiesConfig propertiesConfig){
+    public BalanceFeedbackService(FeedbackPropertiesConfig propertiesConfig) {
         String baseUrl = propertiesConfig.getBaseUrl();
         this.FEEDBACK_WITHOUT_FILTER_URL = baseUrl + "feedback/list";
         this.FEEDBACK_PAGE_WITHOUT_FILTER_URL = baseUrl + "feedback/page/list";
@@ -119,7 +119,7 @@ public class BalanceFeedbackService {
         ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attrs.getRequest().getSession();
         Set<String> permissionSet = (Set<String>) session.getAttribute(SessionKeyEnum.USER_PERMISSIONS.getKeyName());
-        for (String permission:permissionSet) {
+        for (String permission : permissionSet) {
             permissions.add(new Permission(permission));
         }
         return permissions;
@@ -145,7 +145,7 @@ public class BalanceFeedbackService {
             throws FeedbackNotFoundException, FeedbackEmptyException, DataFormatException, FeedbackLockException {
         MultipartFile[] files = new MultipartFile[]{file1, file2, file3, file4};
         List<String> dialogPictures = uploadFile(files);
-        String userId = HttpUtil.getCurrentUserInfo().getId().toString();
+        String userId = HttpUtil.getAccountUserInfo().get("uid") == null ? "admin" : HttpUtil.getAccountUserInfo().get("uid");
         ReplyBean replyBean = new ReplyBean(appId, sessionId, userId, dialogText, dialogPictures);
         logger.info(replyBean.toString());
         int exceptionNum;
@@ -195,7 +195,7 @@ public class BalanceFeedbackService {
      * @throws DialogRevokeException 数据已处理，无法删除
      */
     public void customerRevoker(RevokeDialogBean revokeDialogBean) throws DataFormatException, DialogRevokeException, FeedbackLockException {
-        revokeDialogBean.setCustomerId(HttpUtil.getCurrentUserInfo().getId().toString());
+        revokeDialogBean.setCustomerId(HttpUtil.getAccountUserInfo().get("uid") == null ? "admin" : HttpUtil.getAccountUserInfo().get("uid"));
         logger.info(revokeDialogBean.toString());
         int exceptionNum = 0;
         String result = null;
@@ -310,7 +310,7 @@ public class BalanceFeedbackService {
      */
     public void lockFeedback(LockRequestBean requestBean)
             throws DataFormatException, FeedbackNotFoundException, FeedbackLockException {
-        requestBean.setUserId(HttpUtil.getCurrentUserInfo().getId().toString());
+        requestBean.setUserId(HttpUtil.getAccountUserInfo().get("uid") == null ? "admin" : HttpUtil.getAccountUserInfo().get("uid"));
         logger.info(requestBean);
         String result = null;
         int exceptionNum = 0;

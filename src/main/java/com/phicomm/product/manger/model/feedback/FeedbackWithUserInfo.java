@@ -16,12 +16,6 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
 
     private String appId;
 
-    private String userId;
-
-    private String username;
-
-    private String imageUrl;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -47,30 +41,6 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
 
     public void setAppId(String appId) {
         this.appId = appId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public Date getCreateTime() {
@@ -120,9 +90,6 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
         return "FeedbackWithUserInfo{" +
                 "id=" + id +
                 ", appId='" + appId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", username='" + username + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
                 ", createTime=" + createTime +
                 ", sessionId='" + sessionId + '\'' +
                 ", deviceType='" + deviceType + '\'' +

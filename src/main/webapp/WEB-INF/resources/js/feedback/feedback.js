@@ -1,6 +1,7 @@
 let firstLoad = true;
 let startId = 2147483647;
 let pageNum = 0;
+let pageFilterNum = 0;
 let currentPage = 1;
 let terminalInfo = "";
 let isAll = true;
@@ -288,14 +289,17 @@ function getSearchFeedback(n) {
                 alert('Failed reason: ' + err);
             }, success: function (data) {
                 let result = data.data;
-                let pageFilterNum = result.totalCount % 5 === 0 ? parseInt(result.totalCount / 5) : parseInt(result.totalCount / 5) + 1
-                paging(pageFilterNum);
-                if (result !== null && result.feedbackWithUserInfos.length !== 0) {
+                pageFilterNum = result.totalCount % 5 === 0 ? parseInt(result.totalCount / 5) : parseInt(result.totalCount / 5) + 1;
+                if (result !== null && result.feedbackWithUserInfos !== null && result.feedbackWithUserInfos.length !== 0) {
                     for (let i = 0; i < result.feedbackWithUserInfos.length; i++) {
                         loadItem(result.feedbackWithUserInfos[i]);
                     }
+                    paging(pageFilterNum);
+                    $("#pageId"+n)[0].className = "active";
+                }else{
+                    $("#parentDiv").empty();
+                    $("#paging").empty();
                 }
-                $("#pageId"+n)[0].className = "active";
                 getPermissionList();
             }
         });
@@ -404,7 +408,7 @@ function next() {
             fetchFeedback(currentPage);
         }
     }else{
-        if (currentPage < pageNum){
+        if (currentPage < pageFilterNum){
             $("#pageId"+currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage++;
@@ -425,10 +429,10 @@ function end() {
             fetchFeedback(currentPage);
         }
     }else{
-        if (currentPage < pageNum){
+        if (currentPage < pageFilterNum){
             $("#pageId"+currentPage)[0].className = "";
             $("#parentDiv").empty();
-            currentPage = pageNum;
+            currentPage = pageFilterNum;
             getSearchFeedback(currentPage);
         }
     }
@@ -480,12 +484,13 @@ function fetchFeedback(n) {
                     startId = startId > result[i].id ? result[i].id - 1 : startId - 1;
                 }
                 paging(pageNum);
+                $("#pageId"+n)[0].className = "active";
             }else{
                 $("#parentDiv").empty();
+                $("#paging").empty();
             }
             getPermissionList();
             $("#timeRangeSelected").val("");
-            $("#pageId"+n)[0].className = "active";
         }
     });
 }
@@ -496,7 +501,7 @@ function fetchFeedback(n) {
  */
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
-        loadUserHeader(itemData.imageUrl) + loadUserId(itemData.userId) + loadUsername(itemData.username) +
+        loadUserHeader(itemData.dialogBeans[0].imageUrl) + loadUserId(itemData.dialogBeans[0].userId) + loadUsername(itemData.dialogBeans[0].username) +
         loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
@@ -562,19 +567,22 @@ function loadFeedback(itemData) {
     let dialog = itemData.dialogBeans;
     let id = itemData.id;
     let deviceType = translateDeviceType(itemData.deviceType);
-    let phicomm = "resources/image/xiaofei.png";
     let appId = itemData.appId;
     let src = `<div hidden><span id="appId">${appId}</span></div><div hidden><span id="sessionId">${dialog[0].sessionId}</span></div>`;
     for (let i = 0; i < dialog.length; i++) {
         let images = dialog[i].dialogPictures;
+        let headImage = dialog[i].imageUrl;
         if (i === 2) {
             let moreInfo = "moreInfo" + dialog[0].sessionId;
             src = src + `<div id=${moreInfo} hidden>`
         }
         if ("b2c" === dialog[i].dialogType) {
-            src = src + `<div style="float: left;margin-top: 15px"><img src=${phicomm} style="width: 30px;height: 30px " alt='img'/></a></div>`;
+            src = src + `<div style="float: left;margin-top: 15px"><img src=${headImage} style="width: 30px;height: 30px " alt='img'/></a></div>`;
             src = src + ` <div class="row" style="margin-left: 50px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
         } else {
+            if (i !== 0){
+                src = src + `<div class="product-img" style="float: left;margin-top: 15px;margin-left: -60px;"><img src=${headImage} alt='img'/></a></div>`;
+            }
             src = src + ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
         }
         if (images !== null) {

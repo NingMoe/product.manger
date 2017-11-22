@@ -23,9 +23,9 @@ public class Balance24HourAndElectrodeStatisticCron {
     }
 
     /**
-     * 每天晚上3点执行一次
+     * 每天晚上2点执行一次
      */
-    @Scheduled(cron = "0 24 11 * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void statistic() {
         balanceDailyStatisticService.cronTask();
         System.out.println("caosong scheduled working now~~~~~");

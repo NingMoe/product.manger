@@ -10,6 +10,9 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 数据源代理 -->
+    <!--locaDataSource <-> product_manager库-->
+    <!--prodDataSource <-> smart_hardware库-->
+    <!--testDataSource <-> smart_hardware库-->
     <bean id="dynamicDataSource" class="com.phicomm.product.manger.module.dds.DynamicDataSource" >
         <property name="targetDataSources">
             <map key-type="java.lang.String">

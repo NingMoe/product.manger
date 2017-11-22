@@ -5,17 +5,17 @@ import com.google.common.base.Strings;
 public class CustomerContextHolder {
 
     /**
-     * 主要的数据源
+     *  {product_manager库} 主要的数据源
      */
     private static final String MAIN_DATA_SOURCE = "localDataSource";
 
     /**
-     * 测试环境数据库
+     * {smart_hardware库} 测试环境数据库
      */
     private static final String TEST_DATA_SOURCE = "testDataSource";
 
     /**
-     * 线上的数据库
+     * {smart_hardware库} 线上的数据库
      */
     private static final String PROD_DATA_SOURCE = "prodDataSource";
 
@@ -33,21 +33,21 @@ public class CustomerContextHolder {
     }
 
     /**
-     * 选择线上的数据源
+     *  {smart_hardware库} 选择线上的数据源
      */
     public static void selectProdDataSource() {
         contextHolder.set(PROD_DATA_SOURCE);
     }
 
     /**
-     * 选择本地的数据源
+     * {product_manager库} 选择本地的数据源
      */
     public static void selectLocalDataSource() {
         contextHolder.set(MAIN_DATA_SOURCE);
     }
 
     /**
-     * 选择测试环境数据源
+     * {smart_hardware库} 选择测试环境数据源
      */
     public static void selectTestDataSource() {
         contextHolder.set(TEST_DATA_SOURCE);
