@@ -1,33 +1,36 @@
+/**
+ * Created by song02.cao on 2017/11/20.
+ */
 $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
 });
 
-$(function statisticBalanceActive() {
+
+$(function getBalance24HourDisplay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
-        type: "POST",
-        url: baseUrl + "/balance/statistic/balance/active/query",
-        contentType: "application/json",
-        dataType: "json",
-        error: function (req, status, err) {
-            alert('Failed reason: ' + err);
-        }, success: function (data) {
-            let pvs = data.data.pvs.reverse();
-            let uvs = data.data.uvs.reverse();
-            let dates = data.data.dates.reverse();
-            console.info("uvs = " + uvs.toString());
-            console.info("pvs = " + pvs.toString());
+        type:"POST",
+        url:baseUrl + "/balance/statistic/balance/24hour/display",
+        contentType:"application/json",
+        dataType:"json",
+        error:function (req, status, error) {
+            alert("getBalance24HourDisplay error: " + error);
+        },
+        success:function (rtValue) {
+            let hours = rtValue.data.hours;
+            let counts = rtValue.data.counts;
+            console.info("rtValue.status = " + rtValue.status);
+            console.info("rtValue.data = " + hours.toString())
+            console.info("rtValue.data = " + counts.toString())
+            drawBarChart(hours,counts,new Chart($("#balance-24hour-display").get(0).getContext("2d")))
 
-            drawBarChart(dates, pvs, new Chart($("#balanceActiveStatisticChartPv").get(0).getContext("2d")));
-            drawBarChart(dates, uvs, new Chart($("#balanceActiveStatisticChartUv").get(0).getContext("2d")));
         }
-    })
+    });
 });
 
 /**
  * 绘制柱状图
- *
  * @param labes 横坐标
  * @param datas 数据
  * @param chart 图表类型
