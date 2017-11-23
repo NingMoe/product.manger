@@ -67,6 +67,16 @@ public class BalanceDailyStatisticService {
                 counts[index] = counts[index] + balanceAsHourModel.getCount();
             }
         }
+
+        List<BalanceAsHourModel> hourStatisticList2 = new ArrayList<>();
+        CustomerContextHolder.selectProdDataSource();
+        hourStatisticList2.addAll(balanceDailyStatisticMapper.getBalanceStatistic24HourDisplaySpecialTable());
+        CustomerContextHolder.clearDataSource();
+        for (BalanceAsHourModel balanceAsHourModel : hourStatisticList2) {
+            int index = Integer.parseInt(balanceAsHourModel.getTimeAsHour());
+            counts[index] = counts[index] + balanceAsHourModel.getCount();
+        }
+
         for (int i = 0; i < HOURS_DISPLAY; i++) {
             CustomerContextHolder.selectLocalDataSource();
             balanceDailyStatisticMapper.setBalance24HourCount(counts[i], String.valueOf(i));
@@ -99,8 +109,7 @@ public class BalanceDailyStatisticService {
 
 
     /**
-     *  将balance_measure_24_hour_count中的数据全部删除
-     *
+     * 将balance_measure_24_hour_count中的数据全部删除
      */
     public void deleteBalance24HourCount() {
         balanceDailyStatisticMapper.deleteBalance24HourCount();
@@ -113,16 +122,17 @@ public class BalanceDailyStatisticService {
      */
     public void setBalanceElectrodeStatisticOneDay(String date) {
         List<BalanceElectrodeModel> list = new ArrayList<>();
-        List<BalanceElectrodeModel> resultStandStructList = new ArrayList<>();
         int electrode0 = 0;
         int electrode4 = 0;
         int electrode8 = 0;
-        //@todo tablbe index从多少算起？
         for (int i = 1; i < BALANCE_MEASURE_TABLE_NUM; i++) {
             CustomerContextHolder.selectProdDataSource();
             list.addAll(balanceDailyStatisticMapper.getBalanceElectrodeInfoOnedayFromOriginal(stringToDate(date), i));
             CustomerContextHolder.clearDataSource();
         }
+        CustomerContextHolder.selectProdDataSource();
+        list.addAll(balanceDailyStatisticMapper.getBalanceElectrodeInfoOnedayFromSpecialTable(stringToDate(date)));
+        CustomerContextHolder.clearDataSource();
         for (BalanceElectrodeModel item : list) {
             switch (item.getElectrodeNumber()) {
                 case 0:
@@ -169,9 +179,10 @@ public class BalanceDailyStatisticService {
     }
 
     /**
-     *  将所有balance_measure_info 表中的数据写入到表balance_measure_electrode_statistic_each_day中
+     * 将所有balance_measure_info 表中的数据写入到表balance_measure_electrode_statistic_each_day中
      *
-     *  @todo 该方法效率太低，后续优化
+     * @todo 1. 该函数暂时未使用到,后续根据项目需求，进行删除或者保留
+     * @todo 2. 该方法效率太低，后续优化
      */
     public void setBalanceElectrodeStatisticFromAllHistory() {
         String maxDate = "1999-01-01";
@@ -188,11 +199,10 @@ public class BalanceDailyStatisticService {
 
     /**
      * 每天进行一次日活统计
-     *
      */
     public void cronTask() {
         Date date = new Date();
-        String yesterday =  getYesterday(date);
+        String yesterday = getYesterday(date);
         deleteBalance24HourCount();
         setBalance24HourCount();
         setBalanceElectrodeStatisticOneDay(yesterday);
@@ -215,9 +225,9 @@ public class BalanceDailyStatisticService {
 
 
     /**
-     *   将Date类型转换成String类型日期
+     * 将Date类型转换成String类型日期
      *
-     * @param date      Date类型日期
+     * @param date Date类型日期
      * @return String   转换后的日期字符串
      */
     @NotNull
@@ -227,9 +237,9 @@ public class BalanceDailyStatisticService {
     }
 
     /**
-     *  将String类型的日期转换成Date类型
+     * 将String类型的日期转换成Date类型
      *
-     * @param date   String类型日期
+     * @param date String类型日期
      * @return Date   Date类型日期
      */
     @Nullable
@@ -265,9 +275,9 @@ public class BalanceDailyStatisticService {
     }
 
     /**
-     *  根据当前日期，获取昨天的日期
+     * 根据当前日期，获取昨天的日期
      *
-     * @param date      当前日期
+     * @param date 当前日期
      * @return string    昨天日期
      */
     public String getYesterday(Date date) {

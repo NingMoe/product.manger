@@ -26,6 +26,13 @@ public interface BalanceDailyStatisticMapper {
     List<BalanceAsHourModel> getBalanceStatistic24HourDisplay(@Param("tableIndex") int tableIndex);
 
     /**
+     * 单独从table  balance_measure_info中获取24小时分布数据
+     *
+     * @return List<BalanceAsHourModel>    返回{时间，统计数}列表
+     */
+    List<BalanceAsHourModel> getBalanceStatistic24HourDisplaySpecialTable();
+
+    /**
      * 将以小时为单位的统计写入到balance_measure_24_hour_count表中
      *
      * @param count
@@ -47,13 +54,22 @@ public interface BalanceDailyStatisticMapper {
     void deleteBalance24HourCount();
 
     /**
-     * 从原始表balance_measure_info获取一天的电极统计数据
+     * 从原始表balance_measure_info_<date>获取一天的电极统计数据
+     *
      * @param oneDay                        日期
      * @param tableIndex                    表索引
      * @return List<BalanceElectrodeModel>   返回{日期，电极，数量}对象
      */
     List<BalanceElectrodeModel> getBalanceElectrodeInfoOnedayFromOriginal(@Param("oneDay") Date oneDay,
                                                                           @Param("tableIndex") int tableIndex);
+
+    /**
+     * 从特殊原始表balance_measure_info获取一天的电极统计数据
+     *
+     * @param oneDay                        日期
+     * @return List<BalanceElectrodeModel>   返回{日期，电极，数量}对象
+     */
+    List<BalanceElectrodeModel> getBalanceElectrodeInfoOnedayFromSpecialTable(@Param("oneDay") Date oneDay);
 
     /**
      * 将从原始表balance_measure_info中获取的电极相关插入到表balance_measure_electrode_statistic_each_day中
@@ -76,15 +92,10 @@ public interface BalanceDailyStatisticMapper {
     List<BalanceElectrodeOutModel> getBalanceElectrodeInfoDayFrame(@Param("baseDay") Date baseDay,
                                                                    @Param("dayRange") int dayRange);
 
-    /**
-     *  将原始表balance_measure_info_<x>中的所有电极信息，用于写入到表balance_measure_electrode_statistic_each_day中
-     * @param tableIndex                    原始表索引
-     * @return List<BalanceElectrodeModel>   返回{date,electrode,count}结构list
-     */
-    List<BalanceElectrodeModel> getBalanceElectrodeInfoAlldayFromOriginal(@Param("tableIndex") int tableIndex);
 
     /**
      *  获取表中最大、最小时间
+     *  todo 暂时未使用到，后续根据情况进行删除或者保留
      *
      * @param tableIndex                表索引
      * @return BalanceMaxMinDatesModel   {maxDate,minDate}对象

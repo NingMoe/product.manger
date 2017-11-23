@@ -20,6 +20,23 @@
     </select>
 
     <!--
+            index:
+            performance: good
+            check-time:2017-11-22
+            从原始测量表balance_measure_info中获取24小时统计信息，用于写入到表balance_measue_24_hour_counts中
+     -->
+    <select id="getBalanceStatistic24HourDisplaySpecialTable"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
+        SELECT
+            DATE_FORMAT(create_time, '%H') AS timeAsHour,
+            count(1) AS count
+        FROM
+            balance_measure_info
+        GROUP BY
+            timeAsHour
+    </select>
+
+    <!--
         将数据写入到表balance_measure_24_hour_count中
      -->
     <insert id="setBalance24HourCount">
@@ -56,13 +73,33 @@
     <select id="getBalanceElectrodeInfoOnedayFromOriginal"
             resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeModel">
         SELECT
-            DATE_FORMAT(create_time, '%y-%m-%d') AS date,
+            DATE_FORMAT(create_time, '%Y-%m-%d') AS date,
             electrode_number AS electrodeNumber,
             count(1) AS counts
         FROM
             `balance_measure_info_${tableIndex}`
         WHERE
-            UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%y-%m-%d')) = UNIX_TIMESTAMP(#{oneDay, jdbcType=TIMESTAMP})
+            UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%Y-%m-%d')) = UNIX_TIMESTAMP(#{oneDay, jdbcType=TIMESTAMP})
+        GROUP BY
+            electrode_number
+    </select>
+
+    <!--
+            index:
+            performance: good
+            check-time: 2017-11-21
+            从表balance_measure_info中获取某一天的体脂称数据电极数信息
+      -->
+    <select id="getBalanceElectrodeInfoOnedayFromSpecialTable"
+            resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeModel">
+        SELECT
+            DATE_FORMAT(create_time, '%Y-%m-%d') AS date,
+            electrode_number AS electrodeNumber,
+            count(1) AS counts
+        FROM
+            `balance_measure_info`
+        WHERE
+            UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%Y-%m-%d')) = UNIX_TIMESTAMP(#{oneDay, jdbcType=TIMESTAMP})
         GROUP BY
             electrode_number
     </select>
@@ -104,17 +141,13 @@
         ORDER BY date
     </select>
 
-    <select id="getBalanceElectrodeInfoAlldayFromOriginal" resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
-        SELECT
-            DATE_FORMAT(create_time, '%y-%m-%d') AS date,
-            electrode_number AS electrodeNumber,
-            count(1) AS counts
-        FROM
-            `balance_measure_info_${tableIndex}`
-        GROUP BY
-            date,
-            electrode_number
-    </select>
+    <!--
+            index:
+            performance: good
+            check-time: 2017-11-22
+            获取balance_measure_info_<index>表中数据的时间最大值和最小值
+            todo 暂时未使用到,后续根据情况是否删除
+     -->
 
     <select id="getBalanceMaxMinDates" resultType="com.phicomm.product.manger.model.statistic.BalanceMaxMinDatesModel">
         SELECT

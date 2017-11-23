@@ -39,7 +39,7 @@ public class BalanceDailyStatisticServiceTest {
     @Test
     public void setBalanceElectrodeStatisticOneDayTest() {
 
-        balanceDailyStatisticService.setBalanceElectrodeStatisticOneDay("2017-09-22");
+        balanceDailyStatisticService.setBalanceElectrodeStatisticOneDay("2017-08-30");
     }
     @Test
     public void getBalanceElectrodeStatisticTest() throws ParseException {

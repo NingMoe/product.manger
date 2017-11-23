@@ -80,19 +80,12 @@ public class BalanceDailyStatisticMapperTest {
         electrodeList.add(0);
         electrodeList.add(4);
         electrodeList.add(8);
-        List<Integer> returnList = new ArrayList<>();
         List<BalanceElectrodeModel> list = new ArrayList<>();
         list.addAll(balanceDailyStatisticMapper.getBalanceElectrodeInfoOnedayFromOriginal(date, 1));
         for (BalanceElectrodeModel item : list) {
-            returnList.add(item.getElectrodeNumber());
+            System.out.println(item);
         }
-        electrodeList.removeAll(returnList);
-        for (int item:electrodeList) {
-            list.add(new BalanceElectrodeModel(dateTime,item,0));
-        }
-        for (BalanceElectrodeModel item : list) {
-            System.out.println(item.toString());
-        }
+
     }
 
     @Test
@@ -115,4 +108,23 @@ public class BalanceDailyStatisticMapperTest {
         System.out.println(balanceMaxMinDatesModel.toString());
     }
 
+    @Test
+    public void getBalanceElectrodeFromSpecialTest() throws ParseException {
+        CustomerContextHolder.selectProdDataSource();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse("2017-07-24");
+        List<BalanceElectrodeModel> list =  balanceDailyStatisticMapper.getBalanceElectrodeInfoOnedayFromSpecialTable(date);
+        for (BalanceElectrodeModel item : list) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void getBalance24HourDispalySpecialTable() {
+        CustomerContextHolder.selectProdDataSource();
+        List<BalanceAsHourModel> list = balanceDailyStatisticMapper.getBalanceStatistic24HourDisplaySpecialTable();
+        for (BalanceAsHourModel item: list) {
+            System.out.println(item);
+        }
+    }
 }
