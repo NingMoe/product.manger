@@ -192,10 +192,10 @@ public class BalanceDailyStatisticService {
      */
     public void cronTask() {
         Date date = new Date();
-        String dateString = dateToString(date);
+        String yesterday =  getYesterday(date);
         deleteBalance24HourCount();
         setBalance24HourCount();
-        setBalanceElectrodeStatisticOneDay(dateString);
+        setBalanceElectrodeStatisticOneDay(yesterday);
     }
 
     /**
@@ -262,5 +262,19 @@ public class BalanceDailyStatisticService {
             setBalanceElectrodeStatisticOneDay(date);
             start.add(Calendar.DATE, 1);
         }
+    }
+
+    /**
+     *  根据当前日期，获取昨天的日期
+     *
+     * @param date      当前日期
+     * @return string    昨天日期
+     */
+    public String getYesterday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -1);
+        Date yestoday = calendar.getTime();
+        return dateToString(yestoday);
     }
 }
