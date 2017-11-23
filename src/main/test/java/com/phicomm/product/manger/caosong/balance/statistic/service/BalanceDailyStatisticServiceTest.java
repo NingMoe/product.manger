@@ -64,4 +64,14 @@ public class BalanceDailyStatisticServiceTest {
     public void setBalanceElectrodeStatisticFromAllHistoryTest() {
         balanceDailyStatisticService.setBalanceElectrodeStatisticFromAllHistory();
     }
+
+    @Test
+    public void getYestodayTest() {
+        String yesterday = balanceDailyStatisticService.getYesterday(new Date());
+        System.out.println("caosong yesterday = " + yesterday);
+    }
+    @Test
+    public void conTaskTest() {
+        balanceDailyStatisticService.cronTask();
+    }
 }
