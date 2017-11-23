@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
-    $("#balance-statistic-2").addClass("active");
+    $("#balance-statistic-3").addClass("active");
 });
 
 /**
@@ -61,70 +61,6 @@ $(function obtainLocationYearData() {
                 }
             }
             let barChartCavas = $("#locationYearChart").get(0).getContext("2d");
-            let barChart = new Chart(barChartCavas);
-            drawBarChart(labels, dates, barChart);
-        }
-    })
-});
-
-/**
- * 获取激活位置统计信息，并作图。(30天)
- */
-$(function obtainActiveLocationInfoByDay() {
-    const baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/balance/location/day",
-        dataType: "json",
-        data: {
-            "day": 30,
-            "type": "lianbi",
-            "pageSize": 15
-        },
-        error: function (req, status, err) {
-            alert('Failed reason: ' + err);
-        }, success: function (data) {
-            let labels = [];
-            let dates = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
-                    labels.push(key);
-                    dates.push(data.data[key]);
-                }
-            }
-            let barChartCavas = $("#activeLocationMonthChart").get(0).getContext("2d");
-            let barChart = new Chart(barChartCavas);
-            drawBarChart(labels, dates, barChart);
-        }
-    })
-});
-
-/**
- * 获取过去12个月激活位置统计信息，并作图。
- */
-$(function obtainActiveLocationYearData() {
-    const baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/balance/location/month",
-        dataType: "json",
-        data: {
-            "month": 12,
-            "type": "lianbi",
-            "pageSize": 15
-        },
-        error: function (req, status, err) {
-            alert('Failed reason: ' + err);
-        }, success: function (data) {
-            let labels = [];
-            let dates = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
-                    labels.push(key);
-                    dates.push(data.data[key]);
-                }
-            }
-            let barChartCavas = $("#activeLocationYearChart").get(0).getContext("2d");
             let barChart = new Chart(barChartCavas);
             drawBarChart(labels, dates, barChart);
         }

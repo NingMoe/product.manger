@@ -348,7 +348,9 @@ function showMap(data) {
     for (var i = 0; i <= 3; i++) {
         var html = '';
         for (var j = 0; j <= 4; j++) {
-            html += '<span>' + statistic[5 * i + j].name + '：' + statistic[5 * i + j].value + '</span>';
+            if (5 * i + j < statistic.length){
+                html += '<span>' + statistic[5 * i + j].name + '：' + statistic[5 * i + j].value + '</span>';
+            }
         }
         $('.ranklist' + (i + 1)).append(html);
     }
