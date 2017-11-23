@@ -93,14 +93,11 @@ public class BalanceLocationService {
      * 获取N个月的位置信息
      */
     public Map<String, Integer> obtainLocationCountByMonth(int month, String type, int pageSize) {
-        List<LocationCountBean> countBeans;
+        List<LocationCountBean> countBeans = Lists.newArrayList();
         month = month <= 0 ? DEFAULT_MONTH : month;
         pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
-        //联璧激活的位置信息
-        if ("lianbi".equals(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByMonth(month, pageSize);
-        } else {
+        if ("balance".equalsIgnoreCase(type)){
             countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, pageSize);
         }
         CustomerContextHolder.clearDataSource();
@@ -118,15 +115,11 @@ public class BalanceLocationService {
      * 获取N天的位置信息
      */
     public Map<String, Integer> obtainLocationCountByDay(int day, String type, int pageSize) {
-        List<LocationCountBean> countBeans;
+        List<LocationCountBean> countBeans = Lists.newArrayList();
         day = day <= 0 ? DEFAULT_DAY : day;
         pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
-        //联璧激活位置信息
-        if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveLocationCountByDay(day, pageSize);
-        } else {
-            //其它默认为电子秤位置信息
+        if ("balance".equalsIgnoreCase(type)){
             countBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
         }
         CustomerContextHolder.clearDataSource();

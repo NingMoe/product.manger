@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.service;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.phicomm.product.manger.dao.BalanceStatusMapper;
 import com.phicomm.product.manger.dao.BalanceUserManagerMapper;
 import com.phicomm.product.manger.dao.LianbiActiveMapper;
@@ -64,11 +65,9 @@ public class BalanceStatisticService {
     public Map<String, Integer> obtainCountByMonth(int month, String type) {
         DateTime dateTime = new DateTime(DateTime.now()).minusDays(1);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        List<CountBean> countBeans;
+        List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveCountByMonth(month);
-        } else {
+        if ("balance".equalsIgnoreCase(type)){
             countBeans = balanceStatusMapper.obtainCountByMonth(month);
         }
         CustomerContextHolder.clearDataSource();
@@ -98,11 +97,9 @@ public class BalanceStatisticService {
     public Map<String, Integer> obtainCountByDay(int day, String type) {
         DateTime dateTime = new DateTime(DateTime.now()).minusDays(1);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
-        List<CountBean> countBeans;
+        List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("lianbi".equalsIgnoreCase(type)) {
-            countBeans = lianbiActiveMapper.obtainActiveCountByDay(day);
-        } else {
+        if ("balance".equalsIgnoreCase(type)){
             countBeans = balanceStatusMapper.obtainCountByDay(day);
         }
         CustomerContextHolder.clearDataSource();
