@@ -67,7 +67,7 @@ public class BalanceStatisticService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
         List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)){
             countBeans = balanceStatusMapper.obtainCountByMonth(month);
         }
         CustomerContextHolder.clearDataSource();
@@ -99,7 +99,7 @@ public class BalanceStatisticService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
         List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)){
             countBeans = balanceStatusMapper.obtainCountByDay(day);
         }
         CustomerContextHolder.clearDataSource();
