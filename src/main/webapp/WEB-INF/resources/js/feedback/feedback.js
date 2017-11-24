@@ -74,7 +74,7 @@ function getPermissionList() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let result = data.data;
-            if (JSON.stringify(result).indexOf("feedbackManger") === -1){
+            if (JSON.stringify(result).indexOf("feedbackManger") === -1) {
                 $(".identity").css("display", "none");
             }
         }
@@ -157,7 +157,7 @@ function getAll() {
     $("#deviceTypeSelected").val("");
     $("#versionSelected").val("");
     $("#timeRangeSelected").val("");
-    $("#pageId"+currentPage)[0].className = "";
+    $("#pageId" + currentPage)[0].className = "";
     currentPage = 1;
     $("#parentDiv").empty();
     fetchFeedback(currentPage);
@@ -169,7 +169,7 @@ function getAll() {
 function getDeviceType() {
     let appIdSelected = $("#appIdSelected").val();
     const baseUrl = $("#baseUrl").val();
-    if (appIdSelected !== ""){
+    if (appIdSelected !== "") {
         $.ajax({
             type: "POST",
             url: baseUrl + "/feedback/terminal/list",
@@ -184,12 +184,12 @@ function getDeviceType() {
                 let result = data.data;
                 $("#deviceTypeSelected").find("option:not(:first)").remove();
                 $("#versionSelected").find("option:not(:first)").remove();
-                if (JSON.stringify(result) !== "{}"){
+                if (JSON.stringify(result) !== "{}") {
                     terminalInfo = result;
-                    for (let key in result){
-                        $("#deviceTypeSelected").append("<option value="+key+">"+getDeviceName(key)+"</option>");
+                    for (let key in result) {
+                        $("#deviceTypeSelected").append("<option value=" + key + ">" + getDeviceName(key) + "</option>");
                     }
-                }else{
+                } else {
                     terminalInfo = "";
                     $("#deviceTypeSelected").find("option:not(:first)").remove();
                 }
@@ -197,7 +197,7 @@ function getDeviceType() {
 
             }
         });
-    }else{
+    } else {
         $("#deviceTypeSelected").find("option:not(:first)").remove();
         $("#versionSelected").find("option:not(:first)").remove();
     }
@@ -207,13 +207,13 @@ function getDeviceType() {
  * 将英文单词转化为汉字
  */
 function getDeviceName(data) {
-    if ("balance" === data){
+    if ("balance" === data) {
         return "斐讯智能体脂称S7/S7P";
-    }else if ("bloodPressureMeter" === data){
+    } else if ("bloodPressureMeter" === data) {
         return "斐讯智能血压计";
-    }else if ("w1" === data){
+    } else if ("w1" === data) {
         return "斐讯智能运动手环W1";
-    }else if ("w2" === data){
+    } else if ("w2" === data) {
         return "斐讯智能运动手表W2";
     }
 }
@@ -221,23 +221,23 @@ function getDeviceName(data) {
  * 联动获取版本号
  */
 function getVersion() {
-    if (terminalInfo !== ""){
+    if (terminalInfo !== "") {
         let deviceTypeSelected = $("#deviceTypeSelected").val();
         let versions = "";
         $("#versionSelected").find("option:not(:first)").remove();
-        if ("balance" === deviceTypeSelected){
+        if ("balance" === deviceTypeSelected) {
             versions = terminalInfo.balance;
-        }else if ("bloodPressureMeter" === deviceTypeSelected){
+        } else if ("bloodPressureMeter" === deviceTypeSelected) {
             versions = terminalInfo.bloodPressureMeter;
-        }else if ("w1" === deviceTypeSelected){
+        } else if ("w1" === deviceTypeSelected) {
             versions = terminalInfo.w1;
-        }else if ("w2" === deviceTypeSelected){
+        } else if ("w2" === deviceTypeSelected) {
             versions = terminalInfo.w2;
         }
-        for (let j =0;j<versions.length;j++){
-            $("#versionSelected").append("<option value="+versions[j].softVersion+">"+versions[j].softVersion+"</option>");
+        for (let j = 0; j < versions.length; j++) {
+            $("#versionSelected").append("<option value=" + versions[j].softVersion + ">" + versions[j].softVersion + "</option>");
         }
-    }else{
+    } else {
         $("#versionSelected").find("option:not(:first)").remove();
     }
 
@@ -261,14 +261,14 @@ function getSearchFeedback(n) {
     let timeRange = $("#timeRangeSelected").val();
     let startTime = "";
     let endTime = "";
-    if (timeRange !== ""){
+    if (timeRange !== "") {
         startTime = moment(timeRange.split('-')[0], "YYYY/MM/DD").format("YYYY-MM-DD");
         endTime = moment(timeRange.split('-')[1], "YYYY/MM/DD").format("YYYY-MM-DD");
-    }else{
+    } else {
         startTime = "2016-08-16";
         endTime = "2020-11-20";
     }
-    if (appIdSelected !== "" || timeRange !== ""){
+    if (appIdSelected !== "" || timeRange !== "") {
         isAll = false;
         let baseUrl = $("#baseUrl").val();
         $("#parentDiv").empty();
@@ -295,8 +295,8 @@ function getSearchFeedback(n) {
                         loadItem(result.feedbackWithUserInfos[i]);
                     }
                     paging(pageFilterNum);
-                    $("#pageId"+n)[0].className = "active";
-                }else{
+                    $("#pageId" + n)[0].className = "active";
+                } else {
                     $("#parentDiv").empty();
                     $("#paging").empty();
                 }
@@ -345,48 +345,58 @@ function statistics() {
 function paging(Num) {
     $("#paging").empty();
     $("#paging").append("<li id='first'><a href='javascript:void(0)' onclick='first();'>&lt;&lt;</a></li><li id='previous'><a href='javascript:void(0)' onclick='previous();'>&lt;</a></li>");
-    if (Num < 10){
+    if (Num < 10) {
         for (let i = 1; i <= Num; i++) {
-            let pageId = "pageId"+i;
-            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+            let pageId = "pageId" + i;
+            $("#paging").append("<li id=" + pageId + "><a href='javascript:void(0)' name=" + i + " onclick='showPage(this.name);'>" + i + "</a></li>");
         }
-    }else if(currentPage < 10){
+    } else if (currentPage < 10) {
         for (let i = 1; i <= 9; i++) {
-            let pageId = "pageId"+i;
-            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+            let pageId = "pageId" + i;
+            $("#paging").append("<li id=" + pageId + "><a href='javascript:void(0)' name=" + i + " onclick='showPage(this.name);'>" + i + "</a></li>");
         }
         $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
-    }else if ((Num-currentPage) < 9) {
+    } else if ((Num - currentPage) < 9) {
         $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
-        for (let i = Num-8; i <= Num; i++) {
-            let pageId = "pageId"+i;
-            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        for (let i = Num - 8; i <= Num; i++) {
+            let pageId = "pageId" + i;
+            $("#paging").append("<li id=" + pageId + "><a href='javascript:void(0)' name=" + i + " onclick='showPage(this.name);'>" + i + "</a></li>");
         }
-    }else {
+    } else {
         $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
-        for (let i = currentPage-4; i <= currentPage-(-4); i++) {
-            let pageId = "pageId"+i;
-            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        for (let i = currentPage - 4; i <= currentPage - (-4); i++) {
+            let pageId = "pageId" + i;
+            $("#paging").append("<li id=" + pageId + "><a href='javascript:void(0)' name=" + i + " onclick='showPage(this.name);'>" + i + "</a></li>");
         }
         $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
     }
     $("#paging").append("<li id='next'><a href='javascript:void(0)' onclick='next();'>&gt;</a></li><li id='end'><a href='javascript:void(0)' onclick='end();'>&gt;&gt;</a></li>");
+    $("#paging").append("<li style='margin-left: 10px'><input style='width: 40px' type='number' size='5' id='goToPageNum' value='"+currentPage+"'/></li><li>/" + Num + "</li>");
+    $("#paging").append("<li><button class='btn' onclick='goTo()'>跳页</button></li>");
+}
+
+/**
+ * 跳页
+ */
+function goTo() {
+    let goToPageNum = $("#goToPageNum").val();
+    showPage(goToPageNum);
 }
 
 /**
  * 首页
  */
 function first() {
-    if (isAll === true){
-        if (currentPage > 1){
-            $("#pageId"+currentPage)[0].className = "";
+    if (isAll === true) {
+        if (currentPage > 1) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = 1;
             fetchFeedback(currentPage);
         }
-    }else{
-        if (currentPage > 1){
-            $("#pageId"+currentPage)[0].className = "";
+    } else {
+        if (currentPage > 1) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = 1;
             getSearchFeedback(currentPage);
@@ -399,16 +409,16 @@ function first() {
  * 上一页
  */
 function previous() {
-    if (isAll === true){
-        if (currentPage > 1){
-            $("#pageId"+currentPage)[0].className = "";
+    if (isAll === true) {
+        if (currentPage > 1) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage--;
             fetchFeedback(currentPage);
         }
-    }else{
-        if (currentPage > 1){
-            $("#pageId"+currentPage)[0].className = "";
+    } else {
+        if (currentPage > 1) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage--;
             getSearchFeedback(currentPage);
@@ -421,16 +431,16 @@ function previous() {
  * 下一页
  */
 function next() {
-    if (isAll === true){
-        if (currentPage < pageNum){
-            $("#pageId"+currentPage)[0].className = "";
+    if (isAll === true) {
+        if (currentPage < pageNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage++;
             fetchFeedback(currentPage);
         }
-    }else{
-        if (currentPage < pageFilterNum){
-            $("#pageId"+currentPage)[0].className = "";
+    } else {
+        if (currentPage < pageFilterNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage++;
             getSearchFeedback(currentPage);
@@ -442,16 +452,16 @@ function next() {
  * 末页
  */
 function end() {
-    if (isAll === true){
-        if (currentPage < pageNum){
-            $("#pageId"+currentPage)[0].className = "";
+    if (isAll === true) {
+        if (currentPage < pageNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = pageNum;
             fetchFeedback(currentPage);
         }
-    }else{
-        if (currentPage < pageFilterNum){
-            $("#pageId"+currentPage)[0].className = "";
+    } else {
+        if (currentPage < pageFilterNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = pageFilterNum;
             getSearchFeedback(currentPage);
@@ -463,16 +473,16 @@ function end() {
  * 定位具体某页
  */
 function showPage(n) {
-    if (isAll === true){
-        if (n !== currentPage){
-            $("#pageId"+currentPage)[0].className = "";
+    if (isAll === true) {
+        if (n !== currentPage && n > 0 && n <= pageNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = n;
             fetchFeedback(currentPage);
         }
-    }else{
-        if (n !== currentPage){
-            $("#pageId"+currentPage)[0].className = "";
+    } else {
+        if (n !== currentPage && n > 0 && n <= pageFilterNum) {
+            $("#pageId" + currentPage)[0].className = "";
             $("#parentDiv").empty();
             currentPage = n;
             getSearchFeedback(currentPage);
@@ -505,8 +515,8 @@ function fetchFeedback(n) {
                     startId = startId > result[i].id ? result[i].id - 1 : startId - 1;
                 }
                 paging(pageNum);
-                $("#pageId"+n)[0].className = "active";
-            }else{
+                $("#pageId" + n)[0].className = "active";
+            } else {
                 $("#parentDiv").empty();
                 $("#paging").empty();
             }
@@ -601,7 +611,7 @@ function loadFeedback(itemData) {
             src = src + `<div style="float: left;margin-top: 15px"><img src=${headImage} style="width: 30px;height: 30px " alt='img'/></a></div>`;
             src = src + ` <div class="row" style="margin-left: 50px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
         } else {
-            if (i !== 0){
+            if (i !== 0) {
                 src = src + `<div class="product-img" style="float: left;margin-top: 15px;margin-left: -60px;"><img src=${headImage} alt='img'/></a></div>`;
             }
             src = src + ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
@@ -685,7 +695,7 @@ function replayShow(node, i) {
         data: JSON.stringify({
             "userId": "",
             "sessionId": sessionId
-        }),error: function (req, status, err) {
+        }), error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
             if (data.status === 0) {
@@ -742,9 +752,9 @@ function replaySave() {
             }
             $('#replayModal').modal('hide');
             $("#parentDiv").empty();
-            if (isAll){
+            if (isAll) {
                 fetchFeedback(currentPage);
-            }else{
+            } else {
                 getSearchFeedback(currentPage);
             }
         }
@@ -782,13 +792,13 @@ function deleteReplay(node, i) {
                     alert("数据格式错误 !");
                 } else if (data.status === 21) {
                     alert("反馈处于锁定状态 !");
-                }else if (data.status === 24) {
+                } else if (data.status === 24) {
                     alert("会话撤回失败！");
                 }
                 $("#parentDiv").empty();
-                if (isAll){
+                if (isAll) {
                     fetchFeedback(currentPage);
-                }else{
+                } else {
                     getSearchFeedback(currentPage);
                 }
 
