@@ -345,9 +345,30 @@ function statistics() {
 function paging(Num) {
     $("#paging").empty();
     $("#paging").append("<li id='first'><a href='javascript:void(0)' onclick='first();'>&lt;&lt;</a></li><li id='previous'><a href='javascript:void(0)' onclick='previous();'>&lt;</a></li>");
-    for (let i = 1; i <= Num; i++) {
-        let pageId = "pageId"+i;
-        $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+    if (Num < 10){
+        for (let i = 1; i <= Num; i++) {
+            let pageId = "pageId"+i;
+            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        }
+    }else if(currentPage < 10){
+        for (let i = 1; i <= 9; i++) {
+            let pageId = "pageId"+i;
+            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        }
+        $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
+    }else if ((Num-currentPage) < 9) {
+        $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
+        for (let i = Num-8; i <= Num; i++) {
+            let pageId = "pageId"+i;
+            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        }
+    }else {
+        $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
+        for (let i = currentPage-4; i <= currentPage-(-4); i++) {
+            let pageId = "pageId"+i;
+            $("#paging").append("<li id="+pageId+"><a href='javascript:void(0)' name="+i+" onclick='showPage(this.name);'>" + i + "</a></li>");
+        }
+        $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
     }
     $("#paging").append("<li id='next'><a href='javascript:void(0)' onclick='next();'>&gt;</a></li><li id='end'><a href='javascript:void(0)' onclick='end();'>&gt;&gt;</a></li>");
 }
