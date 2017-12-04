@@ -58,7 +58,7 @@ public class BalanceMcuService {
         checkMcuParamFormat(file, version);
         BalanceMcuBean balanceMcuBean = new BalanceMcuBean();
         int aFileCrc = CRC16Util.calcCrc16(file.getBytes(), 0, file.getBytes().length);
-        String fileUrl = (String) hermesService.uploadFile(file).get("fileHttpsUrl");
+        String fileUrl = (String) hermesService.uploadFile(file).get("fileHttpUrl");
         if (Strings.isNullOrEmpty(fileUrl)) {
             throw new IOException();
         }
