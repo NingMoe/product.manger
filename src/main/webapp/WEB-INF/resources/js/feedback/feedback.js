@@ -300,7 +300,7 @@ function getSearchFeedback(n) {
                     $("#parentDiv").empty();
                     $("#paging").empty();
                 }
-                getPermissionList();
+                //getPermissionList();
             }
         });
     }
@@ -520,7 +520,7 @@ function fetchFeedback(n) {
                 $("#parentDiv").empty();
                 $("#paging").empty();
             }
-            getPermissionList();
+            //getPermissionList();
             $("#timeRangeSelected").val("");
         }
     });
