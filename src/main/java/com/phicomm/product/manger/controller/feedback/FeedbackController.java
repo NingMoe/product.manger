@@ -82,7 +82,7 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("客服回复某个反馈意见")
-    @FunctionPoint(value = "feedbackManger")
+    @FunctionPoint(value = "common")
     public CommonResponse customerReply(@RequestParam("appIdReplay") String appId,
                                         @RequestParam("sessionIdReplay") String sessionId,
                                         @RequestParam("dialogTextReplay") String dialogText,
@@ -110,7 +110,7 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("后台管理撤回用户未读的消息")
-    @FunctionPoint(value = "feedbackManger")
+    @FunctionPoint(value = "common")
     public CommonResponse revokeDialog(@RequestBody RevokeDialogBean revokeDialogBean)
             throws DataFormatException, DialogRevokeException, FeedbackLockException {
         feedbackService.customerRevoker(revokeDialogBean);
@@ -217,7 +217,7 @@ public class FeedbackController {
     })
     @ResponseBody
     @ApiOperation("锁定反馈意见:客服")
-    @FunctionPoint(value = "feedbackManger")
+    @FunctionPoint(value = "common")
     public CommonResponse obtainFeedbackStatus(@RequestBody LockRequestBean lockRequestBean)
             throws DataFormatException, FeedbackNotFoundException, FeedbackLockException {
         feedbackService.lockFeedback(lockRequestBean);
