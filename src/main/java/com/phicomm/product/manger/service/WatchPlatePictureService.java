@@ -67,7 +67,7 @@ public class WatchPlatePictureService {
                                     String[] picChiName,
                                     String[] picEngName,
                                     String picVersion,
-                                    String picResolution,
+                                    String[] picResolution,
                                     String environment)
             throws DataFormatException, UploadFileException {
         List<Integer> picIdList = Arrays.asList(picId);
@@ -79,7 +79,7 @@ public class WatchPlatePictureService {
         watchPlatePictureUploadMapper.watchPlatePictureDelete(picVersion);
         List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
         for (int i = 0; i < file.length; i++) {
-            WatchPlatePictureUpload watchPlatePictureUpload = new WatchPlatePictureUpload(picId[i], picEngName[i], picChiName[i], picVersion, picResolution);
+            WatchPlatePictureUpload watchPlatePictureUpload = new WatchPlatePictureUpload(picId[i], picEngName[i], picChiName[i], picVersion, picResolution[i]);
             Map<String, String> map = FileUtil.uploadFileToHermes(file[i]);
             watchPlatePictureUpload.setPicUrl(map.get("url"));
             Date now = new Date();
