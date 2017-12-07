@@ -19,7 +19,8 @@ import java.util.List;
 
 /**
  * ota
- * Created by wei.yang on 2017/7/10.
+ *
+ * @author wei.yang on 2017/7/10.
  */
 @Service
 public class BalanceOtaService {
@@ -29,6 +30,8 @@ public class BalanceOtaService {
     private OtaServerService otaServerService;
 
     private HermesService hermesService;
+
+    private static final String PROD = "prod";
 
     @Autowired
     public BalanceOtaService(BalanceOtaMapper balanceOtaMapper,
@@ -69,11 +72,7 @@ public class BalanceOtaService {
         balanceOtaInfo.setaVersionFileUrl(aFileUrl);
         balanceOtaInfo.setbVersionFileUrl(bFileUrl);
         balanceOtaInfo.setSoftwareVersion(version);
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        selectEnvironment(environment);
         int effectLine = balanceOtaMapper.uploadOtaMessage(balanceOtaInfo);
         CustomerContextHolder.clearDataSource();
         if (effectLine != 0) {
@@ -91,11 +90,7 @@ public class BalanceOtaService {
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException {
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        selectEnvironment(environment);
         balanceOtaMapper.updateOtaStatus(balanceOtaStatus);
         if (balanceOtaStatus.getEnable() == 1) {
             balanceOtaStatus.setEnable(0);
@@ -126,11 +121,7 @@ public class BalanceOtaService {
      */
     public List<BalanceOtaInfo> fetchOtaList(String environment) {
         List<BalanceOtaInfo> balanceOtaInfoList;
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        selectEnvironment(environment);
         balanceOtaInfoList = balanceOtaMapper.fetchOtaList();
         CustomerContextHolder.clearDataSource();
         return balanceOtaInfoList;
@@ -181,6 +172,22 @@ public class BalanceOtaService {
         }
         if (version <= 0) {
             throw new DataFormatException();
+        }
+    }
+
+    /**
+     * 数据库选择
+     *
+     * @param environment 环境
+     */
+    private void selectEnvironment(String environment) {
+        switch (environment) {
+            case PROD:
+                CustomerContextHolder.selectProdDataSource();
+                break;
+            default:
+                CustomerContextHolder.selectTestDataSource();
+                break;
         }
     }
 }
