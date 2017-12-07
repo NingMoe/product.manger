@@ -55,8 +55,7 @@ public class BalanceMcuService {
      * @throws DataFormatException 数据格式异常
      */
     public BalanceMcuBean uploadMcuMessage(MultipartFile file, int version, String environment)
-            throws IOException,
-            DataFormatException {
+            throws IOException, DataFormatException {
         checkMcuParamFormat(file, version);
         BalanceMcuBean balanceMcuBean = new BalanceMcuBean();
         int aFileCrc = CRC16Util.calcCrc16(file.getBytes(), 0, file.getBytes().length);
@@ -158,7 +157,8 @@ public class BalanceMcuService {
         int enable = balanceMcuStatus.getEnable();
         int testing = balanceMcuStatus.getTesting();
         int version = balanceMcuStatus.getVersion();
-        if (enable != 1 && enable != 0 || testing != 1 && testing != 0 || version <= 0) {
+        boolean invalid = enable != 1 && enable != 0 || testing != 1 && testing != 0 || version <= 0;
+        if (invalid) {
             throw new DataFormatException();
         }
     }
