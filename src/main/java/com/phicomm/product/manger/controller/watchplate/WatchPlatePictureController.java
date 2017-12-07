@@ -58,7 +58,7 @@ public class WatchPlatePictureController {
                                         @RequestParam("picChiName") String[] picChiName,
                                         @RequestParam("picEngName") String[] picEngName,
                                         @RequestParam("picVersion") String picVersion,
-                                        @RequestParam("picResolution") String picResolution,
+                                        @RequestParam("picResolution") String[] picResolution,
                                         @RequestParam("environment") String environment)
             throws DataFormatException, UploadFileException {
         watchPlatePictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, picResolution, environment);

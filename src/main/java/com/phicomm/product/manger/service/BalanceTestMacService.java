@@ -72,15 +72,14 @@ public class BalanceTestMacService {
      */
     private List<String> formatMac(String macString) {
         System.out.println(macString);
-        Set<String> macSet = new HashSet<>();
         List<String> macList = new ArrayList<>();
         String[] macArray = macString.split("、");
         for (String mac : macArray) {
             if (mac.length() == 17) {
-                macList.add(mac);
+                macList.add(mac.toLowerCase());
             }
         }
-        macSet.addAll(macList);
+        Set<String> macSet = new HashSet<>(macList);
         macList.clear();
         macList.addAll(macSet);
         return macList;
