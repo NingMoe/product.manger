@@ -62,7 +62,6 @@ public class BalanceOtaController {
      *
      * @param balanceOtaStatus 版本状态
      * @return 触发升级失败的主机
-     * @throws VersionNotExistException 版本已经存在
      * @throws IOException              socket读写异常
      * @throws DataFormatException      数据格式异常
      */
@@ -72,7 +71,7 @@ public class BalanceOtaController {
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
     public Response<List<HostAndPort>> updateOtaStatusAndTrigger(@RequestBody BalanceOtaStatus balanceOtaStatus)
-            throws VersionNotExistException, IOException, DataFormatException {
+            throws IOException, DataFormatException {
         return new Response<List<HostAndPort>>().setData(balanceOtaService.updateStatusAndTrigger(balanceOtaStatus));
     }
 
@@ -89,7 +88,7 @@ public class BalanceOtaController {
     @ApiOperation("修改版本状态")
     @FunctionPoint(value = "common")
     public CommonResponse updateOtaStatus(@RequestBody BalanceOtaStatus balanceOtaStatus)
-            throws IOException, DataFormatException {
+            throws DataFormatException {
         balanceOtaService.updateBalanceOtaStatus(balanceOtaStatus);
         return CommonResponse.ok();
     }
