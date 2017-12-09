@@ -2,12 +2,19 @@ package com.phicomm.product.manger.enumeration;
 
 /**
  * gender
- * Created by wei.yang on 2017/9/4.
+ *
+ * @author wei.yang on 2017/9/4.
  */
 public enum GenderEnum {
 
+    /**
+     * 男性
+     */
     BOY(1),
 
+    /**
+     * 女性
+     */
     GIRL(0);
 
     private int key;

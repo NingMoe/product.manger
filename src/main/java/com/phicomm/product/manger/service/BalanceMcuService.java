@@ -8,6 +8,7 @@ import com.phicomm.product.manger.model.mcu.BalanceMcuBean;
 import com.phicomm.product.manger.model.mcu.BalanceMcuStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.CRC16Util;
+import com.phicomm.product.manger.utils.EnvironmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -19,7 +20,8 @@ import java.util.List;
 
 /**
  * mcu
- * Created by wei.yang on 2017/7/17.
+ *
+ * @author by wei.yang on 2017/7/17.
  */
 @Service
 public class BalanceMcuService {
@@ -53,8 +55,7 @@ public class BalanceMcuService {
      * @throws DataFormatException 数据格式异常
      */
     public BalanceMcuBean uploadMcuMessage(MultipartFile file, int version, String environment)
-            throws IOException,
-            DataFormatException {
+            throws IOException, DataFormatException {
         checkMcuParamFormat(file, version);
         BalanceMcuBean balanceMcuBean = new BalanceMcuBean();
         int aFileCrc = CRC16Util.calcCrc16(file.getBytes(), 0, file.getBytes().length);
@@ -65,11 +66,7 @@ public class BalanceMcuService {
         balanceMcuBean.setCrc(aFileCrc);
         balanceMcuBean.setFileUrl(fileUrl);
         balanceMcuBean.setVersion(version);
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         int effectLine = balanceMcuMapper.uploadMcuMessage(balanceMcuBean);
         CustomerContextHolder.clearDataSource();
         if (effectLine != 0) {
@@ -87,11 +84,7 @@ public class BalanceMcuService {
     public void updateBalanceMcuStatus(BalanceMcuStatus balanceMcuStatus) throws DataFormatException {
         checkMcuStatusParamFormat(balanceMcuStatus);
         String environment = balanceMcuStatus.getEnvironment();
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         balanceMcuMapper.modifyMcuVersionStatus(balanceMcuStatus);
         if (balanceMcuStatus.getEnable() == 1) {
             balanceMcuStatus.setEnable(0);
@@ -122,11 +115,7 @@ public class BalanceMcuService {
      */
     public List<BalanceMcuBean> fetchMcuList(String environment) {
         List<BalanceMcuBean> balanceMcuBeanList;
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         balanceMcuBeanList = balanceMcuMapper.fetchMcuList();
         CustomerContextHolder.clearDataSource();
         return balanceMcuBeanList;
@@ -168,7 +157,8 @@ public class BalanceMcuService {
         int enable = balanceMcuStatus.getEnable();
         int testing = balanceMcuStatus.getTesting();
         int version = balanceMcuStatus.getVersion();
-        if (enable != 1 && enable != 0 || testing != 1 && testing != 0 || version <= 0) {
+        boolean invalid = enable != 1 && enable != 0 || testing != 1 && testing != 0 || version <= 0;
+        if (invalid) {
             throw new DataFormatException();
         }
     }

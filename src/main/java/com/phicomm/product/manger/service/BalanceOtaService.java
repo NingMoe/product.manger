@@ -8,6 +8,7 @@ import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.utils.CRC16Util;
+import com.phicomm.product.manger.utils.EnvironmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -19,7 +20,8 @@ import java.util.List;
 
 /**
  * ota
- * Created by wei.yang on 2017/7/10.
+ *
+ * @author wei.yang on 2017/7/10.
  */
 @Service
 public class BalanceOtaService {
@@ -69,11 +71,7 @@ public class BalanceOtaService {
         balanceOtaInfo.setaVersionFileUrl(aFileUrl);
         balanceOtaInfo.setbVersionFileUrl(bFileUrl);
         balanceOtaInfo.setSoftwareVersion(version);
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         int effectLine = balanceOtaMapper.uploadOtaMessage(balanceOtaInfo);
         CustomerContextHolder.clearDataSource();
         if (effectLine != 0) {
@@ -91,11 +89,7 @@ public class BalanceOtaService {
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException {
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         balanceOtaMapper.updateOtaStatus(balanceOtaStatus);
         if (balanceOtaStatus.getEnable() == 1) {
             balanceOtaStatus.setEnable(0);
@@ -126,11 +120,7 @@ public class BalanceOtaService {
      */
     public List<BalanceOtaInfo> fetchOtaList(String environment) {
         List<BalanceOtaInfo> balanceOtaInfoList;
-        if ("prod".equalsIgnoreCase(environment)) {
-            CustomerContextHolder.selectProdDataSource();
-        } else {
-            CustomerContextHolder.selectTestDataSource();
-        }
+        EnvironmentUtil.selectEnvironment(environment);
         balanceOtaInfoList = balanceOtaMapper.fetchOtaList();
         CustomerContextHolder.clearDataSource();
         return balanceOtaInfoList;

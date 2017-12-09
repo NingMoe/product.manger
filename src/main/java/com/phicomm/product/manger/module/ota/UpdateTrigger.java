@@ -15,7 +15,8 @@ import java.util.Arrays;
 
 /**
  * 触发服务器，从而拉取最新版本
- * Created by wei.yang on 2017/6/8.
+ *
+ * @author wei.yang on 2017/6/8.
  */
 public class UpdateTrigger {
 
@@ -25,9 +26,12 @@ public class UpdateTrigger {
 
     private static final byte[] MCU_TRIGGER_DATA = new byte[]{(byte) 0xE0, (byte) 0x01};
 
+    private static final int DEFAULT_TIME_OUT = 3000;
+
     /**
      * socket trigger ,会返回无法连接的主机和能连接但是不能正确触发的主机；socket连接主机的超时时间设置成了3秒，
      * 超过3秒则认为该主机不属于可以触发升级的服务器
+     * 注：按需进行ota更新触发，在此处并未将ota和mcu一起进行触发
      *
      * @param hostAndPort ip 和 port
      * @throws IOException io异常
@@ -35,7 +39,7 @@ public class UpdateTrigger {
     public HostAndPort balanceUpdateTrigger(HostAndPort hostAndPort, TriggerTypeEnum triggerTypeEnum) throws IOException {
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress(hostAndPort.getHost(), hostAndPort.getPort()), 3000);
+            socket.connect(new InetSocketAddress(hostAndPort.getHost(), hostAndPort.getPort()), DEFAULT_TIME_OUT);
         } catch (SocketTimeoutException | SocketException e) {
             return hostAndPort;
         }
