@@ -220,7 +220,7 @@ public class FileUtil {
      * @return 解压后的文件
      */
     public static List<File> unZipFile(MultipartFile multipartFile) {
-        logger.info(System.getenv("CATALINA_TMPDIR"));
+        logger.info(System.getProperty("catalina.home") + File.separator + "temp");
         List<File> list = Lists.newArrayList();
         File file = multipartFileToFile(multipartFile);
         list.add(file);
@@ -229,7 +229,7 @@ public class FileUtil {
                 ZipFile zipFile = new ZipFile(file, "GBK");
                 for (Enumeration entries = zipFile.getEntries(); entries.hasMoreElements(); ) {
                     ZipEntry entry = (ZipEntry) entries.nextElement();
-                    File f = new File(System.getenv("CATALINA_TMPDIR") + File.separator + "unZipFiles" + File.separator + entry.getName());
+                    File f = new File(System.getProperty("catalina.home") + File.separator + "temp" + File.separator + "unZipFiles" + File.separator + entry.getName());
                     logger.info("f:"+f);
                     if (entry.isDirectory()) {
                         f.mkdirs();
@@ -264,9 +264,9 @@ public class FileUtil {
      * 清空解压暂存文件
      */
     public static void clearTempFile(MultipartFile multipartFile) {
-        File file = new File(System.getenv("CATALINA_TMPDIR") + File.separator + multipartFile.getOriginalFilename());
+        File file = new File(System.getProperty("catalina.home") + File.separator + "temp" + File.separator + multipartFile.getOriginalFilename());
         file.delete();
-        File dir = new File(System.getenv("CATALINA_TMPDIR") + File.separator + "unZipFiles");
+        File dir = new File(System.getProperty("catalina.home") + File.separator + "temp" + File.separator + "unZipFiles");
         if (dir.exists() && dir.isDirectory()){
             for (File f : dir.listFiles()) {
                 if(f.isFile() && f.exists()){
@@ -283,7 +283,7 @@ public class FileUtil {
      * @return file文件
      */
     public static File multipartFileToFile(MultipartFile multipartFile) {
-        File file = new File(System.getenv("CATALINA_TMPDIR") + File.separator + multipartFile.getOriginalFilename());
+        File file = new File(System.getProperty("catalina.home") + File.separator + "temp" + File.separator + multipartFile.getOriginalFilename());
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {
