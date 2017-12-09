@@ -220,6 +220,7 @@ public class FileUtil {
      * @return 解压后的文件
      */
     public static List<File> unZipFile(MultipartFile multipartFile) {
+        logger.info(System.getenv("CATALINA_TMPDIR"));
         List<File> list = Lists.newArrayList();
         File file = multipartFileToFile(multipartFile);
         list.add(file);
