@@ -99,6 +99,7 @@ public class FirmwareUpgradeService {
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
         String[] appVersions = appVersionCode.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
         List<File> list = FileUtil.unZipFile(file);
+        logger.info("list size:"+list.size());
         // 上传文件
         MultipartFile mfile = FileUtil.fileToMultipartFile(list.get(0));
         Map<String, String> result = FileUtil.uploadFileToHermes(mfile);

@@ -183,6 +183,9 @@ public class FileUtil {
      * @throws UploadFileException 上传文件失败的链接
      */
     public static Map<String, String> uploadFileToHermes(MultipartFile file) throws UploadFileException {
+        if (file.isEmpty()){
+            return Maps.newHashMap();
+        }
         Map<String, String> result = Maps.newHashMap();
         File tempFile = new File(hermesTempDirPath, UUID.randomUUID().toString());
         CommonResponse commonResponse;
@@ -226,6 +229,7 @@ public class FileUtil {
                 for (Enumeration entries = zipFile.getEntries(); entries.hasMoreElements(); ) {
                     ZipEntry entry = (ZipEntry) entries.nextElement();
                     File f = new File(System.getenv("CATALINA_TMPDIR") + File.separator + "unZipFiles" + File.separator + entry.getName());
+                    logger.info("f:"+f);
                     if (entry.isDirectory()) {
                         f.mkdirs();
                     } else {
