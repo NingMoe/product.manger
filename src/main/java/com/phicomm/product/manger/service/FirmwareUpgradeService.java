@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -68,11 +69,11 @@ public class FirmwareUpgradeService {
         if (!Strings.isNullOrEmpty(appPlatform)) {
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment,gnssVersion, forceUpgrade, file, description, "android", appVersionCodeAndroid, appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, file, description, "android", appVersionCodeAndroid, appVersionCodeIos);
             } else if (appPlatforms.length == 1 && "android".equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, "android", appVersionCodeAndroid, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, file, description, "android", appVersionCodeAndroid, null);
             } else if (appPlatforms.length == 1 && "ios".equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, "ios", appVersionCodeIos, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, file, description, "ios", appVersionCodeIos, null);
             }
         }
 
@@ -97,11 +98,18 @@ public class FirmwareUpgradeService {
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
         String[] appVersions = appVersionCode.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
+        List<File> list = FileUtil.unZipFile(file);
         // 上传文件
-        Map<String, String> result = FileUtil.uploadFileToHermes(file);
+        MultipartFile mfile = FileUtil.fileToMultipartFile(list.get(0));
+        Map<String, String> result = FileUtil.uploadFileToHermes(mfile);
         String downloadUrl = result.get("url");
         String md5 = result.get("md5");
         float size = file.getSize();
+        for (int i = 1; i < list.size(); i++) {
+            String partUrl = FileUtil.uploadFileToHermes(FileUtil.fileToMultipartFile(list.get(i))).get("url");
+            downloadUrl += ";" + partUrl;
+        }
+        FileUtil.clearTempFile(file);
         FirmwareInfo firmwareInfo = new FirmwareInfo();
         firmwareInfo.setFirmwareType(firmwareType);
         firmwareInfo.setHardwareCode(hardwareVersion);
@@ -173,14 +181,21 @@ public class FirmwareUpgradeService {
             throw new DataFormatException();
         }
         FirmwareInfo firmwareInfo = new FirmwareInfo();
-        if (file==null || file.isEmpty()){
+        if (file == null || file.isEmpty()) {
             firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));
-        }else {
+        } else {
+            List<File> list = FileUtil.unZipFile(file);
             // 上传文件
-            Map<String, String> result = FileUtil.uploadFileToHermes(file);
+            MultipartFile mfile = FileUtil.fileToMultipartFile(list.get(0));
+            Map<String, String> result = FileUtil.uploadFileToHermes(mfile);
             String downloadUrl = result.get("url");
             String md5 = result.get("md5");
             float size = file.getSize();
+            for (int i = 1; i < list.size(); i++) {
+                String partUrl = FileUtil.uploadFileToHermes(FileUtil.fileToMultipartFile(list.get(i))).get("url");
+                downloadUrl += ";" + partUrl;
+            }
+            FileUtil.clearTempFile(file);
             firmwareInfo.setUrl(downloadUrl);
             firmwareInfo.setMd5(md5);
             firmwareInfo.setSize(size);
@@ -213,12 +228,12 @@ public class FirmwareUpgradeService {
                          String environment,
                          String versionCode,
                          String appPlatform,
-                         String appVersionCode) throws FirmwareTriggerFailException{
+                         String appVersionCode) throws FirmwareTriggerFailException {
         FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode, appPlatform, appVersionCode);
-        logger.info(firmwareType+"     "+hardwareCode+"     "+environment+"     "+versionCode+"     "+appPlatform+"     "+appVersionCode);
+        logger.info(firmwareType + "     " + hardwareCode + "     " + environment + "     " + versionCode + "     " + appPlatform + "     " + appVersionCode);
         logger.info(firmwareInfo);
         String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
