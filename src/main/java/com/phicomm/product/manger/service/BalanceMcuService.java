@@ -104,7 +104,8 @@ public class BalanceMcuService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceMcuStatus balanceMcuStatus) throws DataFormatException,
             IOException {
         updateBalanceMcuStatus(balanceMcuStatus);
-        return otaServerService.updateTrigger(TriggerTypeEnum.MCU);
+        String environment = balanceMcuStatus.getEnvironment();
+        return otaServerService.updateTrigger(TriggerTypeEnum.MCU, environment);
     }
 
     /**
