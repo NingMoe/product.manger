@@ -47,7 +47,7 @@ public class BalanceDailyStatisticController {
     @RequestMapping(value = "balance/statistic/balance/24hour/display", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ResponseBody
-    @ApiOperation(value = "体脂称测量统计24小时分布")
+    @ApiOperation(value = "体脂秤测量统计24小时分布")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
     })
@@ -60,7 +60,7 @@ public class BalanceDailyStatisticController {
     @RequestMapping(value = "balance/statistic/balance/electrode/display", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ResponseBody
-    @ApiOperation(value = "体脂称测量电极数每日统计")
+    @ApiOperation(value = "体脂秤测量电极数每日统计")
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class),
     })

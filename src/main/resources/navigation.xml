@@ -345,7 +345,7 @@
         <id>balance24HourDisplay</id>
         <title>
             <title-name>体脂秤24小时分布统计</title-name>
-            <title-description>体脂称24小时分布统计</title-description>
+            <title-description>体脂秤24小时分布统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
@@ -361,7 +361,7 @@
         <id>balanceElectrodeDisplay</id>
         <title>
             <title-name>体脂秤电极数分布统计</title-name>
-            <title-description>体脂称电极数分布统计</title-description>
+            <title-description>体脂秤电极数分布统计</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
