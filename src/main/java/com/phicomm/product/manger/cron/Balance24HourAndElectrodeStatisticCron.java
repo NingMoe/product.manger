@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- *  统计体脂称24小时分布数据，以及电极数数据
+ *  统计体脂秤24小时分布数据，以及电极数数据
  * Created by song02.cao on 2017/11/22.
  */
 

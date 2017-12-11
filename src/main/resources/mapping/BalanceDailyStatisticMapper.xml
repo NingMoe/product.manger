@@ -68,7 +68,7 @@
             index:
             performance: good
             check-time: 2017-11-21
-            获取某一天的体脂称数据电极数信息
+            获取某一天的体脂秤数据电极数信息
       -->
     <select id="getBalanceElectrodeInfoOnedayFromOriginal"
             resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeModel">
@@ -88,7 +88,7 @@
             index:
             performance: good
             check-time: 2017-11-21
-            从表balance_measure_info中获取某一天的体脂称数据电极数信息
+            从表balance_measure_info中获取某一天的体脂秤数据电极数信息
       -->
     <select id="getBalanceElectrodeInfoOnedayFromSpecialTable"
             resultType="com.phicomm.product.manger.model.statistic.BalanceElectrodeModel">
@@ -105,7 +105,7 @@
     </select>
 
     <!--
-        将体脂称电极数信息写入到表balance_measure_electrode_statistic_each_day中
+        将体脂秤电极数信息写入到表balance_measure_electrode_statistic_each_day中
     -->
     <insert id="setBalanceElectrodeStatistic">
         INSERT IGNORE INTO balance_measure_electrode_statistic_each_day (

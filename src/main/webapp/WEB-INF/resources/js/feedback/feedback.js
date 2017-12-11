@@ -208,7 +208,7 @@ function getDeviceType() {
  */
 function getDeviceName(data) {
     if ("balance" === data) {
-        return "斐讯智能体脂称S7/S7P";
+        return "斐讯智能体脂秤S7/S7P";
     } else if ("bloodPressureMeter" === data) {
         return "斐讯智能血压计";
     } else if ("w1" === data) {
@@ -579,7 +579,7 @@ function loadUserId(userId) {
 function translateDeviceType(deviceType) {
     switch (deviceType) {
         case "balance":
-            return "斐讯智能体脂称S7/S7P";
+            return "斐讯智能体脂秤S7/S7P";
         case "bloodPressureMeter":
             return "斐讯智能血压计";
         case "w1":

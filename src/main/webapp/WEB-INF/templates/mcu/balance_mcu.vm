@@ -3,7 +3,7 @@
         <div class="box box-info">
             <div class="input-group input-group-sm col-md-12">
                 <div class="box-header">
-                    <h3 class="box-title">体脂称MCU升级</h3>
+                    <h3 class="box-title">体脂秤MCU升级</h3>
                 </div>
                 <form role="form" enctype="multipart/form-data" id="uploadFile">
                     <div class="box-body">

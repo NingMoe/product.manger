@@ -116,7 +116,7 @@ public class BalanceDailyStatisticService {
     }
 
     /**
-     * 将一天的体脂称电极数据写入到表balance_measure_electrode_statistic_each_day中
+     * 将一天的体脂秤电极数据写入到表balance_measure_electrode_statistic_each_day中
      *
      * @param date 日期
      */
