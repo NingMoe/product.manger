@@ -109,7 +109,8 @@ public class BalanceOtaService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
             IOException {
         updateBalanceOtaStatus(balanceOtaStatus);
-        return otaServerService.updateTrigger(TriggerTypeEnum.OTA);
+        String environment = balanceOtaStatus.getEnvironment();
+        return otaServerService.updateTrigger(TriggerTypeEnum.OTA, environment);
     }
 
     /**
