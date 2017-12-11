@@ -4,7 +4,7 @@
         <div class="box box-solid">
             <div class="input-group input-group-sm col-md-12">
                 <div class="box-header" style="text-align: center;margin-top: 2%">
-                    <h3 class="box-title">新增体脂称Ota服务器地址</h3>
+                    <h3 class="box-title">新增体脂秤Ota服务器地址</h3>
                 </div>
                 <form role="form" enctype="multipart/form-data" id="addNewAddress"
                       style="padding-top: 10%;margin-bottom: 20%">

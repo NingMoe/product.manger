@@ -8,7 +8,7 @@
                 <form role="form" id="projectMessage">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="projectName">项目名称</label>
+                            <label for="projectName">项目名秤</label>
                             <input type="text" class="form-control" id="projectName" name="projectName">
                         </div>
 

@@ -84,7 +84,7 @@ public interface BalanceDailyStatisticMapper {
                                       @Param("electrode8Number") int electrode8Number);
 
     /**
-     *  从数据表balance_measure_electrode_statistic_each_day中获取体脂称电极情况
+     *  从数据表balance_measure_electrode_statistic_each_day中获取体脂秤电极情况
      * @param baseDay       基准时间点
      * @param dayRange      时间跨度
      * @return

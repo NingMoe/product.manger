@@ -50,7 +50,7 @@
                         <div class="col-sm-7">
                             <select class="form-control select2" id="appType">
                                 <option value="all" selected="selected">全部</option>
-                                <option value="balance">斐讯智能体脂称S7/S7P</option>
+                                <option value="balance">斐讯智能体脂秤S7/S7P</option>
                                 <option value="sphygmomanometer">斐讯智能血压计</option>
                                 <option value="wristband">斐讯智能运动手环W1</option>
                             </select>
