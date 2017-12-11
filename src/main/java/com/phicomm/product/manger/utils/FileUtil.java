@@ -194,7 +194,7 @@ public class FileUtil {
             file.transferTo(tempFile);
             String md5 = md5(tempFile);
             result.put("md5", md5);
-            commonResponse = uploadHermes(tempFile, file.getOriginalFilename());
+            commonResponse = uploadHermes(tempFile, file.getName());
             description = commonResponse.getDescription();
         } catch (IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));

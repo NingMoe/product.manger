@@ -51,6 +51,10 @@ public class FirmwareUpgradeService {
 
     private static final String HTTP_URL = "http://114.141.173.17";
 
+    private static final String FILE = "file";
+
+    private static final String SLOW_DOWNLOAD = "slow/download";
+
     private FirmwareInfoMapper firmwareInfoMapper;
 
     private FirmwareTriggerParamConfigMapper firmwareTriggerParamConfigMapper;
@@ -459,11 +463,10 @@ public class FirmwareUpgradeService {
             url = url.split(";")[0];
             firmwareInfo.setUrl(url);
         }else if(W2.equals(firmwareType)){
-            url = url.replaceAll(HTTPS_URL, HTTP_URL);
+            url = url.replaceAll(HTTPS_URL, HTTP_URL).replace(FILE, SLOW_DOWNLOAD);
             firmwareInfo.setUrl(url);
         }
         return firmwareInfo;
     }
-
 
 }
