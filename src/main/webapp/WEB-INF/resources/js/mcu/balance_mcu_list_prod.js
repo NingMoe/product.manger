@@ -149,8 +149,8 @@ function upgradeVersionList(node) {
     const version = node.parentNode.parentNode.children[1].innerText;
     const testing = node.parentNode.parentNode.children[2].innerText === '公开版' ? 0 : 1;
     const enable = node.parentNode.parentNode.children[3].innerText === '可用' ? 1 : 0;
-    let result = modifyVersionStatus(version, testing, enable);
     if (confirm("确定要修改该版本的状态？")) {
+        let result = modifyVersionStatus(version, testing, enable);
         if ('success' === result) {
             remove(document.getElementById('updateVersionBtn').parentNode);
             firstClick = true;
