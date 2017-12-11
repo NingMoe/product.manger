@@ -8,7 +8,9 @@ import com.phicomm.product.manger.exception.ServerAddressNotExistException;
 import com.phicomm.product.manger.model.server.BalanceOtaServerDetailBean;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
 import com.phicomm.product.manger.model.server.BalanceServerBean;
+import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.module.ota.UpdateTrigger;
+import com.phicomm.product.manger.utils.EnvironmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.HostAndPort;
@@ -40,10 +42,11 @@ public class OtaServerService {
      * @return 触发失败的主机
      * @throws IOException IO异常
      */
-    public List<HostAndPort> updateTrigger(TriggerTypeEnum triggerTypeEnum) throws IOException {
+    public List<HostAndPort> updateTrigger(TriggerTypeEnum triggerTypeEnum, String environment) throws IOException {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
         List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
+        EnvironmentUtil.selectEnvironment(environment);
         addressBeans = otaServerAddressMapper.obtainServerAddress();
         if (addressBeans.isEmpty()) {
             return new ArrayList<>();
@@ -56,6 +59,7 @@ public class OtaServerService {
                 hostAndPortList.add(hostAndPort);
             }
         }
+        CustomerContextHolder.clearDataSource();
         return hostAndPortList.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
