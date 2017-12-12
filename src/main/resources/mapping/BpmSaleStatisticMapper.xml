@@ -9,7 +9,9 @@
                 DATE_FORMAT(create_time, '%y-%m') AS bindPBMTime,
                 count(DISTINCT device_id) AS bindPBMCount
             FROM
-                blood_pressure_meter_location_info
+                device_location_info
+            WHERE
+            device_type = 'blood_pressure_meter'
             GROUP BY
                 bindPBMTime
             HAVING
@@ -30,12 +32,14 @@
                 DATE_FORMAT(create_time, '%m-%d') AS bindPBMTime,
                 count(DISTINCT device_id) AS bindPBMCount
             FROM
-                blood_pressure_meter_location_info
+                device_location_info
+            WHERE
+                device_type = 'blood_pressure_meter'
             GROUP BY
                 bindPBMTime
             HAVING
                 bindPBMTime > DATE_FORMAT(
-                    DATE_ADD(NOW(), INTERVAL - #{days,jdbcType=INTEGER}  DAY),
+                    DATE_ADD(NOW(), INTERVAL - #{days,jdbcType=INTEGER} DAY),
                     '%m-%d'
                 )
             AND bindPBMTime <= DATE_FORMAT(NOW(), '%m-%d')
@@ -46,20 +50,24 @@
 
     <!--统计血压计 销售总量-->
     <select id="obtainBpmSaleNumAll" resultType="int">
-        SELECT
-            COUNT(DISTINCT device_id) AS number
-        FROM
-            blood_pressure_meter_location_info
+            SELECT
+                COUNT(DISTINCT device_id) AS number
+            FROM
+                device_location_info
+            WHERE
+                device_type = 'blood_pressure_meter'
     </select>
 
     <!--统计血压计 今日销量总量-->
     <select id="obtainBpmSaleNumToday" resultType="int">
-        SELECT
-            COUNT(DISTINCT device_id) AS number
-        FROM
-            blood_pressure_meter_location_info
-        WHERE
-            DATE_FORMAT (create_time, '%y-%m-%d') = DATE_FORMAT (now(), '%y-%m-%d')
+            SELECT
+                COUNT(DISTINCT device_id) AS number
+            FROM
+                device_location_info
+            WHERE
+                DATE_FORMAT(create_time, '%y-%m-%d') = DATE_FORMAT(now(), '%y-%m-%d')
+            AND
+                device_type = 'blood_pressure_meter'
     </select>
 
 </mapper>
