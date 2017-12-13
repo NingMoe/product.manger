@@ -70,11 +70,6 @@ public class WatchPlatePictureService {
                                     String[] picResolution,
                                     String environment)
             throws DataFormatException, UploadFileException {
-        List<Integer> picIdList = Arrays.asList(picId);
-        int distinctLen = picIdList.stream().distinct().toArray().length;
-        if (distinctLen != picIdList.size()) {
-            throw new DataFormatException();
-        }
         selectDatabase(environment);
         watchPlatePictureUploadMapper.watchPlatePictureDelete(picVersion);
         List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
