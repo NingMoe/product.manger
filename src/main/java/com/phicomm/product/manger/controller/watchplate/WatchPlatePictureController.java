@@ -1,8 +1,6 @@
 package com.phicomm.product.manger.controller.watchplate;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
@@ -43,8 +41,6 @@ public class WatchPlatePictureController {
      * @param picResolution 图片分辨率
      * @param environment   应用环境
      * @return 图片上传成功
-     * @throws DataFormatException 数据格式错误
-     * @throws UploadFileException 上传失败
      */
     @RequestMapping(value = "watchplate/picture/upload/file", method = RequestMethod.POST)
     @ApiOperation("图片上传接口")
@@ -61,7 +57,7 @@ public class WatchPlatePictureController {
                                         @RequestParam("picVersion") String picVersion,
                                         @RequestParam("picResolution") String[] picResolution,
                                         @RequestParam("environment") String environment)
-            throws DataFormatException, UploadFileException, IOException {
+            throws IOException {
         watchPlatePictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, picResolution, environment);
         return CommonResponse.ok();
     }

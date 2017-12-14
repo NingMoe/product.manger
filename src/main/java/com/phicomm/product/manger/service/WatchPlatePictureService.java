@@ -62,8 +62,6 @@ public class WatchPlatePictureService {
      * @param picEngName  图片英文名
      * @param picVersion  图片版本
      * @param environment 表盘应用环境
-     * @throws DataFormatException 数据格式错误
-     * @throws UploadFileException 上传文件失败
      */
     public void pictureUploadNumber(MultipartFile[] file,
                                     Integer[] picId,
@@ -72,7 +70,7 @@ public class WatchPlatePictureService {
                                     String picVersion,
                                     String[] picResolution,
                                     String environment)
-            throws DataFormatException, UploadFileException, IOException {
+            throws IOException {
         selectDatabase(environment);
         watchPlatePictureUploadMapper.watchPlatePictureDelete(picVersion);
         List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
