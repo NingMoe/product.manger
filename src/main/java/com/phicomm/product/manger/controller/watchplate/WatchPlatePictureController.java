@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class WatchPlatePictureController {
                                         @RequestParam("picVersion") String picVersion,
                                         @RequestParam("picResolution") String[] picResolution,
                                         @RequestParam("environment") String environment)
-            throws DataFormatException, UploadFileException {
+            throws DataFormatException, UploadFileException, IOException {
         watchPlatePictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, picResolution, environment);
         return CommonResponse.ok();
     }

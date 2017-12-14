@@ -43,6 +43,9 @@ public class WatchPlatePictureService {
     private WatchPlatePictureParamConfigMapper watchPlatePictureParamConfigMapper;
 
     @Autowired
+    private HermesService hermesService;
+
+    @Autowired
     public WatchPlatePictureService(WatchPlatePictureUploadMapper watchPlatePictureUploadMapper, WatchPlatePictureParamConfigMapper watchPlatePictureParamConfigMapper) {
         this.watchPlatePictureUploadMapper = watchPlatePictureUploadMapper;
         this.watchPlatePictureParamConfigMapper = watchPlatePictureParamConfigMapper;
@@ -69,14 +72,14 @@ public class WatchPlatePictureService {
                                     String picVersion,
                                     String[] picResolution,
                                     String environment)
-            throws DataFormatException, UploadFileException {
+            throws DataFormatException, UploadFileException, IOException {
         selectDatabase(environment);
         watchPlatePictureUploadMapper.watchPlatePictureDelete(picVersion);
         List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
         for (int i = 0; i < file.length; i++) {
             WatchPlatePictureUpload watchPlatePictureUpload = new WatchPlatePictureUpload(picId[i], picEngName[i], picChiName[i], picVersion, picResolution[i]);
-            Map<String, String> map = FileUtil.uploadFileToHermes(file[i]);
-            watchPlatePictureUpload.setPicUrl(map.get("url"));
+            Map<String, Object> map = hermesService.uploadFile(file[i]);
+            watchPlatePictureUpload.setPicUrl(map.get("HermesService")==null?"":map.get("HermesService").toString());
             Date now = new Date();
             watchPlatePictureUpload.setCreateTime(now);
             watchPlatePictureUpload.setUpdateTime(now);
