@@ -79,7 +79,7 @@ public class WatchPlatePictureService {
         for (int i = 0; i < file.length; i++) {
             WatchPlatePictureUpload watchPlatePictureUpload = new WatchPlatePictureUpload(picId[i], picEngName[i], picChiName[i], picVersion, picResolution[i]);
             Map<String, Object> map = hermesService.uploadFile(file[i]);
-            watchPlatePictureUpload.setPicUrl(map.get("HermesService")==null?"":map.get("HermesService").toString());
+            watchPlatePictureUpload.setPicUrl(map.get("imageHttpsUrl")==null?"":map.get("imageHttpsUrl").toString());
             Date now = new Date();
             watchPlatePictureUpload.setCreateTime(now);
             watchPlatePictureUpload.setUpdateTime(now);
