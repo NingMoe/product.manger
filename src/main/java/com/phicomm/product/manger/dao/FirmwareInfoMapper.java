@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * 固件升级数据库操作
+ * @author Qiang
+ */
 @Repository
 public interface FirmwareInfoMapper {
 
