@@ -71,7 +71,7 @@ public class HttpUtil {
             inputStream = httpURLConnection.getErrorStream();
         }
         String response = getResult(inputStream);
-        logger.info("network request result is:\t" + response);
+        logger.info(String.format("network request %s result is %s.", url, response));
         if (inputStream != null) {
             inputStream.close();
         }
