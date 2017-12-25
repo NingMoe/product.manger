@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.module.account;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.phicomm.product.manger.config.SwaggerPropertiesConfig;
 import com.phicomm.product.manger.enumeration.RequestType;
 import com.phicomm.product.manger.utils.HttpUtil;
@@ -31,7 +32,7 @@ public class PhicommAccountImp implements PhicommAccount {
 
     private static final String RESPONSE_TYPE = "code";
 
-    private static final String CLIENT_ID = "52";
+    private static final String CLIENT_ID = "54";
 
     private static final String SCOPE = "read";
 
@@ -72,11 +73,15 @@ public class PhicommAccountImp implements PhicommAccount {
     @Override
     public Map<String, String> login(String phoneNumber, String password) throws Exception {
         if (swaggerUsername.equals(phoneNumber) && swaggerPassword.equals(password)) {
-            return new HashMap<>();
+            return Maps.newHashMap();
         } else {
+            String passwordMd5 = getMD5(password);
+            if(passwordMd5 == null) {
+                return Maps.newHashMap();
+            }
             JSONObject params = new JSONObject();
             params.put("phonenumber", phoneNumber);
-            params.put("password", getMD5(password));
+            params.put("password", passwordMd5.toUpperCase());
             params.put("authorizationcode", getAuthCode());
             String response = HttpUtil.openUrl(PHONE_LOGIN, RequestType.POST.getKeyName(), CONTENT_TYPE, params);
             Map<String, String> result = getResult(response);
