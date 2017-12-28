@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.wei.yang;
+package com.phicomm.product.manger.wei.yang.LianXin;
 
 /**
  * Created by wei.yang on 2017/8/11.
