@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.wei.yang;
+package com.phicomm.product.manger.wei.yang.string;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
