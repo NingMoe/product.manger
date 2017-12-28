@@ -744,4 +744,20 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>balanceTraceUserActivity</id>
+        <title>
+            <title-name>用户活跃度</title-name>
+            <title-description>用户活跃度</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/trace/user/activity</url>
+            <sub-directories>
+                <name>balanceTraceUserActivity</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>
