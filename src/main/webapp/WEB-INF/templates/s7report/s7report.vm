@@ -10,6 +10,9 @@
 </style>
 <section class="content">
 
+#*
+* 填写需要输入的信息
+* *#
     <div class="phicomm_content_div">
         <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px">
             <form class="form-horizontal">
@@ -90,57 +93,76 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                            <h4 style="margin-left: 2%">获取报告</h4>
+                        </div>
+                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                            color=#987cb9 SIZE=1/>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="reportDate" class="col-sm-4 control-label">日期</label>
+                            <div class="col-sm-8">
+                                <input class="form-control pull-right" type="date" id="reportDate" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1" style="margin-left: 50px">
+                            <div>
+                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                        onclick="getAll()">
+                                    获取
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
+
+
+##      报告总结部分
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+        <div class="box-body">
+            <div class="row">
+                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                    <h3 style="text-align:center;" id="reportTitle">2017/12/28生产环境S7统计报告</h3>
+                </div>
+                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                    color=#987cb9 SIZE=1/>
+            </div>
+            <div class="row">
+                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                    <div class="stats-body">
+                        <ul style=" width:100%; text-align:left; margin-left:5%; margin-right:30px;">
+                            <li type="margin-buttom:10px;"><h4>1.新增智能体脂秤使用数量<label>111</label>台，合计<label>111</label>台。</h4>
+                            </li>
+                            <li type="margin-buttom:10px;"><h4>2.今日新增智能体脂秤k码激活数量<label>111</label>个，合计<label>111</label>个。</h4>
+                            </li>
+                            <li type="margin-buttom:10px;"><h4>3.今日活跃用户合计<label>111</label>人，其中IOS活跃用户<label>111</label>人，Android活跃<label>111</label>人。</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                    color=#987cb9 SIZE=1/>
+            </div>
+
+##************************************图表一
+            <div class="row">
+                <div style="width:95%;  margin-left:15px; margin-right:0 auto;" id="chart1"></div>
+            </div>
+        </div>
     </div>
-    <script>
-        function checkNum(name, val) {
-            document.getElementById(name).value = (val <= 0 || val == null ? 0 : val);
-            console.log(val);
-        }
 
-
-
-        Date.prototype.format = function(format) {
-            var date = {
-                "M+": this.getMonth() + 1,
-                "d+": this.getDate(),
-                "h+": this.getHours(),
-                "m+": this.getMinutes(),
-                "s+": this.getSeconds(),
-                "q+": Math.floor((this.getMonth() + 3) / 3),
-                "S+": this.getMilliseconds()
-            };
-            if (/(y+)/i.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
-            }
-            for (var k in date) {
-                if (new RegExp("(" + k + ")").test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
-                }
-            }
-            return format;
-        }
-
-        function gettodayDate(){
-            return new Date().format("yyyy-MM-dd");
-        }
-
-        //首次加载时执行
-
-        var element1 = document.getElementById('activationDate');
-        element1.value = gettodayDate();
-        var element2 = document.getElementById('activeuserDate');
-        element2.value = gettodayDate();
-        console.log("----选择的日期--begin-" + gettodayDate());
-    </script>
 </section>
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fresco/fresco.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/feedback/feedback.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"/>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>

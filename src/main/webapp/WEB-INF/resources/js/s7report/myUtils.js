@@ -1,8 +1,13 @@
+$(document).ready(function () {
+    $("#balance-statistic-1").addClass("active");
+    $("#balance-statistic-2").addClass("active");
+});
+
 /**
  *  日期格式化处理
  * Created by yafei.hou on 2017/11/13.
  */
-Date.prototype.format = function(format) {
+Date.prototype.format = function (format) {
     var date = {
         "M+": this.getMonth() + 1,
         "d+": this.getDate(),
@@ -23,6 +28,30 @@ Date.prototype.format = function(format) {
     return format;
 }
 
-function gettodayDate(){
+function gettodayDate() {
     return new Date().format("yyyy-MM-dd");
 }
+
+/**
+ * 确保数字输入框中输入负数
+ */
+function checkNum(name, val) {
+    document.getElementById(name).value = (val <= 0 || val == null ? 0 : val);
+    console.log(val);
+}
+
+
+//首次加载时执行，初始化时间
+var yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+var element1 = document.getElementById('activationDate');
+element1.value = yesterday.format("yyyy-MM-dd");
+var element2 = document.getElementById('activeuserDate');
+element2.value = yesterday.format("yyyy-MM-dd");
+
+var beforeYesterday = new Date();
+beforeYesterday.setDate(beforeYesterday.getDate() - 2);
+document.getElementById("reportDate").value = beforeYesterday.format("yyyy-MM-dd");
+
+console.log("----选择的日期--begin-" + gettodayDate());
+
