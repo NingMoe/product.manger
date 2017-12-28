@@ -2,6 +2,7 @@ package com.phicomm.product.manger.cron;
 
 import com.phicomm.product.manger.service.BalanceActiveStatisticService;
 import com.phicomm.product.manger.service.BalanceMeasureSourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -18,6 +19,7 @@ public class BalanceActiveStatisticCron {
 
     private BalanceMeasureSourceService balanceMeasureSourceService;
 
+    @Autowired
     public BalanceActiveStatisticCron(BalanceActiveStatisticService balanceActiveStatisticService,
                                       BalanceMeasureSourceService balanceMeasureSourceService) {
         this.balanceActiveStatisticService = balanceActiveStatisticService;
