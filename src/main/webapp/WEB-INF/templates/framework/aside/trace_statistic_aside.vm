@@ -1,0 +1,15 @@
+<li class="header">Balance Trace Stistic</li>
+<li class="treeview" id="balance-trace-node">
+    <a href="#">
+        <i class="fa fa-anchor"></i>
+        <span>体脂秤埋点统计</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="balance-trace-menu-node">
+        <li id="user-activity-trace-node"><a href="$baseUrl/balance/trace/user/activity"><i class="fa fa-meh-o"></i> 用户活跃度</a></li>
+        <li><a href="#"><i class="fa fa-bar-chart"></i> XXXX</a></li>
+        <li><a href="#"><i class="fa fa-html5"></i> XXXX</a></li>
+    </ul>
+</li>
