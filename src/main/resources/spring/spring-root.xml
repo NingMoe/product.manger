@@ -15,7 +15,4 @@
 
     <!-- 数据源与mybatis相关配置 -->
     <import resource="spring-mybatis.xml"/>
-
-    <!--mongo-->
-    <import resource="spring-mongo.xml"/>
 </beans>
