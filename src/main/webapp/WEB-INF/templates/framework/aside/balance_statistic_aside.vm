@@ -9,6 +9,8 @@
     </a>
     <ul class="treeview-menu" id="balance-statistic-2">
         <li id="balance-statistic-3"><a href="$baseUrl/balance/statistic/balance/sales/location"><i class="fa fa-line-chart"></i> 销售地区统计</a></li>
+        <li><a href="$baseUrl/s7report"><i class="icon-edit"></i> S7 激活与使用数据报告</a></li>
+        <li><a href="$baseUrl/measure/data/sourcePage"><i class="fa fa-bar-chart"></i> 体脂称称量数据来源</a></li>
         <li><a href="$baseUrl/balance/statistic/count"><i class="fa fa-bar-chart"></i> 体脂秤销售数量统计</a></li>
         <li><a href="$baseUrl/balance/statistic/account/info/page"><i class="fa fa-html5"></i> 体脂秤账户信息统计</a></li>
         <li><a href="$baseUrl/balance/shipment/status"><i class="fa fa-truck"></i> 体脂秤出货查询</a></li>
