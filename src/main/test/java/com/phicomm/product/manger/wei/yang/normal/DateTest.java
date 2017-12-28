@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.wei.yang;
+package com.phicomm.product.manger.wei.yang.normal;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.model.table.FeedbackRequestBean;

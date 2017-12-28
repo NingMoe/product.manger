@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+    <!--    相关格式说明：
+        1. credentials 用于密码验证,格式如下：
+            credentials="user:password@database"
+        2. replica-set 用于表明的mongodb的服务器地址以及端口,格式如下:
+            replica-set="ip1:port1, ip2:port2"
+            注意：replica-set也可以用host="" port=""进行替换
+     -->
+        <mongo:mongo-client id="mongo-client"
+                               credentials="${mongo.credentials}"
+                               replica-set="${mongo.replica.set}">
+            <mongo:client-options
+                    connections-per-host="${mongo.connectionsPerHost}"
+                    min-connections-per-host="${mongo.minConnectionsPerHost}"
+                    threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                    connect-timeout="${mongo.connectTimeout}"
+                    max-wait-time="${mongo.maxWaitTime}"
+                    socket-keep-alive="${mongo.socketKeepAlive}"
+                    socket-timeout="${mongo.socketTimeout}"
+                    description="${mongo.description}"
+                    max-connection-idle-time="${mongo.maxConnectionIdleTime}"
+                    max-connection-life-time="${mongo.maxConnectionLifeTime}"
+                    heartbeat-socket-timeout="${mongo.heartbeatSocketTimeout}"
+                    heartbeat-connect-timeout="${mongo.heartbeatConnectTimeout}"
+                    min-heartbeat-frequency="${mongo.minHeartbeatFrequency}"
+                    heartbeat-frequency="${mongo.heartbeatFrequency}"/>
+        </mongo:mongo-client>
+
+        <!--其中dbname根据自己的实际情况,替换为自己的mongodb的数据库-->
+        <mongo:db-factory id="mongo-factory"
+                          mongo-ref="mongo-client"
+                          dbname="${mongo.db.name}"
+        />
+
+        <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+            <constructor-arg name="mongoDbFactory" ref="mongo-factory"/>
+        </bean>
+
+        <!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
+        <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+</beans>
