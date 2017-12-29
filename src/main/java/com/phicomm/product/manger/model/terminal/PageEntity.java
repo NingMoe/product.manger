@@ -5,23 +5,23 @@ package com.phicomm.product.manger.model.terminal;
  */
 public class PageEntity {
 
-    private int pageNumber;
+    private Integer pageNumber;
 
-    private int pageSize;
+    private Integer pageSize;
 
-    public int getPageNumber() {
+    public Integer getPageNumber() {
         return pageNumber;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 

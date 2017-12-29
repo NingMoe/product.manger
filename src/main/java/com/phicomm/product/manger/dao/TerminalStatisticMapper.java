@@ -36,7 +36,9 @@ public interface TerminalStatisticMapper {
      * 获取固定页码大小的数据
      *
      * @param pageEntity 查询的时间段
+     * @param begin      开始
      * @return 数据
      */
-    List<StatisticEntity> getPageStatisticInfo(@Param("pageEntity") PageWithPlatformEntity pageEntity);
+    List<StatisticEntity> getPageStatisticInfo(@Param("pageEntity") PageWithPlatformEntity pageEntity,
+                                               @Param("begin") int begin);
 }

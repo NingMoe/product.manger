@@ -9,14 +9,15 @@
             `type`,
             `count`,
             create_date
-        )VALUES <foreach collection="terminalCommonEntities" item="item" index="index" separator="," >
-        (
+        )VALUES
+        <foreach collection="terminalCommonEntities" item="item" index="index" separator=",">
+            (
             #{item.compareObject,jdbcType=VARCHAR},
             #{item.platform,jdbcType=VARCHAR},
             #{type,jdbcType=VARCHAR},
             #{item.count,jdbcType=INTEGER},
             #{item.createTime,jdbcType=VARCHAR}
-        )
+            )
         </foreach>
 
     </insert>
@@ -56,8 +57,6 @@
         AND
             `type` = #{pageEntity.type,jdbcType=VARCHAR}
         ORDER BY create_date DESC
-        <![CDATA[
-            LIMIT #{pageEntity.pageSize,jdbcType=INTEGER} * #{pageEntity.pageNumber,jdbcType=INTEGER},LIMIT #{pageEntity.pageSize,jdbcType=INTEGER}
-        ]]>
+            LIMIT #{begin,jdbcType=INTEGER}, #{pageEntity.pageSize,jdbcType=INTEGER}
     </select>
 </mapper>
