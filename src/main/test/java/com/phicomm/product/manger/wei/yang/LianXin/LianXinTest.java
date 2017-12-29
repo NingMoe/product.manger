@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.wei.yang;
+package com.phicomm.product.manger.wei.yang.LianXin;
 
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;

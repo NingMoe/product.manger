@@ -1,20 +1,15 @@
 $(document).ready(function () {
-    $("#bpm-statistic-1").addClass("active");
-    $("#bpm-statistic-2").addClass("active");
+    $("#balance-trace-node").addClass("active");
+    $("#balance-trace-menu-node").addClass("active");
+    $("#user-activity-trace-node").addClass("active");
 });
-
-
-
-//最近15天 血压计销量
-$(function bpmMeasureCountSaleByDay() {
+$(function statisticUser() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/bpm/statistic/sale/byDay",
+        url: baseUrl + "/balance/statistic/user/analysis/all",
         dataType: "json",
-        data: {
-            "day": 12
-        },
+        contentType: "application/json",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
@@ -26,53 +21,62 @@ $(function bpmMeasureCountSaleByDay() {
                     dates.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmSaleDayChart").get(0).getContext("2d")));
+            let barChartCavas = $("#traceUserActivityChartPV").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
+            drawPieChart(labels, dates, barChart);
         }
     })
 });
-
-//最近12个月 血压计销量
-$(function bpmMeasureCountSaleByMonth() {
+$(function statisticUserByAge() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/bpm/statistic/sale/byMonth",
+        url: baseUrl + "/balance/statistic/user/age/v2",
         dataType: "json",
-        data: {
-            "month": 12
-        },
+        contentType: "application/json",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
-            for (let key in data.data) {
-                if (data.data.hasOwnProperty(key)) {
+            let boyData = [];
+            let girlData = [];
+            let boyMap = data.data["boy"];
+            let girlMap = data.data["girl"];
+            for (let key in boyMap) {
+                if (boyMap.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    boyData.push(boyMap[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmSaleMonthChart").get(0).getContext("2d")));
+            for (let key in girlMap) {
+                if (girlMap.hasOwnProperty(key)) {
+                    girlData.push(girlMap[key]);
+                }
+            }
+            let barChartCavas = $("#traceUserActivityChartUV").get(0).getContext("2d");
+            let barChart = new Chart(barChartCavas);
+            drawBarChart2(labels, girlData, boyData, barChart);
         }
     })
 });
 
-/**
- * 绘制柱状图
- * @param labes 横坐标
- * @param datas 数据
- * @param chart 图表类型
- */
-function drawBarChart(labels, datas, chart) {
+function drawBarChart2(labes, data0, data1, chart) {
     let chartDataArea = {
-        labels: labels,
+        labels: labes,
         datasets: [
             {
-                fillColor: "#6db539",
-                strokeColor: "#3ab539",
+                fillColor: "#4096B5",
+                strokeColor: "#4096B5",
                 pointColor: "#4096B5",
-                data: datas
+                data: data1
+            },
+            {
+                fillColor: "#b53780",
+                strokeColor: "#b53780",
+                pointColor: "#b53780",
+                data: data0
             }
+
         ]
     };
     const chartOption = {
@@ -81,7 +85,7 @@ function drawBarChart(labels, datas, chart) {
         //Boolean - 是否显示网格线
         scaleShowGridLines: false,
         //String - 网格颜色
-        scaleGridLineColor: "#dcd8cf",
+        scaleGridLineColor: "#000000",
         //Number - 网格线宽度
         scaleGridLineWidth: 1,
         //Boolean - 是否显示水平线（不含x轴）
@@ -102,7 +106,6 @@ function drawBarChart(labels, datas, chart) {
         scaleFontStyle: "500",
         //Number - Pixel width of the bar stroke
         barStrokeWidth: 1,
-        datasetFill: false,
         //Number - Spacing between each of the X value sets
         barValueSpacing: 5,
         //Number - Spacing between data sets within X values
@@ -121,6 +124,7 @@ function drawBarChart(labels, datas, chart) {
         //String - Animation easing effect
         animationEasing: "easeOutQuart",
         showTooltips: false,
+        datasetFill: false,
         onAnimationComplete: function () {
             let ctx = this.chart.ctx;
             ctx.font = this.scale.font;
@@ -137,34 +141,26 @@ function drawBarChart(labels, datas, chart) {
     chart.Bar(chartDataArea, chartOption);
 }
 
-//销售总量
-$(function bpmCountSaleAll() {
-    const baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/bpm/statistic/sale/all",
-        dataType: "json",
-        contentType:"application/json",
-        error: function (req, status, err) {
-            alert('Failed reason: ' + err);
-        }, success: function (data) {
-            $("#saleNum").html(data.data);
-        }
-    })
-});
+function drawPieChart(labes, datas, chart) {
+    let pieData = [
+        {
+            value: datas[0],
+            color: "#b53780",
+            text: labes[0]
 
-//血压计今天销售量
-$(function bpmSaleCountAll() {
-    const baseUrl = $("#baseUrl").val();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + "/bpm/statistic/sale/today",
-        dataType: "json",
-        contentType:"application/json",
-        error: function (req, status, err) {
-            alert('Failed reason: ' + err);
-        }, success: function (data) {
-            $("#bindNum").html(data.data);
+        },
+        {
+            value: datas[1],
+            color: "#4096B5",
+            text: labes[1]
         }
-    })
-});
+    ];
+    const chartOption = {
+        //Boolean - whether to make the chart responsive
+        responsive: true,
+        maintainAspectRatio: true,
+        //是否显示动画
+        animation: true,
+    };
+    chart.Pie(pieData, chartOption);
+}

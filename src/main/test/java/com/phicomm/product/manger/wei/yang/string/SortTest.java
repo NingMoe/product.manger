@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.wei.yang;
+package com.phicomm.product.manger.wei.yang.string;
 
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;

@@ -1,0 +1,168 @@
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/fresco/fresco.css"/>
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="$baseUrl/resources/css/feedback/feedback.css">
+
+<style>
+    #parentDiv li {
+        margin-top: 5px;
+    }
+</style>
+<section class="content">
+
+#*
+* 填写需要输入的信息
+* *#
+    <div class="phicomm_content_div">
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="row">
+                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                            <h4 style="margin-left: 2%">合作商S7激活数量填写</h4>
+                        </div>
+                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                            color=#987cb9 SIZE=1/>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="activationDate" class="col-sm-4 control-label">日期</label>
+                            <div class="col-sm-8">
+                                <input class="form-control pull-right" type="date" id="activationDate" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lianbiActivationCount" class="col-sm-5 control-label">联璧激活数量</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="lianbi" value="0"
+                                       oninput="checkNum('lianbi',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="wanjiaActivationCount" class="col-sm-5 control-label">万家金服激活数量</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="wanjia" value="0"
+                                       oninput="checkNum('wanjia',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1" style="margin-left: 50px">
+                            <div>
+                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                        onclick="getAll()">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;margin-top: 20px; ">
+                            <h4 style="margin-left: 2%">不同设备活跃用户量填写</h4>
+                        </div>
+                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                            color=#987cb9 SIZE=1/>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="activeuserDate" class="col-sm-4 control-label">日期</label>
+                            <div class="col-sm-8">
+                                <input class="form-control pull-right" type="date" id="activeuserDate" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="IOSActiveUserCount" class="col-sm-5 control-label">IOS活跃用户</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="iosActive" value="0"
+                                       oninput="checkNum('iosActive',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="AndroidActiveUserCount" class="col-sm-5 control-label">Android活跃用户</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="androidActive" value="0"
+                                       oninput="checkNum('androidActive',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1" style="margin-left: 50px">
+                            <div>
+                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                        onclick="getAll()">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                            <h4 style="margin-left: 2%">获取报告</h4>
+                        </div>
+                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                            color=#987cb9 SIZE=1/>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="reportDate" class="col-sm-4 control-label">日期</label>
+                            <div class="col-sm-8">
+                                <input class="form-control pull-right" type="date" id="reportDate" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1" style="margin-left: 50px">
+                            <div>
+                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                        onclick="getAll()">
+                                    获取
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+##      报告总结部分
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+        <div class="box-body">
+            <div class="row">
+                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                    <h3 style="text-align:center;" id="reportTitle">2017/12/28生产环境S7统计报告</h3>
+                </div>
+                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                    color=#987cb9 SIZE=1/>
+            </div>
+            <div class="row">
+                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                    <div class="stats-body">
+                        <ul style=" width:100%; text-align:left; margin-left:5%; margin-right:30px;">
+                            <li type="margin-buttom:10px;"><h4>1.新增智能体脂秤使用数量<label>111</label>台，合计<label>111</label>台。</h4>
+                            </li>
+                            <li type="margin-buttom:10px;"><h4>2.今日新增智能体脂秤k码激活数量<label>111</label>个，合计<label>111</label>个。</h4>
+                            </li>
+                            <li type="margin-buttom:10px;"><h4>3.今日活跃用户合计<label>111</label>人，其中IOS活跃用户<label>111</label>人，Android活跃<label>111</label>人。</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                    color=#987cb9 SIZE=1/>
+            </div>
+
+##************************************图表一
+            <div class="row">
+                <div style="width:95%;  margin-left:15px; margin-right:0 auto;" id="chart1"></div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/fresco/fresco.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
+<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>
