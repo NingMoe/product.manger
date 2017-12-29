@@ -32,7 +32,12 @@ public enum TerminalDataTypeEnum {
     /**
      * 网络类型
      */
-    NETWORK_TYPE("network_type", "equipmentTerminalInfo.systemInfo.networkType");
+    NETWORK_TYPE("network_type", "equipmentTerminalInfo.systemInfo.networkType"),
+
+    /**
+     * app版本
+     */
+    APP_VERSION("app_version", "equipmentTerminalInfo.appInfo.appVersion");
 
     private String dataType;
 
