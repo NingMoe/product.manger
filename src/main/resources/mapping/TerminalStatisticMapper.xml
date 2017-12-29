@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.TerminalStatisticMapper">
+
+    <insert id="groupInsert">
+        INSERT IGNORE INTO terminal_statistic_info (
+            compare_object_value,
+            platform,
+            `type`,
+            `count`,
+            create_date
+        )VALUES <foreach collection="terminalCommonEntities" item="item" index="index" separator="," >
+        (
+            #{item.compareObject,jdbcType=VARCHAR},
+            #{item.platform,jdbcType=VARCHAR},
+            #{type,jdbcType=VARCHAR},
+            #{item.count,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=VARCHAR}
+        )
+        </foreach>
+
+    </insert>
+
+    <select id="getTimeStatisticInfo" resultType="com.phicomm.product.manger.model.terminal.StatisticEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity">
+        SELECT
+            compare_object_value AS compareObject,
+            create_date AS createTime,
+            `count` AS `count`
+        FROM
+            terminal_statistic_info
+        WHERE
+            platform = #{periodEntity.platform,jdbcType=VARCHAR}
+        AND
+            `type` = #{periodEntity.type,jdbcType=VARCHAR}
+        AND
+        <![CDATA[
+            TO_DAYS(create_date) >= #{periodEntity.startTime,jdbcType=TIMESTAMP}
+        AND
+            TO_DAYS(create_date) < #{periodEntity.endTime,jdbcType=TIMESTAMP}
+        ]]>
+        ORDER BY create_date DESC
+    </select>
+
+    <!--pageNumber 从0开始-->
+    <select id="getPageStatisticInfo" resultType="com.phicomm.product.manger.model.terminal.StatisticEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.PageWithPlatformEntity">
+        SELECT
+            compare_object_value AS compareObject,
+            create_date AS createTime,
+            `count` AS `count`
+        FROM
+            terminal_statistic_info
+        WHERE
+            platform = #{pageEntity.platform,jdbcType=VARCHAR}
+        AND
+            `type` = #{pageEntity.type,jdbcType=VARCHAR}
+        ORDER BY create_date DESC
+        <![CDATA[
+            LIMIT #{pageEntity.pageSize,jdbcType=INTEGER} * #{pageEntity.pageNumber,jdbcType=INTEGER},LIMIT #{pageEntity.pageSize,jdbcType=INTEGER}
+        ]]>
+    </select>
+</mapper>
