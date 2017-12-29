@@ -67,4 +67,20 @@ public class TerminalStatisticController {
         terminalStatisticService.syncYesterdayData();
         return CommonResponse.ok();
     }
+
+    /**
+     * 获取设备平台与渠道信息
+     *
+     * @return 设备信息
+     */
+    @RequestMapping(value = "channel/detail/sync/history", method = POST, consumes = "application/json", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class)
+    })
+    @ApiOperation("获取设备与渠道信息")
+    @ResponseBody
+    public CommonResponse syncHistoryData() {
+        terminalStatisticService.syncAllData();
+        return CommonResponse.ok();
+    }
 }

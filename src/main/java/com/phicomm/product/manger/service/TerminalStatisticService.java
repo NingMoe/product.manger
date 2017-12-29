@@ -1,12 +1,15 @@
 package com.phicomm.product.manger.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.phicomm.product.manger.dao.TerminalStatisticMapper;
+import com.phicomm.product.manger.enumeration.TerminalDataTypeEnum;
 import com.phicomm.product.manger.model.terminal.PageWithPlatformEntity;
 import com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity;
 import com.phicomm.product.manger.model.terminal.StatisticEntity;
 import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
 import com.phicomm.product.manger.module.terminal.impl.TerminalMongoQueryImpl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,11 +24,7 @@ import java.util.List;
 @Service
 public class TerminalStatisticService {
 
-    private static final String SYSTEM_VERSION_KEY = "equipmentTerminalInfo.systemInfo.systemVersionCode";
-
-    private static final String MOBILE_MODEL_KEY = "equipmentTerminalInfo.systemInfo.mobileModel";
-
-    private static final String GROUP_CHANNEL_KEY = "equipmentTerminalInfo.appInfo.channel";
+    private static final Logger logger = Logger.getLogger(TerminalStatisticService.class);
 
     private TerminalStatisticMapper terminalStatisticMapper;
 
@@ -69,8 +68,24 @@ public class TerminalStatisticService {
     /**
      * 数据同步：同步昨天一天的数据
      */
+    public void syncAllData() {
+        for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
+            List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyGroup(dataTypeEnum.getMongoKey());
+            logger.info(JSONObject.toJSONString(terminalCommonEntities));
+            if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
+                continue;
+            }
+            terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+        }
+    }
+
+    /**
+     * 数据同步：同步昨天一天的数据
+     */
     public void syncYesterdayData() {
-        List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.yesterdayGroup(GROUP_CHANNEL_KEY);
-        terminalStatisticMapper.groupInsert(terminalCommonEntities, "channel");
+        for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
+            List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.yesterdayGroup(dataTypeEnum.getMongoKey());
+            terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+        }
     }
 }

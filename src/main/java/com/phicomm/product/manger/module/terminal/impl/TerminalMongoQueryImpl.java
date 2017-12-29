@@ -1,10 +1,12 @@
 package com.phicomm.product.manger.module.terminal.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
 import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
 import com.phicomm.product.manger.module.terminal.MongoQueryFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.GroupBy;
@@ -28,6 +30,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class TerminalMongoQueryImpl implements MongoQueryFactory {
+
+    private static final Logger logger = Logger.getLogger(TerminalMongoQueryImpl.class);
 
     private static final String GROUP_PLATFORM_KEY = "equipmentTerminalInfo.systemInfo.platform";
 
@@ -82,10 +86,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      */
     public List<TerminalCommonEntity> historyGroup(String compareObjectKey) {
         GroupByResults<BasicDBObject> results = groupQuery(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY);
-        return parseData(results, compareObjectKey)
-                .stream()
-                .sorted(Comparator.comparing(TerminalCommonEntity::getCreateTime))
-                .collect(Collectors.toList());
+        return parseData(results, compareObjectKey);
     }
 
     /**
@@ -100,7 +101,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     }
 
     /**
-     * 数据解析
+     * 数据解析、格式化
      * while循环不能简化，格式转不成BasicDBObject，会报错
      *
      * @param results          查询结果
@@ -109,6 +110,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      */
     @SuppressWarnings("all")
     private List<TerminalCommonEntity> parseData(GroupByResults<BasicDBObject> results, String compareObjectKey) {
+        logger.info(JSON.toJSONString(results));
         List<TerminalCommonEntity> terminalCommonEntities = Lists.newArrayList();
         Iterator<BasicDBObject> iterator = results.iterator();
         while (iterator.hasNext()) {
@@ -120,7 +122,11 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
             terminalCommonEntity.setCreateTime((String) map.get(GROUP_DATE_TIME_KEY));
             terminalCommonEntities.add(terminalCommonEntity);
         }
-        return terminalCommonEntities;
+        return terminalCommonEntities
+                .stream()
+                .filter(o -> !Strings.isNullOrEmpty(o.getCompareObject()))
+                .sorted(Comparator.comparing(TerminalCommonEntity::getCreateTime))
+                .collect(Collectors.toList());
     }
 
     /**
