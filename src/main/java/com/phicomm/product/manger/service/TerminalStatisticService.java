@@ -71,10 +71,10 @@ public class TerminalStatisticService {
     public void syncAllData() {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyGroup(dataTypeEnum.getMongoKey());
-            logger.info(JSONObject.toJSONString(terminalCommonEntities));
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
                 continue;
             }
+            logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
         }
     }
@@ -85,6 +85,10 @@ public class TerminalStatisticService {
     public void syncYesterdayData() {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.yesterdayGroup(dataTypeEnum.getMongoKey());
+            if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
+                continue;
+            }
+            logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
         }
     }
