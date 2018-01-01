@@ -2,6 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.TerminalStatisticMapper">
 
+    <resultMap id="mapResult" type="HashMap">
+        <result property="key" column="key" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="value" column="value" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="obtainCertainTimeData" parameterType="com.phicomm.product.manger.model.terminal.BaseSearchEntity"
+            resultMap="mapResult">
+        SELECT
+            compare_object_value AS `key`,
+            `count` AS `value`
+        FROM
+            terminal_statistic_info
+        WHERE
+            `type` = #{baseSearchEntity.dateType,jdbcType=VARCHAR}
+        AND
+            platform = #{baseSearchEntity.platform,jdbcType=VARCHAR}
+        <if test="baseSearchEntity.searchTime != null">
+            AND create_time = #{baseSearchEntity.searchTime,jdbcType=VARCHAR}
+        </if>
+        GROUP BY `key`
+        ORDER BY `value` DESC
+    </select>
+
     <insert id="groupInsert">
         INSERT IGNORE INTO terminal_statistic_info (
             compare_object_value,
@@ -22,6 +45,9 @@
 
     </insert>
 
+    <!--
+        获取某一时间段的分析数据
+    -->
     <select id="getTimeStatisticInfo" resultType="com.phicomm.product.manger.model.terminal.StatisticEntity"
             parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity">
         SELECT
@@ -58,5 +84,40 @@
             `type` = #{pageEntity.type,jdbcType=VARCHAR}
         ORDER BY create_date DESC
             LIMIT #{begin,jdbcType=INTEGER}, #{pageEntity.pageSize,jdbcType=INTEGER}
+    </select>
+
+    <!--
+        获取昨天和历史的数据
+    -->
+    <select id="obtainCompareData" resultType="com.phicomm.product.manger.model.terminal.HistoryResultEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.SearchWithCertainTimeEntity">
+        SELECT
+            c.historyCompareObject AS historyCompareObject,
+            c.historyCount AS historyCount,
+            a.compareObject AS compareObject,
+            a.count AS `count`
+        FROM
+            (
+                SELECT
+                    compare_object_value AS compareObject,
+                    `count` AS `count`
+                FROM
+                    terminal_statistic_info
+                WHERE
+                    create_date = #{certainTimeEntity.searchTime,jdbcType=VARCHAR}
+                AND #{certainTimeEntity.platform,jdbcType=VARCHAR}
+                AND type = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+            ) AS a
+        RIGHT JOIN (
+            SELECT
+                compare_object_value AS historyCompareObject,
+                `count` AS `historyCount`
+            FROM
+                terminal_statistic_info
+            WHERE
+                platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
+            AND type = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+        ) AS c ON a.compareObject = c.historyCompareObject
+        ORDER BY historyCount DESC
     </select>
 </mapper>

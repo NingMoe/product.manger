@@ -1,9 +1,6 @@
 package com.phicomm.product.manger.dao;
 
-import com.phicomm.product.manger.model.terminal.PageWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.StatisticEntity;
-import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
+import com.phicomm.product.manger.model.terminal.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -41,4 +38,20 @@ public interface TerminalStatisticMapper {
      */
     List<StatisticEntity> getPageStatisticInfo(@Param("pageEntity") PageWithPlatformEntity pageEntity,
                                                @Param("begin") int begin);
+
+    /**
+     * 基础查询
+     *
+     * @param certainTimeEntity 查询条件
+     * @return 结果
+     */
+    List obtainCertainTimeData(@Param("certainTimeEntity") SearchWithCertainTimeEntity certainTimeEntity);
+
+    /**
+     * 获取昨天的数据
+     *
+     * @param certainTimeEntity 筛选条件
+     * @return 结果
+     */
+    List<HistoryResultEntity> obtainCompareData(@Param("certainTimeEntity") SearchWithCertainTimeEntity certainTimeEntity);
 }
