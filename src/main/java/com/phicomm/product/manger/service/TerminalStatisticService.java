@@ -52,7 +52,31 @@ public class TerminalStatisticService {
     public List<HistoryResultEntity> obtainHistoryData(SearchWithCertainTimeEntity certainTimeEntity)
             throws DataFormatException {
         checkCertainTimeData(certainTimeEntity);
+        List<HistoryResultEntity> result = terminalStatisticMapper.obtainCompareData(certainTimeEntity);
+        if (result == null || result.isEmpty()) {
+            return Lists.newLinkedList();
+        }
         return terminalStatisticMapper.obtainCompareData(certainTimeEntity);
+    }
+
+    /**
+     * 获取类型列表
+     *
+     * @param periodWithPlatformEntity 时间段
+     * @return 类型列表
+     * @throws TerminalStatisticTypeNotSupportException 类型不支持
+     * @throws PlatformNotExistException                平台不支持
+     * @throws DataFormatException                      数据格式错误
+     */
+    public List<String> obtainValueType(PeriodWithPlatformEntity periodWithPlatformEntity)
+            throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
+        checkTimePeriodRequest(periodWithPlatformEntity);
+        logger.info(JSONObject.toJSONString(periodWithPlatformEntity));
+        List<String> result = terminalStatisticMapper.obtainValueType(periodWithPlatformEntity);
+        if (result == null || result.isEmpty()) {
+            return Lists.newArrayList();
+        }
+        return result;
     }
 
     /**
@@ -171,7 +195,7 @@ public class TerminalStatisticService {
         if (!PlatformEnum.exist(platform)) {
             throw new PlatformNotExistException();
         }
-        String type = pageEntity.getType();
+        String type = pageEntity.getDateType();
         if (!TerminalDataTypeEnum.exist(type)) {
             throw new TerminalStatisticTypeNotSupportException();
         }
@@ -200,7 +224,7 @@ public class TerminalStatisticService {
         if (!PlatformEnum.exist(platform)) {
             throw new PlatformNotExistException();
         }
-        String type = periodModel.getType();
+        String type = periodModel.getDateType();
         if (!TerminalDataTypeEnum.exist(type)) {
             throw new TerminalStatisticTypeNotSupportException();
         }

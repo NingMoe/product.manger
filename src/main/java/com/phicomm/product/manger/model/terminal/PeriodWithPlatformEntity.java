@@ -1,35 +1,37 @@
 package com.phicomm.product.manger.model.terminal;
 
+import java.util.Date;
+
 /**
  * @author wei.yang on 2017/12/29
  */
-public class PeriodWithPlatformEntity extends PeriodEntity {
+public class PeriodWithPlatformEntity extends BaseSearchEntity {
 
-    private String platform;
+    private Date startTime;
 
-    private String type;
+    private Date endTime;
 
-    public String getPlatform() {
-        return platform;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public String getType() {
-        return type;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Override
     public String toString() {
         return "PeriodWithPlatformEntity{" +
-                "platform='" + platform + '\'' +
-                ", type='" + type + '\'' +
+                "startTime=" + startTime +
+                ", endTime=" + endTime +
                 '}';
     }
 }

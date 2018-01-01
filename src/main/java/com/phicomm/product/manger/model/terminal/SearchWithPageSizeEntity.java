@@ -3,7 +3,7 @@ package com.phicomm.product.manger.model.terminal;
 /**
  * @author wei.yang on 2018/1/1
  */
-public class SearchWithPageSizeEntity {
+public class SearchWithPageSizeEntity extends BaseSearchEntity{
 
     private int pageSize;
 

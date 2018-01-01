@@ -3,33 +3,33 @@ package com.phicomm.product.manger.model.terminal;
 /**
  * @author wei.yang on 2017/12/29
  */
-public class PageWithPlatformEntity extends PageEntity {
+public class PageWithPlatformEntity extends BaseSearchEntity {
 
-    private String platform;
+    private Integer pageNumber;
 
-    private String type;
+    private Integer pageSize;
 
-    public String getPlatform() {
-        return platform;
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
-    public String getType() {
-        return type;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     @Override
     public String toString() {
         return "PageWithPlatformEntity{" +
-                "platform='" + platform + '\'' +
-                ", type='" + type + '\'' +
+                "pageNumber=" + pageNumber +
+                ", pageSize=" + pageSize +
                 '}';
     }
 }

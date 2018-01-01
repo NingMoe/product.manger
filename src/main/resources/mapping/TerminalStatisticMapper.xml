@@ -36,12 +36,12 @@
         WHERE
             platform = #{periodEntity.platform,jdbcType=VARCHAR}
         AND
-            `type` = #{periodEntity.type,jdbcType=VARCHAR}
+            `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
         AND
         <![CDATA[
-            TO_DAYS(create_date) >= #{periodEntity.startTime,jdbcType=TIMESTAMP}
+            TO_DAYS(create_date) >=  TO_DAYS(#{periodEntity.startTime,jdbcType=TIMESTAMP})
         AND
-            TO_DAYS(create_date) < #{periodEntity.endTime,jdbcType=TIMESTAMP}
+            TO_DAYS(create_date) < TO_DAYS(#{periodEntity.endTime,jdbcType=TIMESTAMP})
         ]]>
         ORDER BY create_date DESC
     </select>
@@ -58,7 +58,7 @@
         WHERE
             platform = #{pageEntity.platform,jdbcType=VARCHAR}
         AND
-            `type` = #{pageEntity.type,jdbcType=VARCHAR}
+            `type` = #{pageEntity.dateType,jdbcType=VARCHAR}
         ORDER BY create_date DESC
             LIMIT #{begin,jdbcType=INTEGER}, #{pageEntity.pageSize,jdbcType=INTEGER}
     </select>
@@ -101,5 +101,23 @@
                 `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
         ) AS c ON a.compareObject = c.historyCompareObject
         ORDER BY historyCount DESC
+    </select>
+
+    <select id="obtainValueType" parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity"
+            resultType="java.lang.String">
+        SELECT DISTINCT
+            compare_object_value
+        FROM
+            `terminal_statistic_info`
+        WHERE
+            platform = #{periodEntity.platform,jdbcType=VARCHAR}
+        AND
+            `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
+        AND
+        <![CDATA[
+            TO_DAYS(create_date) >= TO_DAYS(#{periodEntity.startTime,jdbcType=TIMESTAMP})
+        AND
+            TO_DAYS(create_date) < TO_DAYS(#{periodEntity.endTime,jdbcType=TIMESTAMP})
+        ]]>
     </select>
 </mapper>
