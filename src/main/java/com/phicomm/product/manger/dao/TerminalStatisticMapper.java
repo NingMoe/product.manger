@@ -40,7 +40,7 @@ public interface TerminalStatisticMapper {
                                                @Param("begin") int begin);
 
     /**
-     * 获取昨天的数据
+     * 获取昨天的数据:主要用途为表格数据显示
      *
      * @param certainTimeEntity 筛选条件
      * @return 结果
