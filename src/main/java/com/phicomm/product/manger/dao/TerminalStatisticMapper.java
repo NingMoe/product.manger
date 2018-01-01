@@ -40,14 +40,6 @@ public interface TerminalStatisticMapper {
                                                @Param("begin") int begin);
 
     /**
-     * 基础查询
-     *
-     * @param certainTimeEntity 查询条件
-     * @return 结果
-     */
-    List obtainCertainTimeData(@Param("certainTimeEntity") SearchWithCertainTimeEntity certainTimeEntity);
-
-    /**
      * 获取昨天的数据
      *
      * @param certainTimeEntity 筛选条件

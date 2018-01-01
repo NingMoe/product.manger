@@ -2,29 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.TerminalStatisticMapper">
 
-    <resultMap id="mapResult" type="HashMap">
-        <result property="key" column="key" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="value" column="value" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-    </resultMap>
-
-    <select id="obtainCertainTimeData" parameterType="com.phicomm.product.manger.model.terminal.BaseSearchEntity"
-            resultMap="mapResult">
-        SELECT
-            compare_object_value AS `key`,
-            `count` AS `value`
-        FROM
-            terminal_statistic_info
-        WHERE
-            `type` = #{baseSearchEntity.dateType,jdbcType=VARCHAR}
-        AND
-            platform = #{baseSearchEntity.platform,jdbcType=VARCHAR}
-        <if test="baseSearchEntity.searchTime != null">
-            AND create_time = #{baseSearchEntity.searchTime,jdbcType=VARCHAR}
-        </if>
-        GROUP BY `key`
-        ORDER BY `value` DESC
-    </select>
-
     <insert id="groupInsert">
         INSERT IGNORE INTO terminal_statistic_info (
             compare_object_value,
@@ -92,6 +69,7 @@
     <select id="obtainCompareData" resultType="com.phicomm.product.manger.model.terminal.HistoryResultEntity"
             parameterType="com.phicomm.product.manger.model.terminal.SearchWithCertainTimeEntity">
         SELECT
+            FORMAT(a.count / c.historyCount,2) AS percent,
             c.historyCompareObject AS historyCompareObject,
             c.historyCount AS historyCount,
             a.compareObject AS compareObject,
