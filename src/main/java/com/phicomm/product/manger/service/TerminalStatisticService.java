@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -41,8 +43,15 @@ public class TerminalStatisticService {
         Assert.notNull(this.mongoQuery);
     }
 
-
-    public List<HistoryResultEntity> obtainHistoryData(SearchWithCertainTimeEntity certainTimeEntity){
+    /**
+     * 获取统计数据
+     *
+     * @param certainTimeEntity 一般只获取昨天的数据
+     * @return 统计数据
+     */
+    public List<HistoryResultEntity> obtainHistoryData(SearchWithCertainTimeEntity certainTimeEntity)
+            throws DataFormatException {
+        checkCertainTimeData(certainTimeEntity);
         return terminalStatisticMapper.obtainCompareData(certainTimeEntity);
     }
 
@@ -110,6 +119,32 @@ public class TerminalStatisticService {
             }
             logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+        }
+    }
+
+    /**
+     * 核对参数格式
+     *
+     * @param certainTimeEntity 指定时间的查询
+     * @throws DataFormatException 数据格式异常
+     */
+    private void checkCertainTimeData(SearchWithCertainTimeEntity certainTimeEntity) throws DataFormatException {
+        if (certainTimeEntity == null) {
+            throw new DataFormatException();
+        }
+        String platform = certainTimeEntity.getPlatform();
+        String dateType = certainTimeEntity.getDateType();
+        if (!PlatformEnum.exist(platform) || !TerminalDataTypeEnum.exist(dateType)) {
+            throw new DataFormatException();
+        }
+        String searchTime = certainTimeEntity.getSearchTime();
+        try {
+            LocalDate time = LocalDate.parse(searchTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            if (time.isAfter(LocalDate.now())) {
+                throw new DataFormatException();
+            }
+        } catch (Exception e) {
+            throw new DataFormatException();
         }
     }
 
