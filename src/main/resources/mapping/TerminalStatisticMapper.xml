@@ -69,11 +69,11 @@
     <select id="obtainCompareData" resultType="com.phicomm.product.manger.model.terminal.HistoryResultEntity"
             parameterType="com.phicomm.product.manger.model.terminal.SearchWithCertainTimeEntity">
         SELECT
-            FORMAT(a.count / c.historyCount,2) AS percent,
+            FORMAT(`count` / historyCount,2) AS percent,
             c.historyCompareObject AS historyCompareObject,
             c.historyCount AS historyCount,
             a.compareObject AS compareObject,
-            a.count AS `count`
+            a.`count` AS `count`
         FROM
             (
                 SELECT
@@ -83,8 +83,10 @@
                     terminal_statistic_info
                 WHERE
                     create_date = #{certainTimeEntity.searchTime,jdbcType=VARCHAR}
-                AND #{certainTimeEntity.platform,jdbcType=VARCHAR}
-                AND type = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+                AND
+                    platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
+                AND
+                    `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
             ) AS a
         RIGHT JOIN (
             SELECT
@@ -94,7 +96,8 @@
                 terminal_statistic_info
             WHERE
                 platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
-            AND type = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+            AND
+                `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
         ) AS c ON a.compareObject = c.historyCompareObject
         ORDER BY historyCount DESC
     </select>
