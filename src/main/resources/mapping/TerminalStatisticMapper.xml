@@ -65,6 +65,7 @@
 
     <!--
         获取昨天和历史的数据
+        index:platform_value_date_type_idx,type_idx
     -->
     <select id="obtainCompareData" resultType="com.phicomm.product.manger.model.terminal.HistoryResultEntity"
             parameterType="com.phicomm.product.manger.model.terminal.SearchWithCertainTimeEntity">
