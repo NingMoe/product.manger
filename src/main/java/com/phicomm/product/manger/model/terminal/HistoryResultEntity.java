@@ -36,26 +36,6 @@ public class HistoryResultEntity extends BaseResultEntity{
     }
 
     @Override
-    public String getCompareObject() {
-        return super.getCompareObject();
-    }
-
-    @Override
-    public void setCompareObject(String compareObject) {
-        super.setCompareObject(compareObject);
-    }
-
-    @Override
-    public int getCount() {
-        return super.getCount();
-    }
-
-    @Override
-    public void setCount(int count) {
-        super.setCount(count);
-    }
-
-    @Override
     public String toString() {
         return "HistoryResultEntity{" +
                 "historyCompareObject='" + historyCompareObject + '\'' +

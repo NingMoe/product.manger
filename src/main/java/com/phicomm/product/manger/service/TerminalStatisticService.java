@@ -8,10 +8,7 @@ import com.phicomm.product.manger.enumeration.TerminalDataTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.PlatformNotExistException;
 import com.phicomm.product.manger.exception.TerminalStatisticTypeNotSupportException;
-import com.phicomm.product.manger.model.terminal.PageWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.StatisticEntity;
-import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
+import com.phicomm.product.manger.model.terminal.*;
 import com.phicomm.product.manger.module.terminal.impl.TerminalMongoQueryImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +39,11 @@ public class TerminalStatisticService {
         this.mongoQuery = mongoQuery;
         Assert.notNull(this.terminalStatisticMapper);
         Assert.notNull(this.mongoQuery);
+    }
+
+
+    public List<HistoryResultEntity> obtainHistoryData(SearchWithCertainTimeEntity certainTimeEntity){
+        return terminalStatisticMapper.obtainCompareData(certainTimeEntity);
     }
 
     /**

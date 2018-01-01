@@ -5,9 +5,7 @@ import com.phicomm.product.manger.exception.PlatformNotExistException;
 import com.phicomm.product.manger.exception.TerminalStatisticTypeNotSupportException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
-import com.phicomm.product.manger.model.terminal.PageWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity;
-import com.phicomm.product.manger.model.terminal.StatisticEntity;
+import com.phicomm.product.manger.model.terminal.*;
 import com.phicomm.product.manger.service.TerminalStatisticService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +36,26 @@ public class TerminalStatisticController {
     @Autowired
     public TerminalStatisticController(TerminalStatisticService terminalStatisticService) {
         this.terminalStatisticService = terminalStatisticService;
+    }
+
+    /**
+     * 获取设备平台与渠道信息
+     *
+     * @param certainTimeEntity 页面信息
+     * @return 数据
+     */
+    @RequestMapping(value = "history/table/data", method = POST, consumes = "application/json", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = Response.class),
+            @ApiResponse(code = 26, message = "平台不支持", response = Response.class),
+            @ApiResponse(code = 27, message = "分析类型不支持", response = Response.class)
+    })
+    @ApiOperation("获取设备与渠道信息,页码从0开始")
+    @ResponseBody
+    public Response<List<HistoryResultEntity>> obtainHistoryPage(@RequestBody SearchWithCertainTimeEntity certainTimeEntity) {
+        List<HistoryResultEntity> result = terminalStatisticService.obtainHistoryData(certainTimeEntity);
+        return new Response<List<HistoryResultEntity>>().setData(result);
     }
 
     /**
