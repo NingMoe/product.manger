@@ -71,7 +71,6 @@ public class TerminalStatisticService {
     public List<String> obtainValueType(PeriodWithPlatformEntity periodWithPlatformEntity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
         checkTimePeriodRequest(periodWithPlatformEntity);
-        logger.info(JSONObject.toJSONString(periodWithPlatformEntity));
         List<String> result = terminalStatisticMapper.obtainValueType(periodWithPlatformEntity);
         if (result == null || result.isEmpty()) {
             return Lists.newArrayList();
