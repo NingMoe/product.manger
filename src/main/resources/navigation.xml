@@ -760,4 +760,20 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>shareStatistic14Days</id>
+        <title>
+            <title-name>用户分享数据统计</title-name>
+            <title-description>用户分享数据统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/</url>
+            <sub-directories>
+                <name>userShareStatistic14Days</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
 </navigations>
