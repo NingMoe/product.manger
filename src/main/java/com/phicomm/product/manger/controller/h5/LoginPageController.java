@@ -29,7 +29,7 @@ public class LoginPageController {
         boolean userLoginFlag = session != null && session.getAttribute(SessionKeyEnum.LOGIN_FLAG.getKeyName()) != null;
         boolean swaggerLoginFlag = session != null && session.getAttribute(SessionKeyEnum.SWAGGER_LOGIN_FLAG.getKeyName()) != null;
         if(userLoginFlag || swaggerLoginFlag) {
-            response.sendRedirect("homepage");
+            response.sendRedirect("s7report");
             return null;
         }
         return new ModelAndView("login/login");
