@@ -1,7 +1,7 @@
-<link rel="stylesheet" type="text/css" href="$baseUrl/resources/fresco/fresco.css"/>
-<link rel="stylesheet" type="text/css" href="$baseUrl/resources/daterangepicker/daterangepicker.css">
-<link rel="stylesheet" type="text/css" href="$baseUrl/resources/select2/select2.min.css">
-<link rel="stylesheet" type="text/css" href="$baseUrl/resources/css/feedback/feedback.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/fresco/fresco.css"/>
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/css/feedback/feedback.css">
 
 <style>
     #parentDiv li {
@@ -21,15 +21,16 @@
                         <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
                             <h4 style="margin-left: 2%">合作商S7激活数量填写</h4>
                         </div>
-                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                            color=#987cb9 SIZE=1/>
+                        <hr style="border:2 dashed #987cb9;color: #449d44; margin-top: 0px;margin-bottom: 20px"
+                            width="100%"
+                        />
                     </div>
 
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="activationDate" class="col-sm-4 control-label">日期</label>
                             <div class="col-sm-8">
-                                <input class="form-control pull-right" type="date" id="activationDate" />
+                                <input class="form-control pull-right" type="date" id="activationDate"/>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -67,7 +68,7 @@
                         <div class="form-group col-md-3">
                             <label for="activeuserDate" class="col-sm-4 control-label">日期</label>
                             <div class="col-sm-8">
-                                <input class="form-control pull-right" type="date" id="activeuserDate" />
+                                <input class="form-control pull-right" type="date" id="activeuserDate"/>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -106,7 +107,7 @@
                         <div class="form-group col-md-3">
                             <label for="reportDate" class="col-sm-4 control-label">日期</label>
                             <div class="col-sm-8">
-                                <input class="form-control pull-right" type="date" id="reportDate" />
+                                <input class="form-control pull-right" type="date" id="reportDate"/>
                             </div>
                         </div>
                         <div class="form-group col-md-1" style="margin-left: 50px">
@@ -123,46 +124,117 @@
         </div>
 
 
-##      报告总结部分
+    ##      报告总结部分
         <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
-        <div class="box-body">
-            <div class="row">
-                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
-                    <h3 style="text-align:center;" id="reportTitle">2017/12/28生产环境S7统计报告</h3>
+            <div class="box-body">
+                <div class="row">
+                    <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                        <h3 style="text-align:center;" id="reportTitle">2017/12/28生产环境S7统计报告</h3>
+                    </div>
                 </div>
-                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                    color=#987cb9 SIZE=1/>
-            </div>
-            <div class="row">
-                <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <h3 class="box-title">一、今日总体概况</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="stats-body">
-                        <ul style=" width:100%; text-align:left; margin-left:5%; margin-right:30px;">
-                            <li type="margin-buttom:10px;"><h4>1.新增智能体脂秤使用数量<label>111</label>台，合计<label>111</label>台。</h4>
+                        <ul style=" width:100%; text-align:left; margin-left:5%; margin-right:5%;">
+                            <li type="margin-buttom:10px;"><h4>1.新增智能体脂秤使用数量<label
+                                    id="s7DataUsageCountToday">111</label>台，累计新增总量<label
+                                    id="s7DataUsageCountAll">111</label>台。</h4>
                             </li>
-                            <li type="margin-buttom:10px;"><h4>2.今日新增智能体脂秤k码激活数量<label>111</label>个，合计<label>111</label>个。</h4>
+                            <li type="margin-buttom:10px;"><h4>2.今日新增智能体脂秤k码激活数量<label>111</label>个，合计<label>111</label>个。
+                            </h4>
                             </li>
-                            <li type="margin-buttom:10px;"><h4>3.今日活跃用户合计<label>111</label>人，其中IOS活跃用户<label>111</label>人，Android活跃<label>111</label>人。</h4>
+                            <li type="margin-buttom:10px;"><h4>3.今日活跃用户合计<label>111</label>人，其中IOS活跃用户<label>111</label>人，Android活跃<label>111</label>人。
+                            </h4>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                    color=#987cb9 SIZE=1/>
-            </div>
 
-##************************************图表一
-            <div class="row">
-                <div style="width:95%;  margin-left:15px; margin-right:0 auto;" id="chart1"></div>
+            ##************************************图表一
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <h3 class="box-title">二、S7新增使用量</h3>
+                        </div>
+                        <div class="stats-body">
+                            <ul style=" width:100%;background: rgba(76,159,255,0.99);text-align:left;">
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日新增使用数量<label id="s7DataUsageCountToday">111</label>台，累计新增总量<label
+                                        id="s7DataUsageCountAll">111</label>台。</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                    ##体脂秤设备新增使用量(每天)
+                        <div id="S7UsageCountschart1"></div>
+                    </div>
+                </div>
+                <div class="row">
+                ##体脂秤设备新增使用量(每月)
+                    <div class="col-md-6">
+                        <div id="S7UsageCountschart2"></div>
+                    </div>
+                ##体脂秤设备各地区使用量
+                    <div class="col-md-6">
+                        <div id="S7SalesLocationchart3"></div>
+                    </div>
+                </div>
+
+            ##************************************图表二
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <h3 class="box-title">三、S7新增K码激活统计</h3>
+                        </div>
+                        <div class="stats-body">
+                            <ul style=" width:100%;background: rgba(76,159,255,0.99)  ;text-align:left;">
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日新增K码激活量<label id="s7KKeysCountToday">111</label>台，累计新增K码总激活量<label
+                                        id="s7KKeysCountAll">111</label>台。</h4>
+                                </li>
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日联璧新增K码激活量<label id="s7LianbiKKeysCountToday">111</label>台，联璧累计新增K码激活总量<label
+                                        id="s7LianbiKKeysCountAll">111</label>台。</h4>
+                                </li>
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日万家金服新增K码激活量<label id="s7WanjiaKKeysCountToday">111</label>台，万家金服累计新增K码激活总量<label
+                                        id="s7WanjiaKKeysCountAll">111</label>台。</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                    ##体脂秤设备新增使用量(每天)
+                        <div id="S7KKeysCountsChart1"></div>
+                    </div>
+                </div>
+                <div class="row">
+                ##体脂秤设备新增使用量(每月)
+                    <div class="col-md-6">
+                        <div id="S7KKeysCountschart2"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
 
 </section>
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fresco/fresco.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
-<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>
