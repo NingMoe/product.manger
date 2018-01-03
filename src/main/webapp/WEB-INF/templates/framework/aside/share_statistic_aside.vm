@@ -1,0 +1,13 @@
+<li class="header">user share statistic</li>
+<li class="treeview" id="share-statistic-node">
+    <a href="#">
+        <i class="fa fa-anchor"></i>
+        <span>用户分享统计</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu" id="share-statistic-menu-node">
+        <li id="share-statistic-trace-node"><a href="$baseUrl/share/statistic/page/14days"><i class="fa fa-meh-o"></i> 用户分享14天统计</a></li>
+    </ul>
+</li>

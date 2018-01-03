@@ -71,6 +71,7 @@
                 #parse("framework/aside/hermes_helper_aside.vm")
                 #parse("framework/aside/swagger_manager_aside.vm")
                 #parse("framework/aside/permession_manger_aside.vm")
+                #parse("framework/aside/share_statistic_aside.vm")
             </ul>
         </section>
     </aside>
