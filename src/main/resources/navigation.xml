@@ -19,6 +19,41 @@
         </directory>
     </navigation>
 
+    <!--yafei.hou 2017-12-27-->
+    <navigation>
+        <id>s7report</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>S7 激活与使用情况报告</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/s7report</url>
+            <sub-directories>
+                <name>s7report</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+    <!---->
+<!--2017-12-28 yafei.hou-->
+    <navigation>
+        <id>BalanceDataSource</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>体脂称称量数据来源</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/measure/data/sourcePage</url>
+            <sub-directories>
+                <name>BalanceDataSource</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+    <!--2017-12-28 yafei.hou-->
+
     <navigation>
         <id>salesLocationStatistic</id>
         <title>
@@ -705,6 +740,38 @@
             <url>$baseUrl/watchplate/picture/config/page</url>
             <sub-directories>
                 <name>watchplatePictureParamForConfig</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceTraceUserActivity</id>
+        <title>
+            <title-name>用户活跃度</title-name>
+            <title-description>用户活跃度</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/trace/user/activity</url>
+            <sub-directories>
+                <name>balanceTraceUserActivity</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>shareStatistic14Days</id>
+        <title>
+            <title-name>用户分享数据统计</title-name>
+            <title-description>用户分享数据统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/</url>
+            <sub-directories>
+                <name>userShareStatistic14Days</name>
             </sub-directories>
         </directory>
     </navigation>

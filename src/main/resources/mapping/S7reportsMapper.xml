@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.S7reportsMapper">
+
+    <!--将各个厂家每日激活s7数量添加到数据库中，通过date的唯一性约束，使得数据存在则更新，不存在则插入-->
+    <insert id="addedActivationCount">
+        REPLACE INTO activation_count (date, lianbi, wanjia)
+        VALUES
+        (DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d'),
+        #{lianbi,jdbcType=BIGINT},
+        #{wanjia,jdbcType=BIGINT})
+    </insert>
+
+    <!--获取当前月份内各个厂家每天激活数据量-->
+    <select id="obtainActivationStatisticThisMonth" resultType="java.util.HashMap">
+        SELECT
+          date,
+          sum(lianbi) AS lianbi,
+          sum(wanjia) AS wanjia
+        FROM activation_count
+        WHERE
+        DATE_FORMAT(date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')
+    </select>
+
+    <!--更新月份统计表,通过month的唯一性约束，使得数据存在则更新，不存在则插入-->
+    <insert id="upDateActivationMonthCount">
+        REPLACE INTO activation_count_month (month,lianbi,wanjia)
+        VALUES (
+        DATE_FORMAT(#{month,jdbcType=VARCHAR},'%Y-%m'),
+        #{lianbi,jdbcType=BIGINT},
+        wanjia=#{wanjia,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <!--获取最近N天的激活情况统计（每个厂商激活数量）-->
+    <select id="obtainActivationStatisticEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            activation_count
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <!--最近N天每天激活总量-->
+    <select id="obtainActivationStatisticByDay" resultType="java.util.HashMap">
+        SELECT
+          date,
+          (lianbi+wanjia) AS counts
+        FROM
+          activation_count
+        ORDER BY
+          date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <!--获取某天各个厂家激活状况-->
+    <select id="obtainActivationStatisticDay" resultType="java.util.HashMap">
+        SELECT date,lianbi,wanjia
+        FROM activation_count
+        WHERE
+        DATE_FORMAT(date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d')
+    </select>
+
+    <!--获取最近N月的激活情况统计-->
+    <select id="obtainActivationStatisticMonth" resultType="java.util.HashMap">
+        SELECT
+            month,
+            lianbi,
+            wanjia
+        FROM
+            activation_count_month
+        ORDER BY
+            month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <!--获取每个厂家激活总量-->
+    <select id="obtainActivationAllCounts" resultType="java.util.HashMap">
+        SELECT
+            sum(lianbi) AS lianbi,
+            sum(wanjia) AS wanjia
+        FROM
+            activation_count_month
+    </select>
+
+
+    <!--添加android和ios设备每日用户活跃数量,设置date的唯一性约束，-->
+    <insert id="addedActiveUsersCount">
+        REPLACE INTO active_user_count (date, ios, android)
+        VALUES
+        (DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d'),
+        #{ios,jdbcType=BIGINT},
+        #{android,jdbcType=BIGINT})
+    </insert>
+
+    <!--获取某天各个设备的用户活跃量-->
+    <select id="activeUsersCount" resultType="java.util.HashMap">
+        SELECT
+        date,ios,android
+        FROM
+        active_user_count
+        WHERE
+        DATE_FORMAT(date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d')
+    </select>
+
+    <!--获取最近N天用户活跃度-->
+    <select id="activeUsersCountEveryDay" resultType="java.util.HashMap">
+        SELECT
+        date,ios,android
+        FROM
+        active_user_count
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+</mapper>

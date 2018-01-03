@@ -63,9 +63,9 @@ $(function bpmMeasureCountSaleByMonth() {
  * @param datas 数据
  * @param chart 图表类型
  */
-function drawBarChart(labes, datas, chart) {
+function drawBarChart(labels, datas, chart) {
     let chartDataArea = {
-        labels: labes,
+        labels: labels,
         datasets: [
             {
                 fillColor: "#6db539",
