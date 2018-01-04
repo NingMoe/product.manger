@@ -94,7 +94,6 @@ public class TerminalStatisticService {
         }
         Map<String, List<ResultWithDataTime>> result = dataTimes.stream()
                 .collect(Collectors.groupingBy(ResultWithDataTime::getCompareObject));
-        Map<String, List<Integer>> resultMap = Maps.newHashMap();
         Date startTime = entity.getStartTime();
         Date endTime = entity.getEndTime();
         List<Map<String, Object>> resultList = Lists.newArrayList();

@@ -26,7 +26,6 @@ public class TerminalDetailCron {
      */
     @Scheduled(cron = "0 0 1 * * ?")
     public void syncTerminalInfo() {
-        /*terminalStatisticService.syncAllData();*/
         terminalStatisticService.syncYesterdayData();
     }
 }
