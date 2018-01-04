@@ -28,7 +28,7 @@
         VALUES (
         DATE_FORMAT(#{month,jdbcType=VARCHAR},'%Y-%m'),
         #{lianbi,jdbcType=BIGINT},
-        wanjia=#{wanjia,jdbcType=BIGINT}
+        #{wanjia,jdbcType=BIGINT}
         )
     </insert>
 
@@ -48,7 +48,7 @@
     <!--最近N天每天激活总量-->
     <select id="obtainActivationStatisticByDay" resultType="java.util.HashMap">
         SELECT
-          date,
+          DATE_FORMAT(date,'%y-%m-%d') AS date,
           (lianbi+wanjia) AS counts
         FROM
           activation_count

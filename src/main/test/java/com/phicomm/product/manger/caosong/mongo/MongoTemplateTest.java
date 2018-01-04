@@ -8,7 +8,6 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
 import com.phicomm.product.manger.utils.MongoDbUtil;
-import org.bson.BsonDateTime;
 import org.bson.Document;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -18,16 +17,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import scala.io.BytePickle;
 
-import javax.print.Doc;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.gte;
 import static com.mongodb.client.model.Filters.lt;
-import static com.mongodb.client.model.Projections.excludeId;
-import static com.mongodb.client.model.Projections.fields;
-import static com.mongodb.client.model.Projections.include;
+import static com.mongodb.client.model.Projections.*;
 
 /**
  * Created by song02.cao on 2017/12/28.
@@ -250,12 +247,7 @@ public class MongoTemplateTest {
                 append("count", 1);
         collection.aggregate(Arrays.asList(new Document("$group", group),
                 new Document("$project", project))).
-                forEach(new Block<Document>() {
-                    @Override
-                    public void apply(Document document) {
-                        System.out.println(document);
-                    }
-                });
+                forEach((Block<Document>) System.out::println);
     }
 
     /**

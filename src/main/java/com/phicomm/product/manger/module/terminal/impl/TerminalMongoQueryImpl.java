@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
 import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
 import com.phicomm.product.manger.module.terminal.MongoQueryFactory;
+import com.phicomm.product.manger.utils.MongoDbUtil;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.GroupBy;
@@ -17,10 +21,8 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -61,6 +63,30 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
                 .initialDocument("{ count: 0 }")
                 .reduceFunction("function(doc, prev) { prev.count += 1 }");
         return mongoTemplate.group(criteria, COLLECTION_NAME, groupBy, BasicDBObject.class);
+    }
+
+    /**
+     * 分组
+     *
+     * @param key key
+     * @return 格式化好的数据
+     */
+    @Override
+    public List<TerminalCommonEntity> historyKeyGroup(String key) {
+        MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
+        String groupKey = key.substring(key.lastIndexOf('.') + 1);
+        logger.info(groupKey);
+        Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
+        Document project = new Document("createTime", time)
+                .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
+                .append(groupKey, String.format("$%s", key));
+        Document group = new Document("_id", new Document("platform", "$platform")
+                .append("createTime", "$createTime")
+                .append(groupKey, String.format("$%s", groupKey))
+                .append("count", new Document("$sum", 1)));
+        AggregateIterable<Document> result = collection
+                .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
+        return parseDocData(result, groupKey);
     }
 
     /**
@@ -127,6 +153,24 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
                 .filter(o -> !Strings.isNullOrEmpty(o.getCompareObject()))
                 .sorted(Comparator.comparing(TerminalCommonEntity::getCreateTime))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * doc解析
+     *
+     * @param documents doc
+     * @param key       key
+     * @return 格式化好的数据
+     */
+    private List<TerminalCommonEntity> parseDocData(AggregateIterable<Document> documents, String key) {
+        List<TerminalCommonEntity> result = Lists.newArrayList();
+        documents.forEach((Consumer<Document>) document -> {
+            logger.info(document.toJson());
+            Map objectMap = JSON.toJavaObject(JSON.parseObject(document.toJson()), Map.class);
+            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"), TerminalCommonEntity.class);
+            result.add(entity);
+        });
+        return result;
     }
 
     /**

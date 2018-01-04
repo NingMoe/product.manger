@@ -4,6 +4,9 @@ $(document).ready(function () {
     $("#terminal-activity-line-chart").addClass("active");
 });
 
+/**
+ * 绘制版本分布图
+ */
 $(function drawLineChart() {
     let object = {};
     object.platform = 'android';
@@ -15,9 +18,12 @@ $(function drawLineChart() {
     object.startTime = startTime;
     object.endTime = endTime;
     console.info(JSON.stringify(object));
-    networkRequest(object,"appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
+    networkRequest(object, "appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
+/**
+ * 绘制渠道分布图
+ */
 $(function drawLineChart() {
     let object = {};
     object.platform = 'android';
@@ -29,9 +35,18 @@ $(function drawLineChart() {
     object.startTime = startTime;
     object.endTime = endTime;
     console.info(JSON.stringify(object));
-    networkRequest(object,"appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
+    networkRequest(object, "appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
+/**
+ * 因为用的都是同一个url，所以摘出来
+ * @param param 请求参数
+ * @param divId 组件id
+ * @param title 图标题
+ * @param subtitle 副标题
+ * @param yTitle y轴代表内容
+ * @param date x轴开始的时间
+ */
 function networkRequest(param, divId, title, subtitle, yTitle, date) {
     let baseUrl = $("#baseUrl").val();
     $.ajax({
@@ -50,6 +65,15 @@ function networkRequest(param, divId, title, subtitle, yTitle, date) {
     })
 }
 
+/**
+ * 只管画图
+ * @param divId 组件id
+ * @param title 标题
+ * @param subtitle 副标题
+ * @param yTitle y轴标题
+ * @param date 开始时间
+ * @param data 图数据
+ */
 function draw(divId, title, subtitle, yTitle, date, data) {
     console.info(date.getFullYear(), date.getMonth(), date.getDate());
     Highcharts.chart(divId, {

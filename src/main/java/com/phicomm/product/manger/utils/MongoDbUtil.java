@@ -23,7 +23,6 @@ public class MongoDbUtil {
     public static Document timeFormat(String format, String timeField) {
         String newTimeField = "$" + timeField;
         Document timeDate = new Document("$add", Arrays.asList(new Date(0), newTimeField, 8 * 60 * 60 * 1000));
-        Document timeFormat = new Document("$dateToString", new Document("format", format).append("date", timeDate));
-        return timeFormat;
+        return new Document("$dateToString", new Document("format", format).append("date", timeDate));
     }
 }

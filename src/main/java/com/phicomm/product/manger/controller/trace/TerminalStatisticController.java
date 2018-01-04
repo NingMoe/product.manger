@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.controller.statistic;
+package com.phicomm.product.manger.controller.trace;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
@@ -53,6 +53,7 @@ public class TerminalStatisticController {
             @ApiResponse(code = 2, message = "数据格式错误", response = Response.class)
     })
     @ApiOperation("获取设备、渠道、运行商等信息")
+    @FunctionPoint("common")
     @ResponseBody
     public Response<List<HistoryResultEntity>> obtainHistoryDate(@RequestBody SearchWithCertainTimeEntity timeEntity)
             throws DataFormatException {
@@ -102,6 +103,7 @@ public class TerminalStatisticController {
             @ApiResponse(code = 27, message = "分析类型不支持", response = Response.class)
     })
     @ApiOperation("获取设备与渠道信息,页码从0开始")
+    @FunctionPoint("common")
     @ResponseBody
     public Response<List<StatisticEntity>> obtainDetailByPage(@RequestBody PageWithPlatformEntity pageEntity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
@@ -126,6 +128,7 @@ public class TerminalStatisticController {
             @ApiResponse(code = 27, message = "分析类型不支持", response = Response.class)
     })
     @ApiOperation("按时间段来获取设备与渠道信息")
+    @FunctionPoint("common")
     @ResponseBody
     public Response<List<StatisticEntity>> obtainDetailBetweenTime(@RequestBody PeriodWithPlatformEntity periodModel)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
@@ -144,9 +147,28 @@ public class TerminalStatisticController {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @ApiOperation("获取设备与渠道信息")
+    @FunctionPoint("common")
     @ResponseBody
     public CommonResponse syncHistoryData() {
         terminalStatisticService.syncAllData();
+        return CommonResponse.ok();
+    }
+
+    /**
+     * 获取设备平台与渠道信息
+     *
+     * @return 设备信息
+     */
+    @RequestMapping(value = "history/detail/sync/v2", method = POST, consumes = "application/json",
+            produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+    })
+    @ApiOperation("获取设备与渠道信息")
+    @FunctionPoint("common")
+    @ResponseBody
+    public CommonResponse syncHistoryDataV2() {
+        terminalStatisticService.syncAllDataV2();
         return CommonResponse.ok();
     }
 }

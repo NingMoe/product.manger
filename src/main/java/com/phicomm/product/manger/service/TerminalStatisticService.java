@@ -94,7 +94,6 @@ public class TerminalStatisticService {
         }
         Map<String, List<ResultWithDataTime>> result = dataTimes.stream()
                 .collect(Collectors.groupingBy(ResultWithDataTime::getCompareObject));
-        Map<String, List<Integer>> resultMap = Maps.newHashMap();
         Date startTime = entity.getStartTime();
         Date endTime = entity.getEndTime();
         List<Map<String, Object>> resultList = Lists.newArrayList();
@@ -181,6 +180,20 @@ public class TerminalStatisticService {
     public void syncAllData() {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyGroup(dataTypeEnum.getMongoKey());
+            if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
+                continue;
+            }
+            logger.info(JSONObject.toJSONString(terminalCommonEntities));
+            terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+        }
+    }
+
+    /**
+     * 数据同步：同步数据
+     */
+    public void syncAllDataV2() {
+        for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
+            List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyKeyGroup(dataTypeEnum.getMongoKey());
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
                 continue;
             }

@@ -60,6 +60,7 @@ public class S7reportsService {
         if (list.isEmpty()) {
             throw new Exception("update data failed");
         }
+        logger.info(list);
         Map<String, Object> map = list.get(0);
         s7reportsMapper.upDateActivationMonthCount((String) map.get(DATE_KEY),
                 Long.parseLong(map.get(LIANBI_KEY).toString()), Long.parseLong(map.get(WANJIA_KEY).toString()));
@@ -85,9 +86,10 @@ public class S7reportsService {
 
     /**
      * 获取最近N天的激活情况统计（每个厂商激活数量）
+     *
      * @return List\<Map\<String, Object>>
      */
-    public List<Map<String, Object>> obtainActivationStatisticEveryDay(){
+    public List<Map<String, Object>> obtainActivationStatisticEveryDay() {
         CustomerContextHolder.selectLocalDataSource();
         List<Map<String, Object>> list = s7reportsMapper.obtainActivationStatisticEveryDay(LESTEST_DAYS);
         CustomerContextHolder.clearDataSource();
@@ -97,10 +99,11 @@ public class S7reportsService {
 
     /**
      * 最近N天每天激活总量
+     *
      * @param days 天数
      * @return 每天激活总量
      */
-    public List<Map<String, Object>> obtainActivationStatisticByDay(int days){
+    public List<Map<String, Object>> obtainActivationStatisticByDay(int days) {
         CustomerContextHolder.selectLocalDataSource();
         List<Map<String, Object>> list = s7reportsMapper.obtainActivationStatisticByDay(days);
         logger.warn(list.toString());
@@ -110,10 +113,11 @@ public class S7reportsService {
 
     /**
      * 获取某天各个厂家激活状况
+     *
      * @param date 日期 yyyy-mm-dd
      * @return 数据列表
      */
-    public List<Map<String, Object>> obtainActivationStatisticDay(String date){
+    public List<Map<String, Object>> obtainActivationStatisticDay(String date) {
         CustomerContextHolder.selectLocalDataSource();
         List<Map<String, Object>> list = s7reportsMapper.obtainActivationStatisticDay(date);
         logger.warn(list.toString());
@@ -123,9 +127,10 @@ public class S7reportsService {
 
     /**
      * 获取最近N月的激活情况统计
+     *
      * @return 数据列表
      */
-    public List<Map<String, Object>> obtainActivationStatisticMonth(){
+    public List<Map<String, Object>> obtainActivationStatisticMonth() {
         CustomerContextHolder.selectLocalDataSource();
         List<Map<String, Object>> list = s7reportsMapper.obtainActivationStatisticMonth(LESTEST_MONTH);
         logger.warn(list.toString());
@@ -135,9 +140,10 @@ public class S7reportsService {
 
     /**
      * 获取每个厂家激活总量
+     *
      * @return 数据列表
      */
-    public List<Map<String, Object>> obtainActivationAllCounts(){
+    public List<Map<String, Object>> obtainActivationAllCounts() {
         CustomerContextHolder.selectLocalDataSource();
         List<Map<String, Object>> list = s7reportsMapper.obtainActivationAllCounts();
         CustomerContextHolder.clearDataSource();
@@ -147,7 +153,8 @@ public class S7reportsService {
 
     /**
      * 获取某天各个设备的用户活跃量
-     * @param  date 日期 格式为yyyy-mm-dd
+     *
+     * @param date 日期 格式为yyyy-mm-dd
      * @return 数据列表
      */
     public List<Map<String, Object>> activeUsersCount(String date) throws Exception {
@@ -163,6 +170,7 @@ public class S7reportsService {
 
     /**
      * 获取最近N天用户活跃度
+     *
      * @return 数据列表
      */
     public List<Map<String, Object>> activeUsersCountEveryDay() throws Exception {
