@@ -44,6 +44,8 @@ public class ExceptionHandlerController {
     private static JSONObject exception23;
     private static JSONObject exception24;
     private static JSONObject exception25;
+    private static JSONObject exception26;
+    private static JSONObject exception27;
 
     static {
         exception1001 = new JSONObject();
@@ -201,6 +203,18 @@ public class ExceptionHandlerController {
         exception25.put("description", "app type not found.");
     }
 
+    static {
+        exception26 = new JSONObject();
+        exception26.put("status", 26);
+        exception26.put("description", "platform not exist.");
+    }
+
+    static {
+        exception27 = new JSONObject();
+        exception27.put("status", 27);
+        exception27.put("description", "terminal statistic type not support.");
+    }
+
     @ExceptionHandler(Exception.class)
     public ModelAndView processException(Exception e) {
         logger.info(ExceptionUtil.getErrorMessage(e));
@@ -347,17 +361,18 @@ public class ExceptionHandlerController {
      * ID已经存在
      */
     @ExceptionHandler(IdHasExistException.class)
-    public ModelAndView processIdHasExistException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception18);
+    public ModelAndView processIdHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception18);
     }
 
     /**
      * 固件触发失败
      */
     @ExceptionHandler(FirmwareTriggerFailException.class)
-    public ModelAndView processFirmwareTriggerFailException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception19);
+    public ModelAndView processFirmwareTriggerFailException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception19);
     }
+
     /**
      * 反馈为空
      */
@@ -378,31 +393,47 @@ public class ExceptionHandlerController {
      * 反馈不存在
      */
     @ExceptionHandler(FeedbackNotFoundException.class)
-    public ModelAndView processFeedbackNotFoundException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception22);
+    public ModelAndView processFeedbackNotFoundException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception22);
     }
 
     /**
      * 反馈上传失败
      */
     @ExceptionHandler(FeedbackUploadException.class)
-    public ModelAndView processFeedbackUploadException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception23);
+    public ModelAndView processFeedbackUploadException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception23);
     }
 
     /**
      * 会话撤回失败
      */
     @ExceptionHandler(DialogRevokeException.class)
-    public ModelAndView processDialogRevokeException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception24);
+    public ModelAndView processDialogRevokeException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception24);
     }
 
     /**
      * appType找不到
      */
     @ExceptionHandler(AppTypeNotFoundException.class)
-    public ModelAndView processAppTypeNotFoundException(){
-        return new ModelAndView(new MappingJackson2JsonView(),exception25);
+    public ModelAndView processAppTypeNotFoundException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception25);
+    }
+
+    /**
+     * 平台不支持
+     */
+    @ExceptionHandler(PlatformNotExistException.class)
+    public ModelAndView processPlatformNotExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception26);
+    }
+
+    /**
+     * 分析类型不支持
+     */
+    @ExceptionHandler(TerminalStatisticTypeNotSupportException.class)
+    public ModelAndView processTerminalStatisticTypeNotSupportException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception27);
     }
 }

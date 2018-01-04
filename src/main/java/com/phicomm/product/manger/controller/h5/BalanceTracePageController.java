@@ -42,4 +42,22 @@ public class BalanceTracePageController {
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceTraceUserActivity"));
         return modelAndView;
     }
+
+    /**
+     * 获取设备分析页面
+     *
+     * @param session session
+     * @return 页面
+     */
+    @RequestMapping(value = "balance/terminal/activity/line/chart", method = RequestMethod.GET)
+    @ApiIgnore("用户活跃度页面展示")
+    @FunctionPoint(value = "common")
+    public ModelAndView terminalActivityPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "trace/balance_terminal_app.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("terminalLineChart"));
+        return modelAndView;
+    }
 }

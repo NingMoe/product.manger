@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.wei.yang.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @author wei.yang on 2017/12/28
  */
