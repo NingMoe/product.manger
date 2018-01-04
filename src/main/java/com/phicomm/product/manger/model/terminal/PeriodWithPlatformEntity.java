@@ -1,5 +1,7 @@
 package com.phicomm.product.manger.model.terminal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -7,8 +9,10 @@ import java.util.Date;
  */
 public class PeriodWithPlatformEntity extends BaseSearchEntity {
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC+8")
     private Date startTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC+8")
     private Date endTime;
 
     public Date getStartTime() {

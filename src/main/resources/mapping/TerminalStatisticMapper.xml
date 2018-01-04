@@ -39,9 +39,9 @@
             `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
         AND
         <![CDATA[
-            TO_DAYS(create_date) >=  TO_DAYS(#{periodEntity.startTime,jdbcType=TIMESTAMP})
+            STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
         AND
-            TO_DAYS(create_date) < TO_DAYS(#{periodEntity.endTime,jdbcType=TIMESTAMP})
+            STR_TO_DATE(create_date,'%Y-%m-%d')  < #{periodEntity.endTime,jdbcType=TIMESTAMP}
         ]]>
         ORDER BY create_date DESC
     </select>
@@ -103,21 +103,23 @@
         ORDER BY historyCount DESC
     </select>
 
-    <select id="obtainValueType" parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity"
-            resultType="java.lang.String">
-        SELECT DISTINCT
-            compare_object_value
+    <select id="obtainTerminalLineChartData" parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity"
+            resultType="com.phicomm.product.manger.model.terminal.ResultWithDataTime">
+        SELECT
+            compare_object_value AS compareObject,
+            `count` AS `count`,
+            create_date AS dataTime
         FROM
             `terminal_statistic_info`
         WHERE
-            platform = #{periodEntity.platform,jdbcType=VARCHAR}
-        AND
             `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
         AND
+            platform = #{periodEntity.platform,jdbcType=VARCHAR}
         <![CDATA[
-            TO_DAYS(create_date) >= TO_DAYS(#{periodEntity.startTime,jdbcType=TIMESTAMP})
         AND
-            TO_DAYS(create_date) < TO_DAYS(#{periodEntity.endTime,jdbcType=TIMESTAMP})
+             STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
+        AND
+            STR_TO_DATE(create_date,'%Y-%m-%d')  <= #{periodEntity.endTime,jdbcType=TIMESTAMP}
         ]]>
     </select>
 </mapper>

@@ -48,10 +48,10 @@ public interface TerminalStatisticMapper {
     List<HistoryResultEntity> obtainCompareData(@Param("certainTimeEntity") SearchWithCertainTimeEntity certainTimeEntity);
 
     /**
-     * 获取某个时间段、某个平台、某个数据类型的数据种类
+     * 获取线图的数据
      *
-     * @param periodWithPlatformEntity 时间段、平台、数据类型
-     * @return 数据种类
+     * @param periodEntity 时间段+平台+类别
+     * @return 数据
      */
-    List<String> obtainValueType(@Param("periodEntity") PeriodWithPlatformEntity periodWithPlatformEntity);
+    List<ResultWithDataTime> obtainTerminalLineChartData(@Param("periodEntity") PeriodWithPlatformEntity periodEntity);
 }

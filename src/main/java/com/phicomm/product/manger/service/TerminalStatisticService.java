@@ -2,6 +2,7 @@ package com.phicomm.product.manger.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.TerminalStatisticMapper;
 import com.phicomm.product.manger.enumeration.PlatformEnum;
 import com.phicomm.product.manger.enumeration.TerminalDataTypeEnum;
@@ -15,10 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 设备分析
@@ -60,20 +66,67 @@ public class TerminalStatisticService {
     }
 
     /**
-     * 获取类型列表
+     * 获取某一时间段、某个平台、某个类型数据的线图数据
      *
-     * @param periodWithPlatformEntity 时间段
-     * @return 类型列表
+     * @param periodWithPlatformEntity 时间段及平台、类型数据
+     * @return 格式化好的数据
      * @throws TerminalStatisticTypeNotSupportException 类型不支持
      * @throws PlatformNotExistException                平台不支持
      * @throws DataFormatException                      数据格式错误
      */
-    public List<String> obtainValueType(PeriodWithPlatformEntity periodWithPlatformEntity)
+    public Map<String, List<Integer>> obtainLineChartData(PeriodWithPlatformEntity periodWithPlatformEntity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
         checkTimePeriodRequest(periodWithPlatformEntity);
-        List<String> result = terminalStatisticMapper.obtainValueType(periodWithPlatformEntity);
-        if (result == null || result.isEmpty()) {
-            return Lists.newArrayList();
+        List<ResultWithDataTime> monthDatas = terminalStatisticMapper.obtainTerminalLineChartData(periodWithPlatformEntity);
+        return formatData(monthDatas, periodWithPlatformEntity);
+    }
+
+    /**
+     * 这一块不考虑返回横轴坐标，只返回对应对象对应的y轴数据
+     *
+     * @param dataTimes 待格式化的数据
+     * @param entity    起始时间
+     * @return 格式化好的时间
+     */
+    private Map<String, List<Integer>> formatData(List<ResultWithDataTime> dataTimes, PeriodWithPlatformEntity entity) {
+        if (dataTimes == null || dataTimes.isEmpty()) {
+            return Maps.newHashMap();
+        }
+        Map<String, List<ResultWithDataTime>> result = dataTimes.stream()
+                .collect(Collectors.groupingBy(ResultWithDataTime::getCompareObject));
+        Map<String, List<Integer>> resultMap = Maps.newHashMap();
+        Date startTime = entity.getStartTime();
+        Date endTime = entity.getEndTime();
+        result.forEach((s, resultWithDataTimes) -> {
+            List<Integer> chartData = getChartData(resultWithDataTimes, startTime, endTime);
+            resultMap.put(s, chartData);
+        });
+        return resultMap;
+    }
+
+    /**
+     * 单组数据数据补充
+     *
+     * @param resultWithDataTimes 数据
+     * @param startTime           开始时间
+     * @param endTime             终止时间
+     * @return 格式好的数据
+     */
+    private List<Integer> getChartData(List<ResultWithDataTime> resultWithDataTimes, Date startTime, Date endTime) {
+        List<Integer> result = Lists.newArrayList();
+        ZoneId zoneId = ZoneId.of("UTC+8");
+        Instant startInstant = startTime.toInstant();
+        Instant endInstant = endTime.toInstant();
+        LocalDateTime start = LocalDateTime.ofInstant(startInstant, zoneId);
+        LocalDateTime end = LocalDateTime.ofInstant(endInstant, zoneId);
+        Map<String, Integer> timeMap = Maps.newHashMap();
+        resultWithDataTimes.forEach(resultWithDataTime ->
+                timeMap.put(resultWithDataTime.getDataTime(), resultWithDataTime.getCount()));
+        while (!start.isAfter(end)) {
+            Integer count = timeMap.get(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            count = count == null ? 0 : count;
+            result.add(count);
+            start = start.plusDays(1);
         }
         return result;
     }

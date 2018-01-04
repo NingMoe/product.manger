@@ -13,6 +13,7 @@ public interface MongoQueryFactory {
     /**
      * 获取设备终端详情
      *
+     * @param keys 分组的key
      * @return 详情
      */
     GroupByResults<BasicDBObject> groupQuery(String... keys);
