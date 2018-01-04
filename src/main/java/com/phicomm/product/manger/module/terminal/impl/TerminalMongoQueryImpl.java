@@ -173,7 +173,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
             result.add(entity);
         });
         return result.stream()
-                .filter(terminalCommonEntity -> Strings.isNullOrEmpty(terminalCommonEntity.getCompareObject()))
+                .filter(terminalCommonEntity -> !Strings.isNullOrEmpty(terminalCommonEntity.getCompareObject()))
                 .collect(Collectors.toList());
     }
 
