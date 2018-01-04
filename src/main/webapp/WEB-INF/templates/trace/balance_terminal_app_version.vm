@@ -1,0 +1,24 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div id="appVersion" style="width: 96%;height: 500px;margin-left: 2%">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div id="appChanel" style="width: 96%;height: 500px;margin-left: 2%">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/trace/balance_terminal_app_version.js"></script>

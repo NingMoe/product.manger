@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.TerminalStatisticMapper">
+
+    <insert id="groupInsert">
+        INSERT IGNORE INTO terminal_statistic_info (
+            compare_object_value,
+            platform,
+            `type`,
+            `count`,
+            create_date
+        )VALUES
+        <foreach collection="terminalCommonEntities" item="item" index="index" separator=",">
+            (
+            #{item.compareObject,jdbcType=VARCHAR},
+            #{item.platform,jdbcType=VARCHAR},
+            #{type,jdbcType=VARCHAR},
+            #{item.count,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+
+    <!--
+        获取某一时间段的分析数据
+    -->
+    <select id="getTimeStatisticInfo" resultType="com.phicomm.product.manger.model.terminal.StatisticEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity">
+        SELECT
+            compare_object_value AS compareObject,
+            create_date AS createTime,
+            `count` AS `count`
+        FROM
+            terminal_statistic_info
+        WHERE
+            platform = #{periodEntity.platform,jdbcType=VARCHAR}
+        AND
+            `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
+        AND
+        <![CDATA[
+            STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
+        AND
+            STR_TO_DATE(create_date,'%Y-%m-%d')  < #{periodEntity.endTime,jdbcType=TIMESTAMP}
+        ]]>
+        ORDER BY create_date DESC
+    </select>
+
+    <!--pageNumber 从0开始-->
+    <select id="getPageStatisticInfo" resultType="com.phicomm.product.manger.model.terminal.StatisticEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.PageWithPlatformEntity">
+        SELECT
+            compare_object_value AS compareObject,
+            create_date AS createTime,
+            `count` AS `count`
+        FROM
+            terminal_statistic_info
+        WHERE
+            platform = #{pageEntity.platform,jdbcType=VARCHAR}
+        AND
+            `type` = #{pageEntity.dateType,jdbcType=VARCHAR}
+        ORDER BY create_date DESC
+            LIMIT #{begin,jdbcType=INTEGER}, #{pageEntity.pageSize,jdbcType=INTEGER}
+    </select>
+
+    <!--
+        获取昨天和历史的数据
+        index:platform_value_date_type_idx,type_idx
+    -->
+    <select id="obtainCompareData" resultType="com.phicomm.product.manger.model.terminal.HistoryResultEntity"
+            parameterType="com.phicomm.product.manger.model.terminal.SearchWithCertainTimeEntity">
+        SELECT
+            FORMAT(`count` / historyCount,2) AS percent,
+            c.historyCompareObject AS historyCompareObject,
+            c.historyCount AS historyCount,
+            a.compareObject AS compareObject,
+            a.`count` AS `count`
+        FROM
+            (
+                SELECT
+                    compare_object_value AS compareObject,
+                    `count` AS `count`
+                FROM
+                    terminal_statistic_info
+                WHERE
+                    create_date = #{certainTimeEntity.searchTime,jdbcType=VARCHAR}
+                AND
+                    platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
+                AND
+                    `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+            ) AS a
+        RIGHT JOIN (
+            SELECT
+                compare_object_value AS historyCompareObject,
+                `count` AS `historyCount`
+            FROM
+                terminal_statistic_info
+            WHERE
+                platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
+            AND
+                `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+        ) AS c ON a.compareObject = c.historyCompareObject
+        ORDER BY historyCount DESC
+    </select>
+
+    <select id="obtainTerminalLineChartData" parameterType="com.phicomm.product.manger.model.terminal.PeriodWithPlatformEntity"
+            resultType="com.phicomm.product.manger.model.terminal.ResultWithDataTime">
+        SELECT
+            compare_object_value AS compareObject,
+            `count` AS `count`,
+            create_date AS dataTime
+        FROM
+            `terminal_statistic_info`
+        WHERE
+            `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
+        AND
+            platform = #{periodEntity.platform,jdbcType=VARCHAR}
+        <![CDATA[
+        AND
+             STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
+        AND
+            STR_TO_DATE(create_date,'%Y-%m-%d')  <= #{periodEntity.endTime,jdbcType=TIMESTAMP}
+        ]]>
+    </select>
+</mapper>

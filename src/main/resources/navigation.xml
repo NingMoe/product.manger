@@ -776,4 +776,19 @@
         </directory>
     </navigation>
 
+    <navigation>
+        <id>terminalLineChart</id>
+        <title>
+            <title-name>App使用情况</title-name>
+            <title-description>App使用情况趋势图</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/terminal/activity/line/chart</url>
+            <sub-directories>
+                <name>terminalLineChart</name>
+            </sub-directories>
+        </directory>
+    </navigation>
 </navigations>

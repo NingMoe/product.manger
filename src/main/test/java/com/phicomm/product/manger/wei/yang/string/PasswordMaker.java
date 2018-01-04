@@ -8,7 +8,7 @@ import org.junit.Test;
 public class PasswordMaker {
 
     @Test
-    public void maker(){
+    public void maker() {
         System.out.println(StringMaker.maker(16));
     }
 }
