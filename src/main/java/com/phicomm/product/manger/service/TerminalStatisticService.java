@@ -189,6 +189,20 @@ public class TerminalStatisticService {
     }
 
     /**
+     * 数据同步：同步数据
+     */
+    public void syncAllDataV2() {
+        for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
+            List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyKeyGroup(dataTypeEnum.getMongoKey());
+            if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
+                continue;
+            }
+            logger.info(JSONObject.toJSONString(terminalCommonEntities));
+            terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+        }
+    }
+
+    /**
      * 数据同步：同步昨天一天的数据
      */
     public void syncYesterdayData() {

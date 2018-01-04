@@ -1,7 +1,10 @@
 package com.phicomm.product.manger.module.terminal;
 
 import com.mongodb.BasicDBObject;
+import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
 import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
+
+import java.util.List;
 
 /**
  * 设备终端
@@ -17,6 +20,14 @@ public interface MongoQueryFactory {
      * @return 详情
      */
     GroupByResults<BasicDBObject> groupQuery(String... keys);
+
+    /**
+     * 历史同步
+     *
+     * @param key key
+     * @return 数据
+     */
+    List<TerminalCommonEntity> historyKeyGroup(String key);
 
     /**
      * 查询，不分组
