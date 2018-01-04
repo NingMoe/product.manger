@@ -74,19 +74,17 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     @Override
     public List<TerminalCommonEntity> historyKeyGroup(String key) {
         MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
-        String groupKey = key.substring(key.lastIndexOf('.') + 1);
-        logger.info(groupKey);
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
-                .append(groupKey, String.format("$%s", key));
+                .append("compareObject", String.format("$%s", key));
         Document group = new Document("_id", new Document("platform", "$platform")
                 .append("createTime", "$createTime")
-                .append(groupKey, String.format("$%s", groupKey))
-                .append("count", new Document("$sum", 1)));
+                .append("compareObject", "$compareObject"))
+                .append("count", new Document("$sum", 1));
         AggregateIterable<Document> result = collection
                 .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
-        return parseDocData(result, groupKey);
+        return parseDocData(result);
     }
 
     /**
@@ -159,15 +157,19 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * doc解析
      *
      * @param documents doc
-     * @param key       key
      * @return 格式化好的数据
      */
-    private List<TerminalCommonEntity> parseDocData(AggregateIterable<Document> documents, String key) {
+    private List<TerminalCommonEntity> parseDocData(AggregateIterable<Document> documents) {
         List<TerminalCommonEntity> result = Lists.newArrayList();
         documents.forEach((Consumer<Document>) document -> {
             logger.info(document.toJson());
             Map objectMap = JSON.toJavaObject(JSON.parseObject(document.toJson()), Map.class);
-            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"), TerminalCommonEntity.class);
+            TerminalCommonEntity entity = new TerminalCommonEntity();
+            entity.setCount((Integer) objectMap.get("count"));
+            Map body = JSON.toJavaObject((JSON) objectMap.get("_id"), Map.class);
+            entity.setCompareObject((String) body.get("compareObject"));
+            entity.setPlatform((String) body.get("platform"));
+            entity.setCreateTime((String) body.get("createTime"));
             result.add(entity);
         });
         return result;
