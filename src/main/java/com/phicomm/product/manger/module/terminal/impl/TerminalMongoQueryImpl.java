@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -149,7 +150,6 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
         return terminalCommonEntities
                 .stream()
                 .filter(o -> !Strings.isNullOrEmpty(o.getCompareObject()))
-                .sorted(Comparator.comparing(TerminalCommonEntity::getCreateTime))
                 .collect(Collectors.toList());
     }
 
@@ -172,7 +172,9 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
             entity.setCreateTime((String) body.get("createTime"));
             result.add(entity);
         });
-        return result;
+        return result.stream()
+                .filter(terminalCommonEntity -> Strings.isNullOrEmpty(terminalCommonEntity.getCompareObject()))
+                .collect(Collectors.toList());
     }
 
     /**
