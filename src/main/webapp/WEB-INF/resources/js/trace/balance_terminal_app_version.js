@@ -15,7 +15,7 @@ $(function drawLineChart() {
     object.startTime = startTime;
     object.endTime = endTime;
     console.info(JSON.stringify(object));
-    networkRequest(object,"appVersion", "斐讯健康版本活跃情况", "数据来源：www.phicomm.com", "活跃量", startTime);
+    networkRequest(object,"appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
 $(function drawLineChart() {
@@ -29,7 +29,7 @@ $(function drawLineChart() {
     object.startTime = startTime;
     object.endTime = endTime;
     console.info(JSON.stringify(object));
-    networkRequest(object,"appChanel", "斐讯健康渠道活跃情况", "数据来源：www.phicomm.com", "活跃量", startTime);
+    networkRequest(object,"appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
 function networkRequest(param, divId, title, subtitle, yTitle, date) {
