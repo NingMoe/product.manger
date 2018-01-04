@@ -124,7 +124,7 @@ function column() {
         text: null
     };
     var subtitle = {
-        text: 'Source: phicomm-AI'
+        text: 'Phicomm-AI'
     };
     var xAxis = {
         categories: null,
@@ -139,7 +139,7 @@ function column() {
     var tooltip = {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b>{point.y}台 </b></td></tr>',
+        '<td style="padding:0"><b>{point.y} </b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -187,7 +187,7 @@ function column() {
 /**
  * 获取不同合作商激活的最近30天激活的K码数量
  */
-$(function obtainKKeyCount() {
+$(function () {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
@@ -221,7 +221,7 @@ $(function obtainKKeyCount() {
 /**
  * 获取不同合作商激活的每个月激活的K码数量
  */
-$(function obtainKKeyCount() {
+$(function () {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
@@ -233,25 +233,170 @@ $(function obtainKKeyCount() {
             let dates = [];
             let lianbi = [];
             let wanjia = [];
+            let sum = [];
             console.info(rtValue.data);
             for (var i = rtValue.data.length - 1; i >= 0; i--) {
                 dates.push(rtValue.data[i]["month"]);
                 lianbi.push(rtValue.data[i]["lianbi"]);
                 wanjia.push(rtValue.data[i]["wanjia"]);
-
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
             }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
             var json1 = column();
             json1.title.text = 'S7K码新增激活量';
-            // json1.series[1].data = wanjia;
-            // json1.series[1].name = '万家金服K码激活量';
             json1.xAxis.categories = dates;
             json1.series[0].data = lianbi;
             json1.series[0].name = '联璧K码激活量';
-            var chart = $("#S7KKeysCountsChart2").highcharts(json1);
-            chart.addSeries({data:wanjia,name:'万家金服K码激活量'});
+            json1.series[0].type = 'spline';
+            json1.series[0].color = '#f72347';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                color: '#3ab539',
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'S7K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3", json2);
         }
     })
 });
+
+/**
+ * 激活量和使用量对比
+ */
+$(function () {
+    var S7UsageCountsEveryDay = {};
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/balance/statistic/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "mac"
+        },
+        async: false,
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            S7UsageCountsEveryDay = data;
+            console.log("data:" + data.data);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/ActivationAllCountDay",
+        dataType: "json",
+        data: {
+            "days": 30
+        },
+        async: false,
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let datesTemp = [];
+            let usageTemp = [];
+            let kKeysTemp = [];
+            let dates = [];
+            let usage = [];
+            let kKeys = [];
+            let usagePercentage = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                datesTemp.push(rtValue.data[i]["date"]);
+                kKeysTemp.push(rtValue.data[i]["counts"]);
+            }
+            console.info("datesTemp:\n" + datesTemp);
+            console.info("kKeysTemp:\n" + kKeysTemp);
+            for (let key in S7UsageCountsEveryDay.data) {
+                if (S7UsageCountsEveryDay.data.hasOwnProperty(key)) {
+                    dates.push(key);
+                    usageTemp.push(S7UsageCountsEveryDay.data[key]);
+                }
+            }
+            console.info("dates:\n" + dates);
+            console.info("usageTemp:\n" + usageTemp);
+            for (var k = 0; k < dates.length; k++) {
+                usage[k] = usageTemp[k];
+                for (var j = 0; j < datesTemp.length; j++) {
+                    if (dates[k] === datesTemp[j]) {
+                        kKeys[k] = kKeysTemp[j];
+                        if (usage[k] === 0 || kKeys === 0) {
+                            usagePercentage[k] = 0;
+                        } else {
+                            usagePercentage[k] = ((usage[k] / kKeys[k]) * 100).toFixed(3);
+                        }
+                        break;
+                    } else {
+                        kKeys[k] = 0;
+                        usagePercentage[k] = 0;
+                    }
+
+
+                }
+            }
+
+            var json1 = column();
+            json1.title.text = 'S7K码新增激活量与实际注册使用量对比';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = usage;
+            json1.series[0].name = 'S7注册使用量';
+            json1.series[0].type = 'column';
+            var chart = new Highcharts.Chart("S7KKeysCountsChart4", json1);
+            chart.addSeries({
+                data: kKeys, name: 'K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false
+                },
+                type: 'column'
+            });
+            chart.addAxis({ // Secondary yAxis
+                id: 'percentage',
+                title: {
+                    text: '使用量占比'
+                },
+                labels: {
+                    format: '{value}%'
+                },
+                opposite: true
+            });
+            chart.addSeries({
+                data: usagePercentage, name: '使用量占比',
+                dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    format: '{y}%'
+                },
+                yAxis: 'percentage',
+                type: 'spline',
+                tooltip: {
+                    valueSuffix: '%'
+                }
+            });
+        }
+    })
+});
+
+
 /**
  * 堆叠柱状图
  * @param chartId
@@ -277,7 +422,7 @@ function drawChart() {
                 color: 'black'
             },
             enabled: true,
-            allowOverlap:true
+            allowOverlap: true
         }
     };
     var legend = {
@@ -336,4 +481,37 @@ function drawChart() {
     json.credits = credits;
     json.series = series;
     return json;
+}
+
+/**
+ * 读取输入的激活数量统计数据
+ */
+function addedKKeys() {
+    var date = document.getElementById("activationDate").value;
+    var lianbi = document.getElementById("lianbi").value;
+    var wanjia = document.getElementById("wanjia").value;
+    if (lianbi === "0" && wanjia === "0") {
+        return alert("数量不应该是0");
+    }
+    console.log("date:" + date);
+    console.log("lianbi = " + lianbi + ",wanjia=" + wanjia);
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/addActivationData",
+        dataType: "json",
+        data: {
+            "date": date,
+            "lianbi": lianbi,
+            "wanjia": wanjia
+
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function () {
+            document.getElementById("lianbi").value = 0;
+            document.getElementById("wanjia").value = 0;
+            return alert("数据存储成功");
+        }
+    });
 }

@@ -50,7 +50,7 @@
                         <div class="form-group col-md-1" style="margin-left: 50px">
                             <div>
                                 <button type="button" class="btn btn-primary pull-right phicomm_button_go"
-                                        onclick="getAll()">
+                                        onclick="addedKKeys()">
                                     提交
                                 </button>
                             </div>
@@ -165,7 +165,7 @@
                             <h3 class="box-title">二、S7新增使用量</h3>
                         </div>
                         <div class="stats-body">
-                            <ul style=" width:100%;background: rgba(76,159,255,0.99);text-align:left;">
+                            <ul style=" width:100%;background: rgba(208,208,208,0.99);text-align:left;">
                                 <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日新增使用数量<label id="s7DataUsageCountToday">111</label>台，累计新增总量<label
                                         id="s7DataUsageCountAll">111</label>台。</h4>
                                 </li>
@@ -198,7 +198,7 @@
                             <h3 class="box-title">三、S7新增K码激活统计</h3>
                         </div>
                         <div class="stats-body">
-                            <ul style=" width:100%;background: rgba(76,159,255,0.99)  ;text-align:left;">
+                            <ul style=" width:100%;background: rgba(208,208,208,0.99)  ;text-align:left;">
                                 <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日新增K码激活量<label id="s7KKeysCountToday">111</label>台，累计新增K码总激活量<label
                                         id="s7KKeysCountAll">111</label>台。</h4>
                                 </li>
@@ -221,14 +221,18 @@
                 </div>
                 <div class="row">
                 ##体脂秤K码新增激活量(每月)各个合作商
-                    <div class="col-xs-12">
+                    <div class="col-md-6">
                         <div id="S7KKeysCountsChart2"></div>
+                    </div>
+                    <div class="col-md-6">
+                    ##体脂秤K码新增激活量与使用量对比(每天)
+                        <div id="S7KKeysCountsChart3"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                    ##体脂秤K码新增激活量与使用量对比(每天)
-                        <div id="S7KKeysCountsChart3"></div>
+                    ##体脂秤K码新增激活量(每天)与使用量对比
+                        <div id="S7KKeysCountsChart4"></div>
                     </div>
                 </div>
 
