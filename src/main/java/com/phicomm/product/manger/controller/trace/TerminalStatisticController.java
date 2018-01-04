@@ -1,4 +1,4 @@
-package com.phicomm.product.manger.controller.statistic;
+package com.phicomm.product.manger.controller.trace;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;

@@ -55,7 +55,7 @@ public class BalanceTracePageController {
     public ModelAndView terminalActivityPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "trace/balance_terminal_app_version.vm");
+        modelAndView.getModel().put("context", "trace/balance_terminal_app.vm");
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("terminalLineChart"));
         return modelAndView;
