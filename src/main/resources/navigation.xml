@@ -779,8 +779,8 @@
     <navigation>
         <id>terminalLineChart</id>
         <title>
-            <title-name>设备活跃情况</title-name>
-            <title-description>用户设备活跃情况</title-description>
+            <title-name>App使用情况</title-name>
+            <title-description>App使用情况趋势图</title-description>
         </title>
         <directory>
             <icon>fa fa-dashboard</icon>
