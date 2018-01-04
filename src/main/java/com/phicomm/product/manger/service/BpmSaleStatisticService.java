@@ -75,7 +75,7 @@ public class BpmSaleStatisticService {
      */
     public Map<String, Integer> obtainBPMSaleNumByDay(int days) {
         DateTime dateTime = new DateTime(DateTime.now());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
         List<BpmCountBean> countBeans;
         CustomerContextHolder.selectProdDataSource();
         countBeans = bpmSaleStatisticMapper.obtainBpmSaleNumByDay(days);

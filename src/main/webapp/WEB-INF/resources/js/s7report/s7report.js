@@ -1,4 +1,5 @@
 /**
+ * @author yafei.hou
  * Created by yafei.hou on 2017/12/27.
  */
 $(document).ready(function () {
@@ -31,13 +32,14 @@ $(function obtainMacInfoByDay() {
                     dates.push(data.data[key]);
                 }
             }
-            console.log("data:"+data.data);
-            console.log("labels:"+labels);
-            console.log("dates:"+dates);
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("dates:" + dates);
             var jsons = column();
-            jsons.title.text='S7体脂称每天新增使用量(最近30天)';
-            jsons.series[0].data=dates;
-            jsons.xAxis.categories=labels;
+            jsons.title.text = 'S7体脂称每天新增使用量(最近30天)';
+            jsons.series[0].data = dates;
+            jsons.xAxis.categories = labels;
+            jsons.legend.enabled=false;
             $("#S7UsageCountschart1").highcharts(jsons);
         }
     })
@@ -66,13 +68,14 @@ $(function obtainMacYearData() {
                     datas.push(data.data[key]);
                 }
             }
-            console.log("data:"+data.data);
-            console.log("labels:"+labels);
-            console.log("datas:"+datas);
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("datas:" + datas);
             var json = column();
-            json.title.text='S7体脂称每月新增使用量';
-            json.series[0].data=datas;
-            json.xAxis.categories=labels;
+            json.title.text = 'S7体脂称每月新增使用量';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled=false;
             $("#S7UsageCountschart2").highcharts(json);
         }
     })
@@ -104,9 +107,10 @@ $(function obtainLocationInfoByDay() {
                 }
             }
             var json = column();
-            json.title.text='S7体脂称各地区新增使用量（最近30天）';
-            json.series[0].data=datas;
-            json.xAxis.categories=labels;
+            json.title.text = 'S7体脂称各地区新增使用量（最近30天）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled=false;
             $("#S7SalesLocationchart3").highcharts(json);
         }
     })
@@ -117,84 +121,77 @@ $(function obtainLocationInfoByDay() {
  * @returns {{}}
  */
 function column() {
-        var chart = {
-            type: 'column'
-        };
-        var title = {
-            text: null
-        };
-        var subtitle = {
-            text: 'Source: phicomm-AI'
-        };
-        var xAxis = {
-            categories: null,
-            crosshair: true
-        };
-        var yAxis = {
-            min: 0,
-            title: {
-                text: '数量 (台)'
-            }
-        };
-        var tooltip = {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y}台 </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        };
-        var plotOptions = {
-            column: {
-                pointPadding: 0.1,
-                borderWidth: 0
-            }
-        };
-        var credits = {
-            enabled: false
-        };
-        var legend = {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 100,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-            shadow: true
-        };
-        var series= [{
-            name: 'S7新增使用量',
-            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            dataLabels: {
-                enabled: true
-            },
-            color: '#3ab539'
-        }];
+    var chart = {
+        type: 'column'
+    };
+    var title = {
+        text: null
+    };
+    var subtitle = {
+        text: 'Phicomm-AI'
+    };
+    var xAxis = {
+        categories: null,
+        crosshair: true
+    };
+    var yAxis = {
+        min: 0,
+        title: {
+            text: '数量 (台)'
+        }
+    };
+    var tooltip = {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y} </b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    };
+    var plotOptions = {
+        column: {
+            pointPadding: 0.1,
+            borderWidth: 0
+        }
+    };
+    var credits = {
+        enabled: false
+    };
+    var legend = {
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true
+    };
+    var series = [{
+        name: 'S7新增使用量',
+        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        dataLabels: {
+            enabled: true
+        },
+        color: '#3ab539'
+    }];
 
-        var json = {};
-        json.chart = chart;
-        json.title = title;
-        json.subtitle = subtitle;
-        json.tooltip = tooltip;
-        json.xAxis = xAxis;
-        json.yAxis = yAxis;
-        json.legend = legend;
-        json.series = series;
-        json.plotOptions = plotOptions;
-        json.credits = credits;
-        return json;
+    var json = {};
+    json.chart = chart;
+    json.title = title;
+    json.subtitle = subtitle;
+    json.tooltip = tooltip;
+    json.xAxis = xAxis;
+    json.yAxis = yAxis;
+    json.legend = legend;
+    json.series = series;
+    json.plotOptions = plotOptions;
+    json.credits = credits;
+    return json;
 
 
 }
 
 
-
 /**
  * 获取不同合作商激活的最近30天激活的K码数量
  */
-$(function obtainKKeyCount() {
+$(function () {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
@@ -213,102 +210,324 @@ $(function obtainKKeyCount() {
                 wanjia.push(rtValue.data[i]["wanjia"]);
 
             }
-            var json = drawChart();
-            json.title.text='S7K码新增激活量（最近30天）';
-            json.series[1].data=wanjia;
-            json.series[1].name='万家金服K码激活量';
-            json.series[0].data=lianbi;
-            json.series[0].name='联璧K码激活量';
-            json.xAxis.categories=dates;
-            $("#S7KKeysCountsChart1").highcharts(json);
+            var json1 = drawChart();
+            json1.title.text = 'S7K码新增激活量（最近30天）';
+            json1.series[1].data = wanjia;
+            json1.series[1].name = '万家金服K码激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            $("#S7KKeysCountsChart1").highcharts(json1);
         }
     })
 });
+
+/**
+ * 获取不同合作商激活的每个月激活的K码数量
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/ActivationCountMonth",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            let sum = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["month"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
+            }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
+            var json1 = column();
+            json1.title.text = 'S7K码新增激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            json1.series[0].type = 'spline';
+            json1.series[0].color = '#f72347';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                color: '#3ab539',
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'S7K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3", json2);
+        }
+    })
+});
+
+/**
+ * 激活量和使用量对比
+ */
+$(function () {
+    var S7UsageCountsEveryDay = {};
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/balance/statistic/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "mac"
+        },
+        async: false,
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            S7UsageCountsEveryDay = data;
+            console.log("data:" + data.data);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/ActivationAllCountDay",
+        dataType: "json",
+        data: {
+            "days": 30
+        },
+        async: false,
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let datesTemp = [];
+            let usageTemp = [];
+            let kKeysTemp = [];
+            let dates = [];
+            let usage = [];
+            let kKeys = [];
+            let usagePercentage = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                datesTemp.push(rtValue.data[i]["date"]);
+                kKeysTemp.push(rtValue.data[i]["counts"]);
+            }
+            console.info("datesTemp:\n" + datesTemp);
+            console.info("kKeysTemp:\n" + kKeysTemp);
+            for (let key in S7UsageCountsEveryDay.data) {
+                if (S7UsageCountsEveryDay.data.hasOwnProperty(key)) {
+                    dates.push(key);
+                    usageTemp.push(S7UsageCountsEveryDay.data[key]);
+                }
+            }
+            console.info("dates:\n" + dates);
+            console.info("usageTemp:\n" + usageTemp);
+            for (var k = 0; k < dates.length; k++) {
+                usage[k] = usageTemp[k];
+                for (var j = 0; j < datesTemp.length; j++) {
+                    if (dates[k] === datesTemp[j]) {
+                        kKeys[k] = kKeysTemp[j];
+                        if (usage[k] === 0 || kKeys === 0) {
+                            usagePercentage[k] = 0;
+                        } else {
+                            usagePercentage[k] = ((usage[k] / kKeys[k]) * 100).toFixed(3);
+                        }
+                        break;
+                    } else {
+                        kKeys[k] = 0;
+                        usagePercentage[k] = 0;
+                    }
+
+
+                }
+            }
+
+            var json1 = column();
+            json1.title.text = 'S7K码新增激活量与实际注册使用量对比';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = usage;
+            json1.series[0].name = 'S7注册使用量';
+            json1.series[0].type = 'column';
+            var chart = new Highcharts.Chart("S7KKeysCountsChart4", json1);
+            chart.addSeries({
+                data: kKeys, name: 'K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false
+                },
+                type: 'column'
+            });
+            chart.addAxis({ // Secondary yAxis
+                id: 'percentage',
+                title: {
+                    text: '使用量占比'
+                },
+                labels: {
+                    format: '{value}%'
+                },
+                opposite: true
+            });
+            chart.addSeries({
+                data: usagePercentage, name: '使用量占比',
+                dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    format: '{y}%'
+                },
+                yAxis: 'percentage',
+                type: 'spline',
+                tooltip: {
+                    valueSuffix: '%'
+                }
+            });
+        }
+    })
+});
+
+
 /**
  * 堆叠柱状图
  * @param chartId
  */
 function drawChart() {
     var chart = {
-        type: 'column',
-        showAxes:true
+        type: 'column'
     };
     var title = {
-        text: 'K码激活'
-    };
-    var subtitle = {
-        text: 'Phicomm-AI'
+        text: '堆叠柱形图'
     };
     var xAxis = {
-        categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-        title: {
-            text: null
-        }
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
     };
     var yAxis = {
         min: 0,
-        labels: {
-            overflow: 'justify'
+        title: {
+            text: 'S7K码激活数量(台)'
         },
-        title:{
-            text: '数量 (台)'
-        }
-    };
-    var tooltip = {
-        valueSuffix: ' 台'
-    };
-    var plotOptions = {
-        bar: {
-            dataLabels: {
-                enabled: true
-            }
-        },
-        series: {
-            stacking: 'normal'
+        stackLabels: {
+            style: {
+                fontWeight: 'bold',
+                color: 'black'
+            },
+            enabled: true,
+            allowOverlap: true
         }
     };
     var legend = {
-        layout: 'horizon',
-        align: 'right',
-        verticalAlign: 'top',
-        x: -40,
-        y: 100,
-        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
         borderWidth: 1,
-        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-        shadow: true
+        shadow: false
+    };
+    var tooltip = {
+        formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                '总激活量: ' + this.point.stackTotal;
+        }
+    };
+    var plotOptions = {
+        column: {
+            stacking: 'normal'
+        }
     };
     var credits = {
         enabled: false
     };
-
-    var series= [{
-        name: 'Year 1800',
-        data: [107, 31, 635, 203, 2],
-        dataLabels: {
-            enabled: true
-        },
-        color: '#f72347'
-    }, {
-        name: 'Year 1900',
-        data: [133, 156, 947, 408, 6],
-        dataLabels: {
-            enabled: true
-        },
-        color: '#3ab539'
-    }
-    ];
+    var series = [
+        {
+            name: 'Jane',
+            data: [2, 2, 3, 2, 1],
+            color: '#f72347',
+            dataLabels: {
+                style: {
+                    fontWeight: 'bold',
+                    color: 'black'
+                },
+                enabled: true,
+                shadow: false
+            }
+        }, {
+            color: '#3ab539',
+            dataLabels: {
+                style: {
+                    fontWeight: 'bold',
+                    color: 'black'
+                },
+                enabled: true,
+                shadow: false
+            }
+        }];
 
     var json = {};
     json.chart = chart;
     json.title = title;
-    json.subtitle = subtitle;
-    json.tooltip = tooltip;
     json.xAxis = xAxis;
     json.yAxis = yAxis;
-    json.series = series;
-    json.plotOptions = plotOptions;
     json.legend = legend;
+    json.tooltip = tooltip;
+    json.plotOptions = plotOptions;
     json.credits = credits;
+    json.series = series;
     return json;
+}
+
+/**
+ * 读取输入的激活数量统计数据
+ */
+function addedKKeys() {
+    var date = document.getElementById("activationDate").value;
+    var lianbi = document.getElementById("lianbi").value;
+    var wanjia = document.getElementById("wanjia").value;
+    if (lianbi === "0" && wanjia === "0") {
+        return alert("数量不应该是0");
+    }
+    console.log("date:" + date);
+    console.log("lianbi = " + lianbi + ",wanjia=" + wanjia);
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/addActivationData",
+        dataType: "json",
+        data: {
+            "date": date,
+            "lianbi": lianbi,
+            "wanjia": wanjia
+
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function () {
+            document.getElementById("lianbi").value = 0;
+            document.getElementById("wanjia").value = 0;
+            return alert("数据存储成功");
+        }
+    });
+}
+
+/**
+ * 获取所选日期的报告
+ */
+function getReport() {
+    var date = document.getElementById("reportDate").value;
+    var eleDate = document.getElementsByName("selectedDate");
+    for (var i=0; i< eleDate.length;i++){
+        eleDate[i].innerHTML=date;
+        console.log(i+document.getElementsByName("selectedDate")[i].value);
+    }
 }
