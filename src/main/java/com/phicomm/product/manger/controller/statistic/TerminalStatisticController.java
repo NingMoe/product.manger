@@ -1,5 +1,6 @@
 package com.phicomm.product.manger.controller.statistic;
 
+import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.PlatformNotExistException;
 import com.phicomm.product.manger.exception.TerminalStatisticTypeNotSupportException;
@@ -76,11 +77,12 @@ public class TerminalStatisticController {
             @ApiResponse(code = 27, message = "分析类型不支持", response = Response.class)
     })
     @ApiOperation("获取某个平台、某个数据类型的线图数据")
+    @FunctionPoint("common")
     @ResponseBody
-    public Response<Map<String, List<Integer>>> obtainLineChartData(@RequestBody PeriodWithPlatformEntity entity)
+    public Response<List<Map<String, Object>>> obtainLineChartData(@RequestBody PeriodWithPlatformEntity entity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
-        Map<String, List<Integer>> result = terminalStatisticService.obtainLineChartData(entity);
-        return new Response<Map<String, List<Integer>>>().setData(result);
+        List<Map<String, Object>> result = terminalStatisticService.obtainLineChartData(entity);
+        return new Response<List<Map<String, Object>>>().setData(result);
     }
 
     /**

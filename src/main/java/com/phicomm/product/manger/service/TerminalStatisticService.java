@@ -74,7 +74,7 @@ public class TerminalStatisticService {
      * @throws PlatformNotExistException                平台不支持
      * @throws DataFormatException                      数据格式错误
      */
-    public Map<String, List<Integer>> obtainLineChartData(PeriodWithPlatformEntity periodWithPlatformEntity)
+    public List<Map<String, Object>> obtainLineChartData(PeriodWithPlatformEntity periodWithPlatformEntity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
         checkTimePeriodRequest(periodWithPlatformEntity);
         List<ResultWithDataTime> monthDatas = terminalStatisticMapper.obtainTerminalLineChartData(periodWithPlatformEntity);
@@ -88,20 +88,25 @@ public class TerminalStatisticService {
      * @param entity    起始时间
      * @return 格式化好的时间
      */
-    private Map<String, List<Integer>> formatData(List<ResultWithDataTime> dataTimes, PeriodWithPlatformEntity entity) {
+    private List<Map<String, Object>> formatData(List<ResultWithDataTime> dataTimes, PeriodWithPlatformEntity entity) {
         if (dataTimes == null || dataTimes.isEmpty()) {
-            return Maps.newHashMap();
+            return Lists.newLinkedList();
         }
         Map<String, List<ResultWithDataTime>> result = dataTimes.stream()
                 .collect(Collectors.groupingBy(ResultWithDataTime::getCompareObject));
         Map<String, List<Integer>> resultMap = Maps.newHashMap();
         Date startTime = entity.getStartTime();
         Date endTime = entity.getEndTime();
+        List<Map<String, Object>> resultList = Lists.newArrayList();
         result.forEach((s, resultWithDataTimes) -> {
+            Map<String, Object> item = Maps.newHashMap();
             List<Integer> chartData = getChartData(resultWithDataTimes, startTime, endTime);
-            resultMap.put(s, chartData);
+            item.put("data", chartData);
+            item.put("name", s);
+            resultList.add(item);
         });
-        return resultMap;
+        logger.info(resultList);
+        return resultList;
     }
 
     /**

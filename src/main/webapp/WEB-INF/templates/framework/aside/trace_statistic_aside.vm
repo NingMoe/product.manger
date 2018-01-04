@@ -9,7 +9,7 @@
     </a>
     <ul class="treeview-menu" id="balance-trace-menu-node">
         <li id="user-activity-trace-node"><a href="$baseUrl/balance/trace/user/activity"><i class="fa fa-meh-o"></i> 用户活跃度</a></li>
-        <li><a href="#"><i class="fa fa-bar-chart"></i> XXXX</a></li>
+        <li id="terminal-activity-line-chart"><a href="$baseUrl/balance/terminal/activity/line/chart"><i class="fa fa-bar-chart"></i>设备活跃度</a></li>
         <li><a href="#"><i class="fa fa-html5"></i> XXXX</a></li>
     </ul>
 </li>
