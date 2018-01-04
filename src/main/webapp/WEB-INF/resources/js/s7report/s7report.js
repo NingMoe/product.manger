@@ -1,4 +1,5 @@
 /**
+ * @author yafei.hou
  * Created by yafei.hou on 2017/12/27.
  */
 $(document).ready(function () {
@@ -38,6 +39,7 @@ $(function obtainMacInfoByDay() {
             jsons.title.text = 'S7体脂称每天新增使用量(最近30天)';
             jsons.series[0].data = dates;
             jsons.xAxis.categories = labels;
+            jsons.legend.enabled=false;
             $("#S7UsageCountschart1").highcharts(jsons);
         }
     })
@@ -73,6 +75,7 @@ $(function obtainMacYearData() {
             json.title.text = 'S7体脂称每月新增使用量';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
+            json.legend.enabled=false;
             $("#S7UsageCountschart2").highcharts(json);
         }
     })
@@ -107,6 +110,7 @@ $(function obtainLocationInfoByDay() {
             json.title.text = 'S7体脂称各地区新增使用量（最近30天）';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
+            json.legend.enabled=false;
             $("#S7SalesLocationchart3").highcharts(json);
         }
     })
@@ -514,4 +518,16 @@ function addedKKeys() {
             return alert("数据存储成功");
         }
     });
+}
+
+/**
+ * 获取所选日期的报告
+ */
+function getReport() {
+    var date = document.getElementById("reportDate").value;
+    var eleDate = document.getElementsByName("selectedDate");
+    for (var i=0; i< eleDate.length;i++){
+        eleDate[i].innerHTML=date;
+        console.log(i+document.getElementsByName("selectedDate")[i].value);
+    }
 }
