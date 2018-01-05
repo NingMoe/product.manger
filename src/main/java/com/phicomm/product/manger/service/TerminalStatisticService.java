@@ -1,7 +1,6 @@
 package com.phicomm.product.manger.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.TerminalStatisticMapper;
@@ -25,7 +24,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
