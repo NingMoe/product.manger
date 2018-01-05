@@ -69,16 +69,17 @@ public class TerminalTest {
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
-                .append("channel", "$equipmentTerminalInfo.appInfo.channel");
+                .append("compareObject", "$equipmentTerminalInfo.appInfo.channel");
         Document group = new Document("_id", new Document("platform", "$platform")
                 .append("createTime", "$createTime")
-                .append("channel", "$channel")
-                .append("count", new Document("$sum", 1)));
+                .append("compareObject", "$compareObject"))
+                .append("count", new Document("$sum", 1));
         AggregateIterable<Document> result = collection
                 .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
         result.forEach((Consumer<Document>) document -> {
             Map objectMap = JSON.toJavaObject(JSON.parseObject(document.toJson()), Map.class);
-            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"),TerminalCommonEntity.class);
+            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"), TerminalCommonEntity.class);
+            entity.setCount((Integer) objectMap.get("count"));
             System.out.println(JSONObject.toJSONString(entity));
         });
     }
