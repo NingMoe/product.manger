@@ -167,10 +167,13 @@ function column() {
         data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         dataLabels: {
             enabled: true
-        },
-        color: '#3ab539'
+        }
     }];
-
+    var navigation = {
+        buttonOptions: {
+            enabled: true
+        }
+    };
     var json = {};
     json.chart = chart;
     json.title = title;
@@ -182,6 +185,7 @@ function column() {
     json.series = series;
     json.plotOptions = plotOptions;
     json.credits = credits;
+    json.navigation=navigation;
     return json;
 
 
@@ -258,7 +262,6 @@ $(function () {
             json1.series[0].data = lianbi;
             json1.series[0].name = '联璧K码激活量';
             json1.series[0].type = 'spline';
-            json1.series[0].color = '#f72347';
             json1.plotOptions = plotOptions;
             var chart = new Highcharts.Chart("S7KKeysCountsChart2", json1);
             chart.addSeries({
@@ -267,7 +270,6 @@ $(function () {
                     shadow: false,
                     allowOverlap: true
                 },
-                color: '#3ab539',
                 type: 'spline'
             });
 
@@ -347,18 +349,17 @@ $(function () {
                         if (usage[k] === 0 || kKeys === 0) {
                             usagePercentage[k] = 0;
                         } else {
-                            usagePercentage[k] = ((usage[k] / kKeys[k]) * 100).toFixed(3);
+                            usagePercentage[k] = ((usage[k] / kKeys[k]) * 100);
                         }
                         break;
                     } else {
                         kKeys[k] = 0;
                         usagePercentage[k] = 0;
                     }
-
-
                 }
             }
-
+            console.log("---");
+            console.log(usagePercentage);
             var json1 = column();
             json1.title.text = 'S7K码新增激活量与实际注册使用量对比';
             json1.xAxis.categories = dates;
@@ -367,7 +368,8 @@ $(function () {
             json1.series[0].type = 'column';
             var chart = new Highcharts.Chart("S7KKeysCountsChart4", json1);
             chart.addSeries({
-                data: kKeys, name: 'K码激活量', dataLabels: {
+                data: kKeys, name: 'K码激活量',
+                dataLabels: {
                     enabled: true,
                     shadow: false
                 },
@@ -379,7 +381,7 @@ $(function () {
                     text: '使用量占比'
                 },
                 labels: {
-                    format: '{value}%'
+                    format: '{value:.3f}%'
                 },
                 opposite: true
             });
@@ -388,7 +390,7 @@ $(function () {
                 dataLabels: {
                     enabled: true,
                     shadow: false,
-                    format: '{y}%'
+                    format: '{y:.3f}%'
                 },
                 yAxis: 'percentage',
                 type: 'spline',
@@ -453,7 +455,6 @@ function drawChart() {
         {
             name: 'Jane',
             data: [2, 2, 3, 2, 1],
-            color: '#f72347',
             dataLabels: {
                 style: {
                     fontWeight: 'bold',
@@ -463,7 +464,6 @@ function drawChart() {
                 shadow: false
             }
         }, {
-            color: '#3ab539',
             dataLabels: {
                 style: {
                     fontWeight: 'bold',
@@ -473,7 +473,11 @@ function drawChart() {
                 shadow: false
             }
         }];
-
+    var navigation = {
+        buttonOptions: {
+            enabled: true
+        }
+    };
     var json = {};
     json.chart = chart;
     json.title = title;
@@ -484,6 +488,7 @@ function drawChart() {
     json.plotOptions = plotOptions;
     json.credits = credits;
     json.series = series;
+    json.navigation = navigation;
     return json;
 }
 
@@ -520,14 +525,101 @@ function addedKKeys() {
     });
 }
 
+
+
 /**
  * 获取所选日期的报告
  */
 function getReport() {
     var date = document.getElementById("reportDate").value;
-    var eleDate = document.getElementsByName("selectedDate");
+    updateElementsValuesByName("selectedDate",date);
+    //当前日期下的S7使用量和截止当前日期的总使用量
+    getThisDateUsage(date);
+    //当前日期下S7的激活量和截止当前日期的总使用量
+    getThisDateActivation(date);
+    //获取当前日期下的活跃用户数量
+    getThisDateActiveUser(date);
+
+}
+
+/**
+ * 用于通过元素名称修改元素名称
+ */
+function updateElementsValuesByName(elementNames,value){
+    var eleDate = document.getElementsByName(elementNames);
     for (var i=0; i< eleDate.length;i++){
-        eleDate[i].innerHTML=date;
-        console.log(i+document.getElementsByName("selectedDate")[i].value);
+        eleDate[i].innerHTML=value;
     }
+}
+
+/**
+ * 当前日期下的S7使用量和总使用量
+ * @param thisDate 日期 格式为yyyy-mm-dd
+ */
+function getThisDateUsage(thisDate) {
+
+}
+
+/**
+ * 当前日期下S7的激活量
+ * @param date 日期 格式为yyyy-mm-dd
+ */
+function getThisDateActivation(date) {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/ActivationCountByMates",
+        dataType: "json",
+        data: {
+            "date": date
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            updateElementsValuesByName("s7ActivationToday",data.data[0]["lianbi"]+data.data[0]["wanjia"]);
+            updateElementsValuesByName("s7LianbiKKeysCountToday",data.data[0]["lianbi"]);
+            updateElementsValuesByName("s7WanjiaKKeysCountToday",data.data[0]["wanjia"]);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/s7/reports/ActivationAllCountsEveryMate",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            updateElementsValuesByName("s7ActivationAll",data.data[0]["lianbi"]+data.data[0]["wanjia"]);
+            updateElementsValuesByName("s7LianbiKKeysCountAll",data.data[0]["lianbi"]);
+            updateElementsValuesByName("s7WanjiaKKeysCountAll",data.data[0]["wanjia"]);
+        }
+    });
+}
+/**
+ * 获取当前日期下的活跃用户数量
+ * @param date 日期 格式为yyyy-mm-dd
+ */
+function getThisDateActiveUser(date) {
+    let userId = null;
+    let baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/balance/trace/user/activity/pv",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+            "userId": userId,
+            "date": date
+        }),error: function (req, status, err) {
+            console.log('Failed reason: ' + err);
+        }, success: function (data) {
+            let result = data.data.data;
+            var activeUser = null;
+            console.log("--------result-------"+result);
+            for(var i=0;i<24;i++){
+                activeUser += result[1][i];
+            }
+            updateElementsValuesByName("s7ActiveToday",activeUser);
+        }
+    })
 }
