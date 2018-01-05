@@ -12,8 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.mapreduce.GroupBy;
 import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -68,6 +67,31 @@ public class TerminalTest {
                                 .as("count")
                 ), "equipment_terminal_detail_trace", BasicDBObject.class);
         System.out.println(JSON.toJSONString(basicDBObjects));
+    }
+
+    /**
+     * 尝试直接将timestamp在这个使用方法中转为固定格式时间失败
+     */
+    @Test
+    @SuppressWarnings("all")
+    public void projectTest() {
+        ProjectionOperation projectionOperation = Aggregation.project()
+                .andExpression("equipmentTerminalInfo.systemInfo.platform").as("platform")
+                .andExpression("equipmentTerminalInfo.appInfo.channel").as("$compareObject")
+                .andExpression("createDate").as("createTime");
+        GroupOperation groupOperation = Aggregation
+                .group("platform", "$compareObject", "createTime")
+                .count().as("count");
+        AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
+                .aggregate(TypedAggregation.newAggregation(
+                        projectionOperation,
+                        groupOperation
+                ), "equipment_terminal_detail_trace", BasicDBObject.class);
+        Iterator<BasicDBObject> iterator = basicDBObjects.iterator();
+        while (iterator.hasNext()) {
+            TerminalCommonEntity entity = JSON.toJavaObject((JSON) JSON.toJSON(iterator.next()), TerminalCommonEntity.class);
+            System.out.println(JSONObject.toJSONString(entity));
+        }
     }
 
     @Test
