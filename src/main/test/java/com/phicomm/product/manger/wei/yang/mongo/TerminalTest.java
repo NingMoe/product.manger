@@ -58,6 +58,9 @@ public class TerminalTest {
         }
     }
 
+    /**
+     * 失败的尝试，group的一定要是路径
+     */
     @Test
     public void aggregationTest() {
         AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
