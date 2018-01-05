@@ -55,6 +55,10 @@ public class TerminalTest {
             Map map = JSON.toJavaObject((JSON) JSON.toJSON(iterator.next()), Map.class);
             System.out.println(map);
         }
+    }
+
+    @Test
+    public void aggregationTest() {
         AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
                 .aggregate(Aggregation.newAggregation(
                         Aggregation.group("platform", "channel")
