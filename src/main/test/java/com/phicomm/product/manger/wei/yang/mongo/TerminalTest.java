@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
+ * 测试mongoTemplate
+ *
  * @author wei.yang on 2017/12/28
  */
 @RunWith(SpringJUnit4ClassRunner.class)
