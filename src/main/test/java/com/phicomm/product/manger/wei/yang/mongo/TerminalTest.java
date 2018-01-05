@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
+ * 测试mongoTemplate
+ *
  * @author wei.yang on 2017/12/28
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,6 +40,7 @@ public class TerminalTest {
     private MongoTemplate mongoTemplate;
 
     @Test
+    @SuppressWarnings("all")
     public void test() {
         Criteria criteria = Criteria.where("createDate").lt("2017-12-29");
         GroupBy groupBy = GroupBy
@@ -54,6 +57,10 @@ public class TerminalTest {
             Map map = JSON.toJavaObject((JSON) JSON.toJSON(iterator.next()), Map.class);
             System.out.println(map);
         }
+    }
+
+    @Test
+    public void aggregationTest() {
         AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
                 .aggregate(Aggregation.newAggregation(
                         Aggregation.group("platform", "channel")
@@ -69,16 +76,17 @@ public class TerminalTest {
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
-                .append("channel", "$equipmentTerminalInfo.appInfo.channel");
+                .append("compareObject", "$equipmentTerminalInfo.appInfo.channel");
         Document group = new Document("_id", new Document("platform", "$platform")
                 .append("createTime", "$createTime")
-                .append("channel", "$channel")
-                .append("count", new Document("$sum", 1)));
+                .append("compareObject", "$compareObject"))
+                .append("count", new Document("$sum", 1));
         AggregateIterable<Document> result = collection
                 .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
         result.forEach((Consumer<Document>) document -> {
             Map objectMap = JSON.toJavaObject(JSON.parseObject(document.toJson()), Map.class);
-            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"),TerminalCommonEntity.class);
+            TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"), TerminalCommonEntity.class);
+            entity.setCount((Integer) objectMap.get("count"));
             System.out.println(JSONObject.toJSONString(entity));
         });
     }
