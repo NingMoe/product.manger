@@ -38,6 +38,7 @@ public class TerminalTest {
     private MongoTemplate mongoTemplate;
 
     @Test
+    @SuppressWarnings("all")
     public void test() {
         Criteria criteria = Criteria.where("createDate").lt("2017-12-29");
         GroupBy groupBy = GroupBy
