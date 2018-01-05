@@ -94,6 +94,25 @@ public class TerminalTest {
         }
     }
 
+    /**
+     * 文档构建
+        db.equipment_terminal_detail_trace.aggregate(
+         {
+         $project : {
+         _id : "$equipmentTerminalInfo.userId",
+         date :  {$dateToString : {format:'%Y-%m-%d',date:{$add: [new Date(0), "$timestamp"]}}},
+         network:'$equipmentTerminalInfo.systemInfo.networkType',
+         platform:'$equipmentTerminalInfo.systemInfo.platform'
+         }
+         },
+         {
+         $group :{
+         _id:{userId:'$platform',network:'$network',date:'$date'},
+         count: {'$sum': 1}
+         }
+         }
+         );
+     */
     @Test
     public void docTest() {
         MongoCollection<Document> collection = mongoTemplate.getCollection("equipment_terminal_detail_trace");
