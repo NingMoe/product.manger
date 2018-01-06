@@ -81,7 +81,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     public List<TerminalCommonEntity> historyKeyGroup(String key) throws ParseException {
         MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
-        Document match = new Document("timestamp", new Document("$lt", obtainYesterdayTimestamp()));
+        Document match = new Document("timestamp", new Document("$lte", obtainYesterdayTimestamp()));
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", String.format("$%s", key));
