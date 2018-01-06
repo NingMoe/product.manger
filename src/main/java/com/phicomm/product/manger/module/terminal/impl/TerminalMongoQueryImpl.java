@@ -81,7 +81,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     public List<TerminalCommonEntity> historyKeyGroup(String key) throws ParseException {
         MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
-        Document match = new Document("timestamp", new Document("$lte", obtainYesterdayTimestamp()));
+        Document match = new Document("timestamp", new Document("$lte", obtainMidNightTimestamp()));
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", String.format("$%s", key));
@@ -200,8 +200,8 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return 昨天
      * @throws ParseException 解析错误
      */
-    private long obtainYesterdayTimestamp() throws ParseException {
-        LocalDateTime yesterday = LocalDateTime.now(ZoneId.of("UTC+8")).minusDays(1);
+    private long obtainMidNightTimestamp() throws ParseException {
+        LocalDateTime yesterday = LocalDateTime.now(ZoneId.of("UTC+8"));
         return new SimpleDateFormat("yyyy-MM-dd").parse(yesterday.toString()).getTime();
     }
 }
