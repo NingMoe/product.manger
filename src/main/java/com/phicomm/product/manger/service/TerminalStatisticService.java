@@ -177,7 +177,7 @@ public class TerminalStatisticService {
     /**
      * 数据同步：同步数据
      */
-    public void syncAllData() {
+    public void syncAllData() throws InterruptedException {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyGroup(dataTypeEnum.getMongoKey());
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
@@ -185,13 +185,14 @@ public class TerminalStatisticService {
             }
             logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+            Thread.sleep(60 * 1000);
         }
     }
 
     /**
      * 数据同步：同步数据
      */
-    public void syncAllDataV2() {
+    public void syncAllDataV2() throws InterruptedException {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyKeyGroup(dataTypeEnum.getMongoKey());
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
@@ -199,13 +200,14 @@ public class TerminalStatisticService {
             }
             logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+            Thread.sleep(60 * 1000);
         }
     }
 
     /**
      * 数据同步：同步昨天一天的数据
      */
-    public void syncYesterdayData() {
+    public void syncYesterdayData() throws InterruptedException {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.yesterdayGroup(dataTypeEnum.getMongoKey());
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {
@@ -213,6 +215,7 @@ public class TerminalStatisticService {
             }
             logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
+            Thread.sleep(60 * 1000);
         }
     }
 

@@ -27,6 +27,5 @@ public class TerminalDetailCron {
     @Scheduled(cron = "0 0 4 * * ?")
     public void syncTerminalInfo() throws InterruptedException {
         terminalStatisticService.syncYesterdayData();
-        Thread.sleep(5 * 60 * 1000);
     }
 }
