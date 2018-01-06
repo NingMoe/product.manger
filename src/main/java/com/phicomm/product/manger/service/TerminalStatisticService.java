@@ -215,7 +215,7 @@ public class TerminalStatisticService {
             }
             logger.info(JSONObject.toJSONString(terminalCommonEntities));
             terminalStatisticMapper.groupInsert(terminalCommonEntities, dataTypeEnum.getDataType());
-            Thread.sleep(5 * 60 * 1000);
+            Thread.sleep(60 * 1000);
         }
     }
 
