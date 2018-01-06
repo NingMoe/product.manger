@@ -17,7 +17,6 @@ $(function drawLineChart() {
     endTime.setDate(endTime.getDate() - 1);
     object.startTime = startTime.format("yyyy-MM-dd");
     object.endTime = endTime.format("yyyy-MM-dd");
-    startTime.setDate(startTime.getDate() + 1);
     networkRequest(object, "appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
@@ -36,7 +35,6 @@ $(function drawLineChart() {
     object.endTime = endTime.format("yyyy-MM-dd");
     object.startTime = startTime.format("yyyy-MM-dd");
     object.endTime = endTime.format("yyyy-MM-dd");
-    startTime.setDate(startTime.getDate() + 1);
     networkRequest(object, "appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
