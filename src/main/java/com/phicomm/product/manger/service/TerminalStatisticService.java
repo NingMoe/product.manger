@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -191,7 +192,7 @@ public class TerminalStatisticService {
     /**
      * 数据同步：同步数据
      */
-    public void syncAllDataV2() {
+    public void syncAllDataV2() throws ParseException {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyKeyGroup(dataTypeEnum.getMongoKey());
             if (terminalCommonEntities == null || terminalCommonEntities.isEmpty()) {

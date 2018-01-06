@@ -19,6 +19,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -75,9 +77,10 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return 格式化好的数据
      */
     @Override
-    public List<TerminalCommonEntity> historyKeyGroup(String key) {
+    public List<TerminalCommonEntity> historyKeyGroup(String key) throws ParseException {
         MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
+        Document match = new Document("timestamp", new Document("$lt", onbtainYesterday()));
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", String.format("$%s", key));
@@ -86,7 +89,8 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
                 .append("compareObject", "$compareObject"))
                 .append("count", new Document("$sum", 1));
         AggregateIterable<Document> result = collection
-                .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$project", project),
+                        new Document("$group", group)));
         return parseDocData(result);
     }
 
@@ -187,5 +191,16 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     private String obtainYesterday() {
         LocalDateTime dateTime = LocalDateTime.now().minusDays(1);
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    /**
+     * 获取昨天
+     *
+     * @return 昨天
+     * @throws ParseException 解析错误
+     */
+    private long onbtainYesterday() throws ParseException {
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        return new SimpleDateFormat("yyyy-MM-dd").parse(yesterday.toString()).getTime();
     }
 }
