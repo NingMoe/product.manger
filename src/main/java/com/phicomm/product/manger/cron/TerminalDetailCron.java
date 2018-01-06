@@ -24,7 +24,7 @@ public class TerminalDetailCron {
      * 每次全部同步开销有点大，但按道理来说我只需要同步昨天的数据到数据库就行
      * 1点的时候同步数据
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 0 4 * * ?")
     public void syncTerminalInfo() throws InterruptedException {
         terminalStatisticService.syncYesterdayData();
         Thread.sleep(5 * 60 * 1000);
