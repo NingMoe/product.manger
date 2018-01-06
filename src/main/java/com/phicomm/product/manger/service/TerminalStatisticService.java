@@ -78,6 +78,7 @@ public class TerminalStatisticService {
     public List<Map<String, Object>> obtainLineChartData(PeriodWithPlatformEntity periodWithPlatformEntity)
             throws TerminalStatisticTypeNotSupportException, PlatformNotExistException, DataFormatException {
         checkTimePeriodRequest(periodWithPlatformEntity);
+        logger.info(JSONObject.toJSONString(periodWithPlatformEntity));
         List<ResultWithDataTime> monthDatas = terminalStatisticMapper.obtainTerminalLineChartData(periodWithPlatformEntity);
         return formatData(monthDatas, periodWithPlatformEntity);
     }
