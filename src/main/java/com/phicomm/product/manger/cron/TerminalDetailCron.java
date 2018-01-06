@@ -25,7 +25,8 @@ public class TerminalDetailCron {
      * 1点的时候同步数据
      */
     @Scheduled(cron = "0 0 1 * * ?")
-    public void syncTerminalInfo() {
+    public void syncTerminalInfo() throws InterruptedException {
         terminalStatisticService.syncYesterdayData();
+        Thread.sleep(5 * 60 * 1000);
     }
 }
