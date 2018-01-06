@@ -25,7 +25,7 @@ public class BpmStatisticCron {
     /**
      * 每天两点更新数据表
      */
-    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void startCron(){
         bpmMeasureStatisticService.cronTask();
     }
