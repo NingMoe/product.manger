@@ -20,6 +20,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -99,36 +104,38 @@ public class TerminalTest {
 
     /**
      * 文档构建
-        db.equipment_terminal_detail_trace.aggregate(
-         {
-         $project : {
-         _id : "$equipmentTerminalInfo.userId",
-         date :  {$dateToString : {format:'%Y-%m-%d',date:{$add: [new Date(0), "$timestamp"]}}},
-         network:'$equipmentTerminalInfo.systemInfo.networkType',
-         platform:'$equipmentTerminalInfo.systemInfo.platform'
-         }
-         },
-         {
-         $group :{
-         _id:{userId:'$platform',network:'$network',date:'$date'},
-         count: {'$sum': 1}
-         }
-         }
-         );
+     * db.equipment_terminal_detail_trace.aggregate(
+     * {
+     * $project : {
+     * _id : "$equipmentTerminalInfo.userId",
+     * date :  {$dateToString : {format:'%Y-%m-%d',date:{$add: [new Date(0), "$timestamp"]}}},
+     * network:'$equipmentTerminalInfo.systemInfo.networkType',
+     * platform:'$equipmentTerminalInfo.systemInfo.platform'
+     * }
+     * },
+     * {
+     * $group :{
+     * _id:{userId:'$platform',network:'$network',date:'$date'},
+     * count: {'$sum': 1}
+     * }
+     * }
+     * );
      */
     @Test
-    public void docTest() {
+    public void docTest() throws ParseException {
         MongoCollection<Document> collection = mongoTemplate.getCollection("equipment_terminal_detail_trace");
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", "$equipmentTerminalInfo.appInfo.channel");
+        Document match = new Document("timestamp", new Document("$lt", new SimpleDateFormat("yyyy-MM-dd").parse(yesterday.toString()).getTime()));
         Document group = new Document("_id", new Document("platform", "$platform")
                 .append("createTime", "$createTime")
                 .append("compareObject", "$compareObject"))
                 .append("count", new Document("$sum", 1));
         AggregateIterable<Document> result = collection
-                .aggregate(Arrays.asList(new Document("$project", project), new Document("$group", group)));
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$project", project), new Document("$group", group)));
         result.forEach((Consumer<Document>) document -> {
             Map objectMap = JSON.toJavaObject(JSON.parseObject(document.toJson()), Map.class);
             TerminalCommonEntity entity = JSON.toJavaObject((JSON) objectMap.get("_id"), TerminalCommonEntity.class);
