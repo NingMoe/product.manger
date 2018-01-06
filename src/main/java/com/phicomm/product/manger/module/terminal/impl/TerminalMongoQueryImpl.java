@@ -22,6 +22,7 @@ import org.springframework.util.Assert;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -80,7 +81,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
     public List<TerminalCommonEntity> historyKeyGroup(String key) throws ParseException {
         MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
-        Document match = new Document("timestamp", new Document("$lt", onbtainYesterday()));
+        Document match = new Document("timestamp", new Document("$lt", obtainYesterdayTimestamp()));
         Document project = new Document("createTime", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", String.format("$%s", key));
@@ -189,7 +190,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return 字符串时间
      */
     private String obtainYesterday() {
-        LocalDateTime dateTime = LocalDateTime.now().minusDays(1);
+        LocalDateTime dateTime = LocalDateTime.now(ZoneId.of("UTC+8")).minusDays(1);
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
@@ -199,8 +200,8 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return 昨天
      * @throws ParseException 解析错误
      */
-    private long onbtainYesterday() throws ParseException {
-        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+    private long obtainYesterdayTimestamp() throws ParseException {
+        LocalDateTime yesterday = LocalDateTime.now(ZoneId.of("UTC+8")).minusDays(1);
         return new SimpleDateFormat("yyyy-MM-dd").parse(yesterday.toString()).getTime();
     }
 }

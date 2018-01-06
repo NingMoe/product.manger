@@ -11,8 +11,9 @@ $(function drawLineChart() {
     let object = {};
     object.platform = 'android';
     object.dateType = 'app_version';
-    let startTime = new Date();
-    let endTime = new Date();
+    let baseTime = new Date().getTimezoneOffset() * 60000 + new Date();
+    let startTime = baseTime;
+    let endTime = baseTime;
     startTime.setDate(startTime.getDate() - 31);
     endTime.setDate(endTime.getDate() - 1);
     object.startTime = startTime;
