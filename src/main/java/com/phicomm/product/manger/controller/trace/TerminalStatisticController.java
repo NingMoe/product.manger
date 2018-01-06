@@ -149,7 +149,7 @@ public class TerminalStatisticController {
     @ApiOperation("获取设备与渠道信息")
     @FunctionPoint("common")
     @ResponseBody
-    public CommonResponse syncHistoryData() throws InterruptedException {
+    public CommonResponse syncHistoryData() {
         terminalStatisticService.syncAllData();
         return CommonResponse.ok();
     }
@@ -167,7 +167,7 @@ public class TerminalStatisticController {
     @ApiOperation("获取设备与渠道信息")
     @FunctionPoint("common")
     @ResponseBody
-    public CommonResponse syncHistoryDataV2() throws InterruptedException {
+    public CommonResponse syncHistoryDataV2() {
         terminalStatisticService.syncAllDataV2();
         return CommonResponse.ok();
     }
@@ -185,7 +185,7 @@ public class TerminalStatisticController {
     @ApiOperation("获取设备与渠道信息")
     @FunctionPoint("common")
     @ResponseBody
-    public CommonResponse syncYesterdayData() throws InterruptedException {
+    public CommonResponse syncYesterdayData() {
         terminalStatisticService.syncYesterdayData();
         return CommonResponse.ok();
     }
