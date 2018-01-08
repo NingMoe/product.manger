@@ -405,7 +405,6 @@ $(function () {
 
 /**
  * 堆叠柱状图
- * @param chartId
  */
 function drawChart() {
     var chart = {
@@ -575,7 +574,7 @@ function getThisDateActivation(date) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            if (data.data != null) {
+            if (data.data !== null) {
                 updateElementsValuesByName("s7ActivationToday", data.data[0]["lianbi"] + data.data[0]["wanjia"]);
                 updateElementsValuesByName("s7LianbiKKeysCountToday", data.data[0]["lianbi"]);
                 updateElementsValuesByName("s7WanjiaKKeysCountToday", data.data[0]["wanjia"]);
