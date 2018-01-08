@@ -395,7 +395,8 @@ $(function () {
                 yAxis: 'percentage',
                 type: 'spline',
                 tooltip: {
-                    valueSuffix: '%'
+                    pointFormat: '<br>{series.name}: {point.y:.3f}%'
+
                 }
             });
         }
