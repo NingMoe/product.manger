@@ -25,7 +25,7 @@ public class UserAgeSectionCron {
     /**
      * 更新数据库内容:12小时更新一次
      */
-    @Scheduled(cron = "0 0 */12 * * ?")
+    @Scheduled(cron = "0 0 3 * * ?")
     public void update() {
         userAgeSectionService.update();
     }
