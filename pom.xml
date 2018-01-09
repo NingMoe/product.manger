@@ -388,6 +388,12 @@
             <artifactId>annotations</artifactId>
             <version>15.0</version>
         </dependency>
+        <!-- mongodb java driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.6.1</version>
+        </dependency>
     </dependencies>
 
     <build>
