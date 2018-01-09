@@ -15,9 +15,8 @@ $(function drawLineChart() {
     let endTime = new Date();
     startTime.setDate(startTime.getDate() - 31);
     endTime.setDate(endTime.getDate() - 1);
-    object.startTime = startTime;
-    object.endTime = endTime;
-    console.info(JSON.stringify(object));
+    object.startTime = startTime.format("yyyy-MM-dd");
+    object.endTime = endTime.format("yyyy-MM-dd");
     networkRequest(object, "appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
@@ -32,9 +31,10 @@ $(function drawLineChart() {
     let endTime = new Date();
     startTime.setDate(startTime.getDate() - 31);
     endTime.setDate(endTime.getDate() - 1);
-    object.startTime = startTime;
-    object.endTime = endTime;
-    console.info(JSON.stringify(object));
+    object.startTime = startTime.format("yyyy-MM-dd");
+    object.endTime = endTime.format("yyyy-MM-dd");
+    object.startTime = startTime.format("yyyy-MM-dd");
+    object.endTime = endTime.format("yyyy-MM-dd");
     networkRequest(object, "appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
 });
 
@@ -64,6 +64,29 @@ function networkRequest(param, divId, title, subtitle, yTitle, date) {
         }
     })
 }
+
+/**
+ * 时间格式化，主要是date转json的时候出错，少了8小时，所以这里提前格式化一次
+ * @param fmt 时间格式
+ * @returns {*} 时间
+ * @constructor null
+ */
+Date.prototype.format = function (fmt) {
+    let o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (let k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
 
 /**
  * 只管画图
