@@ -18,17 +18,16 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
                         enabled: true
                     }
                 }
-            }
+            };
             break;
         case 'line':
-            console.info("line now");
             plotOptions = {
                 series: {
                     dataLabels: {
                         enabled: false
                     }
                 }
-            }
+            };
             break;
         default:
     }
@@ -146,9 +145,19 @@ function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, dat
     Highcharts.chart(divId, settings);
 }
 
-function drawOneIndexCatagoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data) {
+/**
+ * 制作单一指标图表
+ *
+ * @param chartType 图表类型，诸如"column", "line", "bar"
+ * @param divId 页面中指定的作图divId
+ * @param title 主标题
+ * @param subTitle 副标题
+ * @param yTitle y轴名称
+ * @param xCategories x轴坐标数组
+ * @param data 传递的数据，数据类型为{name:xxx, data:[]}
+ */
+function drawOneIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    console.info("xCategories = " + xCategories);
     settings.xAxis.type = "category";
     settings.xAxis.categories = xCategories;
     Highcharts.chart(divId, settings);
@@ -176,9 +185,7 @@ function drawMultiIndexDaysChart(chartType, divId, title, subTitle, yTitle, data
     };
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
-    console.info("enable = " + enableLegendRight);
     if (enableLegendRight == 1) {
-        console.info("in enableLegendRight");
         settings.legend.layout = "vertical";
         settings.legend.align = "right";
         settings.legend.verticalAlign = "middle";
@@ -209,7 +216,6 @@ function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, da
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     if (enableLegendRight == 1) {
-        console.info("in enableLegendRight");
         settings.legend.layout = "vertical";
         settings.legend.align = "right";
         settings.legend.verticalAlign = "middle";
@@ -240,7 +246,6 @@ function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, dat
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     if (enableLegendRight == 1) {
-        console.info("in enableLegendRight");
         settings.legend.layout = "vertical";
         settings.legend.align = "right";
         settings.legend.verticalAlign = "middle";
@@ -264,7 +269,6 @@ function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, d
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
     if (enableLegendRight == 1) {
-        console.info("in enableLegendRight");
         settings.legend.layout = "vertical";
         settings.legend.align = "right";
         settings.legend.verticalAlign = "middle";
@@ -272,4 +276,29 @@ function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, d
     Highcharts.chart(divId, settings);
 }
 
-
+/**
+ *
+ * 制作多指标categories图表
+ *
+ * @param chartType 图表的类型，诸如"column", "line", "bar"
+ * @param divId 页面中指定的作图divId
+ * @param title 主标题
+ * @param subTitle 副标题
+ * @param yTitle y轴名称
+ * @param xCategories x轴坐标数组
+ * @param data 传递的数据，数据类型为[{name:xxx,data:[]},{name:xxx,data:[]}...,{name:xxx,data:[]}]
+ * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
+ */
+function drawMultiIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data, enableLegendRight) {
+    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    settings.legend.enabled = true;
+    settings.xAxis.type = "linear";
+    if (enableLegendRight == 1) {
+        settings.legend.layout = "vertical";
+        settings.legend.align = "right";
+        settings.legend.verticalAlign = "middle";
+    }
+    settings.xAxis.type = "category";
+    settings.xAxis.categories = xCategories;
+    Highcharts.chart(divId, settings);
+}
