@@ -12,31 +12,25 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
     var plotOptions = {};
     switch (chartType) {
         case 'column':
-            plotOptions: {
+            plotOptions = {
                 series: {
                     dataLabels: {
-                        enabled:true
+                        enabled: true
                     }
                 }
             }
             break;
         case 'line':
-            plotOptions: {
+            console.info("line now");
+            plotOptions = {
                 series: {
                     dataLabels: {
-                        enabled:false
+                        enabled: false
                     }
                 }
             }
             break;
         default:
-            plotOptions: {
-                series: {
-                    dataLabels: {
-                        enabled:false
-                    }
-                }
-            }
     }
     var setting = {
         chart: {
@@ -49,7 +43,8 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
             text: subTitle
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            categories: null
         },
         yAxis: {
             title: {
@@ -105,10 +100,7 @@ function drawOneIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data
     var plotOptions = {
         series: {
             pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth()),
-            pointIntervalUnit: 'month',
-            dataLabels: {
-                enabled: true
-            }
+            pointIntervalUnit: 'month'
         }
     };
     settings.plotOptions = plotOptions;
@@ -131,10 +123,7 @@ function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data,
     var plotOptions = {
         series: {
             pointStart: Date.UTC(startDate.getFullYear()),
-            pointIntervalUnit: 'year',
-            dataLabels: {
-                enabled: true
-            }
+            pointIntervalUnit: 'year'
         }
     };
     settings.plotOptions = plotOptions;
@@ -153,15 +142,15 @@ function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data,
  */
 function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = {
-        series: {
-            dataLabels: {
-                enabled: true
-            }
-        }
-    };
-    settings.plotOptions = plotOptions;
     settings.xAxis.type = "linear";
+    Highcharts.chart(divId, settings);
+}
+
+function drawOneIndexCatagoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data) {
+    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    console.info("xCategories = " + xCategories);
+    settings.xAxis.type = "category";
+    settings.xAxis.categories = xCategories;
     Highcharts.chart(divId, settings);
 }
 
@@ -214,10 +203,7 @@ function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, da
     var plotOptions = {
         series: {
             pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth()),
-            pointIntervalUnit: 'month',
-            dataLabels: {
-                enabled: true
-            }
+            pointIntervalUnit: 'month'
         }
     };
     settings.plotOptions = plotOptions;
@@ -248,10 +234,7 @@ function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, dat
     var plotOptions = {
         series: {
             pointStart: Date.UTC(startDate.getFullYear()),
-            pointIntervalUnit: 'year',
-            dataLabels: {
-                enabled: true
-            }
+            pointIntervalUnit: 'year'
         }
     };
     settings.plotOptions = plotOptions;
@@ -278,14 +261,6 @@ function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, dat
  */
 function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = {
-        series: {
-            dataLabels: {
-                enabled: true
-            }
-        }
-    };
-    settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
     if (enableLegendRight == 1) {
