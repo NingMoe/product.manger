@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -167,7 +168,7 @@ public class TerminalStatisticController {
     @ApiOperation("获取设备与渠道信息")
     @FunctionPoint("common")
     @ResponseBody
-    public CommonResponse syncHistoryDataV2() {
+    public CommonResponse syncHistoryDataV2() throws ParseException {
         terminalStatisticService.syncAllDataV2();
         return CommonResponse.ok();
     }

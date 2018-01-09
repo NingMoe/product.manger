@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
 import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public interface MongoQueryFactory {
      * @param key key
      * @return 数据
      */
-    List<TerminalCommonEntity> historyKeyGroup(String key);
+    List<TerminalCommonEntity> historyKeyGroup(String key) throws ParseException;
 
     /**
      * 查询，不分组
