@@ -111,6 +111,7 @@ function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, dat
     let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
     settings.plotOptions = dataLablesEnableSetting(chartType);
     settings.xAxis.type = "linear";
+    settings.xAxis.tickInterval = 1;
     Highcharts.chart(divId, settings);
 }
 
@@ -232,6 +233,7 @@ function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, d
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
+    settings.xAxis.tickInterval = 1;
     if (enableLegendRight == 1) {
         settings.legend.layout = "vertical";
         settings.legend.align = "right";
