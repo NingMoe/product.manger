@@ -77,6 +77,11 @@ $(function obtainMacYearData() {
             json.xAxis.categories = labels;
             json.legend.enabled = false;
             $("#S7UsageCountschart2").highcharts(json);
+            var sum =0;
+            for (var i=0;i<datas.length;i++){
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll",sum);
         }
     })
 });
@@ -542,7 +547,7 @@ function getReport() {
 }
 
 /**
- * 用于通过元素名称修改元素名称
+ * 用于通过元素名称修改元素内容
  */
 function updateElementsValuesByName(elementNames, value) {
     var eleDate = document.getElementsByName(elementNames);
@@ -583,6 +588,11 @@ function getThisDateActivation(date) {
         }
     });
 
+
+}
+
+$(function getUsageCount() {
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/s7/reports/ActivationAllCountsEveryMate",
@@ -595,7 +605,8 @@ function getThisDateActivation(date) {
             updateElementsValuesByName("s7WanjiaKKeysCountAll", data.data[0]["wanjia"]);
         }
     });
-}
+});
+
 /**
  * 获取当前日期下的活跃用户数量
  * @param date 日期 格式为yyyy-mm-dd
@@ -615,7 +626,7 @@ function getThisDateActiveUser(date) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
             let result = data.data.data;
-            var activeUser = null;
+            var activeUser = 0;
             console.log("--------result-------" + result);
             for (var i = 0; i < 24; i++) {
                 activeUser += result[1][i];
