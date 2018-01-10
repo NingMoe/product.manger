@@ -36,7 +36,7 @@ function gettodayDate() {
  * 确保数字输入框中输入负数
  */
 function checkNum(name, val) {
-    document.getElementById(name).value = (val <= 0 || val == null ? 0 : val);
+    document.getElementById(name).value = (val <= 0 || val === null ? 0 : val);
     console.log(val);
 }
 
@@ -46,12 +46,10 @@ var yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 var element1 = document.getElementById('activationDate');
 element1.value = yesterday.format("yyyy-MM-dd");
-var element2 = document.getElementById('activeuserDate');
-element2.value = yesterday.format("yyyy-MM-dd");
 
 var beforeYesterday = new Date();
 beforeYesterday.setDate(beforeYesterday.getDate() - 2);
-document.getElementById("reportDate").value = beforeYesterday.format("yyyy-MM-dd");
+document.getElementById('reportDate').value = beforeYesterday.format("yyyy-MM-dd");
 
-console.log("----选择的日期--begin-" + gettodayDate());
+console.log("----选择的日期--begin-" + document.getElementById("reportDate").value);
 
