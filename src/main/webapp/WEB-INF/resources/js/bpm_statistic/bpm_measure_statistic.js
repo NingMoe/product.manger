@@ -17,14 +17,18 @@ $(function getMeasureStatisticLast15Day() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureDayChart").get(0).getContext("2d")));
+            let series = {name: "血压计测量数据", data: datas};
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 12);
+            drawOneIndexDaysChart("column", "bpm-measure-day-chart", "血压计测量数据统计", "(最近12天)",
+                null, series, startDate);
         }
     })
 });
@@ -43,14 +47,18 @@ $(function getMeasureStatisticLast12Month() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureMonthChart").get(0).getContext("2d")));
+            let series = {name: "血压计测量数据", data: datas};
+            let startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - 11);
+            drawOneIndexMonthsChart("column", "bpm-measure-month-chart", "血压计测量数据", "(最近12个月)",
+                null, series, startDate);
         }
     })
 });
@@ -69,16 +77,18 @@ $(function getMeasureStatisticHour() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            let labels = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
-            let dates = [];
+            let labels = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+            let datas = [];
             //for (var key in data.data) {
-            for (var i=0;i<24;i++ ) {
+            for (var i = 0; i < 24; i++) {
                 if (data.data.hasOwnProperty(labels[i])) {
                     //labels.push(key);
-                    dates.push(data.data[labels[i]]);
+                    datas.push(data.data[labels[i]]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureHourChart").get(0).getContext("2d")));
+            let series = {name: "24小时分布", data: datas};
+            drawOneIndex24HoursChart("column", "bpm-measure-hour-chart", "用户测量时间按小时分布", "(24小时)",
+                null, series);
         }
     })
 });
@@ -203,11 +213,10 @@ function measureTodayOrMonth() {
 }
 
 //开启定时
-$(function time()
-{
-    if(timeout4measureAll) return;
+$(function time() {
+    if (timeout4measureAll) return;
     measureAll();
     measureTodayOrMonth();
-    setTimeout(time,5000); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+    setTimeout(time, 5000); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
 });
 //----------------end---------------------------------------

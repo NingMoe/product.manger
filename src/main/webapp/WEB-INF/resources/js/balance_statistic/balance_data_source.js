@@ -28,13 +28,16 @@ $(function getBalanceElectrodeDisplay() {
                 claimData.push(rtValue.data[i]["locking"]);
                 lockingData.push(rtValue.data[i]["claim"]);
             }
-            console.info("rtValue.status = " + rtValue.status);
-            console.info("dates = " + dates.toString());
-            console.info("electrode0Counts = " + autoData.toString());
-            console.info("electrode4Counts = " + claimData.toString());
-            console.info("electrode8Counts = " + lockingData.toString());
-
-            drawBarChart(new Chart($("#balance_data_source").get(0).getContext("2d")), dates, autoData, claimData, lockingData);
+            let title = "体脂秤称量数据来源";
+            let subTitile = "最近10天数据来源";
+            let series = [
+                {name: "自动认领", data: autoData},
+                {name: "手动认领", data: claimData},
+                {name: "锁定上称", data: lockingData}
+            ];
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 10);
+            drawMultiIndexDaysChart("column", "balance-data-source", title, subTitile, null, series, startDate, 1);
         }
     });
 });
