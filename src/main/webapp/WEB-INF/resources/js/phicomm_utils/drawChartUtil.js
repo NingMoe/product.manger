@@ -9,28 +9,6 @@
  * @returns {{chart: {type: *}, title: {text: *}, subtitle: {text: *}, xAxis: {type: string}, yAxis: {title: {text: *}}, legend: {enabled: boolean}, series: *}}
  */
 function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
-    var plotOptions = {};
-    switch (chartType) {
-        case 'column':
-            plotOptions = {
-                series: {
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            };
-            break;
-        case 'line':
-            plotOptions = {
-                series: {
-                    dataLabels: {
-                        enabled: false
-                    }
-                }
-            };
-            break;
-        default:
-    }
     var setting = {
         chart: {
             type: chartType
@@ -54,7 +32,6 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
             enabled: false
         },
         series: data,
-        plotOptions: plotOptions
     };
     return setting;
 }
@@ -73,12 +50,9 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
  */
 function drawOneIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
-            pointIntervalUnit: 'day'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    plotOptions.series.pointIntervalUnit = 'day';
     settings.plotOptions = plotOptions;
     Highcharts.chart(divId, settings);
 }
@@ -96,12 +70,9 @@ function drawOneIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, 
  */
 function drawOneIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth()),
-            pointIntervalUnit: 'month'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth());
+    plotOptions.series.pointIntervalUnit = 'month';
     settings.plotOptions = plotOptions;
     Highcharts.chart(divId, settings);
 }
@@ -119,12 +90,9 @@ function drawOneIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data
  */
 function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear()),
-            pointIntervalUnit: 'year'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear());
+    plotOptions.series.pointIntervalUnit = 'year';
     settings.plotOptions = plotOptions;
     Highcharts.chart(divId, settings);
 }
@@ -141,6 +109,8 @@ function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data,
  */
 function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    var plotOptions = dataLablesEnableSetting(chartType);
+    settings.plotOptions = plotOptions;
     settings.xAxis.type = "linear";
     Highcharts.chart(divId, settings);
 }
@@ -158,8 +128,10 @@ function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, dat
  */
 function drawOneIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    var plotOptions = dataLablesEnableSetting(chartType);
     settings.xAxis.type = "category";
     settings.xAxis.categories = xCategories;
+    settings.plotOptions = plotOptions;
     Highcharts.chart(divId, settings);
 }
 
@@ -177,12 +149,9 @@ function drawOneIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xC
  */
 function drawMultiIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
-            pointIntervalUnit: 'day'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    plotOptions.series.pointIntervalUnit = 'day';
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     if (enableLegendRight == 1) {
@@ -207,12 +176,9 @@ function drawMultiIndexDaysChart(chartType, divId, title, subTitle, yTitle, data
  */
 function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear(), startDate.getMonth()),
-            pointIntervalUnit: 'month'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth());
+    plotOptions.series.pointIntervalUnit = 'month';
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     if (enableLegendRight == 1) {
@@ -237,12 +203,9 @@ function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, da
  */
 function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = {
-        series: {
-            pointStart: Date.UTC(startDate.getFullYear()),
-            pointIntervalUnit: 'year'
-        }
-    };
+    var plotOptions = dataLablesEnableSetting(chartType);
+    plotOptions.series.pointStart = Date.UTC(startDate.getFullYear());
+    plotOptions.series.pointIntervalUnit = 'year';
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     if (enableLegendRight == 1) {
@@ -266,6 +229,8 @@ function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, dat
  */
 function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    var plotOptions = dataLablesEnableSetting(chartType);
+    settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
     if (enableLegendRight == 1) {
@@ -291,6 +256,8 @@ function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, d
  */
 function drawMultiIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data, enableLegendRight) {
     var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    var plotOptions = dataLablesEnableSetting(chartType);
+    settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
     if (enableLegendRight == 1) {
@@ -301,4 +268,37 @@ function drawMultiIndexCategoryChart(chartType, divId, title, subTitle, yTitle, 
     settings.xAxis.type = "category";
     settings.xAxis.categories = xCategories;
     Highcharts.chart(divId, settings);
+}
+
+function dataLablesEnableSetting(chartType) {
+    var plotOptions = {};
+    switch (chartType) {
+        case 'column':
+            plotOptions = {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            };
+            break;
+        case 'line':
+            plotOptions = {
+                series: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            };
+            break;
+        default:
+            plotOptions = {
+                series: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            };
+    }
+    return plotOptions;
 }
