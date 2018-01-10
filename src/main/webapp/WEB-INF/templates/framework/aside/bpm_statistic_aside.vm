@@ -2,7 +2,7 @@
 <li class="treeview" id="bpm-statistic-1">
     <a href="#">
         <i class="fa fa-heart-o"></i>
-        <span>血压计相关统计</span>
+        <span>血压计统计</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
