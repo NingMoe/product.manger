@@ -60,7 +60,7 @@
     <select id="obtainBpmMeasureByDay" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         <![CDATA[
             SELECT
-                DATE_FORMAT(create_time, '%m-%d') AS measureTime,
+                DATE_FORMAT(create_time, '%Y-%m-%d') AS measureTime,
                 count(1) AS measureCount
             FROM
                 blood_pressure_measure_info_#{table,jdbcType=INTEGER}
@@ -69,9 +69,9 @@
             HAVING
                 measureTime >= DATE_FORMAT(
                     DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
-                    '%m-%d'
+                    '%Y-%m-%d'
                 )
-            AND measureTime < DATE_FORMAT(NOW(), '%m-%d')
+            AND measureTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
             ORDER BY
                 measureTime DESC
         ]]>
@@ -82,7 +82,7 @@
     <select id="obtainBpmMeasureByMonth" resultType="com.phicomm.product.manger.model.bpm.BpmMeasureBean">
         <![CDATA[
             SELECT
-                DATE_FORMAT(create_time, '%y-%m') AS measureTime,
+                DATE_FORMAT(create_time, '%Y-%m') AS measureTime,
                 count(1) AS measureCount
             FROM
                 blood_pressure_measure_info_#{table,jdbcType=INTEGER}
@@ -91,9 +91,9 @@
             HAVING
                 measureTime > DATE_FORMAT(
                     DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
-                    '%y-%m'
+                    '%Y-%m'
                 )
-            AND measureTime < DATE_FORMAT(NOW(), '%y-%m-%d')
+            AND measureTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
             ORDER BY
                 measureTime DESC
         ]]>

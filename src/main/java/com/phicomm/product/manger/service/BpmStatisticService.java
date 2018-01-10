@@ -31,8 +31,8 @@ public class BpmStatisticService {
     private static final String TODAY_KEY = "today";
     private static final int HOURS = 24;
     private static final int TABLES = 20;
-    private static final String DAY_PATTERN_MM_DD = "MM-dd";
-    private static final String MONTH_PATTERN_YY_MM = "yy-MM";
+    private static final String DAY_PATTERN_MM_DD = "yyyy-MM-dd";
+    private static final String MONTH_PATTERN_YY_MM = "yyyy-MM";
     private static final String HOUR_PATTERN_HH = "HH";
     private BpmBindStatisticMapper bpmBindStatisticMapper;
 
@@ -112,7 +112,7 @@ public class BpmStatisticService {
      * @param day 最近N天的数据
      * @return 返回key：日期，value：数量；的映射表
      */
-    public Map<String, Integer> obtainBPMeasureCountByDay(int day) {
+     Map<String, Integer> obtainBPMeasureCountByDay(int day) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DAY_PATTERN_MM_DD);
         List<BpmMeasureBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
@@ -167,7 +167,7 @@ public class BpmStatisticService {
      * @param month 最近N月的数据
      * @return 返回key：日期，value：数量；的映射表
      */
-    public Map<String, Integer> obtainBpmMeasureByMonth(int month) {
+     Map<String, Integer> obtainBpmMeasureByMonth(int month) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(MONTH_PATTERN_YY_MM);
         List<BpmMeasureBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
@@ -189,7 +189,7 @@ public class BpmStatisticService {
      *
      * @return 返回key：日期，value：数量；的映射表
      */
-    public Map<String, Integer> obtainBpmMeasureByHour() {
+     Map<String, Integer> obtainBpmMeasureByHour() {
         DateTime dateTime = new DateTime(DateTime.now()).minusDays(1);
         SimpleDateFormat dateFormat = new SimpleDateFormat(HOUR_PATTERN_HH);
         List<BpmMeasureBean> countBeans = Lists.newArrayList();
