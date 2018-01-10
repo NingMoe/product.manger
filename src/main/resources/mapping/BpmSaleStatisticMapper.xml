@@ -6,7 +6,7 @@
     <select id="obtainBpmSaleByMonth" resultType="com.phicomm.product.manger.model.bpm.BpmCountBean">
         <![CDATA[
             SELECT
-                DATE_FORMAT(create_time, '%y-%m') AS bindPBMTime,
+                DATE_FORMAT(create_time, '%Y-%m') AS bindPBMTime,
                 count(DISTINCT device_id) AS bindPBMCount
             FROM
                 device_location_info
@@ -17,9 +17,9 @@
             HAVING
                 bindPBMTime > DATE_FORMAT(
                     DATE_ADD(NOW(), INTERVAL - #{months,jdbcType=INTEGER} MONTH),
-                    '%y-%m'
+                    '%Y-%m'
                 )
-            AND bindPBMTime <= DATE_FORMAT(NOW(), '%y-%m')
+            AND bindPBMTime <= DATE_FORMAT(NOW(), '%Y-%m')
             ORDER BY
                 bindPBMTime DESC
         ]]>
@@ -29,7 +29,7 @@
     <select id="obtainBpmSaleNumByDay" resultType="com.phicomm.product.manger.model.bpm.BpmCountBean">
         <![CDATA[
             SELECT
-                DATE_FORMAT(create_time, '%y-%m-%d') AS bindPBMTime,
+                DATE_FORMAT(create_time, '%Y-%m-%d') AS bindPBMTime,
                 count(DISTINCT device_id) AS bindPBMCount
             FROM
                 device_location_info
@@ -40,9 +40,9 @@
             HAVING
                 bindPBMTime > DATE_FORMAT(
                     DATE_ADD(NOW(), INTERVAL - #{days,jdbcType=INTEGER} DAY),
-                    '%y-%m-%d'
+                    '%Y-%m-%d'
                 )
-            AND bindPBMTime <= DATE_FORMAT(NOW(), '%y-%m-%d')
+            AND bindPBMTime <= DATE_FORMAT(NOW(), '%Y-%m-%d')
             ORDER BY
                 bindPBMTime DESC
         ]]>
