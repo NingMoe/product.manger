@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class UserActivityTrace {
 
-    private List<int[]> data;
+    private List<List<Object>> data;
 
-    public List<int[]> getData() {
+    public List<List<Object>> getData() {
         return data;
     }
 
-    public void setData(List<int[]> data) {
+    public void setData(List<List<Object>> data) {
         this.data = data;
     }
 
