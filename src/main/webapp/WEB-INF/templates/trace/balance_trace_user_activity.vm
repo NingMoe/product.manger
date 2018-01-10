@@ -2,18 +2,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">24小时-用户活跃度统计(PV)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
+                <div class="box-body">
+                    <div id ="trace-user-activity-chart-pv">
                     </div>
-                </div>
-                <div id="traceUserActivityChartPV" style="margin: 2%">
                 </div>
             </div>
         </div>
@@ -21,18 +12,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">24小时-用户活跃度统计(UV)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
+                <div class="box-body">
+                    <div id ="trace-user-activity-chart-uv">
                     </div>
-                </div>
-                <div id="traceUserActivityChartUV" style="margin: 2%">
                 </div>
             </div>
         </div>
@@ -40,5 +22,10 @@
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/trace/balance_trace_user_activity.js"></script>
