@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.qiang.ren.mongo;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.mongodb.*;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
@@ -12,6 +13,8 @@ import org.bson.Document;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -35,24 +38,16 @@ import static com.mongodb.client.model.Sorts.orderBy;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MongoTest {
 
-    public MongoCollection<Document> linkTest(String databaseName, String traceStr){
-        ServerAddress serverAddress = new ServerAddress("172.16.99.220" , 4000);
-        List<ServerAddress> addrs = new ArrayList<>();
-        addrs.add(serverAddress);
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
-        MongoCredential credential = MongoCredential.createScramSha1Credential("tracer", "trace", "123456".toCharArray());
-        List<MongoCredential> credentials = new ArrayList<>();
-        credentials.add(credential);
-
-        MongoClient mongoClient = new MongoClient(addrs,credentials);
-
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
-        return database.getCollection(traceStr);
+    public MongoCollection<Document> linkTest(String traceStr){
+        return mongoTemplate.getCollection(traceStr);
     }
 
     @Test
     public void insertTest(){
-        MongoCollection<Document> collection = linkTest("trace","user_activity_trace");
+        MongoCollection<Document> collection = linkTest("user_activity_trace");
 
         Document doc = new Document("traceType", "user_activity_trace")
                 .append("others", "ren")
@@ -65,7 +60,7 @@ public class MongoTest {
 
     @Test
     public void findTest(){
-        MongoCollection<Document> collection = linkTest("trace","user_activity_trace");
+        MongoCollection<Document> collection = linkTest("user_activity_trace");
 
         System.out.println("记录总数："+collection.count());
 
@@ -84,7 +79,7 @@ public class MongoTest {
 
     @Test
     public void updateTest(){
-        MongoCollection<Document> collection = linkTest("trace","user_activity_trace");
+        MongoCollection<Document> collection = linkTest("user_activity_trace");
 
         collection.updateOne(Filters.eq("timestamp", 99), new Document("$set", new Document("timestamp", 77)));
         //collection.updateMany(Filters.eq("timestamp", 99), new Document("$set", new Document("timestamp", 77))).getModifiedCount();
@@ -94,7 +89,7 @@ public class MongoTest {
 
     @Test
     public void deleteTest(){
-        MongoCollection<Document> collection = linkTest("trace","user_activity_trace");
+        MongoCollection<Document> collection = linkTest("user_activity_trace");
         //collection.deleteOne(Filters.gt("timestamp", 77));
         collection.deleteMany(Filters.eq("timestamp", 77)).getDeletedCount();
         Block<Document> printBlock = document -> System.out.println(document.toJson());
@@ -103,16 +98,17 @@ public class MongoTest {
 
     @Test
     public void aggregateTest(){
-        Block<Document> printBlock = document -> System.out.println(JSON.parseObject(document.toJson()).get("_id"));
-        //Block<Document> printBlock = document -> System.out.println(document.get("count"));
-        MongoCollection<Document> collection = linkTest("trace","user_activity_trace");
+        List<Object> result = Lists.newArrayList();
+        Block<Document> printBlock = document -> result.add(document.get("count"));
+        MongoCollection<Document> collection = linkTest("user_activity_trace");
         collection.aggregate(
                 Arrays.asList(
-                        Aggregates.match(Filters.eq("others", "ren")),
-                        Aggregates.group("$timestamp", Accumulators.sum("count", 1)),
-                        Aggregates.sort(orderBy(ascending("_id"), descending("count")))
+                        Aggregates.match(Filters.eq("date", "2018-1-10")),
+                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.sort(orderBy(ascending("_id")))
                 )
         ).forEach(printBlock);
+        System.out.println("2018-1-10"+"数据："+result);
     }
 
     /*@Test
