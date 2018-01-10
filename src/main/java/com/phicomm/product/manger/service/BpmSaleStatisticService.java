@@ -42,7 +42,7 @@ public class BpmSaleStatisticService {
      */
     public Map<String, Integer> obtainBPMSaleNumByMonth(int months) {
         DateTime dateTime = new DateTime(DateTime.now());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
         List<BpmCountBean> countBeans;
         CustomerContextHolder.selectProdDataSource();
         countBeans = bpmSaleStatisticMapper.obtainBpmSaleByMonth(months);
@@ -75,7 +75,7 @@ public class BpmSaleStatisticService {
      */
     public Map<String, Integer> obtainBPMSaleNumByDay(int days) {
         DateTime dateTime = new DateTime(DateTime.now());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<BpmCountBean> countBeans;
         CustomerContextHolder.selectProdDataSource();
         countBeans = bpmSaleStatisticMapper.obtainBpmSaleNumByDay(days);

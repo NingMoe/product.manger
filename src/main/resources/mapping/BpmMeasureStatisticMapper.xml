@@ -4,7 +4,7 @@
 
     <!--保存数据-->
     <insert id="insertMonth" >
-        insert blood_pressure_measure_data_size_every_month(data_size,month)
+        REPLACE into blood_pressure_measure_data_size_every_month(data_size,month)
         value(#{bpmMeasureBean.measureCount,jdbcType=INTEGER},#{bpmMeasureBean.measureTime,jdbcType=VARCHAR})
     </insert>
 
