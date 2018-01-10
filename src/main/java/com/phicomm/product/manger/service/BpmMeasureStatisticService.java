@@ -40,7 +40,7 @@ public class BpmMeasureStatisticService {
         this.bpmMeasureStatisticMapper = bpmMeasureStatisticMapper;
         Assert.notNull(this.bpmStatisticService);
         Assert.notNull(this.bpmMeasureStatisticMapper);
-        cronTask();
+        //cronTask();
     }
 
     /**
