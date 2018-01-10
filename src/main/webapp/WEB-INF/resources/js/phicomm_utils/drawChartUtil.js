@@ -9,7 +9,7 @@
  * @returns {{chart: {type: *}, title: {text: *}, subtitle: {text: *}, xAxis: {type: string}, yAxis: {title: {text: *}}, legend: {enabled: boolean}, series: *}}
  */
 function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
-    var setting = {
+    let setting = {
         chart: {
             type: chartType
         },
@@ -49,8 +49,8 @@ function drawChartBasicSetting(chartType, title, subTitle, yTitle, data) {
  * @param startDate 开始的日期,为Date类型
  */
 function drawOneIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     plotOptions.series.pointIntervalUnit = 'day';
     settings.plotOptions = plotOptions;
@@ -69,8 +69,8 @@ function drawOneIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, 
  * @param startDate 开始的日期
  */
 function drawOneIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth());
     plotOptions.series.pointIntervalUnit = 'month';
     settings.plotOptions = plotOptions;
@@ -89,8 +89,8 @@ function drawOneIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data
  * @param startDate 开始的日期
  */
 function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data, startDate) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear());
     plotOptions.series.pointIntervalUnit = 'year';
     settings.plotOptions = plotOptions;
@@ -108,9 +108,8 @@ function drawOneIndexYearsChart(chartType, divId, title, subTitle, yTitle, data,
  * @param data 传递的数据，数据类型为{name:xxx,data:[]}
  */
 function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = dataLablesEnableSetting(chartType);
-    settings.plotOptions = plotOptions;
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    settings.plotOptions = dataLablesEnableSetting(chartType);
     settings.xAxis.type = "linear";
     Highcharts.chart(divId, settings);
 }
@@ -127,8 +126,8 @@ function drawOneIndex24HoursChart(chartType, divId, title, subTitle, yTitle, dat
  * @param data 传递的数据，数据类型为{name:xxx, data:[]}
  */
 function drawOneIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, [data]);
+    let plotOptions = dataLablesEnableSetting(chartType);
     settings.xAxis.type = "category";
     settings.xAxis.categories = xCategories;
     settings.plotOptions = plotOptions;
@@ -148,8 +147,8 @@ function drawOneIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xC
  * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
  */
 function drawMultiIndexDaysChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     plotOptions.series.pointIntervalUnit = 'day';
     settings.plotOptions = plotOptions;
@@ -175,8 +174,8 @@ function drawMultiIndexDaysChart(chartType, divId, title, subTitle, yTitle, data
  * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
  */
 function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth());
     plotOptions.series.pointIntervalUnit = 'month';
     settings.plotOptions = plotOptions;
@@ -202,8 +201,8 @@ function drawMultiIndexMonthsChart(chartType, divId, title, subTitle, yTitle, da
  * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
  */
 function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, data, startDate, enableLegendRight) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    let plotOptions = dataLablesEnableSetting(chartType);
     plotOptions.series.pointStart = Date.UTC(startDate.getFullYear());
     plotOptions.series.pointIntervalUnit = 'year';
     settings.plotOptions = plotOptions;
@@ -228,8 +227,8 @@ function drawMultiIndexYearsChart(chartType, divId, title, subTitle, yTitle, dat
  * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
  */
 function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, data, enableLegendRight) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    let plotOptions = dataLablesEnableSetting(chartType);
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
@@ -255,8 +254,8 @@ function drawMultiIndex24HoursChart(chartType, divId, title, subTitle, yTitle, d
  * @param enableLegendRight legend是位于右边还是底部,1表示位于右边，否则位于底部
  */
 function drawMultiIndexCategoryChart(chartType, divId, title, subTitle, yTitle, xCategories, data, enableLegendRight) {
-    var settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
-    var plotOptions = dataLablesEnableSetting(chartType);
+    let settings = drawChartBasicSetting(chartType, title, subTitle, yTitle, data);
+    let plotOptions = dataLablesEnableSetting(chartType);
     settings.plotOptions = plotOptions;
     settings.legend.enabled = true;
     settings.xAxis.type = "linear";
@@ -270,8 +269,14 @@ function drawMultiIndexCategoryChart(chartType, divId, title, subTitle, yTitle, 
     Highcharts.chart(divId, settings);
 }
 
+/**
+ *  数据标签一些设置
+ *
+ * @param chartType 图表类型，诸如"column", "line"等
+ * @returns {{}} 返回设置
+ */
 function dataLablesEnableSetting(chartType) {
-    var plotOptions = {};
+    let plotOptions = {};
     switch (chartType) {
         case 'column':
             plotOptions = {
@@ -301,4 +306,41 @@ function dataLablesEnableSetting(chartType) {
             };
     }
     return plotOptions;
+}
+
+/**
+ * 饼图的制作
+ *
+ * @param divId 图表中divId
+ * @param title 主标题
+ * @param subTitle 副标题
+ * @param data 数据.格式为:[{name:xxx, data:[[xx,xxx],[xx,xx],,,[xx,xx]]}]
+ */
+function drawPieChart(divId, title, subTitle, data) {
+    let setting = {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: title
+        },
+        subtitle: {
+            text: subTitle
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'point',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: data
+    };
+    Highcharts.chart(divId, setting);
 }
