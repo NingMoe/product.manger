@@ -21,16 +21,16 @@ $(function obtainLocationInfoByDay() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            let barChartCavas = $("#locationMonthChart").get(0).getContext("2d");
-            let barChart = new Chart(barChartCavas);
-            drawBarChart(labels, dates, barChart);
+            let title = "体脂秤使用地区分布(月)";
+            let series = {name: title, data: datas};
+            drawOneIndexCategoryChart("column", "location-month-chart", title, null, null, labels, series);
         }
     })
 });
@@ -53,16 +53,16 @@ $(function obtainLocationYearData() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            let barChartCavas = $("#locationYearChart").get(0).getContext("2d");
-            let barChart = new Chart(barChartCavas);
-            drawBarChart(labels, dates, barChart);
+            let title = "体脂秤使用地区分布(年)";
+            let series = {name: title, data: datas};
+            drawOneIndexCategoryChart("column", "location-year-chart", title, null, null, labels, series);
         }
     })
 });

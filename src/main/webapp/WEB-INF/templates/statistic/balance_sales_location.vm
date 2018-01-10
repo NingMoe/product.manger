@@ -2,40 +2,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">体脂秤使用地区分布(年)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
                 <div class="box-body">
-                    <div class="chart">
-                        <canvas id="locationYearChart"></canvas>
+                    <div id="location-year-chart">
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">体脂秤使用地区分布(月)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
                 <div class="box-body">
-                    <div class="chart">
-                        <canvas id="locationMonthChart"></canvas>
+                    <div id="location-month-chart">
                     </div>
                 </div>
             </div>
@@ -44,5 +20,11 @@
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/chartjs/Chart.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/balance_sale_location.js"></script>
