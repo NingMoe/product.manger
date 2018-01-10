@@ -8,6 +8,7 @@ $(document).ready(function () {
 });
 
 
+
 /**
  * 获取过去30天的mac统计信息
  */
@@ -39,7 +40,7 @@ $(function obtainMacInfoByDay() {
             jsons.title.text = 'S7体脂称每天新增使用量(最近30天)';
             jsons.series[0].data = dates;
             jsons.xAxis.categories = labels;
-            jsons.legend.enabled=false;
+            jsons.legend.enabled = false;
             $("#S7UsageCountschart1").highcharts(jsons);
         }
     })
@@ -75,8 +76,13 @@ $(function obtainMacYearData() {
             json.title.text = 'S7体脂称每月新增使用量';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
-            json.legend.enabled=false;
+            json.legend.enabled = false;
             $("#S7UsageCountschart2").highcharts(json);
+            var sum = 0;
+            for (var i = 0; i < datas.length; i++) {
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll", formatNum(sum));
         }
     })
 });
@@ -110,7 +116,7 @@ $(function obtainLocationInfoByDay() {
             json.title.text = 'S7体脂称各地区新增使用量（最近30天）';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
-            json.legend.enabled=false;
+            json.legend.enabled = false;
             $("#S7SalesLocationchart3").highcharts(json);
         }
     })
@@ -185,7 +191,7 @@ function column() {
     json.series = series;
     json.plotOptions = plotOptions;
     json.credits = credits;
-    json.navigation=navigation;
+    json.navigation = navigation;
     return json;
 
 
@@ -395,7 +401,8 @@ $(function () {
                 yAxis: 'percentage',
                 type: 'spline',
                 tooltip: {
-                    valueSuffix: '%'
+                    pointFormat: '<br>{series.name}: {point.y:.3f}%'
+
                 }
             });
         }
@@ -405,7 +412,6 @@ $(function () {
 
 /**
  * 堆叠柱状图
- * @param chartId
  */
 function drawChart() {
     var chart = {
@@ -526,13 +532,12 @@ function addedKKeys() {
 }
 
 
-
 /**
  * 获取所选日期的报告
  */
 function getReport() {
     var date = document.getElementById("reportDate").value;
-    updateElementsValuesByName("selectedDate",date);
+    updateElementsValuesByName("selectedDate", date);
     //当前日期下的S7使用量和截止当前日期的总使用量
     getThisDateUsage(date);
     //当前日期下S7的激活量和截止当前日期的总使用量
@@ -541,14 +546,24 @@ function getReport() {
     getThisDateActiveUser(date);
 
 }
+$(function(){
+    var date = document.getElementById("reportDate").value;
+    updateElementsValuesByName("selectedDate", date);
+    //当前日期下的S7使用量和截止当前日期的总使用量
+    getThisDateUsage(date);
+    //当前日期下S7的激活量和截止当前日期的总使用量
+    getThisDateActivation(date);
+    //获取当前日期下的活跃用户数量
+    getThisDateActiveUser(date);
+});
 
 /**
- * 用于通过元素名称修改元素名称
+ * 用于通过元素名称修改元素内容
  */
-function updateElementsValuesByName(elementNames,value){
+function updateElementsValuesByName(elementNames, value) {
     var eleDate = document.getElementsByName(elementNames);
-    for (var i=0; i< eleDate.length;i++){
-        eleDate[i].innerHTML=value;
+    for (var i = 0; i < eleDate.length; i++) {
+        eleDate[i].innerHTML = value;
     }
 }
 
@@ -576,12 +591,20 @@ function getThisDateActivation(date) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            updateElementsValuesByName("s7ActivationToday",data.data[0]["lianbi"]+data.data[0]["wanjia"]);
-            updateElementsValuesByName("s7LianbiKKeysCountToday",data.data[0]["lianbi"]);
-            updateElementsValuesByName("s7WanjiaKKeysCountToday",data.data[0]["wanjia"]);
+            if (data.data !== null) {
+                console.log("-----"+data.data);
+                updateElementsValuesByName("s7ActivationToday", formatNum(data.data[0]["lianbi"] + data.data[0]["wanjia"]));
+                updateElementsValuesByName("s7LianbiKKeysCountToday", formatNum(data.data[0]["lianbi"]));
+                updateElementsValuesByName("s7WanjiaKKeysCountToday", formatNum(data.data[0]["wanjia"]));
+            }
         }
     });
 
+
+}
+
+$(function getUsageCount() {
+    const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
         url: baseUrl + "/s7/reports/ActivationAllCountsEveryMate",
@@ -589,12 +612,13 @@ function getThisDateActivation(date) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            updateElementsValuesByName("s7ActivationAll",data.data[0]["lianbi"]+data.data[0]["wanjia"]);
-            updateElementsValuesByName("s7LianbiKKeysCountAll",data.data[0]["lianbi"]);
-            updateElementsValuesByName("s7WanjiaKKeysCountAll",data.data[0]["wanjia"]);
+            updateElementsValuesByName("s7ActivationAll", formatNum(data.data[0]["lianbi"] + data.data[0]["wanjia"]));
+            updateElementsValuesByName("s7LianbiKKeysCountAll", formatNum(data.data[0]["lianbi"]));
+            updateElementsValuesByName("s7WanjiaKKeysCountAll", formatNum(data.data[0]["wanjia"]));
         }
     });
-}
+});
+
 /**
  * 获取当前日期下的活跃用户数量
  * @param date 日期 格式为yyyy-mm-dd
@@ -604,22 +628,42 @@ function getThisDateActiveUser(date) {
     let baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/trace/user/activity/pv",
+        url: baseUrl + "/balance/trace/user/activity/uv",
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
             "userId": userId,
             "date": date
-        }),error: function (req, status, err) {
+        }), error: function (req, status, err) {
             console.log('Failed reason: ' + err);
         }, success: function (data) {
             let result = data.data.data;
-            var activeUser = null;
-            console.log("--------result-------"+result);
-            for(var i=0;i<24;i++){
+            var activeUser = 0;
+            console.log("--------result-------" + result);
+            for (var i = 0; i < 24; i++) {
                 activeUser += result[1][i];
             }
-            updateElementsValuesByName("s7ActiveToday",activeUser);
+            updateElementsValuesByName("s7ActiveToday", formatNum(activeUser));
         }
     })
+}
+
+/**
+ * 格式化数字，千分位加逗号
+ * @param originStr 原来的数字串
+ */
+function formatNum(originStr) {
+    var str = originStr.toString();
+    var newStr = "";
+    var count = 0;
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (count % 3 === 0 && count !== 0) {
+            newStr = str.charAt(i) + "," + newStr;
+        } else {
+            newStr = str.charAt(i) + newStr;
+        }
+        count++;
+    }
+    console.log(str);
+    return newStr;
 }

@@ -57,68 +57,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;margin-top: 20px; ">
-                            <h4 style="margin-left: 2%">不同设备活跃用户量填写</h4>
-                        </div>
-                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                            color=#987cb9 SIZE=1/>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="activeuserDate" class="col-sm-4 control-label">日期</label>
-                            <div class="col-sm-8">
-                                <input class="form-control pull-right" type="date" id="activeuserDate"/>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="IOSActiveUserCount" class="col-sm-5 control-label">IOS活跃用户</label>
-                            <div class="col-sm-7">
-                                <input type="number" class="form-control pull-right" id="iosActive" value="0"
-                                       oninput="checkNum('iosActive',this.value)"/>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="AndroidActiveUserCount" class="col-sm-5 control-label">Android活跃用户</label>
-                            <div class="col-sm-7">
-                                <input type="number" class="form-control pull-right" id="androidActive" value="0"
-                                       oninput="checkNum('androidActive',this.value)"/>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-1" style="margin-left: 50px">
-                            <div>
-                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
-                                        onclick="getAll()">
-                                    提交
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
-                            <h4 style="margin-left: 2%">获取报告</h4>
-                        </div>
-                        <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                            color=#987cb9 SIZE=1/>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="reportDate" class="col-sm-4 control-label">日期</label>
-                            <div class="col-sm-8">
-                                <input class="form-control pull-right" type="date" id="reportDate"/>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-1" style="margin-left: 50px">
-                            <div>
-                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
-                                        onclick="getReport()">
-                                    获取
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </form>
         </div>
@@ -129,7 +67,7 @@
             <div class="box-body">
                 <div class="row">
                     <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
-                        <h3 style="text-align:center;" id="reportTitle"><label name="selectedDate">2017/12/28</label>生产环境S7统计报告
+                        <h3 style="text-align:center;" id="reportTitle">生产环境S7统计报告
                         </h3>
                     </div>
                 </div>
@@ -137,33 +75,104 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-primary">
-                            <h3 class="box-title">一、今日总体概况</h3>
+                            <h3 class="box-title">一、总体概况</h3>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="stats-body">
-                        <ul style=" width:100%; text-align:left; margin-left:5%; margin-right:5%;">
-                            <li type="margin-buttom:10px;"><h4>1.<label name="selectedDate">2017/12/28</label>新增智能体脂秤使用数量<label
-                                    name="s7DataUsageCountToday">111</label>台，累计新增总量<label
-                                    name="s7DataUsageCountAll">111</label>台。</h4>
-                            </li>
-                            <li type="margin-buttom:10px;"><h4>2.<label name="selectedDate">2017/12/28</label>新增智能体脂秤k码激活数量<label
-                                    name="s7ActivationToday">111</label>个，合计<label name="s7ActivationAll">111</label>个。
-                            </h4>
-                            </li>
-                            <li type="margin-buttom:10px;"><h4>3.<label
-                                    name="selectedDate">2017/12/28</label>活跃用户合计<label
-                                    name="s7ActiveToday">111</label>人。
-##                                暂时注释掉
-##                                其中IOS活跃用户<label name="s7ActiveIOS">111</label>人，Android活跃<label
-##                                    name="s7ActiveAndroid">111</label>人。
-                            </h4>
-                            </li>
-                        </ul>
+                    <div class="form-group col-md-4">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7总使用数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7DataUsageCountAll">0000</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7总k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7ActivationAll">0000</label>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>联璧S7总k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7LianbiKKeysCountAll">0000</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>万家金服S7总k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7WanjiaKKeysCountAll">0000</label>
+                        </div>
+                    </div>
+                </div>
+
+            ##                今日详情
+                <div class="row">
+                    <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
+                        color=#987cb9 SIZE=1/>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-1" style="margin-left: 50px">
+                        <div>
+                            <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                    onclick="getReport()">
+                                获取该天详情
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3 ">
+                        <label class="col-sm-4 control-label"><h4>选择日期</h4></label>
+                        <div class="col-sm-8">
+                            <input class="form-control pull-right" type="date" id="reportDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                ##                    <div class="form-group col-md-4">
+                ##                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7使用数量</h4></label>
+                ##                        <div class="col-sm-6">
+                ##                            <label class="form-control" name="s7DataUsageCountToday">0000</label>
+                ##                        </div>
+                ##                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>活跃用户合计</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7ActiveToday">0000</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7ActivationToday">0000</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>联璧S7k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7LianbiKKeysCountToday">0000</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-6 control-label"><h4>万家金服S7k码激活数量</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7WanjiaKKeysCountToday">0000</label>
+                        </div>
+                    </div>
+                </div>
+##                <div class="row">
+##                    <div class="form-group col-md-4">
+##                        <label for="activationDate" class="col-sm-6 control-label"><h4>活跃用户合计</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7ActiveToday">0000</label>
+##                        </div>
+##                    </div>
+##                </div>
             </div>
         </div>
     ##************************************图表一
@@ -174,14 +183,14 @@
                         <div class="box box-primary">
                             <h3 class="box-title">二、S7新增使用量</h3>
                         </div>
-                        <div class="stats-body">
-                            <ul style=" width:100%;background: rgba(208,208,208,0.99);text-align:left;">
-                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
-                                        name="selectedDate">2017/12/28</label>新增使用数量<label name="s7DataUsageCountToday">111</label>台，累计新增总量<label
-                                        name="s7DataUsageCountAll">111</label>台。</h4>
-                                </li>
-                            </ul>
-                        </div>
+                    ##                        <div class="stats-body">
+                    ##                            <ul style=" width:100%;background: rgba(208,208,208,0.99);text-align:left;">
+                    ##                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
+                    ##                                        name="selectedDate">2017/12/28</label>新增使用数量<label name="s7DataUsageCountToday">111</label>台，累计新增总量<label
+                    ##                                        name="s7DataUsageCountAll">111</label>台。</h4>
+                    ##                                </li>
+                    ##                            </ul>
+                    ##                        </div>
                     </div>
                 </div>
             </div>
@@ -232,19 +241,13 @@
                         </div>
                         <div class="stats-body">
                             <ul style=" width:100%;background: rgba(208,208,208,0.99)  ;text-align:left;">
-                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
-                                        name="selectedDate">2017/12/28</label>新增K码激活量<label
-                                        name="s7ActivationToday">111</label>台，累计新增K码总激活量<label
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;累计新增K码总激活量<label
                                         name="s7ActivationAll">111</label>台。</h4>
                                 </li>
-                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
-                                        name="selectedDate">2017/12/28</label>联璧新增K码激活量<label
-                                        name="s7LianbiKKeysCountToday">111</label>台，联璧累计新增K码激活总量<label
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联璧累计新增K码激活总量<label
                                         name="s7LianbiKKeysCountAll">111</label>台。</h4>
                                 </li>
-                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
-                                        name="selectedDate">2017/12/28</label>万家金服新增K码激活量<label
-                                        name="s7WanjiaKKeysCountToday">111</label>台，万家金服累计新增K码激活总量<label
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万家金服累计新增K码激活总量<label
                                         name="s7WanjiaKKeysCountAll">111</label>台。</h4>
                                 </li>
                             </ul>
@@ -311,5 +314,6 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
+
