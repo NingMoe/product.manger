@@ -1,12 +1,9 @@
 package com.phicomm.product.manger.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mongodb.Block;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
@@ -14,13 +11,17 @@ import com.phicomm.product.manger.model.trace.UserActivityInputInfo;
 import com.phicomm.product.manger.model.trace.UserActivityTrace;
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.mongodb.client.model.Indexes.ascending;
 import static com.mongodb.client.model.Sorts.orderBy;
@@ -34,9 +35,16 @@ import static com.mongodb.client.model.Sorts.orderBy;
 @Service
 public class UserActivityService {
 
+    private MongoTemplate mongoTemplate;
 
     private static final Logger logger = Logger.getLogger(UserActivityService.class);
     private static final String USER_ACTIVITY_TRACE = "user_activity_trace";
+
+    @Autowired
+    public UserActivityService(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+        Assert.notNull(this.mongoTemplate);
+    }
 
     /**
      * 统计24小时用户活跃度（PV）
@@ -45,21 +53,20 @@ public class UserActivityService {
      */
     public UserActivityTrace traceUserActivityPV(UserActivityInputInfo userActivityInputInfo){
         UserActivityTrace userActivityTrace = new UserActivityTrace();
-        Date today = new Date();
-        Date yesterday = new Date(System.currentTimeMillis()-24*60*60*1000);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
         List<List<Object>> list = Lists.newArrayList();
         if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
-            list.add(getPVData(df.format(yesterday)));
+            list.add(getPVData(today));
+            list.add(getPVData(yesterday));
         }else if(null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
+            list.add(getPVData(today));
             list.add(getPVData(userActivityInputInfo.getDate()));
         }else if(null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
-            list.add(getUserPVData(df.format(yesterday), userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(yesterday, userActivityInputInfo.getUserId()));
         }else{
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
             list.add(getUserPVData(userActivityInputInfo.getDate(), userActivityInputInfo.getUserId()));
         }
         userActivityTrace.setData(list);
@@ -73,21 +80,20 @@ public class UserActivityService {
      */
     public UserActivityTrace traceUserActivityUV(UserActivityInputInfo userActivityInputInfo){
         UserActivityTrace userActivityTrace = new UserActivityTrace();
-        Date today = new Date();
-        Date yesterday = new Date(System.currentTimeMillis()-24*60*60*1000);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
         List<List<Object>> list = Lists.newArrayList();
         if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
-            list.add(getPVData(df.format(yesterday)));
+            list.add(getPVData(today));
+            list.add(getPVData(yesterday));
         }else if(null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
+            list.add(getPVData(today));
             list.add(getPVData(userActivityInputInfo.getDate()));
         }else if(null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
-            list.add(getUserPVData(df.format(yesterday), userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(yesterday, userActivityInputInfo.getUserId()));
         }else{
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
             list.add(getUserPVData(userActivityInputInfo.getDate(), userActivityInputInfo.getUserId()));
         }
         userActivityTrace.setData(list);
@@ -101,8 +107,16 @@ public class UserActivityService {
      */
     private List<Object> getPVData(String day){
         List<Object> result = Lists.newArrayList();
-        Block<Document> printBlock = document -> result.add(document.get("count"));
-        MongoCollection<Document> collection = link("trace",USER_ACTIVITY_TRACE);
+        Map<Object, Object> map = Maps.newHashMap();
+        for(int i =0;i<24;i++){
+            map.put(i,0);
+        }
+        Block<Document> printBlock = document -> {
+            Object key = document.get("_id");
+            Object val = document.get("count");
+            map.put(key,val);
+        };
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
         collection.aggregate(
                 Arrays.asList(
                         Aggregates.match(Filters.eq("date", day)),
@@ -110,6 +124,9 @@ public class UserActivityService {
                         Aggregates.sort(orderBy(ascending("_id")))
                 )
         ).forEach(printBlock);
+        for(int i =0;i<24;i++){
+            result.add(map.get(i));
+        }
         logger.info(day+"数据："+result);
         return result;
     }
@@ -123,7 +140,7 @@ public class UserActivityService {
     private List<Object> getUserPVData(String day, String userId){
         List<Object> result = Lists.newArrayList();
         Block<Document> printBlock = document -> result.add(document.get("count"));
-        MongoCollection<Document> collection = link("trace",USER_ACTIVITY_TRACE);
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
         collection.aggregate(
                 Arrays.asList(
                         Aggregates.match(Filters.and(Filters.eq("date", day), Filters.eq("userId", userId))),
@@ -143,7 +160,7 @@ public class UserActivityService {
     private List<Object> getUVData(String day){
         List<Object> result = Lists.newArrayList();
         Block<Document> printBlock = document -> result.add(document.get("count"));
-        MongoCollection<Document> collection = link("trace",USER_ACTIVITY_TRACE);
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
         collection.aggregate(
                 Arrays.asList(
                         Aggregates.match(Filters.eq("date", day)),
@@ -155,15 +172,7 @@ public class UserActivityService {
         return result;
     }
 
-    private MongoCollection<Document> link(String databaseName, String traceStr){
-        ServerAddress serverAddress = new ServerAddress("172.16.99.220" , 4000);
-        List<ServerAddress> addrs = new ArrayList<>();
-        addrs.add(serverAddress);
-        MongoCredential credential = MongoCredential.createScramSha1Credential("tracer", "trace", "123456".toCharArray());
-        List<MongoCredential> credentials = new ArrayList<>();
-        credentials.add(credential);
-        MongoClient mongoClient = new MongoClient(addrs,credentials);
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
-        return database.getCollection(traceStr);
+    private MongoCollection<Document> link(String traceStr){
+        return mongoTemplate.getCollection(traceStr);
     }
 }
