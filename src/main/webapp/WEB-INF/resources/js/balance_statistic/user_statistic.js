@@ -1,3 +1,4 @@
+import * as $ from "../../jquery/jquery-3.2.1";
 $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
@@ -87,12 +88,11 @@ $(function statisticMember() {
             let womenData = datas[0];
             let menData = datas[1];
             let series = [{
-                name: "体脂秤用户男女比例",
+                name: "体脂秤成员男女比例",
                 data: [["男", menData], ["女", womenData]],
                 colors: ["#95CEFF", "#FF7430"]
             }];
-            drawPieChart("member-all-chart", "体脂秤用户男女比例", "(总)", series);
-
+            drawPieChart("member-all-chart", "体脂秤成员男女比例", "(总)", series);
         }
     })
 });
@@ -133,3 +133,6 @@ $(function statisticMemberByAge() {
     })
 });
 
+function drawChart(data) {
+
+}
