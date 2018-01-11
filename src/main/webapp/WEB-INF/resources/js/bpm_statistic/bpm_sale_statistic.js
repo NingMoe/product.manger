@@ -4,7 +4,6 @@ $(document).ready(function () {
 });
 
 
-
 //最近15天 血压计销量
 $(function bpmMeasureCountSaleByDay() {
     const baseUrl = $("#baseUrl").val();
@@ -19,14 +18,18 @@ $(function bpmMeasureCountSaleByDay() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmSaleDayChart").get(0).getContext("2d")));
+            let series = {name: "血压计使用量", data: datas};
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 11);
+            drawOneIndexDaysChart("column", "bpm-sale-day-chart", "血压计使用量", "(最近12天)",
+                null, series, startDate);
         }
     })
 });
@@ -45,14 +48,18 @@ $(function bpmMeasureCountSaleByMonth() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmSaleMonthChart").get(0).getContext("2d")));
+            let series = {name: "血压计使用量", data: datas};
+            let startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - 11);
+            drawOneIndexMonthsChart("column", "bpm-sale-month-chart", "血压计使用量", "(最近12个月)",
+                null, series, startDate);
         }
     })
 });
@@ -144,7 +151,7 @@ $(function bpmCountSaleAll() {
         type: "POST",
         url: baseUrl + "/bpm/statistic/sale/all",
         dataType: "json",
-        contentType:"application/json",
+        contentType: "application/json",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
@@ -160,7 +167,7 @@ $(function bpmSaleCountAll() {
         type: "POST",
         url: baseUrl + "/bpm/statistic/sale/today",
         dataType: "json",
-        contentType:"application/json",
+        contentType: "application/json",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {

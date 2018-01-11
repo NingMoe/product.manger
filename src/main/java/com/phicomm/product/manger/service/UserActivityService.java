@@ -1,20 +1,32 @@
 package com.phicomm.product.manger.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
+import com.phicomm.product.manger.dao.UserActivityMapper;
+import com.phicomm.product.manger.model.trace.UserActivityInfo;
 import com.phicomm.product.manger.model.trace.UserActivityInputInfo;
 import com.phicomm.product.manger.model.trace.UserActivityTrace;
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import static com.mongodb.client.model.Indexes.ascending;
+import static com.mongodb.client.model.Sorts.orderBy;
 
 /**
  * 用户活跃度处理逻辑
@@ -25,38 +37,55 @@ import java.util.List;
 @Service
 public class UserActivityService {
 
+    private MongoTemplate mongoTemplate;
+
+    private UserActivityMapper userActivityMapper;
 
     private static final Logger logger = Logger.getLogger(UserActivityService.class);
     private static final String USER_ACTIVITY_TRACE = "user_activity_trace";
-
-    private static final int[] yesterday1 = new int[]{1295,429,196,162,270,1264,4280,5717,5192,4747,4877,5076,5294,4957,4582,4883,5422,6745,8710,9888,10460,10287,7172,3261};
-    private static final int[] today1 = new int[]{1127,419,198,168,280,1121,4055,5571,4746,4702,4887,5231,5394,5169,4876,1320,0,0,0,0,0,0,0,0};
+    private static final String PV = "PV";
+    private static final String UV = "UV";
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    public UserActivityService(MongoTemplate mongoTemplate,
+                               UserActivityMapper userActivityMapper) {
+        this.mongoTemplate = mongoTemplate;
+        this.userActivityMapper = userActivityMapper;
+        Assert.notNull(this.mongoTemplate);
+        Assert.notNull(this.userActivityMapper);
+    }
 
     /**
      * 统计24小时用户活跃度（PV）
+     *
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    public UserActivityTrace traceUserActivityPV(UserActivityInputInfo userActivityInputInfo){
+    public UserActivityTrace traceUserActivityPV(UserActivityInputInfo userActivityInputInfo) {
         UserActivityTrace userActivityTrace = new UserActivityTrace();
-        Date today = new Date();
-        Date yesterday = new Date(System.currentTimeMillis()-24*60*60*1000);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        List<int[]> list = Lists.newArrayList();
-        if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
-            list.add(getPVData(df.format(yesterday)));
-        }else if(null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()){
-            list.add(getPVData(df.format(today)));
-            list.add(getPVData(userActivityInputInfo.getDate()));
-        }else if(null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
-            list.add(getUserPVData(df.format(yesterday), userActivityInputInfo.getUserId()));
-        }else{
-            list.add(getUserPVData(df.format(today), userActivityInputInfo.getUserId()));
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
+        List<List<Object>> list = Lists.newArrayList();
+        if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
+            list.add(getList(userActivityMapper.getUserActivity(today,PV)));
+            if(1 != userActivityMapper.isExistUserActivity(yesterday, PV)){
+                list.add(getPVData(yesterday));
+                syncUserActivityInfo(yesterday);
+            }else {
+                list.add(getList(userActivityMapper.getUserActivity(yesterday,PV)));
+            }
+        } else if (null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()) {
+            list.add(getList(userActivityMapper.getUserActivity(today,PV)));
+            if(1 != userActivityMapper.isExistUserActivity(userActivityInputInfo.getDate(), PV)){
+                list.add(getPVData(userActivityInputInfo.getDate()));
+            }else {
+                list.add(getList(userActivityMapper.getUserActivity(userActivityInputInfo.getDate(),PV)));
+            }
+        } else if (null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(yesterday, userActivityInputInfo.getUserId()));
+        } else {
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
             list.add(getUserPVData(userActivityInputInfo.getDate(), userActivityInputInfo.getUserId()));
         }
         userActivityTrace.setData(list);
@@ -65,113 +94,151 @@ public class UserActivityService {
 
     /**
      * 统计24小时用户活跃度（UV）
+     *
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    public UserActivityTrace traceUserActivityUV(UserActivityInputInfo userActivityInputInfo){
+    public UserActivityTrace traceUserActivityUV(UserActivityInputInfo userActivityInputInfo) {
         UserActivityTrace userActivityTrace = new UserActivityTrace();
-        if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-            List<int[]> list = Lists.newArrayList();
-            list.add(today1);
-            list.add(yesterday1);
-            userActivityTrace.setData(list);
-
-        }else if(null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()){
-
-        }else if(null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()){
-
-        }else{
-
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
+        List<List<Object>> list = Lists.newArrayList();
+        if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
+            list.add(getPVData(today));
+            list.add(getPVData(yesterday));
+        } else if (null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()) {
+            list.add(getPVData(today));
+            list.add(getPVData(userActivityInputInfo.getDate()));
+        } else if (null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(yesterday, userActivityInputInfo.getUserId()));
+        } else {
+            list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
+            list.add(getUserPVData(userActivityInputInfo.getDate(), userActivityInputInfo.getUserId()));
         }
+        userActivityTrace.setData(list);
         return userActivityTrace;
     }
 
     /**
      * 通过day获取用户活跃度（PV）
+     *
      * @param day 日期 格式为"yyyy-MM-dd"
      * @return 该日期24小时的用户活跃度数据
      */
-    private int[] getPVData(String day){
-        int[] result = new int[24];
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        MongoCollection<Document> collection = mongoTemplate.getCollection(USER_ACTIVITY_TRACE);
-        long startTimeStamp = 0;
-        long endTimeStamp;
-        try {
-            startTimeStamp = df.parse(day).getTime();
-        } catch (ParseException e) {
-            logger.info(e.getMessage(), e);
+    private List<Object> getPVData(String day) {
+        List<Object> result = Lists.newArrayList();
+        Map<Object, Object> map = Maps.newHashMap();
+        for (int i = 0; i < 24; i++) {
+            map.put(i, 0);
         }
-        for(int i=0;i<24;i++){
-            endTimeStamp = startTimeStamp+60*60*1000;
-            Document match = new Document("$and", Arrays.asList(
-                    new Document("timestamp", new Document("$gte", startTimeStamp)),
-                    new Document("timestamp", new Document("$lt", endTimeStamp))
-            ));
-            int count = (int) collection.count(match);
-            result[i] = count;
-            startTimeStamp = startTimeStamp + 60*60*1000;
+        Block<Document> printBlock = document -> {
+            Object key = document.get("_id");
+            Object val = document.get("count");
+            map.put(key, val);
+        };
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
+        collection.aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.eq("date", day)),
+                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.sort(orderBy(ascending("_id")))
+                )
+        ).forEach(printBlock);
+        for (int i = 0; i < 24; i++) {
+            result.add(map.get(i));
         }
+        logger.info(day + "数据：" + result);
         return result;
     }
 
     /**
-     * 通过day获取用户活跃度（PV）
-     * @param day 日期 格式为"yyyy-MM-dd"
+     * 通过day和userId获取单个用户的活跃度（PV）
+     *
+     * @param day    日期 格式为"yyyy-MM-dd"
      * @param userId 用户Id
-     * @return 该日期,该用户24小时的用户活跃度数据
+     * @return 该日期, 该用户24小时的用户活跃度数据
      */
-    private int[] getUserPVData(String day, String userId){
-        int[] result = new int[24];
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        MongoCollection<Document> collection = mongoTemplate.getCollection(USER_ACTIVITY_TRACE);
-        long startTimeStamp = 0;
-        long endTimeStamp;
-        try {
-            startTimeStamp = df.parse(day).getTime();
-        } catch (ParseException e) {
-            logger.info(e.getMessage(), e);
-        }
-        for(int i=0;i<24;i++){
-            endTimeStamp = startTimeStamp+60*60*1000;
-            Document match = new Document("$and", Arrays.asList(
-                    new Document("timestamp", new Document("$gte", startTimeStamp)),
-                    new Document("timestamp", new Document("$lt", endTimeStamp)),
-                    new Document("userId", userId)
-            ));
-            int count = (int) collection.count(match);
-            result[i] = count;
-            startTimeStamp = startTimeStamp + 60*60*1000;
-        }
+    private List<Object> getUserPVData(String day, String userId) {
+        List<Object> result = Lists.newArrayList();
+        Block<Document> printBlock = document -> result.add(document.get("count"));
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
+        collection.aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.and(Filters.eq("date", day), Filters.eq("userId", userId))),
+                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.sort(orderBy(ascending("_id")))
+                )
+        ).forEach(printBlock);
+        logger.info(day + "数据：" + result);
         return result;
     }
 
     /**
      * 通过day获取用户活跃度（UV）
+     *
      * @param day 日期 格式为"yyyy-MM-dd"
      * @return 该日期24小时的用户活跃度数据
      */
-    private int[] getUVData(String day){
-        int[] result = new int[24];
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        MongoCollection<Document> collection = mongoTemplate.getCollection(USER_ACTIVITY_TRACE);
-        long startTimeStamp = 0;
-        long endTimeStamp;
-        try {
-            startTimeStamp = df.parse(day).getTime();
-        } catch (ParseException e) {
-            logger.info(e.getMessage(), e);
+    private List<Object> getUVData(String day) {
+        List<Object> result = Lists.newArrayList();
+        Block<Document> printBlock = document -> result.add(document.get("count"));
+        MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
+        collection.aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.eq("date", day)),
+                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.sort(orderBy(ascending("_id")))
+                )
+        ).forEach(printBlock);
+        logger.info(day + "数据：" + result);
+        return result;
+    }
+
+    /**
+     * 同步日期为day的数据
+     */
+    public void syncUserActivityInfo(String day) {
+        List<Object> todayPVList = getPVData(day);
+        UserActivityInfo userActivityInfo = new UserActivityInfo(day, PV, todayPVList.toString(), getTotalNum(todayPVList), new Date(), new Date());
+        if(1 != userActivityMapper.isExistUserActivity(day, PV)){
+            userActivityMapper.addUserActivity(userActivityInfo);
+        }else {
+            userActivityMapper.updateUserActivity(userActivityInfo);
         }
-        for(int i=0;i<24;i++){
-            endTimeStamp = startTimeStamp+60*60*1000;
-            Document match = new Document("$and", Arrays.asList(
-                    new Document("timestamp", new Document("$gte", startTimeStamp)),
-                    new Document("timestamp", new Document("$lt", endTimeStamp))
-            ));
-            int count = (int) collection.count(match);
-            result[i] = count;
-            startTimeStamp = startTimeStamp + 60*60*1000;
+
+    }
+
+    /**
+     * 从UserActivityInfo中读取用户活跃度
+     * @return List<Object>
+     */
+    private List<Object> getList(UserActivityInfo userActivityInfo){
+        List<Object> list = Lists.newArrayList();
+        String activityDate = userActivityInfo.getActivityDate();
+        int length = activityDate.length();
+        String[] activityDates = activityDate.substring(1,length-1).split(",");
+        for (String s:activityDates) {
+            list.add(Integer.valueOf(s.trim()));
+        }
+        return list;
+    }
+
+    /**
+     * 计算活跃度总数
+     *
+     * @param list List<Object>
+     * @return 活跃度总数
+     */
+    private int getTotalNum(List<Object> list) {
+        int result = 0;
+        for (Object object : list) {
+            result += Integer.parseInt(object.toString());
         }
         return result;
+    }
+
+    private MongoCollection<Document> link(String traceStr) {
+        return mongoTemplate.getCollection(traceStr);
     }
 }

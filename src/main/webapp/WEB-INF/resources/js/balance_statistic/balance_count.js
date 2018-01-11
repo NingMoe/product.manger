@@ -20,14 +20,17 @@ $(function obtainMacInfoByDay() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#macMonthChart").get(0).getContext("2d")));
+            let series = {name: "新增使用量", data: datas};
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 15);
+            drawOneIndexDaysChart("column", "mac-month-chart", "体脂秤设备新增使用量", "每天", null, series, startDate);
         }
     })
 });
@@ -49,14 +52,17 @@ $(function obtainMacYearData() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#macYearChart").get(0).getContext("2d")));
+            let series = {name: "新增使用量", data: datas};
+            let startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - 11);
+            drawOneIndexMonthsChart("column", "mac-year-chart", "体脂秤设备新增使用量", "每月", null, series, startDate);
         }
     })
 });
