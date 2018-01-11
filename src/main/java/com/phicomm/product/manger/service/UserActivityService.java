@@ -87,35 +87,36 @@ public class UserActivityService {
 
     /**
      * 具体逻辑处理
+     *
      * @return 活跃度list
      */
-    private List<List<Object>> dealData(UserActivityInputInfo userActivityInputInfo, String type){
+    private List<List<Object>> dealData(UserActivityInputInfo userActivityInputInfo, String type) {
         List<List<Object>> list = Lists.newArrayList();
         String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
         if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
-            list.add(getList(userActivityMapper.getUserActivity(today,type)));
-            if(1 != userActivityMapper.isExistUserActivity(yesterday, type)){
-                if(PV.equals(type)){
+            list.add(getList(userActivityMapper.getUserActivity(today, type)));
+            if (1 != userActivityMapper.isExistUserActivity(yesterday, type)) {
+                if (PV.equals(type)) {
                     list.add(getPVData(yesterday));
                     syncUserActivityInfo(yesterday, PV);
-                }else {
+                } else {
                     list.add(getUVData(yesterday));
                     syncUserActivityInfo(yesterday, UV);
                 }
-            }else {
-                list.add(getList(userActivityMapper.getUserActivity(yesterday,type)));
+            } else {
+                list.add(getList(userActivityMapper.getUserActivity(yesterday, type)));
             }
         } else if (null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()) {
-            list.add(getList(userActivityMapper.getUserActivity(today,type)));
-            if(1 != userActivityMapper.isExistUserActivity(userActivityInputInfo.getDate(), type)){
-                if(PV.equals(type)){
+            list.add(getList(userActivityMapper.getUserActivity(today, type)));
+            if (1 != userActivityMapper.isExistUserActivity(userActivityInputInfo.getDate(), type)) {
+                if (PV.equals(type)) {
                     list.add(getPVData(userActivityInputInfo.getDate()));
-                }else {
+                } else {
                     list.add(getUVData(userActivityInputInfo.getDate()));
                 }
-            }else {
-                list.add(getList(userActivityMapper.getUserActivity(userActivityInputInfo.getDate(),type)));
+            } else {
+                list.add(getList(userActivityMapper.getUserActivity(userActivityInputInfo.getDate(), type)));
             }
         } else if (null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
             list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
@@ -194,9 +195,9 @@ public class UserActivityService {
         Document group = new Document("_id", new Document("userId", "$userId")
                 .append("hour", "$hour"));
         Document group1 = new Document("_id", new Document("hour", "$_id.hour"))
-                .append("count", new Document("$sum",1));
+                .append("count", new Document("$sum", 1));
         AggregateIterable<Document> aggregate = collection
-                .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group),new Document("$group",group1)));
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group), new Document("$group", group1)));
         aggregate.forEach((Consumer<Document>) document -> {
             Object key = Integer.valueOf(JSON.parseObject(JSON.toJSONString(document.get("_id"))).getString("hour"));
             Object val = document.get("count").toString();
@@ -211,9 +212,10 @@ public class UserActivityService {
 
     /**
      * 初始化map
+     *
      * @return map
      */
-    private Map<Object, Object> initMap(){
+    private Map<Object, Object> initMap() {
         Map<Object, Object> map = Maps.newHashMap();
         for (int i = 0; i < HOURS; i++) {
             map.put(i, 0);
@@ -226,15 +228,15 @@ public class UserActivityService {
      */
     public void syncUserActivityInfo(String day, String type) {
         List<Object> todayList;
-        if (PV.equals(type)){
+        if (PV.equals(type)) {
             todayList = getPVData(day);
-        }else {
+        } else {
             todayList = getUVData(day);
         }
         UserActivityInfo userActivityInfo = new UserActivityInfo(day, type, todayList.toString(), getTotalNum(todayList), new Date(), new Date());
-        if(1 != userActivityMapper.isExistUserActivity(day, type)){
+        if (1 != userActivityMapper.isExistUserActivity(day, type)) {
             userActivityMapper.addUserActivity(userActivityInfo);
-        }else {
+        } else {
             userActivityMapper.updateUserActivity(userActivityInfo);
         }
 
@@ -242,14 +244,15 @@ public class UserActivityService {
 
     /**
      * 从UserActivityInfo中读取用户活跃度
+     *
      * @return List<Object>
      */
-    private List<Object> getList(UserActivityInfo userActivityInfo){
+    private List<Object> getList(UserActivityInfo userActivityInfo) {
         List<Object> list = Lists.newArrayList();
         String activityDate = userActivityInfo.getActivityDate();
         int length = activityDate.length();
-        String[] activityDates = activityDate.substring(1,length-1).split(",");
-        for (String s:activityDates) {
+        String[] activityDates = activityDate.substring(1, length - 1).split(",");
+        for (String s : activityDates) {
             list.add(Integer.valueOf(s.trim()));
         }
         return list;
@@ -268,6 +271,7 @@ public class UserActivityService {
         }
         return result;
     }
+
     private MongoCollection<Document> link(String traceStr) {
         return mongoTemplate.getCollection(traceStr);
     }
