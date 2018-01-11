@@ -15,14 +15,14 @@ $(function statisticUser() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            var shareDatas = data.data;
+            let shareDatas = data.data;
             layOutShareStatisticContent(shareDatas);
         }
     })
 });
 
 Object.size = function (obj) {
-    var size = 0, key;
+    let size = 0, key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) size++;
     }
@@ -35,19 +35,20 @@ Object.size = function (obj) {
  * @param shareDatas 绘制的数据
  */
 function layOutShareStatisticContent(shareDatas) {
-    var $sharePictureTemplate = $("#col-template");
-    var labels = getTimeLabels();
-    var i = 0;
-    for (var shareDataKey in shareDatas) {
+    let $sharePictureTemplate = $("#col-template");
+    let labels = getTimeLabels();
+    let i = 0;
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate() - 14);
+    for (let shareDataKey in shareDatas) {
         console.info(i);
-        var sharePictureIndex = "picture" + i;
-        var canvasIndex = "share-statistic-canvas" + i;
-        var sharePicture = $sharePictureTemplate.clone().css('display', 'block').attr("id", sharePictureIndex);
-        sharePicture.find(".box-title").text(shareDataKey);
-        var ctx = sharePicture.find("#share-statistic-canvas").attr("id", canvasIndex);
-        console.info(shareDatas[shareDataKey]);
-        drawBarChart(ctx, 'bar', labels, shareDataKey, shareDatas[shareDataKey]);
+        let sharePictureIndex = "picture" + i;
+        let canvasIndex = "share-statistic-canvas" + i;
+        let sharePicture = $sharePictureTemplate.clone().css('display', 'block').attr("id", sharePictureIndex);
+        sharePicture.find("#share-statistic-canvas").attr("id", canvasIndex);
+        let series = {name: shareDataKey, data: shareDatas[shareDataKey]};
         $("#base-row").append(sharePicture);
+        drawOneIndexDaysChart("column", canvasIndex, shareDataKey, "(最近14天)", null, series, startDate);
         i++;
     }
 }
@@ -92,8 +93,8 @@ function drawBarChart(ctx, type, labels, label, dataset) {
  * @returns {Array} 日期
  */
 function getTimeLabels() {
-    var labels = [];
-    for (var i = 0; i < 14; i++) {
+    let labels = [];
+    for (let i = 0; i < 14; i++) {
         labels.push(new Date().DateAdd('d', -14 + i).Format('yyyy-MM-dd'));
     }
     return labels;
@@ -107,7 +108,7 @@ function getTimeLabels() {
  * @constructor
  */
 Date.prototype.Format = function (fmt) {
-    var o = {
+    let o = {
         "M+": this.getMonth() + 1, //月份
         "d+": this.getDate(), //日
         "h+": this.getHours(), //小时
@@ -117,7 +118,7 @@ Date.prototype.Format = function (fmt) {
         "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o) {
+    for (let k in o) {
         if (new RegExp("(" + k + ")").test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         }
@@ -134,7 +135,7 @@ Date.prototype.Format = function (fmt) {
  * @constructor
  */
 Date.prototype.DateAdd = function (strInterval, Number) {
-    var dtTmp = this;
+    let dtTmp = this;
     switch (strInterval) {
         case 's':
             return new Date(Date.parse(dtTmp) + (1000 * Number));

@@ -5,7 +5,6 @@ import com.phicomm.product.manger.dao.BpmMeasureStatisticMapper;
 import com.phicomm.product.manger.model.bpm.BpmMeasureBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.apache.log4j.Logger;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

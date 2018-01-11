@@ -8,7 +8,6 @@ $(document).ready(function () {
 });
 
 
-
 /**
  * 获取过去30天的mac统计信息
  */
@@ -546,7 +545,7 @@ function getReport() {
     getThisDateActiveUser(date);
 
 }
-$(function(){
+$(function () {
     var date = document.getElementById("reportDate").value;
     updateElementsValuesByName("selectedDate", date);
     //当前日期下的S7使用量和截止当前日期的总使用量
@@ -591,8 +590,8 @@ function getThisDateActivation(date) {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            if (data.data !== null) {
-                console.log("-----"+data.data);
+            if (data.data.length !== 0) {
+                console.log("-----" + data.data);
                 updateElementsValuesByName("s7ActivationToday", formatNum(data.data[0]["lianbi"] + data.data[0]["wanjia"]));
                 updateElementsValuesByName("s7LianbiKKeysCountToday", formatNum(data.data[0]["lianbi"]));
                 updateElementsValuesByName("s7WanjiaKKeysCountToday", formatNum(data.data[0]["wanjia"]));
@@ -612,9 +611,12 @@ $(function getUsageCount() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            updateElementsValuesByName("s7ActivationAll", formatNum(data.data[0]["lianbi"] + data.data[0]["wanjia"]));
-            updateElementsValuesByName("s7LianbiKKeysCountAll", formatNum(data.data[0]["lianbi"]));
-            updateElementsValuesByName("s7WanjiaKKeysCountAll", formatNum(data.data[0]["wanjia"]));
+            if (data.data.length !== 0) {
+                updateElementsValuesByName("s7ActivationAll", formatNum(data.data[0]["lianbi"] + data.data[0]["wanjia"]));
+                updateElementsValuesByName("s7LianbiKKeysCountAll", formatNum(data.data[0]["lianbi"]));
+                updateElementsValuesByName("s7WanjiaKKeysCountAll", formatNum(data.data[0]["wanjia"]));
+            }
+
         }
     });
 });
@@ -639,11 +641,13 @@ function getThisDateActiveUser(date) {
         }, success: function (data) {
             let result = data.data.data;
             var activeUser = 0;
-            console.log("--------result-------" + result);
-            for (var i = 0; i < 24; i++) {
-                activeUser += result[1][i];
+            if (result.length === 2) {
+                for (var i = 0; i < 24; i++) {
+                    activeUser += result[0][i];
+                }
+                updateElementsValuesByName("s7ActiveToday", formatNum(activeUser));
             }
-            updateElementsValuesByName("s7ActiveToday", formatNum(activeUser));
+
         }
     })
 }

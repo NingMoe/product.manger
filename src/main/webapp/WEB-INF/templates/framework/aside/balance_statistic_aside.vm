@@ -2,7 +2,7 @@
 <li class="treeview" id="balance-statistic-1">
     <a href="#">
         <i class="fa fa-tasks"></i>
-        <span>体脂秤销售统计</span>
+        <span>体脂秤统计</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
