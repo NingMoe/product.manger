@@ -10,6 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Map;
+
 /**
  * balanceCronStatisticMapper的测试
  *
@@ -35,6 +37,21 @@ public class BalanceCronStatisticMapperTest {
     public void replaceTest() {
         CustomerContextHolder.selectLocalDataSource();
         balanceCronStatisticMapper.insertUpateBalanceAccountInfo(1, 1, 1);
+        CustomerContextHolder.clearDataSource();
+    }
+
+    @Test
+    public void getUserCountTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        Map<String, Map<String,Integer>> countMap = balanceCronStatisticMapper.getBalanceUserCountInfo();
+        System.out.println("countMap = " + countMap);
+    }
+
+    @Test
+    public void replaceUserCountTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        balanceCronStatisticMapper.insertUpdateBalanceUserCountInfo(0, "男", 500);
+        balanceCronStatisticMapper.insertUpdateBalanceUserCountInfo(1, "女", 400);
         CustomerContextHolder.clearDataSource();
     }
 }
