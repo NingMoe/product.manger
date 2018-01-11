@@ -198,7 +198,7 @@ public class UserActivityService {
         AggregateIterable<Document> aggregate = collection
                 .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group),new Document("$group",group1)));
         aggregate.forEach((Consumer<Document>) document -> {
-            Object key = JSON.parseObject(JSON.toJSONString(document.get("_id"))).getString("hour");
+            Object key = Integer.valueOf(JSON.parseObject(JSON.toJSONString(document.get("_id"))).getString("hour"));
             Object val = document.get("count").toString();
             map.put(key, val);
         });
@@ -225,8 +225,13 @@ public class UserActivityService {
      * 同步日期为day的数据
      */
     public void syncUserActivityInfo(String day, String type) {
-        List<Object> todayPVList = getPVData(day);
-        UserActivityInfo userActivityInfo = new UserActivityInfo(day, type, todayPVList.toString(), getTotalNum(todayPVList), new Date(), new Date());
+        List<Object> todayList;
+        if (PV.equals(type)){
+            todayList = getPVData(day);
+        }else {
+            todayList = getUVData(day);
+        }
+        UserActivityInfo userActivityInfo = new UserActivityInfo(day, type, todayList.toString(), getTotalNum(todayList), new Date(), new Date());
         if(1 != userActivityMapper.isExistUserActivity(day, type)){
             userActivityMapper.addUserActivity(userActivityInfo);
         }else {
