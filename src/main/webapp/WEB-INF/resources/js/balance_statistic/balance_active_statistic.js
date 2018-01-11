@@ -25,7 +25,7 @@ $(function statisticBalanceActive() {
             startDate.setDate(startDate.getDate() - 20);
             let series = [pvData, uvData];
             drawMultiIndexDaysChart("line", "balance-active-statistic-chart", "体脂称S7每日活跃量", "(PV-UV)",
-                null, series, startDate, 1);
+                "活跃度", series, startDate, 1);
         }
     })
 });
