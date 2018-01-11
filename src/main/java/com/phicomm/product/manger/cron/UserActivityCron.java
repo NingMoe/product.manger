@@ -31,6 +31,8 @@ public class UserActivityCron {
      */
     @Scheduled(cron = "0 0/30 * * * ?")
     public void syncUserActivityInfo() {
-        userActivityService.syncUserActivityInfo(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        String day = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        userActivityService.syncUserActivityInfo(day, "PV");
+        userActivityService.syncUserActivityInfo(day, "UV");
     }
 }
