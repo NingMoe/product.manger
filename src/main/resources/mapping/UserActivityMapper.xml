@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.UserActivityMapper">
+
+    <insert id="addUserActivity" parameterType="com.phicomm.product.manger.model.trace.UserActivityInfo">
+        INSERT INTO user_activity (
+            u_date,
+            u_type,
+            activity_data,
+            total,
+            update_time,
+            create_time
+        )VALUES
+        (
+            #{userActivityInfo.date,jdbcType=VARCHAR},
+            #{userActivityInfo.type,jdbcType=VARCHAR},
+            #{userActivityInfo.activityDate,jdbcType=VARCHAR},
+            #{userActivityInfo.total,jdbcType=INTEGER},
+            #{userActivityInfo.updateTime, jdbcType=TIMESTAMP},
+            #{userActivityInfo.createTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <select id="getUserActivity" resultType="com.phicomm.product.manger.model.trace.UserActivityInfo">
+        SELECT
+            u_date AS `date`,
+            u_type AS `type`,
+            activity_data AS activityDate,
+            total AS total,
+            update_time AS updateTime,
+            create_time AS createTime
+        FROM
+            user_activity
+        WHERE
+            u_date = #{date,jdbcType=VARCHAR}
+        AND
+            u_type = #{type,jdbcType=VARCHAR}
+    </select>
+
+    <select id="isExistUserActivity" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            user_activity
+        WHERE
+            u_date = #{date,jdbcType=VARCHAR}
+        AND
+            u_type = #{type,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateUserActivity" parameterType="com.phicomm.product.manger.model.trace.UserActivityInfo">
+        UPDATE user_activity
+        SET
+            activity_data = #{userActivityInfo.activityDate,jdbcType=VARCHAR},
+            total = #{userActivityInfo.total,jdbcType=INTEGER},
+            update_time = NOW()
+        WHERE
+            u_date = #{userActivityInfo.date,jdbcType=VARCHAR}
+        AND
+            u_type = #{userActivityInfo.type,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
