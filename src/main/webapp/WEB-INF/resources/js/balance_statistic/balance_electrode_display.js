@@ -29,7 +29,7 @@ $(function getBalanceElectrodeDisplay() {
             let startDate = new Date();
             startDate.setDate(startDate.getDate() - 20);
             drawMultiIndexDaysChart("line", "balance-electrode-display", "体脂秤电极使用分布统计", "(20天)",
-                null, series, startDate, 1);
+                "次数", series, startDate, 1);
         }
     });
 });
