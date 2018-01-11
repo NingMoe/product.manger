@@ -30,7 +30,7 @@ $(function obtainMacInfoByDay() {
             let series = {name: "新增使用量", data: datas};
             let startDate = new Date();
             startDate.setDate(startDate.getDate() - 15);
-            drawOneIndexDaysChart("column", "mac-month-chart", "体脂秤设备新增使用量", "(每天)", "台数", series, startDate);
+            drawOneIndexDaysChart("column", "mac-month-chart", "体脂秤设备新增使用量", "(最近15天)", "台数", series, startDate);
         }
     })
 });
@@ -62,7 +62,7 @@ $(function obtainMacYearData() {
             let series = {name: "新增使用量", data: datas};
             let startDate = new Date();
             startDate.setMonth(startDate.getMonth() - 11);
-            drawOneIndexMonthsChart("column", "mac-year-chart", "体脂秤设备新增使用量", "(每月)", "台数", series, startDate);
+            drawOneIndexMonthsChart("column", "mac-year-chart", "体脂秤设备新增使用量", "(最近12个月)", "台数", series, startDate);
         }
     })
 });
