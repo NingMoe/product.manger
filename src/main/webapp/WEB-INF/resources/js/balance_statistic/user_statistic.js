@@ -1,4 +1,3 @@
-import * as $ from "../../jquery/jquery-3.2.1";
 $(document).ready(function () {
     $("#balance-statistic-1").addClass("active");
     $("#balance-statistic-2").addClass("active");
@@ -62,7 +61,7 @@ $(function statisticUserByAge() {
                 {name: "男", data: boyData, color: "#95CEFF"},
                 {name: "女", data: girlData, color: "#FF7430"}
             ];
-            drawMultiIndexCategoryChart("column", "user-age-chart", "体脂称用户男女比例", "(年龄)", null,
+            drawMultiIndexCategoryChart("column", "user-age-chart", "体脂称用户男女比例", "(年龄)", "人数",
                 labels, series, 0);
         }
     })
@@ -127,12 +126,8 @@ $(function statisticMemberByAge() {
                 {name: "男", data: boyData, color: "#95CEFF"},
                 {name: "女", data: girlData, color: "#FF7430"}
             ];
-            drawMultiIndexCategoryChart("column", "member-age-chart", "体脂称用户男女比例", "(年龄)", null,
+            drawMultiIndexCategoryChart("column", "member-age-chart", "体脂称成员男女比例", "(年龄)", "人数",
                 labels, series, 0);
         }
     })
 });
-
-function drawChart(data) {
-
-}
