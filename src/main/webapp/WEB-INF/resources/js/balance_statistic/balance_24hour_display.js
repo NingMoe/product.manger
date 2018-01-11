@@ -22,7 +22,7 @@ $(function getBalance24HourDisplay() {
             let datas = rtValue.data.counts;
             let series = {name: "24小时数据", data: datas};
             drawOneIndex24HoursChart("column", "balance-24hour-display", "体脂秤测量次数统计分布", "(24小时)",
-                null, series);
+                "次数", series);
         }
     });
 });
