@@ -29,13 +29,14 @@ public class UserActivityController {
     private UserActivityService userActivityService;
 
     @Autowired
-    public UserActivityController(UserActivityService userActivityService){
+    public UserActivityController(UserActivityService userActivityService) {
         this.userActivityService = userActivityService;
         Assert.notNull(this.userActivityService);
     }
 
     /**
      * 统计24小时用户活跃度（PV）
+     *
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
@@ -47,13 +48,14 @@ public class UserActivityController {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint("common")
-    public Response<UserActivityTrace> traceUserActivityPV(@RequestBody UserActivityInputInfo userActivityInputInfo){
+    public Response<UserActivityTrace> traceUserActivityPV(@RequestBody UserActivityInputInfo userActivityInputInfo) {
         UserActivityTrace userActivityTrace = userActivityService.traceUserActivityPV(userActivityInputInfo);
         return new Response<UserActivityTrace>().setData(userActivityTrace);
     }
 
     /**
      * 统计24小时用户活跃度（UV）
+     *
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
@@ -65,7 +67,7 @@ public class UserActivityController {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
     })
     @FunctionPoint("common")
-    public Response<UserActivityTrace> traceUserActivityUV(@RequestBody UserActivityInputInfo userActivityInputInfo){
+    public Response<UserActivityTrace> traceUserActivityUV(@RequestBody UserActivityInputInfo userActivityInputInfo) {
         UserActivityTrace userActivityTrace = userActivityService.traceUserActivityUV(userActivityInputInfo);
         return new Response<UserActivityTrace>().setData(userActivityTrace);
     }
