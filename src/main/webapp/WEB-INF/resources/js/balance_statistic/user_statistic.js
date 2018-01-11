@@ -61,7 +61,7 @@ $(function statisticUserByAge() {
                 {name: "男", data: boyData, color: "#95CEFF"},
                 {name: "女", data: girlData, color: "#FF7430"}
             ];
-            drawMultiIndexCategoryChart("column", "user-age-chart", "体脂称用户男女比例", "(年龄)", null,
+            drawMultiIndexCategoryChart("column", "user-age-chart", "体脂称用户男女比例", "(年龄)", "人数",
                 labels, series, 0);
         }
     })
@@ -87,12 +87,11 @@ $(function statisticMember() {
             let womenData = datas[0];
             let menData = datas[1];
             let series = [{
-                name: "体脂秤用户男女比例",
+                name: "体脂秤成员男女比例",
                 data: [["男", menData], ["女", womenData]],
                 colors: ["#95CEFF", "#FF7430"]
             }];
-            drawPieChart("member-all-chart", "体脂秤用户男女比例", "(总)", series);
-
+            drawPieChart("member-all-chart", "体脂秤成员男女比例", "(总)", series);
         }
     })
 });
@@ -127,9 +126,8 @@ $(function statisticMemberByAge() {
                 {name: "男", data: boyData, color: "#95CEFF"},
                 {name: "女", data: girlData, color: "#FF7430"}
             ];
-            drawMultiIndexCategoryChart("column", "member-age-chart", "体脂称用户男女比例", "(年龄)", null,
+            drawMultiIndexCategoryChart("column", "member-age-chart", "体脂称成员男女比例", "(年龄)", "人数",
                 labels, series, 0);
         }
     })
 });
-
