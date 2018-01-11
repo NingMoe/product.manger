@@ -4,12 +4,11 @@ import com.phicomm.product.manger.dao.BalanceCronStatisticMapper;
 import com.phicomm.product.manger.dao.BalanceStatusMapper;
 import com.phicomm.product.manger.model.statistic.BalanceAccountInfo;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Date;
 
 /**
  * 体脂秤定时获取账号信息
@@ -19,6 +18,8 @@ import java.util.Date;
 
 @Component
 public class BalanceAccountInfoCron {
+
+    private static final Logger logger = Logger.getLogger(BalanceAccountInfoCron.class);
 
     private BalanceStatusMapper balanceStatusMapper;
 
@@ -37,7 +38,7 @@ public class BalanceAccountInfoCron {
      */
     @Scheduled(cron = "0 0 * * * ?")
     public void statistic() {
-        System.out.println("当前时间为" + new Date() + ", 定时任务：体脂秤账号统计信息每小时更新running now");
+        logger.info("定时任务：每小时更新体脂秤账号统计信息running now");
         CustomerContextHolder.selectProdDataSource();
         BalanceAccountInfo balanceAccountInfo = balanceStatusMapper.obtainAccountInfo();
         CustomerContextHolder.clearDataSource();
