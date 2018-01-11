@@ -2,7 +2,7 @@
 <li class="treeview" id="balance-trace-node">
     <a href="#">
         <i class="fa fa-anchor"></i>
-        <span>体脂秤埋点统计</span>
+        <span>APP统计</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
@@ -10,6 +10,6 @@
     <ul class="treeview-menu" id="balance-trace-menu-node">
         <li id="user-activity-trace-node"><a href="$baseUrl/balance/trace/user/activity"><i class="fa fa-meh-o"></i> 用户活跃度</a></li>
         <li id="terminal-activity-line-chart"><a href="$baseUrl/balance/terminal/activity/line/chart"><i class="fa fa-bar-chart"></i>App使用情况</a></li>
-        <li><a href="#"><i class="fa fa-html5"></i> XXXX</a></li>
+        <li id="share-statistic-trace-node"><a href="$baseUrl/share/statistic/page/14days"><i class="fa fa-meh-o"></i> 用户分享统计</a></li>
     </ul>
 </li>
