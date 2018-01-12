@@ -148,8 +148,30 @@ public class BalanceLocationService {
         CustomerContextHolder.selectLocalDataSource();
         List<LocationCountBean> countBeans = balanceCronStatisticMapper.getBalanceSaleLocationCountInfo();
         CustomerContextHolder.clearDataSource();
+        return convertCountBeanListToMap(countBeans);
+    }
+
+    /**
+     * 获取12个月内体脂秤各省份数据
+     *
+     * @return 省份数据
+     */
+    public Map<String, Integer> obtainLocationCount12Months() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> countBeans = balanceCronStatisticMapper.getBalanceSaleLocation12MonthsCountInfo();
+        CustomerContextHolder.clearDataSource();
+        return convertCountBeanListToMap(countBeans);
+    }
+
+    /**
+     * 将countBean List形式转换成Map形式
+     *
+     * @param countBeans 需要转换的List
+     * @return 转换后的map
+     */
+    private Map<String, Integer> convertCountBeanListToMap(List<LocationCountBean> countBeans) {
         if (countBeans.isEmpty()) {
-            return new HashMap<>();
+            return new HashMap<>(16);
         }
         Map<String, Integer> result = new LinkedHashMap<>();
         for (LocationCountBean countBean : countBeans) {

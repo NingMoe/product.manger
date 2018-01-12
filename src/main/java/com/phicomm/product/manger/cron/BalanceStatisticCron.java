@@ -114,15 +114,21 @@ public class BalanceStatisticCron {
 
         /*取30天的数据*/
         int day = 30;
+        /*取12个月的数据*/
+        int month = 12;
         /*取前15个省份*/
         int pageSize = 15;
         CustomerContextHolder.selectProdDataSource();
-        List<LocationCountBean> countBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
+        List<LocationCountBean> daysCountBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
+        List<LocationCountBean> monthsCountBeans = balanceLocationMapper.obtainLocationCountByMonth(month, pageSize);
         CustomerContextHolder.clearDataSource();
 
         CustomerContextHolder.selectLocalDataSource();
         balanceCronStatisticMapper.cleanBalanceSaleLocationCountInfo();
-        balanceCronStatisticMapper.insertBalanceSaleLocationCountInfo(countBeans);
+        balanceCronStatisticMapper.insertBalanceSaleLocationCountInfo(daysCountBeans);
+
+        balanceCronStatisticMapper.cleanBalanceSaleLocation12MonthsCountInfo();
+        balanceCronStatisticMapper.insertBalanceSaleLocation12MonthsCountInfo(monthsCountBeans);
         CustomerContextHolder.clearDataSource();
     }
 }
