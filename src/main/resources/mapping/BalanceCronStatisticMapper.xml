@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.BalanceCronStatisticMapper">
+
+    <!--
+            index: null
+            performance: good
+            check-time: 2018-01-11
+     -->
+    <select id="getBalanceAccountInfo" resultType="com.phicomm.product.manger.model.statistic.BalanceAccountInfo">
+        SELECT
+	      user_count AS userCount,
+	      member_count AS memberCount,
+	      mac_count AS macCount
+        FROM
+	      `balance_account_count_each_hour`;
+    </select>
+
+    <insert id="insertUpateBalanceAccountInfo">
+        REPLACE INTO `balance_account_count_each_hour` (
+            id,
+            user_count,
+            member_count,
+            mac_count
+        )
+        VALUES
+            (1,
+             #{userCount, jdbcType=INTEGER},
+             #{memberCount, jdbcType=INTEGER},
+             #{macCount, jdbcType=INTEGER} );
+    </insert>
+
+    <!--
+            index: null
+            performance: good
+            check-time: 2018-01-11
+     -->
+    <select id="getBalanceUserCountInfo" resultType="java.util.HashMap">
+        SELECT
+            gender AS gender,
+            `count` AS count
+        FROM
+            `balance_user_count_each_hour`;
+    </select>
+
+    <insert id="insertUpdateBalanceUserCountInfo">
+        REPLACE INTO `balance_user_count_each_hour` (id, gender, count)
+        VALUES
+            (#{id, jdbcType=INTEGER},
+             #{gender, jdbcType=VARCHAR},
+             #{count, jdbcType=INTEGER})
+    </insert>
+
+    <!--
+            index: null
+            performance: good
+            check-time: 2018-01-12
+     -->
+    <select id="getBalanceMemberCountInfo" resultType="java.util.HashMap">
+        SELECT
+        gender AS gender,
+        `count` AS count
+        FROM
+        `balance_member_count_each_hour`;
+    </select>
+
+    <insert id="insertUpdateBalanceMemberCountInfo">
+        REPLACE INTO `balance_member_count_each_hour` (id, gender, count)
+        VALUES
+        (#{id, jdbcType=INTEGER},
+        #{gender, jdbcType=VARCHAR},
+        #{count, jdbcType=INTEGER})
+    </insert>
+</mapper>

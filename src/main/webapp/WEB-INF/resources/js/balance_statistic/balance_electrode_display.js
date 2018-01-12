@@ -9,25 +9,27 @@ $(document).ready(function () {
 $(function getBalanceElectrodeDisplay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
-        type:"POST",
-        url:baseUrl + "/balance/statistic/balance/electrode/display",
-        contentType:"application/json",
-        dataType:"json",
-        error:function (req, status, error) {
+        type: "POST",
+        url: baseUrl + "/balance/statistic/balance/electrode/display",
+        contentType: "application/json",
+        dataType: "json",
+        error: function (req, status, error) {
             alert("getBalanceElectrodeDisplay error: " + error);
         },
-        success:function (rtValue) {
+        success: function (rtValue) {
             let dates = rtValue.data.dates;
             let electrode0Counts = rtValue.data.electrode0Counts;
             let electrode4Counts = rtValue.data.electrode4Counts;
             let electrode8Counts = rtValue.data.electrode8Counts;
-            console.info("rtValue.status = " + rtValue.status);
-            console.info("dates = " + dates.toString())
-            console.info("electrode0Counts = " + electrode0Counts.toString())
-            console.info("electrode4Counts = " + electrode4Counts.toString())
-            console.info("electrode8Counts = " + electrode8Counts.toString())
-            var ctx = $("#balance-electrode-display")
-            drawBarChart(ctx,'bar',dates,electrode0Counts,electrode4Counts,electrode8Counts);
+            let series = [
+                {name: "0电极", data: electrode0Counts},
+                {name: "4电极", data: electrode4Counts},
+                {name: "8电极", data: electrode8Counts}
+            ];
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 20);
+            drawMultiIndexDaysChart("line", "balance-electrode-display", "体脂秤电极使用分布统计", "(20天)",
+                "次数", series, startDate, 1);
         }
     });
 });
@@ -42,26 +44,26 @@ $(function getBalanceElectrodeDisplay() {
  * @param dataset2    数据集2
  * @todo 柱状图上方直接显示数据，需要后续添加
  */
-function drawBarChart(ctx, type, labels,dataset0, dataset1, dataset2) {
+function drawBarChart(ctx, type, labels, dataset0, dataset1, dataset2) {
     var myChart = new Chart(ctx, {
-        type:type,
+        type: type,
         data: {
-            labels:labels,
-            datasets:[
+            labels: labels,
+            datasets: [
                 {
-                    label:'电极0',
-                    data:dataset0,
-                    backgroundColor:'#666600'
+                    label: '电极0',
+                    data: dataset0,
+                    backgroundColor: '#666600'
                 },
                 {
-                    label:'电极4',
-                    data:dataset1,
-                    backgroundColor:'#99FF99'
+                    label: '电极4',
+                    data: dataset1,
+                    backgroundColor: '#99FF99'
                 },
                 {
-                    label:'电极8',
-                    data:dataset2,
-                    backgroundColor:'#4096B5'
+                    label: '电极8',
+                    data: dataset2,
+                    backgroundColor: '#4096B5'
                 }
             ],
         },
@@ -69,7 +71,7 @@ function drawBarChart(ctx, type, labels,dataset0, dataset1, dataset2) {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             }

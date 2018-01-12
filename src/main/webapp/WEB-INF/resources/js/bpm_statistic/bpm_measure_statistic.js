@@ -17,14 +17,18 @@ $(function getMeasureStatisticLast15Day() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureDayChart").get(0).getContext("2d")));
+            let series = {name: "血压计测量数据", data: datas};
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 12);
+            drawOneIndexDaysChart("column", "bpm-measure-day-chart", "血压计测量数据统计", "(最近12天)",
+                "次数", series, startDate);
         }
     })
 });
@@ -43,14 +47,18 @@ $(function getMeasureStatisticLast12Month() {
             alert('Failed reason: ' + err);
         }, success: function (data) {
             let labels = [];
-            let dates = [];
+            let datas = [];
             for (let key in data.data) {
                 if (data.data.hasOwnProperty(key)) {
                     labels.push(key);
-                    dates.push(data.data[key]);
+                    datas.push(data.data[key]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureMonthChart").get(0).getContext("2d")));
+            let series = {name: "血压计测量数据", data: datas};
+            let startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - 11);
+            drawOneIndexMonthsChart("column", "bpm-measure-month-chart", "血压计测量数据", "(最近12个月)",
+                "次数", series, startDate);
         }
     })
 });
@@ -69,99 +77,21 @@ $(function getMeasureStatisticHour() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            let labels = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
-            let dates = [];
+            let labels = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+            let datas = [];
             //for (var key in data.data) {
-            for (var i=0;i<24;i++ ) {
+            for (var i = 0; i < 24; i++) {
                 if (data.data.hasOwnProperty(labels[i])) {
                     //labels.push(key);
-                    dates.push(data.data[labels[i]]);
+                    datas.push(data.data[labels[i]]);
                 }
             }
-            drawBarChart(labels, dates, new Chart($("#bpmMeasureHourChart").get(0).getContext("2d")));
+            let series = {name: "24小时分布", data: datas};
+            drawOneIndex24HoursChart("column", "bpm-measure-hour-chart", "用户测量时间按小时分布", "(24小时)",
+                "次数", series);
         }
     })
 });
-
-/**
- * 绘制柱状图
- * @param labes 横坐标
- * @param datas 数据
- * @param chart 图表类型
- */
-function drawBarChart(labes, datas, chart) {
-    let chartDataArea = {
-        labels: labes,
-        datasets: [
-            {
-                fillColor: "#63b542",
-                strokeColor: "#72b553",
-                pointColor: "#4096B5",
-                data: datas
-            }
-        ]
-    };
-    const chartOption = {
-        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-        scaleBeginAtZero: true,
-        //Boolean - 是否显示网格线
-        scaleShowGridLines: false,
-        //String - 网格颜色
-        scaleGridLineColor: "#aaa69d",
-        //Number - 网格线宽度
-        scaleGridLineWidth: 1,
-        //Boolean - 是否显示水平线（不含x轴）
-        scaleShowHorizontalLines: true,
-        //Boolean - 是否显示垂直线（不含y轴）
-        scaleShowVerticalLines: true,
-        scaleLineColor: "#000000",
-        //Boolean - If there is a stroke on each bar
-        barShowStroke: true,
-        //字体颜色
-        scaleFontColor: "#000000",
-        scaleFontFamily: " 'Arial' ,'Microsoft YaHei'",
-        //字体大小
-        /*            scaleFontSize:13,
-         //字体
-         scaleFontFamily : "'Microsoft Yahei'",*/
-        //字体风格
-        scaleFontStyle: "500",
-        //Number - Pixel width of the bar stroke
-        barStrokeWidth: 1,
-        datasetFill: false,
-        //Number - Spacing between each of the X value sets
-        barValueSpacing: 5,
-        //Number - Spacing between data sets within X values
-        barDatasetSpacing: 1,
-        //String - 示例模板
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++)" +
-        "{%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%>" +
-        "<%=datasets[i].label%><%}%></li><%}%></ul>",
-        //Boolean - whether to make the chart responsive
-        responsive: true,
-        maintainAspectRatio: true,
-        //是否显示动画
-        animation: true,
-        //Number - Number of animation steps
-        animationSteps: 60,
-        //String - Animation easing effect
-        animationEasing: "easeOutQuart",
-        showTooltips: false,
-        onAnimationComplete: function () {
-            let ctx = this.chart.ctx;
-            ctx.font = this.scale.font;
-            ctx.fillStyle = this.scale.textColor;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-            this.datasets.forEach(function (dataset) {
-                dataset.bars.forEach(function (bar) {
-                    ctx.fillText(bar.value, bar.x, bar.y);
-                });
-            });
-        }
-    };
-    chart.Bar(chartDataArea, chartOption);
-}
 
 //------------------start ------------------------------
 //血压计测量数据总量
@@ -203,11 +133,10 @@ function measureTodayOrMonth() {
 }
 
 //开启定时
-$(function time()
-{
-    if(timeout4measureAll) return;
+$(function time() {
+    if (timeout4measureAll) return;
     measureAll();
     measureTodayOrMonth();
-    setTimeout(time,5000); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+    setTimeout(time, 5000); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
 });
 //----------------end---------------------------------------

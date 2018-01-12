@@ -19,8 +19,13 @@ $(function statisticBalanceActive() {
             console.info("uvs = " + uvs.toString());
             console.info("pvs = " + pvs.toString());
 
-            drawBarChart(dates, pvs, new Chart($("#balanceActiveStatisticChartPv").get(0).getContext("2d")));
-            drawBarChart(dates, uvs, new Chart($("#balanceActiveStatisticChartUv").get(0).getContext("2d")));
+            let pvData = {name: "pv", data: pvs};
+            let uvData = {name: "uv", data: uvs};
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() - 20);
+            let series = [pvData, uvData];
+            drawMultiIndexDaysChart("line", "balance-active-statistic-chart", "体脂称S7每日活跃量", "(PV-UV)",
+                "活跃度", series, startDate, 1);
         }
     })
 });
