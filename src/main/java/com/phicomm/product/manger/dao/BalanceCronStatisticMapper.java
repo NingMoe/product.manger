@@ -88,7 +88,26 @@ public interface BalanceCronStatisticMapper {
     void insertBalanceSaleLocationCountInfo(@Param("saleLocationCountList") List<LocationCountBean> locationCountBeanList);
 
     /**
-     * 清空表balance_sale_location_count_each_hour中所有数据
+     * 清空表balance_sale_location_30days_count_each_hour中所有数据
      */
     void cleanBalanceSaleLocationCountInfo();
+
+    /**
+     * 获取体脂秤销售12月省份数据
+     *
+     * @return 省份数据信息
+     */
+    List<LocationCountBean> getBalanceSaleLocation12MonthsCountInfo();
+
+    /**
+     * 插入12月各个省份体脂秤数量
+     *
+     * @param locationCountBeanList 体脂秤数量
+     */
+    void insertBalanceSaleLocation12MonthsCountInfo(@Param("saleLocationCountList") List<LocationCountBean> locationCountBeanList);
+
+    /**
+     * 清空表balance_sale_location_12months_count_each_hour中所有数据
+     */
+    void cleanBalanceSaleLocation12MonthsCountInfo();
 }

@@ -36,13 +36,7 @@ $(function obtainLocationYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/location/month",
-        dataType: "json",
-        data: {
-            "month": 12,
-            "type": "balance",
-            "pageSize": 15
-        },
+        url: baseUrl + "/balance/location/12months",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
