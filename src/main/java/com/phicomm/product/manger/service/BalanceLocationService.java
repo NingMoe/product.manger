@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.service;
 
 import com.google.common.collect.Lists;
+import com.phicomm.product.manger.dao.BalanceCronStatisticMapper;
 import com.phicomm.product.manger.dao.BalanceLocationMapper;
 import com.phicomm.product.manger.dao.LianbiActiveMapper;
 import com.phicomm.product.manger.model.statistic.BalanceLocation;
@@ -36,13 +37,18 @@ public class BalanceLocationService {
 
     private static final int DEFAULT_DAY = 30;
 
+    private BalanceCronStatisticMapper balanceCronStatisticMapper;
+
     @Autowired
     public BalanceLocationService(BalanceLocationMapper balanceLocationMapper,
-                                  LianbiActiveMapper lianbiActiveMapper) {
+                                  LianbiActiveMapper lianbiActiveMapper,
+                                  BalanceCronStatisticMapper balanceCronStatisticMapper) {
         this.balanceLocationMapper = balanceLocationMapper;
         this.lianbiActiveMapper = lianbiActiveMapper;
+        this.balanceCronStatisticMapper = balanceCronStatisticMapper;
         Assert.notNull(this.balanceLocationMapper);
         Assert.notNull(this.lianbiActiveMapper);
+        Assert.notNull(this.balanceCronStatisticMapper);
     }
 
     /**
@@ -97,7 +103,7 @@ public class BalanceLocationService {
         month = month <= 0 ? DEFAULT_MONTH : month;
         pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type)) {
             countBeans = balanceLocationMapper.obtainLocationCountByMonth(month, pageSize);
         }
         CustomerContextHolder.clearDataSource();
@@ -119,9 +125,28 @@ public class BalanceLocationService {
         day = day <= 0 ? DEFAULT_DAY : day;
         pageSize = pageSize <= 0 ? DEFAULT_LOCATION_PAGE_SIZE : pageSize;
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type)) {
             countBeans = balanceLocationMapper.obtainLocationCountByDay(day, pageSize);
         }
+        CustomerContextHolder.clearDataSource();
+        if (countBeans.isEmpty()) {
+            return new HashMap<>();
+        }
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (LocationCountBean countBean : countBeans) {
+            result.put(countBean.getProvince(), countBean.getGenerateCount());
+        }
+        return result;
+    }
+
+    /**
+     * 获取30天内体脂秤各省份数据
+     *
+     * @return 省份数据
+     */
+    public Map<String, Integer> obtainLocationCount30Days() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> countBeans = balanceCronStatisticMapper.getBalanceSaleLocationCountInfo();
         CustomerContextHolder.clearDataSource();
         if (countBeans.isEmpty()) {
             return new HashMap<>();

@@ -10,13 +10,7 @@ $(function obtainLocationInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/location/day",
-        dataType: "json",
-        data: {
-            "day": 30,
-            "type": "balance",
-            "pageSize": 15
-        },
+        url: baseUrl + "/balance/location/30days",
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {

@@ -71,4 +71,34 @@
         #{gender, jdbcType=VARCHAR},
         #{count, jdbcType=INTEGER})
     </insert>
+
+    <!--
+            index: null
+            performance: good
+            check-time: 2018-01-12
+     -->
+    <select id="getBalanceSaleLocationCountInfo" resultType="com.phicomm.product.manger.model.statistic.LocationCountBean">
+        SELECT
+            province AS province,
+            `count` AS generateCount
+        FROM
+            `balance_sale_location_30days_count_each_hour`
+        ORDER BY
+            `count` DESC;
+    </select>
+
+    <insert id="insertBalanceSaleLocationCountInfo">
+        INSERT INTO `balance_sale_location_30days_count_each_hour` (province, count)
+        VALUES
+        <foreach collection="saleLocationCountList" item="item" index="index" separator=",">
+            (
+            #{item.province, jdbcType=VARCHAR},
+            #{item.generateCount, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="cleanBalanceSaleLocationCountInfo">
+        TRUNCATE TABLE `balance_sale_location_30days_count_each_hour`
+    </delete>
 </mapper>

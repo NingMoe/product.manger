@@ -2,6 +2,7 @@ package com.phicomm.product.manger.caosong.dao;
 
 import com.phicomm.product.manger.dao.BalanceCronStatisticMapper;
 import com.phicomm.product.manger.model.statistic.BalanceAccountInfo;
+import com.phicomm.product.manger.model.statistic.LocationCountBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +46,7 @@ public class BalanceCronStatisticMapperTest {
     @Test
     public void getUserCountTest() {
         CustomerContextHolder.selectLocalDataSource();
-        Map<String, Map<String,Integer>> countMap = balanceCronStatisticMapper.getBalanceUserCountInfo();
+        Map<String, Map<String, Integer>> countMap = balanceCronStatisticMapper.getBalanceUserCountInfo();
         System.out.println("countMap = " + countMap);
     }
 
@@ -54,4 +57,54 @@ public class BalanceCronStatisticMapperTest {
         balanceCronStatisticMapper.insertUpdateBalanceUserCountInfo(1, "女", 400);
         CustomerContextHolder.clearDataSource();
     }
+
+    @Test
+    public void getBalanceSaleLocationCountTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> map = balanceCronStatisticMapper.getBalanceSaleLocationCountInfo();
+        System.out.println(map);
+        CustomerContextHolder.clearDataSource();
+    }
+
+    @Test
+    public void insertBalanceSaleLocationCountTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> list = new ArrayList<>();
+        LocationCountBean locationCountBean1 = new LocationCountBean();
+        locationCountBean1.setProvince("广东");
+        locationCountBean1.setGenerateCount(100);
+
+        LocationCountBean locationCountBean2 = new LocationCountBean();
+        locationCountBean2.setProvince("广西");
+        locationCountBean2.setGenerateCount(100);
+
+        LocationCountBean locationCountBean3 = new LocationCountBean();
+        locationCountBean3.setProvince("河南");
+        locationCountBean3.setGenerateCount(100);
+
+        LocationCountBean locationCountBean4 = new LocationCountBean();
+        locationCountBean4.setProvince("河北");
+        locationCountBean4.setGenerateCount(100);
+
+        list.add(locationCountBean1);
+        list.add(locationCountBean2);
+        list.add(locationCountBean3);
+        list.add(locationCountBean4);
+        balanceCronStatisticMapper.insertBalanceSaleLocationCountInfo(list);
+    }
+
+    @Test
+    public void getSaleLocationCountInfoTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> list = balanceCronStatisticMapper.getBalanceSaleLocationCountInfo();
+        System.out.println(list);
+    }
+
+    @Test
+    public void cleanSaleLocationCountInfoTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        balanceCronStatisticMapper.cleanBalanceSaleLocationCountInfo();
+        CustomerContextHolder.clearDataSource();
+    }
+
 }
