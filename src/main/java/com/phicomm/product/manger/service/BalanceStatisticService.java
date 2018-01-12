@@ -288,12 +288,11 @@ public class BalanceStatisticService {
     @SuppressWarnings("unchecked")
     public Map<String, Integer> statisticMember() {
         Map<String, Integer> result = new HashMap<>();
-        CustomerContextHolder.selectProdDataSource();
-        int menNum = balanceUserManagerMapper.statisticMember(1);
-        int womenNum = balanceUserManagerMapper.statisticMember(0);
+        CustomerContextHolder.selectLocalDataSource();
+        Map<String, Map<String, Integer>> memberCountInfo = balanceCronStatisticMapper.getBalanceMemberCountInfo();
+        result.put("男", memberCountInfo.get("男").get("count"));
+        result.put("女", memberCountInfo.get("女").get("count"));
         CustomerContextHolder.clearDataSource();
-        result.put("男", menNum);
-        result.put("女", womenNum);
         return result;
     }
 }

@@ -30,4 +30,9 @@ public class BalanceStatisticCronTest {
     public void userGenderCountTest() {
         balanceStatisticCron.userGenderCountStatistic();
     }
+
+    @Test
+    public void memberGenderCountTest() {
+        balanceStatisticCron.memberGenderCountStatistic();
+    }
 }

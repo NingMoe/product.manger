@@ -51,4 +51,23 @@ public interface BalanceCronStatisticMapper {
     void insertUpdateBalanceUserCountInfo(@Param("id") int id,
                                           @Param("gender") String gender,
                                           @Param("count") int count);
+
+    /**
+     * 获取用户成员性别统计信息
+     *
+     * @return 用户成员性别信息
+     */
+    @MapKey("gender")
+    Map<String, Map<String, Integer>> getBalanceMemberCountInfo();
+
+    /**
+     * 往用户性别信息表中插入数据
+     *
+     * @param id     表中id
+     * @param gender 性别
+     * @param count  数量
+     */
+    void insertUpdateBalanceMemberCountInfo(@Param("id") int id,
+                                            @Param("gender") String gender,
+                                            @Param("count") int count);
 }
