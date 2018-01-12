@@ -82,13 +82,13 @@
             province AS province,
             `count` AS generateCount
         FROM
-            `balance_sale_location_count_each_hour`
+            `balance_sale_location_30days_count_each_hour`
         ORDER BY
             `count` DESC;
     </select>
 
     <insert id="insertBalanceSaleLocationCountInfo">
-        INSERT INTO `balance_sale_location_count_each_hour` (province, count)
+        INSERT INTO `balance_sale_location_30days_count_each_hour` (province, count)
         VALUES
         <foreach collection="saleLocationCountList" item="item" index="index" separator=",">
             (
@@ -99,6 +99,6 @@
     </insert>
 
     <delete id="cleanBalanceSaleLocationCountInfo">
-        TRUNCATE TABLE `balance_sale_location_count_each_hour`
+        TRUNCATE TABLE `balance_sale_location_30days_count_each_hour`
     </delete>
 </mapper>

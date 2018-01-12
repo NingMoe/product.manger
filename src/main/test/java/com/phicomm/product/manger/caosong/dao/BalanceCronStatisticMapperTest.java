@@ -94,9 +94,17 @@ public class BalanceCronStatisticMapperTest {
     }
 
     @Test
+    public void getSaleLocationCountInfoTest() {
+        CustomerContextHolder.selectLocalDataSource();
+        List<LocationCountBean> list = balanceCronStatisticMapper.getBalanceSaleLocationCountInfo();
+        System.out.println(list);
+    }
+
+    @Test
     public void cleanSaleLocationCountInfoTest() {
         CustomerContextHolder.selectLocalDataSource();
         balanceCronStatisticMapper.cleanBalanceSaleLocationCountInfo();
         CustomerContextHolder.clearDataSource();
     }
+
 }
