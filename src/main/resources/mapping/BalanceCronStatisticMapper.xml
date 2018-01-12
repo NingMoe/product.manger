@@ -50,4 +50,25 @@
              #{gender, jdbcType=VARCHAR},
              #{count, jdbcType=INTEGER})
     </insert>
+
+    <!--
+            index: null
+            performance: good
+            check-time: 2018-01-12
+     -->
+    <select id="getBalanceMemberCountInfo" resultType="java.util.HashMap">
+        SELECT
+        gender AS gender,
+        `count` AS count
+        FROM
+        `balance_member_count_each_hour`;
+    </select>
+
+    <insert id="insertUpdateBalanceMemberCountInfo">
+        REPLACE INTO `balance_member_count_each_hour` (id, gender, count)
+        VALUES
+        (#{id, jdbcType=INTEGER},
+        #{gender, jdbcType=VARCHAR},
+        #{count, jdbcType=INTEGER})
+    </insert>
 </mapper>
