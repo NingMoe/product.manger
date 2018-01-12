@@ -24,8 +24,8 @@ $(function statisticUser() {
             let menData = datas[1];
             let series = [{
                 name: "体脂秤用户男女比例",
-                data: [["男", menData], ["女", womenData]],
-                colors: ["#95CEFF", "#FF7430"]
+                data: [["女", womenData],["男", menData]],
+                colors: ["#FF7430","#95CEFF"]
             }];
             drawPieChart("user-all-chart", "体脂秤用户男女比例", "(总)", series);
         }
@@ -88,8 +88,8 @@ $(function statisticMember() {
             let menData = datas[1];
             let series = [{
                 name: "体脂秤成员男女比例",
-                data: [["男", menData], ["女", womenData]],
-                colors: ["#95CEFF", "#FF7430"]
+                data: [["女", womenData],["男", menData]],
+                colors: ["#FF7430","#95CEFF"]
             }];
             drawPieChart("member-all-chart", "体脂秤成员男女比例", "(总)", series);
         }
