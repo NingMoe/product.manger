@@ -31,4 +31,4 @@
     </div>
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/mcu/balance_mcu_test_mac.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/mcu/balance_mcu_test_mac.js?v=$uuid"></script>

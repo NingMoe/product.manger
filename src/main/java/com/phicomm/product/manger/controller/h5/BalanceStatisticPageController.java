@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
+import com.phicomm.product.manger.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -40,6 +41,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "statistic/balance_k_code_active.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticKCodeActive"));
         return modelAndView;
@@ -55,6 +57,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "statistic/balance_count.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticCount"));
         return modelAndView;
@@ -70,6 +73,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "statistic/balance_sales_location.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceStatisticLocation"));
         return modelAndView;
@@ -85,6 +89,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "statistic/balance_account_info.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceAccount"));
         return modelAndView;
@@ -100,6 +105,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "statistic/user_analysis.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userAnalysis"));
         return modelAndView;
@@ -115,6 +121,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("context", "statistic/balance_active_statistic.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceActiveStatistic"));
         return modelAndView;
@@ -127,6 +134,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("context", "statistic/balance_24hour_display.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balance24HourDisplay"));
         return modelAndView;
@@ -138,6 +146,7 @@ public class BalanceStatisticPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("context", "statistic/balance_electrode_display.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceElectrodeDisplay"));
         return modelAndView;

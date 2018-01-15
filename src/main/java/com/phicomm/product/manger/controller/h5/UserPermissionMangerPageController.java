@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
+import com.phicomm.product.manger.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -41,6 +42,7 @@ public class UserPermissionMangerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("context", "user_manger/user_manger.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userManger"));
         return modelAndView;
@@ -56,6 +58,7 @@ public class UserPermissionMangerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("context", "user_manger/user_manger_create.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userMangerCreate"));
         return modelAndView;
@@ -71,6 +74,7 @@ public class UserPermissionMangerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("context", "user_manger/user_manger_list.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userMangerList"));
         return modelAndView;
@@ -87,6 +91,7 @@ public class UserPermissionMangerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("context", "user_manger/user_manger_modify.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("userMangerModify"));
         modelAndView.getModelMap().put("phoneNumber", phoneNumber);
@@ -103,6 +108,7 @@ public class UserPermissionMangerPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("context", "permission_manger/permission_manger.vm");
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("permissionManger"));
         return modelAndView;

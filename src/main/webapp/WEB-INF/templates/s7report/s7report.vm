@@ -81,98 +81,83 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7总使用数量</h4></label>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>总使用量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7DataUsageCountAll">0000</label>
+                            <label class="form-control" name="s7DataUsageCountAll">0</label>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7总k码激活数量</h4></label>
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>总激活量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7ActivationAll">0000</label>
+                            <label class="form-control" name="s7ActivationAll">0</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>联璧S7总k码激活数量</h4></label>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7LianbiKKeysCountAll">0000</label>
+                            <label class="form-control" name="s7LianbiKKeysCountAll">0</label>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>万家金服S7总k码激活数量</h4></label>
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7WanjiaKKeysCountAll">0000</label>
+                            <label class="form-control" name="s7WanjiaKKeysCountAll">0</label>
                         </div>
                     </div>
                 </div>
 
             ##                今日详情
                 <div class="row">
-                    <hr style="border:1 dashed #987cb9; margin-top: 0px;margin-bottom: 20px" width="100%"
-                        color=#987cb9 SIZE=1/>
+                    <hr style="height: 1px;width:96%;background-color:#62a7bc; margin-top: 0px;margin-bottom: 20px;padding: 0 10px"/>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-1" style="margin-left: 50px">
-                        <div>
-                            <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                    <div class="form-group col-md-6 ">
+                        <label class="col-sm-4 control-label"><h4>选择日期</h4></label>
+                        <div class="col-sm-6">
+                            <input class="form-control pull-right" type="date" id="reportDate">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="col-sm-10">
+                            <button type="button" style="margin-top: 10px" class="btn btn-primary pull-right phicomm_button_go"
                                     onclick="getReport()">
                                 获取该天详情
                             </button>
                         </div>
                     </div>
-                    <div class="form-group col-md-3 ">
-                        <label class="col-sm-4 control-label"><h4>选择日期</h4></label>
-                        <div class="col-sm-8">
-                            <input class="form-control pull-right" type="date" id="reportDate">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
-                ##                    <div class="form-group col-md-4">
-                ##                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7使用数量</h4></label>
-                ##                        <div class="col-sm-6">
-                ##                            <label class="form-control" name="s7DataUsageCountToday">0000</label>
-                ##                        </div>
-                ##                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>活跃用户合计</h4></label>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>活跃用户</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7ActiveToday">0000</label>
+                            <label class="form-control" name="s7ActiveToday">0</label>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>S7k码激活数量</h4></label>
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>激活数量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7ActivationToday">0000</label>
+                            <label class="form-control" name="s7ActivationToday">0</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>联璧S7k码激活数量</h4></label>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7LianbiKKeysCountToday">0000</label>
+                            <label class="form-control" name="s7LianbiKKeysCountToday">0</label>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-6 control-label"><h4>万家金服S7k码激活数量</h4></label>
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量</h4></label>
                         <div class="col-sm-6">
-                            <label class="form-control" name="s7WanjiaKKeysCountToday">0000</label>
+                            <label class="form-control" name="s7WanjiaKKeysCountToday">0</label>
                         </div>
                     </div>
                 </div>
-##                <div class="row">
-##                    <div class="form-group col-md-4">
-##                        <label for="activationDate" class="col-sm-6 control-label"><h4>活跃用户合计</h4></label>
-##                        <div class="col-sm-6">
-##                            <label class="form-control" name="s7ActiveToday">0000</label>
-##                        </div>
-##                    </div>
-##                </div>
             </div>
         </div>
     ##************************************图表一
@@ -183,14 +168,6 @@
                         <div class="box box-primary">
                             <h3 class="box-title">二、S7新增使用量</h3>
                         </div>
-                    ##                        <div class="stats-body">
-                    ##                            <ul style=" width:100%;background: rgba(208,208,208,0.99);text-align:left;">
-                    ##                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
-                    ##                                        name="selectedDate">2017/12/28</label>新增使用数量<label name="s7DataUsageCountToday">111</label>台，累计新增总量<label
-                    ##                                        name="s7DataUsageCountAll">111</label>台。</h4>
-                    ##                                </li>
-                    ##                            </ul>
-                    ##                        </div>
                     </div>
                 </div>
             </div>
@@ -314,6 +291,6 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js?v=$uuid"></script>
 

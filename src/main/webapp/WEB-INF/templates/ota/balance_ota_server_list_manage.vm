@@ -29,4 +29,4 @@
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_server_list_manage.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota_server_list_manage.js?v=$uuid"></script>
