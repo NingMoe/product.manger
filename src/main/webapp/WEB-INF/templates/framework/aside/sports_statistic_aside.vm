@@ -8,6 +8,7 @@
         </span>
     </a>
     <ul class="treeview-menu" id="trace-sport-menu-node">
-        <li id="user-activity-trace-sport-node"><a href="$baseUrl/trace/user/activity/sport"><i class="fa fa-meh-o"></i>用户活跃度</a></li>
+        <li id="user-activity-trace-sport-node"><a href="$baseUrl/trace/user/activity/sport"><i class="fa fa-meh-o"></i>用户活跃度</a>
+        </li>
     </ul>
 </li>
