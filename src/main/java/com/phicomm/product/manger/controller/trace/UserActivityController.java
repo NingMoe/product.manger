@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.controller.trace;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
+import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.model.trace.UserActivityInputInfo;
@@ -40,15 +41,17 @@ public class UserActivityController {
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    @RequestMapping(value = "balance/trace/user/activity/pv", method = RequestMethod.POST,
+    @RequestMapping(value = "trace/user/activity/pv", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ApiOperation("统计24小时用户活跃度")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
     })
     @FunctionPoint("common")
-    public Response<UserActivityTrace> traceUserActivityPV(@RequestBody UserActivityInputInfo userActivityInputInfo) {
+    public Response<UserActivityTrace> traceUserActivityPV(@RequestBody UserActivityInputInfo userActivityInputInfo)
+            throws DataFormatException {
         UserActivityTrace userActivityTrace = userActivityService.traceUserActivityPV(userActivityInputInfo);
         return new Response<UserActivityTrace>().setData(userActivityTrace);
     }
@@ -59,15 +62,17 @@ public class UserActivityController {
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    @RequestMapping(value = "balance/trace/user/activity/uv", method = RequestMethod.POST,
+    @RequestMapping(value = "trace/user/activity/uv", method = RequestMethod.POST,
             consumes = "application/json", produces = "application/json")
     @ApiOperation("统计24小时用户活跃度")
     @ResponseBody
     @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class)
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
     })
     @FunctionPoint("common")
-    public Response<UserActivityTrace> traceUserActivityUV(@RequestBody UserActivityInputInfo userActivityInputInfo) {
+    public Response<UserActivityTrace> traceUserActivityUV(@RequestBody UserActivityInputInfo userActivityInputInfo)
+            throws DataFormatException{
         UserActivityTrace userActivityTrace = userActivityService.traceUserActivityUV(userActivityInputInfo);
         return new Response<UserActivityTrace>().setData(userActivityTrace);
     }

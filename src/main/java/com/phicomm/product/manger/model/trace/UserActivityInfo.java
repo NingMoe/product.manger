@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class UserActivityInfo {
 
+    private String appId;
+
     private String date;
 
     private String type;
@@ -25,6 +27,14 @@ public class UserActivityInfo {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
     public String getDate() {
         return date;
@@ -77,7 +87,8 @@ public class UserActivityInfo {
     @Override
     public String toString() {
         return "UserActivityInfo{" +
-                "date='" + date + '\'' +
+                "appId='" + appId + '\'' +
+                ", date='" + date + '\'' +
                 ", type='" + type + '\'' +
                 ", activityDate='" + activityDate + '\'' +
                 ", total=" + total +
@@ -86,7 +97,8 @@ public class UserActivityInfo {
                 '}';
     }
 
-    public UserActivityInfo(String date, String type, String activityDate, int total, Date updateTime, Date createTime) {
+    public UserActivityInfo(String appId, String date, String type, String activityDate, int total, Date updateTime, Date createTime) {
+        this.appId = appId;
         this.date = date;
         this.type = type;
         this.activityDate = activityDate;

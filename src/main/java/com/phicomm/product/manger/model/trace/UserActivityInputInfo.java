@@ -12,6 +12,8 @@ public class UserActivityInputInfo {
 
     private String date;
 
+    private String appId;
+
     public String getUserId() {
         return userId;
     }
@@ -28,11 +30,20 @@ public class UserActivityInputInfo {
         this.date = date;
     }
 
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
     @Override
     public String toString() {
         return "UserActivityInputInfo{" +
                 "userId='" + userId + '\'' +
                 ", date='" + date + '\'' +
+                ", appId='" + appId + '\'' +
                 '}';
     }
 }
