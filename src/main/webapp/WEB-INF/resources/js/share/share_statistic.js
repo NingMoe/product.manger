@@ -15,6 +15,7 @@ $(document).ready(function () {
 $(function statisticUser() {
     const baseUrl = $("#baseUrl").val();
     console.info("baseUrl = " + baseUrl);
+    phicommLoading.show();
     $.ajax({
         type: "POST",
         url: baseUrl + "/share/statistic/14days",
@@ -25,6 +26,7 @@ $(function statisticUser() {
         }, success: function (data) {
             let shareDatas = data.data;
             layOutShareStatisticContent(shareDatas);
+            phicommLoading.hide();
         }
     })
 });
