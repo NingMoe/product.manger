@@ -236,7 +236,7 @@ public class FeedbackController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<List<Permission>> getPermissionList(){
+    public Response<List<Permission>> getPermissionList() {
         List<Permission> permissions = feedbackService.getPermissionList();
         return new Response<List<Permission>>().setData(permissions);
     }
