@@ -1,13 +1,13 @@
 $(document).ready(function () {
-    $("#balance-statistic-1").addClass("active");
-    $("#balance-statistic-2").addClass("active");
-    $("#user-activity-trace-balance-node").addClass("active");
+    $("#trace-sport-node").addClass("active");
+    $("#trace-sport-menu-node").addClass("active");
+    $("#user-activity-trace-sport-node").addClass("active");
 });
 $(function traceUserActivityPV() {
     let baseUrl = $("#baseUrl").val();
     let userId = null;
     let date = null;
-    let appId = "balance";
+    let appId = "147759445162119";
     $.ajax({
         type: "POST",
         url: baseUrl + "/trace/user/activity/pv",
@@ -34,7 +34,7 @@ $(function traceUserActivityUV() {
     let baseUrl = $("#baseUrl").val();
     let userId = null;
     let date = null;
-    let appId = "balance";
+    let appId = "147759445162119";
     $.ajax({
         type: "POST",
         url: baseUrl + "/trace/user/activity/uv",

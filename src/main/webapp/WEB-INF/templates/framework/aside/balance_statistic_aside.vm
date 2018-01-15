@@ -16,6 +16,7 @@
         <li><a href="$baseUrl/balance/shipment/status"><i class="fa fa-truck"></i> 体脂秤出货查询</a></li>
         <li><a href="$baseUrl/statistic/page/user/analysis"><i class="fa fa-bullhorn"></i> 用户成分分析</a></li>
         <li><a href="$baseUrl/statistic/page/balance/active/statistic"><i class="fa fa-truck"></i> 体脂秤日活统计</a></li>
+        <li id="user-activity-trace-balance-node"><a href="$baseUrl/trace/user/activity/balance"><i class="fa fa-meh-o"></i> 用户活跃度</a></li>
         <li><a href="$baseUrl/statistic/page/balance/24hour/display"><i class="fa fa-line-chart"></i> 体脂秤24小时测量数据统计</a></li>
         <li><a href="$baseUrl/statistic/page/balance/electrode/display"><i class="fa fa-line-chart"></i> 体脂秤测量数据电极数统计</a></li>
         <li><a href="$baseUrl/statistic/sales/statistic/projection">

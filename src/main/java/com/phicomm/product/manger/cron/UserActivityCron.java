@@ -20,6 +20,8 @@ public class UserActivityCron {
 
     private UserActivityService userActivityService;
 
+    private static final String[] APP_IDS = {"all", "balance", "147759445162119"};
+
     @Autowired
     public UserActivityCron(UserActivityService userActivityService){
         this.userActivityService = userActivityService;
@@ -32,7 +34,9 @@ public class UserActivityCron {
     @Scheduled(cron = "0 0/30 * * * ?")
     public void syncUserActivityInfo() {
         String day = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        userActivityService.syncUserActivityInfo(day, "PV");
-        userActivityService.syncUserActivityInfo(day, "UV");
+        for (String appId:APP_IDS) {
+            userActivityService.syncUserActivityInfo(day, "PV", appId);
+            userActivityService.syncUserActivityInfo(day, "UV", appId);
+        }
     }
 }

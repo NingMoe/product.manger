@@ -1,6 +1,7 @@
 package com.phicomm.product.manger.service;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mongodb.Block;
@@ -10,6 +11,7 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.phicomm.product.manger.dao.UserActivityMapper;
+import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.trace.UserActivityInfo;
 import com.phicomm.product.manger.model.trace.UserActivityInputInfo;
 import com.phicomm.product.manger.model.trace.UserActivityTrace;
@@ -48,6 +50,7 @@ public class UserActivityService {
     private static final String USER_ACTIVITY_TRACE = "user_activity_trace";
     private static final String PV = "PV";
     private static final String UV = "UV";
+    private static final String[] APP_IDS = {"all", "balance", "147759445162119"};
     private static final int HOURS = 24;
 
     @Autowired
@@ -65,7 +68,8 @@ public class UserActivityService {
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    public UserActivityTrace traceUserActivityPV(UserActivityInputInfo userActivityInputInfo) {
+    public UserActivityTrace traceUserActivityPV(UserActivityInputInfo userActivityInputInfo)
+            throws DataFormatException {
         UserActivityTrace userActivityTrace = new UserActivityTrace();
         List<List<Object>> list = dealData(userActivityInputInfo, PV);
         userActivityTrace.setData(list);
@@ -78,7 +82,8 @@ public class UserActivityService {
      * @param userActivityInputInfo 用户活跃度传入信息
      * @return 24小时用户活跃度
      */
-    public UserActivityTrace traceUserActivityUV(UserActivityInputInfo userActivityInputInfo) {
+    public UserActivityTrace traceUserActivityUV(UserActivityInputInfo userActivityInputInfo)
+            throws DataFormatException {
         UserActivityTrace userActivityTrace = new UserActivityTrace();
         List<List<Object>> list = dealData(userActivityInputInfo, UV);
         userActivityTrace.setData(list);
@@ -86,37 +91,52 @@ public class UserActivityService {
     }
 
     /**
+     * 检查userActivityInputInfo是否为空
+     *
+     * @param userActivityInputInfo 传入信息
+     * @throws DataFormatException 数据格式异常
+     */
+    private void checkInputInfo(UserActivityInputInfo userActivityInputInfo, String type) throws DataFormatException {
+        if (null == userActivityInputInfo || Strings.isNullOrEmpty(type)) {
+            throw new DataFormatException();
+        }
+    }
+
+    /**
      * 具体逻辑处理
      *
      * @return 活跃度list
      */
-    private List<List<Object>> dealData(UserActivityInputInfo userActivityInputInfo, String type) {
+    private List<List<Object>> dealData(UserActivityInputInfo userActivityInputInfo, String type)
+            throws DataFormatException {
+        checkInputInfo(userActivityInputInfo, type);
         List<List<Object>> list = Lists.newArrayList();
         String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(new DateTime().minusDays(1).toDate());
+        String appId = userActivityInputInfo.getAppId();
         if (null == userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
-            list.add(getList(userActivityMapper.getUserActivity(today, type)));
-            if (1 != userActivityMapper.isExistUserActivity(yesterday, type)) {
+            list.add(getList(userActivityMapper.getUserActivity(today, type, appId)));
+            if (1 != userActivityMapper.isExistUserActivity(yesterday, type, appId)) {
                 if (PV.equals(type)) {
-                    list.add(getPVData(yesterday));
-                    syncUserActivityInfo(yesterday, PV);
+                    list.add(getPVData(yesterday, appId));
+                    syncUserActivityInfo(yesterday, PV, appId);
                 } else {
-                    list.add(getUVData(yesterday));
-                    syncUserActivityInfo(yesterday, UV);
+                    list.add(getUVData(yesterday, appId));
+                    syncUserActivityInfo(yesterday, UV, appId);
                 }
             } else {
-                list.add(getList(userActivityMapper.getUserActivity(yesterday, type)));
+                list.add(getList(userActivityMapper.getUserActivity(yesterday, type, appId)));
             }
         } else if (null == userActivityInputInfo.getUserId() && null != userActivityInputInfo.getDate()) {
-            list.add(getList(userActivityMapper.getUserActivity(today, type)));
-            if (1 != userActivityMapper.isExistUserActivity(userActivityInputInfo.getDate(), type)) {
+            list.add(getList(userActivityMapper.getUserActivity(today, type, appId)));
+            if (1 != userActivityMapper.isExistUserActivity(userActivityInputInfo.getDate(), type, appId)) {
                 if (PV.equals(type)) {
-                    list.add(getPVData(userActivityInputInfo.getDate()));
+                    list.add(getPVData(userActivityInputInfo.getDate(), appId));
                 } else {
-                    list.add(getUVData(userActivityInputInfo.getDate()));
+                    list.add(getUVData(userActivityInputInfo.getDate(), appId));
                 }
             } else {
-                list.add(getList(userActivityMapper.getUserActivity(userActivityInputInfo.getDate(), type)));
+                list.add(getList(userActivityMapper.getUserActivity(userActivityInputInfo.getDate(), type, appId)));
             }
         } else if (null != userActivityInputInfo.getUserId() && null == userActivityInputInfo.getDate()) {
             list.add(getUserPVData(today, userActivityInputInfo.getUserId()));
@@ -131,10 +151,11 @@ public class UserActivityService {
     /**
      * 通过day获取用户活跃度（PV）
      *
-     * @param day 日期 格式为"yyyy-MM-dd"
+     * @param day   日期 格式为"yyyy-MM-dd"
+     * @param appId appId
      * @return 该日期24小时的用户活跃度数据
      */
-    private List<Object> getPVData(String day) {
+    private List<Object> getPVData(String day, String appId) {
         List<Object> result = Lists.newArrayList();
         Map<Object, Object> map = initMap();
         Block<Document> printBlock = document -> {
@@ -143,14 +164,26 @@ public class UserActivityService {
             map.put(key, val);
         };
         MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
-        for (Document document : collection.aggregate(
-                Arrays.asList(
-                        Aggregates.match(Filters.eq("date", day)),
-                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
-                        Aggregates.sort(orderBy(ascending("_id")))
-                )
-        )) {
-            printBlock.apply(document);
+        if (APP_IDS[0].equals(appId)) {
+            for (Document document : collection.aggregate(
+                    Arrays.asList(
+                            Aggregates.match(Filters.eq("date", day)),
+                            Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                            Aggregates.sort(orderBy(ascending("_id")))
+                    )
+            )) {
+                printBlock.apply(document);
+            }
+        } else {
+            for (Document document : collection.aggregate(
+                    Arrays.asList(
+                            Aggregates.match(Filters.and(Filters.eq("date", day), Filters.eq("appId", appId))),
+                            Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                            Aggregates.sort(orderBy(ascending("_id")))
+                    )
+            )) {
+                printBlock.apply(document);
+            }
         }
         for (int i = 0; i < HOURS; i++) {
             result.add(map.get(i));
@@ -187,11 +220,16 @@ public class UserActivityService {
      * @param day 日期 格式为"yyyy-MM-dd"
      * @return 该日期24小时的用户活跃度数据
      */
-    private List<Object> getUVData(String day) {
+    private List<Object> getUVData(String day, String appId) {
         List<Object> result = Lists.newArrayList();
         Map<Object, Object> map = initMap();
         MongoCollection<Document> collection = link(USER_ACTIVITY_TRACE);
-        Document match = new Document("date", day);
+        Document match;
+        if (APP_IDS[0].equals(appId)) {
+            match = new Document("date", day);
+        } else {
+            match = new Document("date", day).append("appId", appId);
+        }
         Document group = new Document("_id", new Document("userId", "$userId")
                 .append("hour", "$hour"));
         Document group1 = new Document("_id", new Document("hour", "$_id.hour"))
@@ -226,20 +264,19 @@ public class UserActivityService {
     /**
      * 同步日期为day的数据
      */
-    public void syncUserActivityInfo(String day, String type) {
-        List<Object> todayList;
+    public void syncUserActivityInfo(String day, String type, String appId) {
+        List<Object> todayList = Lists.newArrayList();
         if (PV.equals(type)) {
-            todayList = getPVData(day);
-        } else {
-            todayList = getUVData(day);
+            todayList = getPVData(day, appId);
+        } else if (UV.equals(type)) {
+            todayList = getUVData(day, appId);
         }
-        UserActivityInfo userActivityInfo = new UserActivityInfo(day, type, todayList.toString(), getTotalNum(todayList), new Date(), new Date());
-        if (1 != userActivityMapper.isExistUserActivity(day, type)) {
+        UserActivityInfo userActivityInfo = new UserActivityInfo(appId, day, type, todayList.toString(), getTotalNum(todayList), new Date(), new Date());
+        if (1 != userActivityMapper.isExistUserActivity(day, type, appId)) {
             userActivityMapper.addUserActivity(userActivityInfo);
         } else {
             userActivityMapper.updateUserActivity(userActivityInfo);
         }
-
     }
 
     /**
@@ -271,7 +308,6 @@ public class UserActivityService {
         }
         return result;
     }
-
     private MongoCollection<Document> link(String traceStr) {
         return mongoTemplate.getCollection(traceStr);
     }
