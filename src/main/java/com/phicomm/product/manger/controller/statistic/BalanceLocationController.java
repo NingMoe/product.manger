@@ -110,4 +110,30 @@ public class BalanceLocationController {
         return new Response<Map<String, Integer>>().setData(locationInfo);
     }
 
+
+    @RequestMapping(
+            value = "/balance/location/30days",
+            method = RequestMethod.POST,
+            produces = "application/json"
+    )
+    @ResponseBody
+    @ApiOperation("30天统计位置信息")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainLocaionCount30Days() {
+        Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCount30Days();
+        return new Response<Map<String, Integer>>().setData(locationInfo);
+    }
+
+    @RequestMapping(
+            value = "/balance/location/12months",
+            method = RequestMethod.POST,
+            produces = "application/json"
+    )
+    @ResponseBody
+    @ApiOperation("12个月统计位置信息")
+    @PublicInterface
+    public Response<Map<String, Integer>> obtainLocationCount12Months() {
+        Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCount12Months();
+        return new Response<Map<String, Integer>>().setData(locationInfo);
+    }
 }
