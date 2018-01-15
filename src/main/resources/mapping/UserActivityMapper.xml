@@ -4,14 +4,16 @@
 
     <insert id="addUserActivity" parameterType="com.phicomm.product.manger.model.trace.UserActivityInfo">
         INSERT INTO user_activity (
-            u_date,
-            u_type,
+            app_id,
+            `date`,
+            `type`,
             activity_data,
             total,
             update_time,
             create_time
         )VALUES
         (
+            #{userActivityInfo.appId,jdbcType=VARCHAR},
             #{userActivityInfo.date,jdbcType=VARCHAR},
             #{userActivityInfo.type,jdbcType=VARCHAR},
             #{userActivityInfo.activityDate,jdbcType=VARCHAR},
@@ -23,8 +25,9 @@
 
     <select id="getUserActivity" resultType="com.phicomm.product.manger.model.trace.UserActivityInfo">
         SELECT
-            u_date AS `date`,
-            u_type AS `type`,
+            app_id AS appId,
+            `date` AS `date`,
+            `type` AS `type`,
             activity_data AS activityDate,
             total AS total,
             update_time AS updateTime,
@@ -32,9 +35,11 @@
         FROM
             user_activity
         WHERE
-            u_date = #{date,jdbcType=VARCHAR}
+            `date` = #{date,jdbcType=VARCHAR}
         AND
-            u_type = #{type,jdbcType=VARCHAR}
+            `type` = #{type,jdbcType=VARCHAR}
+        AND
+            app_id = #{appId,jdbcType=VARCHAR}
     </select>
 
     <select id="isExistUserActivity" resultType="java.lang.Integer">
@@ -43,9 +48,11 @@
         FROM
             user_activity
         WHERE
-            u_date = #{date,jdbcType=VARCHAR}
+            `date` = #{date,jdbcType=VARCHAR}
         AND
-            u_type = #{type,jdbcType=VARCHAR}
+            `type` = #{type,jdbcType=VARCHAR}
+        AND
+            app_id = #{appId,jdbcType=VARCHAR}
     </select>
 
     <update id="updateUserActivity" parameterType="com.phicomm.product.manger.model.trace.UserActivityInfo">
@@ -55,9 +62,11 @@
             total = #{userActivityInfo.total,jdbcType=INTEGER},
             update_time = NOW()
         WHERE
-            u_date = #{userActivityInfo.date,jdbcType=VARCHAR}
+            `date` = #{userActivityInfo.date,jdbcType=VARCHAR}
         AND
-            u_type = #{userActivityInfo.type,jdbcType=VARCHAR}
+            `type` = #{userActivityInfo.type,jdbcType=VARCHAR}
+        AND
+            app_id = #{userActivityInfo.appId,jdbcType=VARCHAR}
     </update>
 
 </mapper>

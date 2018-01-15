@@ -291,6 +291,6 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/myUtils.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/s7report/s7report.js?v=$uuid"></script>
 

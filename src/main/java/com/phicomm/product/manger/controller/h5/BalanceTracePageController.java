@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
+import com.phicomm.product.manger.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -31,13 +32,38 @@ public class BalanceTracePageController {
         Assert.notNull(this.navigationManger);
     }
 
-    @RequestMapping(value = "balance/trace/user/activity", method = RequestMethod.GET)
-    @ApiIgnore("用户活跃度页面展示")
+    @RequestMapping(value = "trace/user/activity", method = RequestMethod.GET)
+    @ApiIgnore("所有用户活跃度页面展示")
     @FunctionPoint(value = "common")
-    public ModelAndView showEssayAddProdPage(HttpSession session) {
+    public ModelAndView userActivityPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "trace/trace_user_activity.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("traceUserActivity"));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "trace/user/activity/sport", method = RequestMethod.GET)
+    @ApiIgnore("运动用户活跃度页面展示")
+    @FunctionPoint(value = "common")
+    public ModelAndView sportUserActivityPage(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("framework/main_layout");
+        AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
+        modelAndView.getModel().put("context", "trace/sport_trace_user_activity.vm");
+        modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("sportTraceUserActivity"));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "trace/user/activity/balance", method = RequestMethod.GET)
+    @ApiIgnore("健康用户活跃度页面展示")
+    @FunctionPoint(value = "common")
+    public ModelAndView healthUserActivityPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "trace/balance_trace_user_activity.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceTraceUserActivity"));
         return modelAndView;
@@ -56,6 +82,7 @@ public class BalanceTracePageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "trace/balance_terminal_app.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("terminalLineChart"));
         return modelAndView;

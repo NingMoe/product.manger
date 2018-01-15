@@ -745,7 +745,7 @@
     </navigation>
 
     <navigation>
-        <id>balanceTraceUserActivity</id>
+        <id>traceUserActivity</id>
         <title>
             <title-name>用户活跃度</title-name>
             <title-description>用户活跃度</title-description>
@@ -753,7 +753,39 @@
         <directory>
             <icon>fa fa-dashboard</icon>
             <name>Home</name>
-            <url>$baseUrl/balance/trace/user/activity</url>
+            <url>$baseUrl/trace/user/activity</url>
+            <sub-directories>
+                <name>traceUserActivity</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>sportTraceUserActivity</id>
+        <title>
+            <title-name>运动用户活跃度</title-name>
+            <title-description>运动用户活跃度</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/trace/user/activity/sport</url>
+            <sub-directories>
+                <name>sportTraceUserActivity</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceTraceUserActivity</id>
+        <title>
+            <title-name>健康用户活跃度</title-name>
+            <title-description>健康用户活跃度</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/trace/user/activity/balance</url>
             <sub-directories>
                 <name>balanceTraceUserActivity</name>
             </sub-directories>

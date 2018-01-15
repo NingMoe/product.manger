@@ -45,4 +45,4 @@
 </section>
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/essay/essay_add_test.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/essay/essay_add_test.js?v=$uuid"></script>

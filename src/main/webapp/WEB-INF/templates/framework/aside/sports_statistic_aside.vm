@@ -1,5 +1,5 @@
 <li class="header">user share statistic</li>
-<li class="treeview" id="share-statistic-node">
+<li class="treeview" id="trace-sport-node">
     <a href="#">
         <i class="fa fa-anchor"></i>
         <span>运动统计</span>
@@ -7,7 +7,8 @@
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
-    <ul class="treeview-menu" id="sports-statistic-menu-node">
-        <li><a href="#"><i class="fa fa-html5"></i> XXXX</a></li>
+    <ul class="treeview-menu" id="trace-sport-menu-node">
+        <li id="user-activity-trace-sport-node"><a href="$baseUrl/trace/user/activity/sport"><i class="fa fa-meh-o"></i>用户活跃度</a>
+        </li>
     </ul>
 </li>

@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
+import com.phicomm.product.manger.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -33,10 +34,11 @@ public class EssayPageController {
     @RequestMapping(value = "essay/add/prod", method = RequestMethod.GET)
     @ApiIgnore("文章新增页面展示(生产环境)")
     @FunctionPoint(value = "common")
-    public ModelAndView showEssayAddProdPage(HttpSession session){
+    public ModelAndView showEssayAddProdPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "essay/essay_add_prod.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("essayAddProd"));
         return modelAndView;
@@ -45,10 +47,11 @@ public class EssayPageController {
     @RequestMapping(value = "essay/add/test", method = RequestMethod.GET)
     @ApiIgnore("文章新增页面展示(测试环境)")
     @FunctionPoint(value = "common")
-    public ModelAndView showEssayAddTestPage(HttpSession session){
+    public ModelAndView showEssayAddTestPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "essay/essay_add_test.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("essayAddTest"));
         return modelAndView;
@@ -57,10 +60,11 @@ public class EssayPageController {
     @RequestMapping(value = "essay/list/prod", method = RequestMethod.GET)
     @ApiIgnore("文章列表页面展示(生产环境)")
     @FunctionPoint(value = "common")
-    public ModelAndView showEssayListProdPage(HttpSession session){
+    public ModelAndView showEssayListProdPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "essay/essay_list_prod.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("essayListProd"));
         return modelAndView;
@@ -69,10 +73,11 @@ public class EssayPageController {
     @RequestMapping(value = "essay/list/test", method = RequestMethod.GET)
     @ApiIgnore("文章列表页面展示(测试环境)")
     @FunctionPoint(value = "common")
-    public ModelAndView showEssayListTestPage(HttpSession session){
+    public ModelAndView showEssayListTestPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "essay/essay_list_test.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("essayListTest"));
         return modelAndView;
