@@ -69,7 +69,7 @@ public class BalanceStatisticService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
         List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)) {
             countBeans = balanceStatusMapper.obtainCountByMonth(month);
         }
         CustomerContextHolder.clearDataSource();
@@ -101,7 +101,7 @@ public class BalanceStatisticService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
         List<CountBean> countBeans = Lists.newArrayList();
         CustomerContextHolder.selectProdDataSource();
-        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)){
+        if ("balance".equalsIgnoreCase(type) || "mac".equalsIgnoreCase(type)) {
             countBeans = balanceStatusMapper.obtainCountByDay(day);
         }
         CustomerContextHolder.clearDataSource();
@@ -262,12 +262,11 @@ public class BalanceStatisticService {
     @SuppressWarnings("unchecked")
     public Map<String, Integer> statisticUser() {
         Map<String, Integer> result = new HashMap<>();
-        CustomerContextHolder.selectProdDataSource();
-        int menNum = userInfoMapper.statisticUser(1);
-        int womenNum = userInfoMapper.statisticUser(0);
+        CustomerContextHolder.selectLocalDataSource();
+        Map<String, Map<String, Integer>> userCountInfo = balanceCronStatisticMapper.getBalanceUserCountInfo();
+        result.put("男", userCountInfo.get("男").get("count"));
+        result.put("女", userCountInfo.get("女").get("count"));
         CustomerContextHolder.clearDataSource();
-        result.put("男", menNum);
-        result.put("女", womenNum);
         return result;
     }
 
@@ -289,12 +288,11 @@ public class BalanceStatisticService {
     @SuppressWarnings("unchecked")
     public Map<String, Integer> statisticMember() {
         Map<String, Integer> result = new HashMap<>();
-        CustomerContextHolder.selectProdDataSource();
-        int menNum = balanceUserManagerMapper.statisticMember(1);
-        int womenNum = balanceUserManagerMapper.statisticMember(0);
+        CustomerContextHolder.selectLocalDataSource();
+        Map<String, Map<String, Integer>> memberCountInfo = balanceCronStatisticMapper.getBalanceMemberCountInfo();
+        result.put("男", memberCountInfo.get("男").get("count"));
+        result.put("女", memberCountInfo.get("女").get("count"));
         CustomerContextHolder.clearDataSource();
-        result.put("男", menNum);
-        result.put("女", womenNum);
         return result;
     }
 }

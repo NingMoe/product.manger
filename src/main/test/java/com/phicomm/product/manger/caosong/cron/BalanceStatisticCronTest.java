@@ -1,6 +1,6 @@
 package com.phicomm.product.manger.caosong.cron;
 
-import com.phicomm.product.manger.cron.BalanceAccountInfoCron;
+import com.phicomm.product.manger.cron.BalanceStatisticCron;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,25 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class BalanceStatisticCronTest {
 
     @Autowired
-    BalanceAccountInfoCron balanceAccountInfoCron;
+    BalanceStatisticCron balanceStatisticCron;
 
     @Test
-    public void test() {
-        balanceAccountInfoCron.statistic();
+    public void AcountCountTest() {
+        balanceStatisticCron.accountStatistic();
+    }
+
+    @Test
+    public void userGenderCountTest() {
+        balanceStatisticCron.userGenderCountStatistic();
+    }
+
+    @Test
+    public void memberGenderCountTest() {
+        balanceStatisticCron.memberGenderCountStatistic();
+    }
+
+    @Test
+    public void saleLocationCountTest() {
+        balanceStatisticCron.saleLocationCountStatistic();
     }
 }

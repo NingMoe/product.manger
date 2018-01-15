@@ -1,14 +1,16 @@
 package com.phicomm.product.manger.qiang.ren.mongo;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.mongodb.*;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
+import com.phicomm.product.manger.utils.MongoDbUtil;
 import org.bson.Document;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -19,14 +21,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Indexes.ascending;
-import static com.mongodb.client.model.Sorts.descending;
 import static com.mongodb.client.model.Sorts.orderBy;
 
 /**
@@ -103,12 +107,30 @@ public class MongoTest {
         MongoCollection<Document> collection = linkTest("user_activity_trace");
         collection.aggregate(
                 Arrays.asList(
-                        Aggregates.match(Filters.eq("date", "2018-1-10")),
-                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
-                        Aggregates.sort(orderBy(ascending("_id")))
+                        Aggregates.match(Filters.eq("date", "2018-01-10")),
+                        Aggregates.group("$hour,$userId"),
+                        Aggregates.group("$_id.hour", Accumulators.sum("count", 1))
+                        //[1, 3, 2, 2, 1, 1, 1]
                 )
         ).forEach(printBlock);
-        System.out.println("2018-1-10"+"数据："+result);
+        System.out.println("2018-01-10"+"数据："+result);
+    }
+
+    @Test
+    public void docTest() throws ParseException {
+        MongoCollection<Document> collection = mongoTemplate.getCollection("user_activity_trace");
+        Document match = new Document("date", "2018-01-10");
+        Document group = new Document("_id", new Document("userId", "$userId")
+                .append("hour", "$hour"));
+        Document group1 = new Document("_id", new Document("hour", "$_id.hour"))
+                .append("count", new Document("$sum",1));
+        AggregateIterable<Document> result = collection
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group),new Document("$group",group1)));
+        result.forEach((Consumer<Document>) document -> {
+            System.out.printf(document.toJson());
+            System.out.printf(JSON.parseObject(JSON.toJSONString(document.get("_id"))).getString("hour"));
+            System.out.printf(document.get("count").toString());
+        });
     }
 
     /*@Test
