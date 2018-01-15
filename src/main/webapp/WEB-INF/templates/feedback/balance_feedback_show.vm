@@ -184,4 +184,4 @@
 <script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/feedback/feedback.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/feedback/feedback.js?v=$uuid"></script>

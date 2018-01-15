@@ -4,6 +4,7 @@ import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.enumeration.SessionKeyEnum;
 import com.phicomm.product.manger.model.user.AdminUserInfo;
 import com.phicomm.product.manger.module.navigation.NavigationManger;
+import com.phicomm.product.manger.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -39,6 +40,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOta"));
         return modelAndView;
@@ -54,6 +56,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota_list_test.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;
@@ -69,6 +72,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota_list_prod.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaList"));
         return modelAndView;
@@ -84,6 +88,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota_server_list_manage.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaServer"));
         return modelAndView;
@@ -99,6 +104,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota_server_add.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaServerAdd"));
         return modelAndView;
@@ -114,6 +120,7 @@ public class BalanceOtaPageController {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
         modelAndView.getModel().put("context", "ota/balance_ota_mac.vm");
+        modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
         modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceOtaMac"));
         return modelAndView;

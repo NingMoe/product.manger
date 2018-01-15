@@ -137,4 +137,4 @@
     </div>
 </section>
 <script src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script src="$baseUrl/resources/js/hermes/hermes.js"></script>
+<script src="$baseUrl/resources/js/hermes/hermes.js?v=$uuid"></script>

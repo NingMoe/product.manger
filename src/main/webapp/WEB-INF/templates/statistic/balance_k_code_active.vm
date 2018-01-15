@@ -50,4 +50,4 @@
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/chartjs/Chart.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/balance_k_code_active.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/balance_k_code_active.js?v=$uuid"></script>
