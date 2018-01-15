@@ -21,4 +21,4 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/trace/balance_terminal_app.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/trace/balance_terminal_app.js?v=$uuid"></script>

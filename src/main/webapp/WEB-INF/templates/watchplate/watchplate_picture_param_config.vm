@@ -21,4 +21,4 @@
     </div>
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/watchplate/watchplate_picture_param_config.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/watchplate/watchplate_picture_param_config.js?v=$uuid"></script>

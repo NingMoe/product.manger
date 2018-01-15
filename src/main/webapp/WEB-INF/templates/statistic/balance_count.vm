@@ -25,6 +25,6 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js?v=$uuid"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/balance_count.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/balance_statistic/balance_count.js?v=$uuid"></script>

@@ -52,7 +52,7 @@
 
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/watchplate/watchplate_picture_upload.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/watchplate/watchplate_picture_upload.js?v=$uuid"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>

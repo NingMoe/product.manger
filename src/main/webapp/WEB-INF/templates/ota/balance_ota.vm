@@ -41,4 +41,4 @@
 </section>
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/ota/balance_ota.js?v=$uuid"></script>

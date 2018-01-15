@@ -154,4 +154,4 @@
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/wristband_upgrade/wristband_upgrade_test_list.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_upgrade/wristband_upgrade_test_list.js?v=$uuid"></script>
