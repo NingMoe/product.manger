@@ -533,7 +533,7 @@ function fetchFeedback(n) {
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
         loadUserHeader(itemData.dialogBeans[0].imageUrl) + loadUserId(itemData.dialogBeans[0].userId) + loadUsername(itemData.dialogBeans[0].username) +
-        loadPhoneNumber(itemData.phoneNumber) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
+        loadPhoneDetail(itemData.phoneNumber,itemData.systemVersion) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
     const element = el.getElementById("childDiv");
@@ -555,8 +555,14 @@ function loadUsername(username) {
 /**
  * 加载电话号码
  */
-function loadPhoneNumber(phoneNumber) {
-    return `<span class="product-description">` + "手机号：" + phoneNumber + `</span>`;
+function loadPhoneDetail(phoneNumber,systemVersion) {
+    let version;
+    if (systemVersion.indexOf("_unknown")!==-1){
+        version=systemVersion.substring(0,systemVersion.indexOf("_unknown"));
+    }else {
+        version=systemVersion;
+    }
+    return `<span style="margin-top: 15px" class="product-description">` + "手机号：" + phoneNumber + `&nbsp;&nbsp;&nbsp;系统型号：` + version + `</span>`;
 }
 
 /**
