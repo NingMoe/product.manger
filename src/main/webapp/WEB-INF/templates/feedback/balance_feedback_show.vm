@@ -35,19 +35,19 @@
                             <p>图片 (限 4 张图片)</p>
                             <ul id="inputList">
                                 <li class="img" id="input01">
-                                    <img src="resources/image/imageUpload.png" class="inputImg" />
+                                    <img src="$baseUrl/resources/image/imageUpload.png" class="inputImg" />
                                     <input id="file01" name="file1" class="album" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp" value="" onchange="preview(this,1)" />
                                 </li>
                                 <li class="img" id="input02">
-                                    <img src="resources/image/imageUpload.png" class="inputImg" />
+                                    <img src="$baseUrl/resources/image/imageUpload.png" class="inputImg" />
                                     <input id="file02" name="file2" class="album" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp" value="" onchange="preview(this,2)" />
                                 </li>
                                 <li class="img" id="input03">
-                                    <img src="resources/image/imageUpload.png" class="inputImg" />
+                                    <img src="$baseUrl/resources/image/imageUpload.png" class="inputImg" />
                                     <input id="file03" name="file3" class="album" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp" value="" onchange="preview(this,3)" />
                                 </li>
                                 <li class="img" id="input04">
-                                    <img src="resources/image/imageUpload.png" class="inputImg" />
+                                    <img src="$baseUrl/resources/image/imageUpload.png" class="inputImg" />
                                     <input id="file04" name="file4" class="album" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp" value="" onchange="preview(this,4)" />
                                 </li>
                             </ul>
@@ -71,7 +71,7 @@
             <div class="box-body row">
                 <div class="col-md-5">
                     <div class="col-sm-4">
-                        <a href="#"><img src="./resources/image/logo.png"></a>
+                        <a href="#"><img src="$baseUrl/resources/image/logo.png"></a>
                     </div>
                     <div class="col-sm-8">
                         <span><font style="font-size: 20px"><strong>斐讯智能硬件产品线意见反馈</strong></font></span>
