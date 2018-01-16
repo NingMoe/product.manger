@@ -57,8 +57,9 @@ function editWristband(node) {
     var firmwareVersion = node.parentNode.parentNode.parentNode.childNodes[3].childNodes[3].innerText;
     var gnssVersion = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[1].innerText;
     let forceUpgrade = node.parentNode.parentNode.parentNode.childNodes[4].childNodes[3].innerText;
-    var description = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].lastChild.innerHTML;
-    var enable = node.parentNode.parentNode.parentNode.childNodes[8].childNodes[3].innerText;
+    let fotaForceUpgrade = node.parentNode.parentNode.parentNode.childNodes[5].childNodes[1].innerText;
+    let description = node.parentNode.parentNode.parentNode.childNodes[6].childNodes[1].lastChild.innerHTML;
+    let enable = node.parentNode.parentNode.parentNode.childNodes[9].childNodes[3].innerText;
     $("#id").val(id);
     $("#appPlatform").val(appPlatform);
     $("#appVersionCode").val(appVersionCode);
@@ -68,6 +69,7 @@ function editWristband(node) {
     $("#firmwareVersion").val(firmwareVersion);
     $("#gnssVersion").val(gnssVersion);
     $("#forceUpgrade").val(forceUpgrade === "是" ? 1 : 0);
+    $("#fotaForceUpgrade").val(fotaForceUpgrade === "是" ? 1 : 0);
     $("#description").val(description);
     $("#enable").val(enable);
     $('#wristbandProdModal').modal();
@@ -236,7 +238,7 @@ $(document).ready(function () {
         });
         console.log(JSON.stringify(result));
         if ("不可用" === d.enable) {
-            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td>#gnssVersion#</td><th>是否强制升级:</th><td>#forceUpgrade#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td><td><button style="background-color: slategray" onclick="deleteFirmware(this)">删除</button></td></tr></table>'
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td>#gnssVersion#</td><th>是否强制升级:</th><td>#forceUpgrade#</td></tr><tr><th>是否为里程碑版本:</th><td>#fotaForceUpgrade#</td><th></th><td></td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: #01ff70" onclick="activate(this)">上线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td><td><button style="background-color: slategray" onclick="deleteFirmware(this)">删除</button></td></tr></table>'
                 .replace("#id#", result.id)
                 .replace("#appPlatform#", result.appPlatform)
                 .replace("#appVersionCode#", result.appVersionCode)
@@ -250,12 +252,13 @@ $(document).ready(function () {
                 .replace("#url#", result.url)
                 .replace("#gnssVersion#", result.gnssVersion)
                 .replace("#forceUpgrade#", result.forceUpgrade === true ? "是" : "否")
+                .replace("#fotaForceUpgrade#", result.fotaForceUpgrade === true ? "是" : "否")
                 .replace("#md5#", result.md5)
                 .replace("#size#", result.size)
                 .replace("#createTime#", result.createTime)
                 .replace("#enable#", result.enable === 1 ? "可用" : "不可用");
         } else {
-            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td>#gnssVersion#</td><th>是否强制升级:</th><td>#forceUpgrade#</td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td></tr></table>'
+            return '<table class="table"><tr><th width="25%">ID:</th><td width="25%">#id#</td><th width="25%">APP平台:</th><td width="25%">#appPlatform#</td></tr><tr><th>APP版本号:</th><td>#appVersionCode#<button style="margin-left: 5%" onclick="showAddAppVersion(this)"><i class="fa fa-plus"></i></button></td><th>固件类型:</th><td>#firmwareType#</td></tr><tr><th>硬件版本:</th><td>#hardwareCode#</td><th>环境:</th><td>#environment#</td></tr><tr><th>固件版本:</th><td>#version#</td><th>固件版本号:</th><td>#versionCode#</td></tr><tr><th>GNSS版本:</th><td>#gnssVersion#</td><th>是否强制升级:</th><td>#forceUpgrade#</td></tr><tr><th>是否为里程碑版本:</th><td>#fotaForceUpgrade#</td><th></th><td></td></tr><tr><th>固件说明:</th><td  colspan="3"><textarea rows="3" cols="110">#description#</textarea></td></tr><tr><th>下载链接:</th><td colspan="3"><a href="#url#"><textarea rows="1" cols="110">#url#</textarea></a></td></tr><tr><th>MD5:</th><td>#md5#</td><th>文件大小:</th><td>#size#</td></tr><tr><th>上传时间:</th><td>#createTime#</td><th>状态:</th><td>#enable#</td><tr><th>操作:</th><td><button style="background-color: red" onclick="downgrade(this)">下线</button></td><td><button style="background-color: #db8b0b" onclick="editWristband(this)">编辑</button></td></tr></table>'
                 .replace("#id#", result.id)
                 .replace("#appPlatform#", result.appPlatform)
                 .replace("#appVersionCode#", result.appVersionCode)
@@ -269,6 +272,7 @@ $(document).ready(function () {
                 .replace("#url#", result.url)
                 .replace("#gnssVersion#", result.gnssVersion)
                 .replace("#forceUpgrade#", result.forceUpgrade === true ? "是" : "否")
+                .replace("#fotaForceUpgrade#", result.fotaForceUpgrade === true ? "是" : "否")
                 .replace("#md5#", result.md5)
                 .replace("#size#", result.size)
                 .replace("#createTime#", result.createTime)

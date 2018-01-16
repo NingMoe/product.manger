@@ -128,6 +128,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="fotaForceUpgrade">是否里程碑版本</label>
+                            <select id="fotaForceUpgrade" class="form-control" name="fotaForceUpgrade" style="width: 100%;">
+                                <option value=0>否</option>
+                                <option value=1>是</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="environment">环境（测试/生产）</label>
                             <select id="environment" class="form-control" name="environment" style="width: 100%;">
                                 <option value=""></option>
