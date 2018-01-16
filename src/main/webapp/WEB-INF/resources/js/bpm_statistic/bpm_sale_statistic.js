@@ -7,6 +7,7 @@ $(document).ready(function () {
 //最近15天 血压计销量
 $(function bpmMeasureCountSaleByDay() {
     const baseUrl = $("#baseUrl").val();
+    phicommLoading.show();
     $.ajax({
         type: "POST",
         url: baseUrl + "/bpm/statistic/sale/byDay",
@@ -30,6 +31,7 @@ $(function bpmMeasureCountSaleByDay() {
             startDate.setDate(startDate.getDate() - 11);
             drawOneIndexDaysChart("column", "bpm-sale-day-chart", "血压计使用量", "(最近12天)",
                 "台数", series, startDate);
+            phicommLoading.hide();
         }
     })
 });
@@ -37,6 +39,7 @@ $(function bpmMeasureCountSaleByDay() {
 //最近12个月 血压计销量
 $(function bpmMeasureCountSaleByMonth() {
     const baseUrl = $("#baseUrl").val();
+    phicommLoading.show();
     $.ajax({
         type: "POST",
         url: baseUrl + "/bpm/statistic/sale/byMonth",
@@ -60,6 +63,7 @@ $(function bpmMeasureCountSaleByMonth() {
             startDate.setMonth(startDate.getMonth() - 11);
             drawOneIndexMonthsChart("column", "bpm-sale-month-chart", "血压计使用量", "(最近12个月)",
                 "台数", series, startDate);
+            phicommLoading.hide();
         }
     })
 });
