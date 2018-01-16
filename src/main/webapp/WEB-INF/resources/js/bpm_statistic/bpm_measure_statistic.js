@@ -8,6 +8,7 @@ $(document).ready(function () {
  */
 $(function getMeasureStatisticLast15Day() {
     const baseUrl = $("#baseUrl").val();
+    phicommLoading.show();
     $.ajax({
         type: "POST",
         url: baseUrl + "/bpm/measure/statistic/dataByDay",
@@ -29,6 +30,7 @@ $(function getMeasureStatisticLast15Day() {
             startDate.setDate(startDate.getDate() - 12);
             drawOneIndexDaysChart("column", "bpm-measure-day-chart", "血压计测量数据统计", "(最近12天)",
                 "次数", series, startDate);
+            phicommLoading.hide();
         }
     })
 });
