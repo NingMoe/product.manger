@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
+/**
+ * @author Qiang
+ */
 public class FirmwareInfo {
 
     private Long id;
@@ -38,6 +41,8 @@ public class FirmwareInfo {
     private String description;
 
     private boolean forceUpgrade;
+
+    private boolean fotaForceUpgrade;
 
     public Long getId() {
         return id;
@@ -167,6 +172,14 @@ public class FirmwareInfo {
         this.forceUpgrade = forceUpgrade;
     }
 
+    public boolean getFotaForceUpgrade() {
+        return fotaForceUpgrade;
+    }
+
+    public void setFotaForceUpgrade(boolean fotaForceUpgrade) {
+        this.fotaForceUpgrade = fotaForceUpgrade;
+    }
+
     @Override
     public String toString() {
         return "FirmwareInfo{" +
@@ -186,6 +199,7 @@ public class FirmwareInfo {
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
                 ", forceUpgrade=" + forceUpgrade +
+                ", fotaForceUpgrade=" + fotaForceUpgrade +
                 '}';
     }
 }

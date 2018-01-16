@@ -64,6 +64,7 @@ public class FirmwareUpgradeService {
                               String environment,
                               String gnssVersion,
                               boolean forceUpgrade,
+                              boolean fotaForceUpgrade,
                               MultipartFile file,
                               String description,
                               String appPlatform,
@@ -72,11 +73,11 @@ public class FirmwareUpgradeService {
         if (!Strings.isNullOrEmpty(appPlatform)) {
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment,gnssVersion, forceUpgrade, file, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment,gnssVersion, forceUpgrade,fotaForceUpgrade, file, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos);
             } else if (appPlatforms.length == 1 && ANDROID.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, ANDROID, appVersionCodeAndroid, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade,fotaForceUpgrade, file, description, ANDROID, appVersionCodeAndroid, null);
             } else if (appPlatforms.length == 1 && IOS.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade, file, description, IOS, appVersionCodeIos, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade,fotaForceUpgrade, file, description, IOS, appVersionCodeIos, null);
             }
         }
 
@@ -91,6 +92,7 @@ public class FirmwareUpgradeService {
                                                  String environment,
                                                  String gnssVersion,
                                                  boolean forceUpgrade,
+                                                 boolean fotaForceUpgrade,
                                                  MultipartFile file,
                                                  String description,
                                                  String appPlatform,
@@ -114,6 +116,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setForceUpgrade(forceUpgrade);
+        firmwareInfo.setFotaForceUpgrade(fotaForceUpgrade);
         firmwareInfo.setEnable(1);
         firmwareInfo.setUrl(downloadUrl);
         firmwareInfo.setMd5(md5);
@@ -160,6 +163,7 @@ public class FirmwareUpgradeService {
                                                    String environment,
                                                    String gnssVersion,
                                                    boolean forceUpgrade,
+                                                   boolean fotaForceUpgrade,
                                                    MultipartFile file,
                                                    String description,
                                                    String appPlatform,
@@ -200,6 +204,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setEnvironment(environment);
         firmwareInfo.setGnssVersion(gnssVersion);
         firmwareInfo.setForceUpgrade(forceUpgrade);
+        firmwareInfo.setFotaForceUpgrade(fotaForceUpgrade);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setAppVersionCode(appVersionCode);

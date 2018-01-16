@@ -308,7 +308,6 @@ public class UserActivityService {
         }
         return result;
     }
-
     private MongoCollection<Document> link(String traceStr) {
         return mongoTemplate.getCollection(traceStr);
     }

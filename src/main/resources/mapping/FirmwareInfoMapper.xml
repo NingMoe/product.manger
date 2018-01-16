@@ -27,7 +27,7 @@
         create_time, url,
         description, app_platform,
         app_version_code, size,
-        is_force_upgrade
+        is_force_upgrade, is_fota_force_upgrade
         )
         VALUES (
         #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
@@ -36,7 +36,8 @@
         #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
         now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR},
         #{firmwareInfo.appPlatform,jdbcType=VARCHAR}, #{firmwareInfo.appVersionCode,jdbcType=VARCHAR},
-        #{firmwareInfo.size,jdbcType=FLOAT},#{firmwareInfo.forceUpgrade,jdbcType=INTEGER}
+        #{firmwareInfo.size,jdbcType=FLOAT},#{firmwareInfo.forceUpgrade,jdbcType=INTEGER},
+        #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER}
         )
     </insert>
 
@@ -51,6 +52,7 @@
         environment = #{firmwareInfo.environment,jdbcType=VARCHAR},
         gnss_version = #{firmwareInfo.gnssVersion,jdbcType=INTEGER},
         is_force_upgrade = #{firmwareInfo.forceUpgrade,jdbcType=INTEGER},
+        is_fota_force_upgrade = #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER},
         md5 = #{firmwareInfo.md5,jdbcType=VARCHAR},
         hardware_code = #{firmwareInfo.hardwareCode,jdbcType=VARCHAR},
         url = #{firmwareInfo.url,jdbcType=LONGVARCHAR},
@@ -96,7 +98,8 @@
         `enable` AS `enable`,
         create_time AS createTime,
         description AS description,
-        is_force_upgrade AS forceUpgrade
+        is_force_upgrade AS forceUpgrade,
+        is_fota_force_upgrade AS fotaForceUpgrade
         FROM
         firmware_info
         WHERE
@@ -144,6 +147,7 @@
             environment AS environment,
             gnss_version AS  gnssVersion,
             is_force_upgrade AS  forceUpgrade,
+            is_fota_force_upgrade AS fotaForceUpgrade,
             hardware_code AS hardwareCode,
             url AS url,
             `enable` AS `enable`,
