@@ -41,6 +41,10 @@ public class TerminalStatisticService {
 
     private TerminalMongoQueryImpl mongoQuery;
 
+    private static final int MIN_CHART_DATA = 200;
+
+    private static final int MIN_CHART_DATE = 5;
+
     @Autowired
     public TerminalStatisticService(TerminalStatisticMapper terminalStatisticMapper,
                                     TerminalMongoQueryImpl mongoQuery) {
@@ -102,9 +106,11 @@ public class TerminalStatisticService {
         result.forEach((s, resultWithDataTimes) -> {
             Map<String, Object> item = Maps.newHashMap();
             List<Integer> chartData = getChartData(resultWithDataTimes, startTime, endTime);
-            item.put("data", chartData);
-            item.put("name", s);
-            resultList.add(item);
+            if (chartData != null && !chartData.isEmpty()) {
+                item.put("data", chartData);
+                item.put("name", s);
+                resultList.add(item);
+            }
         });
         logger.info(resultList);
         return resultList;
@@ -134,7 +140,22 @@ public class TerminalStatisticService {
             result.add(count);
             start = start.plusDays(1);
         }
-        return result;
+        return valid(result) ? result : Lists.newArrayList();
+    }
+
+    /**
+     * 过滤
+     *
+     * @param values 数据
+     * @return 是否显示
+     */
+    private boolean valid(List<Integer> values) {
+        int size = values.size();
+        int val = 0;
+        for (int i = size - 1; i > size - MIN_CHART_DATE; i--) {
+            val += values.get(i);
+        }
+        return val > MIN_CHART_DATA;
     }
 
     /**
