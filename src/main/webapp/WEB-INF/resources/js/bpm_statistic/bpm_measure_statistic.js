@@ -110,7 +110,7 @@ function measureAll() {
             timeout4measureAll = true;
         }, success: function (data) {
             console.log(data.data);
-            $("#allNum").html(data.data);
+            $("#allNum").html(formatNum(data.data));
         }
     })
 }
@@ -128,8 +128,8 @@ function measureTodayOrMonth() {
             timeout4measureAll = true;
         }, success: function (data) {
             console.log(data.data);
-            $("#monthNum").html(data.data.month);
-            $("#todayNum").html(data.data.today);
+            $("#monthNum").html(formatNum(data.data.month));
+            $("#todayNum").html(formatNum(data.data.today));
         }
     })
 }
@@ -142,3 +142,23 @@ $(function time() {
     setTimeout(time, 5000); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
 });
 //----------------end---------------------------------------
+
+/**
+ * 格式化数字，千分位加逗号
+ * @param originStr 原来的数字串
+ */
+function formatNum(originStr) {
+    var str = originStr.toString();
+    var newStr = "";
+    var count = 0;
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (count % 3 === 0 && count !== 0) {
+            newStr = str.charAt(i) + "," + newStr;
+        } else {
+            newStr = str.charAt(i) + newStr;
+        }
+        count++;
+    }
+    console.log(str);
+    return newStr;
+}

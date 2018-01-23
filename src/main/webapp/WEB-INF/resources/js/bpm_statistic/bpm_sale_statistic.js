@@ -79,7 +79,7 @@ $(function bpmCountSaleAll() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            $("#saleNum").html(data.data);
+            $("#saleNum").html(formatNum(data.data));
         }
     })
 });
@@ -95,7 +95,27 @@ $(function bpmSaleCountAll() {
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
         }, success: function (data) {
-            $("#bindNum").html(data.data);
+            $("#bindNum").html(formatNum(data.data));
         }
     })
 });
+
+/**
+ * 格式化数字，千分位加逗号
+ * @param originStr 原来的数字串
+ */
+function formatNum(originStr) {
+    var str = originStr.toString();
+    var newStr = "";
+    var count = 0;
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (count % 3 === 0 && count !== 0) {
+            newStr = str.charAt(i) + "," + newStr;
+        } else {
+            newStr = str.charAt(i) + newStr;
+        }
+        count++;
+    }
+    console.log(str);
+    return newStr;
+}

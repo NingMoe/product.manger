@@ -40,26 +40,6 @@ public class FeedbackController {
     }
 
     /**
-     * 获取反馈列表（不带条件）
-     *
-     * @param maxIdBean 要请求的数据
-     * @return 反馈列表
-     */
-    @RequestMapping(value = "feedback/list", method = RequestMethod.POST,
-            consumes = "application/json", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 0, message = "正常情况", response = Response.class),
-            @ApiResponse(code = 2, message = "数据格式异常", response = CommonResponse.class)
-    })
-    @ResponseBody
-    @ApiOperation("后台管理获取反馈列表:maxId为-1的时候表示获取最新数据")
-    @FunctionPoint(value = "common")
-    public Response<List<FeedbackWithUserInfo>> fetchFeedbackListWithoutFilter(@RequestBody MaxIdBean maxIdBean) {
-        List<FeedbackWithUserInfo> feedbackWithUserInfoList = feedbackService.fetchFeedbackWithoutFilter(maxIdBean);
-        return new Response<List<FeedbackWithUserInfo>>().setData(feedbackWithUserInfoList);
-    }
-
-    /**
      * 客服回复某个反馈
      *
      * @param appId      appId

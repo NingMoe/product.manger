@@ -7,9 +7,13 @@ import java.util.Date;
  */
 public class HistoryRequestWithPage {
 
+    private String fuzzySearchObject;
+
     private String deviceType;
 
     private String softVersion;
+
+    private String phoneNumber;
 
     private Date startTime;
 
@@ -18,6 +22,14 @@ public class HistoryRequestWithPage {
     private Date endTime;
 
     private String appId;
+
+    public String getFuzzySearchObject() {
+        return fuzzySearchObject;
+    }
+
+    public void setFuzzySearchObject(String fuzzySearchObject) {
+        this.fuzzySearchObject = fuzzySearchObject;
+    }
 
     public String getDeviceType() {
         return deviceType;
@@ -33,6 +45,14 @@ public class HistoryRequestWithPage {
 
     public void setSoftVersion(String softVersion) {
         this.softVersion = softVersion;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Date getStartTime() {
@@ -70,8 +90,10 @@ public class HistoryRequestWithPage {
     @Override
     public String toString() {
         return "HistoryRequestWithPage{" +
-                "deviceType='" + deviceType + '\'' +
+                "fuzzySearchObject='" + fuzzySearchObject + '\'' +
+                ", deviceType='" + deviceType + '\'' +
                 ", softVersion='" + softVersion + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", startTime=" + startTime +
                 ", page=" + page +
                 ", endTime=" + endTime +
