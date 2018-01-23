@@ -117,12 +117,12 @@
                                             <td id="tableHttpFile"></td>
                                         </tr>
                                         <tr>
-                                            <td>3.</td>
+                                            <td>4.</td>
                                             <td>Http-Image</td>
                                             <td id="tableHttpImage"></td>
                                         </tr>
                                         <tr>
-                                            <td>2.</td>
+                                            <td>5.</td>
                                             <td>内网使用链接</td>
                                             <td id="tableInnerFile"></td>
                                         </tr>

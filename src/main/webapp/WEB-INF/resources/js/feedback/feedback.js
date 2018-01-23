@@ -156,7 +156,9 @@ function getAll() {
     $("#appIdSelected").val("");
     $("#deviceTypeSelected").val("");
     $("#versionSelected").val("");
+    $("#phoneNumberSelected").val("");
     $("#timeRangeSelected").val("");
+    $("#keyWordsSelected").val("");
     $("#pageId" + currentPage)[0].className = "";
     currentPage = 1;
     $("#parentDiv").empty();
@@ -258,7 +260,9 @@ function getSearchFeedback(n) {
     let appIdSelected = $("#appIdSelected").val();
     let deviceTypeSelected = $("#deviceTypeSelected").val();
     let versionSelected = $("#versionSelected").val();
+    let phoneNumberSelected = $("#phoneNumberSelected").val();
     let timeRange = $("#timeRangeSelected").val();
+    let keyWordsSelected = $("#keyWordsSelected").val();
     let startTime = "";
     let endTime = "";
     if (timeRange !== "") {
@@ -268,7 +272,7 @@ function getSearchFeedback(n) {
         startTime = "2016-08-16";
         endTime = "2020-11-20";
     }
-    if (appIdSelected !== "" || timeRange !== "") {
+    if (appIdSelected !== "" || timeRange !== "" || phoneNumberSelected !== "" || keyWordsSelected !== "") {
         isAll = false;
         let baseUrl = $("#baseUrl").val();
         $("#parentDiv").empty();
@@ -281,9 +285,11 @@ function getSearchFeedback(n) {
                 "appId": appIdSelected,
                 "deviceType": deviceTypeSelected,
                 "softVersion": versionSelected,
+                "phoneNumber": phoneNumberSelected,
                 "page": n,
                 "startTime": startTime,
-                "endTime": endTime
+                "endTime": endTime,
+                "fuzzySearchObject": keyWordsSelected
             }),
             error: function (req, status, err) {
                 alert('Failed reason: ' + err);
@@ -533,7 +539,7 @@ function fetchFeedback(n) {
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
         loadUserHeader(itemData.dialogBeans[0].imageUrl) + loadUserId(itemData.dialogBeans[0].userId) + loadUsername(itemData.dialogBeans[0].username) +
-        loadPhoneDetail(itemData.phoneNumber,itemData.systemVersion) + loadAppInfo(itemData.platform, itemData.appVersion) + loadFeedback(itemData);
+        loadPhoneDetail(itemData.phoneNumber,itemData.systemVersion) + loadAppInfo(itemData.platform, itemData.appVersion, itemData.mac) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
     const element = el.getElementById("childDiv");
@@ -562,14 +568,15 @@ function loadPhoneDetail(phoneNumber,systemVersion) {
     }else {
         version=systemVersion;
     }
-    return `<span style="margin-top: 15px" class="product-description">` + "手机号：" + phoneNumber + `&nbsp;&nbsp;&nbsp;系统型号：` + version + `</span>`;
+    return `<span style="margin-top: 15px" class="product-description">` + "手机号：" + phoneNumber + `&nbsp;&nbsp;&nbsp;
+    系统型号：` + version + `</span>`;
 }
 
 /**
  * 获取手机系统及APP版本号
  */
-function loadAppInfo(platform, appVersion) {
-    return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `</span>`;
+function loadAppInfo(platform, appVersion, mac) {
+    return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `&nbsp;&nbsp;&nbsp;MAC地址：` + mac + `</span>`;
 }
 
 /**

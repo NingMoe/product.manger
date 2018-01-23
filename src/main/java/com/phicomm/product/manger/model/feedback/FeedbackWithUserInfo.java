@@ -14,6 +14,8 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
 
     private int id;
 
+    private String mac;
+
     private String appId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -33,6 +35,14 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
     }
 
     public String getAppId() {
@@ -89,6 +99,7 @@ public class FeedbackWithUserInfo extends BasicDeviceBean {
     public String toString() {
         return "FeedbackWithUserInfo{" +
                 "id=" + id +
+                ", mac='" + mac + '\'' +
                 ", appId='" + appId + '\'' +
                 ", createTime=" + createTime +
                 ", sessionId='" + sessionId + '\'' +

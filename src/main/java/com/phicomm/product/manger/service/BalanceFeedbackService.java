@@ -194,13 +194,15 @@ public class BalanceFeedbackService {
      * @throws DataFormatException   数据格式异常
      * @throws DialogRevokeException 数据已处理，无法删除
      */
-    public void customerRevoker(RevokeDialogBean revokeDialogBean) throws DataFormatException, DialogRevokeException, FeedbackLockException {
+    public void customerRevoker(RevokeDialogBean revokeDialogBean)
+            throws DataFormatException, DialogRevokeException, FeedbackLockException {
         revokeDialogBean.setCustomerId(HttpUtil.getAccountUserInfo().get("uid") == null ? "admin" : HttpUtil.getAccountUserInfo().get("uid"));
         logger.info(revokeDialogBean.toString());
         int exceptionNum = 0;
         String result = null;
         try {
-            result = HttpUtil.openPostRequest(FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(revokeDialogBean));
+            result = HttpUtil.openPostRequest(FEEDBACK_DIALOG_CUSTOMER_REVOKE_URL, RequestType.POST.getKeyName(),
+                    (JSONObject) JSONObject.toJSON(revokeDialogBean));
         } catch (IOException | FirmwareTriggerFailException e) {
             ExceptionUtil.getErrorMessage(e);
         }
@@ -251,7 +253,8 @@ public class BalanceFeedbackService {
         String result = null;
         int exceptionNum;
         try {
-            result = HttpUtil.openPostRequest(FEEDBACK_TERMINAL_LIST, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(appIdBean));
+            result = HttpUtil.openPostRequest(FEEDBACK_TERMINAL_LIST, RequestType.POST.getKeyName(),
+                    (JSONObject) JSONObject.toJSON(appIdBean));
         } catch (IOException | FirmwareTriggerFailException e) {
             ExceptionUtil.getErrorMessage(e);
         }
@@ -277,12 +280,14 @@ public class BalanceFeedbackService {
      * @return 反馈意见
      * @throws DataFormatException 数据格式异常
      */
-    public FilterWithTotalCountBean fetchFeedbackList(HistoryRequestWithPage historyRequestBean) throws DataFormatException {
+    public FilterWithTotalCountBean fetchFeedbackList(HistoryRequestWithPage historyRequestBean)
+            throws DataFormatException {
         logger.info(historyRequestBean);
         String result = null;
         int exceptionNum;
         try {
-            result = HttpUtil.openPostRequest(FEEDBACK_PAGE_FILTER_URL, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(historyRequestBean));
+            result = HttpUtil.openPostRequest(FEEDBACK_PAGE_FILTER_URL, RequestType.POST.getKeyName(),
+                    (JSONObject) JSONObject.toJSON(historyRequestBean));
         } catch (IOException | FirmwareTriggerFailException e) {
             ExceptionUtil.getErrorMessage(e);
         }
@@ -315,7 +320,8 @@ public class BalanceFeedbackService {
         String result = null;
         int exceptionNum = 0;
         try {
-            result = HttpUtil.openPostRequest(FEEDBACK_LOCK, RequestType.POST.getKeyName(), (JSONObject) JSONObject.toJSON(requestBean));
+            result = HttpUtil.openPostRequest(FEEDBACK_LOCK, RequestType.POST.getKeyName(),
+                    (JSONObject) JSONObject.toJSON(requestBean));
         } catch (IOException | FirmwareTriggerFailException e) {
             ExceptionUtil.getErrorMessage(e);
         }
