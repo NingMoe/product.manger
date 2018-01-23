@@ -576,7 +576,11 @@ function loadPhoneDetail(phoneNumber,systemVersion) {
  * 获取手机系统及APP版本号
  */
 function loadAppInfo(platform, appVersion, mac) {
-    return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `&nbsp;&nbsp;&nbsp;MAC地址：` + mac + `</span>`;
+    if(null !== mac){
+        return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `&nbsp;&nbsp;&nbsp;MAC地址：` + mac + `</span>`;
+    }else{
+        return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `</span>`;
+    }
 }
 
 /**
