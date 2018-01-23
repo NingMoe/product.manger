@@ -54,7 +54,7 @@ public class LianXinTest {
             List lianXinBeans = (List) jsonObject.get("data");
             for (Object obj : lianXinBeans) {
                 System.out.println(obj);
-                LianXinBean lianXinBean=JSONObject.toJavaObject((JSONObject)obj,LianXinBean.class);
+                LianXinBean lianXinBean = JSONObject.toJavaObject((JSONObject) obj, LianXinBean.class);
                 System.out.println(lianXinBean);
             }
             is.close();
