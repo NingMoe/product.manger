@@ -41,7 +41,7 @@ public class TerminalStatisticService {
 
     private TerminalMongoQueryImpl mongoQuery;
 
-    private static final int MIN_CHART_DATA = 200;
+    private static final int MIN_CHART_DATA = 100;
 
     private static final int MIN_CHART_DATE = 5;
 
@@ -159,7 +159,7 @@ public class TerminalStatisticService {
             }
             sum += values.get(i);
         }
-        return lastFiveDay > MIN_CHART_DATA && sum < MIN_CHART_DATA;
+        return lastFiveDay > MIN_CHART_DATA && sum > MIN_CHART_DATA;
     }
 
     /**
