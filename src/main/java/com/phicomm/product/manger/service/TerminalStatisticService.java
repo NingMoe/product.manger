@@ -151,11 +151,15 @@ public class TerminalStatisticService {
      */
     private boolean valid(List<Integer> values) {
         int size = values.size();
-        int val = 0;
-        for (int i = size - 1; i > size - MIN_CHART_DATE; i--) {
-            val += values.get(i);
+        int lastFiveDay = 0;
+        int sum = 0;
+        for (int i = size - 1; i > 0; i--) {
+            if (i > (size - MIN_CHART_DATE)) {
+                lastFiveDay += values.get(i);
+            }
+            sum += values.get(i);
         }
-        return val > MIN_CHART_DATA;
+        return lastFiveDay > MIN_CHART_DATA && sum < MIN_CHART_DATA;
     }
 
     /**
