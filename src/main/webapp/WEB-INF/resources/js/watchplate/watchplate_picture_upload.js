@@ -3,6 +3,7 @@ function uploadFileToServer() {
     var url = baseUrl + "/watchplate/picture/upload/file";
     var formData = new FormData($("#uploadPictureForm")[0]);
     formData.append("environment",$("#environment").val());
+    console.log(formData);
     $.ajax({
         type: "POST",
         url: url,

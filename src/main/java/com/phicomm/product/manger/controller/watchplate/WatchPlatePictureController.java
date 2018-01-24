@@ -3,6 +3,7 @@ package com.phicomm.product.manger.controller.watchplate;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.watchplate.WatchPlatePictureDeleteBean;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
 import com.phicomm.product.manger.service.WatchPlatePictureService;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by xiang.zhang on 2017/9/6.
+ * @author xiang.zhang
  */
 @Controller
 public class WatchPlatePictureController {
@@ -64,21 +66,37 @@ public class WatchPlatePictureController {
 
     /**
      * 获取表盘图片列表
-     *
      * @return 返回图片信息详情
      */
     @RequestMapping(value = "watchplate/picture/list/page", method = RequestMethod.POST)
     @ApiOperation("获取图片列表")
     @ResponseBody
     @FunctionPoint(value = "common")
-    public Response<List<WatchPlatePictureUpload>> watchPlatePictureList() {
-        List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList();
+    public Response<List<WatchPlatePictureUpload>> watchPlatePictureList(@RequestParam("environment") String environment)
+    throws IOException{
+        List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList(environment);
         return new Response<List<WatchPlatePictureUpload>>().setData(watchPlatePictureList);
     }
 
     /**
+     * 删除表盘信息
+     * @param
+     */
+    @RequestMapping(value = "watchplate/picture/list/delete", method = RequestMethod.POST)
+    @ApiOperation("删除图片信息")
+    @ResponseBody
+    @FunctionPoint(value = "common")
+    public CommonResponse watchPlatePictureListDelete(@RequestBody WatchPlatePictureDeleteBean data)
+            throws IOException{
+        System.out.println("delete图片列表"+data);
+        if(data.getData().size()<=0){
+            return CommonResponse.error();
+        }
+        watchPlatePictureService.pictureListDelete(data);
+        return CommonResponse.ok();
+    }
+    /**
      * 获取表盘配置信息
-     *
      * @return 返回配置信息
      */
     @RequestMapping(value = "watchplate/upload/config/get", method = RequestMethod.POST, produces = "application/json")

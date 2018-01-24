@@ -51,12 +51,15 @@
         pic_id = #{watchPlatePictureUpload.picId, jdbcType=INTEGER}
     </update>
 
-<delete  id="watchPlatePictureDelete" parameterType="java.lang.String">
+<delete  id="watchPlatePictureDelete" parameterType="com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload">
     DELETE
     FROM
     watch_plate_picture_upload
     WHERE
-     pic_version=#{picVerison, jdbcType=VARCHAR}
+     pic_url IN
+    <foreach collection="data" item="item" separator="," open="(" close=")">
+        #{item.picUrl}
+    </foreach>
 </delete>
 
 </mapper>
