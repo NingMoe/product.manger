@@ -9,7 +9,7 @@ $(document).ready(function () {
  */
 $(function drawBalanceLineChart() {
     drawLineChart("balance", "app_version", "balanceAppVersion", "斐讯健康版本活跃情况(Android)");
-    drawLineChart("balance", "channel", "balanceAppChanel", "斐讯健康版本活跃情况(Android)");
+    drawLineChart("balance", "channel", "balanceAppChanel", "斐讯健康渠道活跃情况(Android)");
 });
 
 /**
@@ -17,7 +17,7 @@ $(function drawBalanceLineChart() {
  */
 $(function drawLinkLineChart() {
     drawLineChart("147759445162119", "app_version", "LinkAppVersion", "斐讯运动版本活跃情况(Android)");
-    drawLineChart("147759445162119", "channel", "LinkAppChanel", "斐讯运动版本活跃情况(Android)");
+    drawLineChart("147759445162119", "channel", "LinkAppChanel", "斐讯运动渠道活跃情况(Android)");
 });
 
 /**
