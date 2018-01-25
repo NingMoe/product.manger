@@ -9,6 +9,8 @@ public class TerminalCommonEntity extends StatisticEntity {
 
     private String platform;
 
+    private String appId;
+
     public String getPlatform() {
         return platform;
     }
@@ -18,10 +20,20 @@ public class TerminalCommonEntity extends StatisticEntity {
         return this;
     }
 
+    public String getAppId() {
+        return appId;
+    }
+
+    public TerminalCommonEntity setAppId(String appId) {
+        this.appId = appId;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "TerminalCommonEntity{" +
                 "platform='" + platform + '\'' +
+                ", appId='" + appId + '\'' +
                 '}';
     }
 }

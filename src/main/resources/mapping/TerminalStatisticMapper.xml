@@ -6,6 +6,7 @@
         INSERT IGNORE INTO terminal_statistic_info (
             compare_object_value,
             platform,
+            app_id,
             `type`,
             `count`,
             create_date
@@ -14,6 +15,7 @@
             (
             #{item.compareObject,jdbcType=VARCHAR},
             #{item.platform,jdbcType=VARCHAR},
+            #{item.appId,jdbcType=VARCHAR},
             #{type,jdbcType=VARCHAR},
             #{item.count,jdbcType=INTEGER},
             #{item.createTime,jdbcType=VARCHAR}
@@ -38,6 +40,8 @@
         AND
             `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
         AND
+            app_id = #{periodEntity.appId,jdbcType=VARCHAR}
+        AND
         <![CDATA[
             STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
         AND
@@ -59,6 +63,8 @@
             platform = #{pageEntity.platform,jdbcType=VARCHAR}
         AND
             `type` = #{pageEntity.dateType,jdbcType=VARCHAR}
+        AND
+            app_id = #{pageEntity.appId,jdbcType=VARCHAR}
         ORDER BY create_date DESC
             LIMIT #{begin,jdbcType=INTEGER}, #{pageEntity.pageSize,jdbcType=INTEGER}
     </select>
@@ -88,6 +94,8 @@
                     platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
                 AND
                     `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+                AND
+                    app_id = #{certainTimeEntity.appId,jdbcType=VARCHAR}
             ) AS a
         RIGHT JOIN (
             SELECT
@@ -99,6 +107,8 @@
                 platform = #{certainTimeEntity.platform,jdbcType=VARCHAR}
             AND
                 `type` = #{certainTimeEntity.dateType,jdbcType=VARCHAR}
+            AND
+                app_id = #{certainTimeEntity.appId,jdbcType=VARCHAR}
         ) AS c ON a.compareObject = c.historyCompareObject
         ORDER BY historyCount DESC
     </select>
@@ -115,6 +125,8 @@
             `type` = #{periodEntity.dateType,jdbcType=VARCHAR}
         AND
             platform = #{periodEntity.platform,jdbcType=VARCHAR}
+        AND
+            app_id = #{pageEntity.appId,jdbcType=VARCHAR}
         <![CDATA[
         AND
              STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}

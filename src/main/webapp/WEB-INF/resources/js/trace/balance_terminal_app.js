@@ -11,6 +11,7 @@ $(function drawLineChart() {
     let object = {};
     object.platform = 'android';
     object.dateType = 'app_version';
+    object.appId = "balance";
     let startTime = new Date();
     let endTime = new Date();
     startTime.setDate(startTime.getDate() - 31);
@@ -27,6 +28,7 @@ $(function drawLineChart() {
     let object = {};
     object.platform = 'android';
     object.dateType = 'channel';
+    object.appId = "balance";
     let startTime = new Date();
     let endTime = new Date();
     startTime.setDate(startTime.getDate() - 31);
