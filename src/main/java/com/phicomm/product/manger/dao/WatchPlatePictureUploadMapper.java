@@ -30,8 +30,17 @@ public interface WatchPlatePictureUploadMapper {
      void watchPlatePictureDelete(@Param("data") List<WatchPlatePictureUpload> data);
 
     /**
-     * 获取表盘列表
+     * 图片版本查找所有图片信息
+     * @param picOldVersion 旧的版本号
+     * @return 返回所有图片信息
      */
-     List<WatchPlatePictureUpload> watchPlatePictureList();
+     List<WatchPlatePictureUpload> watchPlatePictureFind(@Param("picOldVersion") String picOldVersion);
+
+
+    /**
+     * 获取表盘列表
+     * @return
+     */
+    List<WatchPlatePictureUpload> watchPlatePictureList();
 
 }

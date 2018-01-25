@@ -95,6 +95,28 @@ public class WatchPlatePictureController {
         watchPlatePictureService.pictureListDelete(data);
         return CommonResponse.ok();
     }
+
+    @RequestMapping(value = "watchplate/picture/version/update", method = RequestMethod.POST)
+    @ApiOperation("图片版本更新接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse pictureUpload(@RequestParam("picOldVersion") String picOldVersion,
+                                        @RequestParam("picNewVersion") String picNewVersion,
+                                        @RequestParam("environment") String environment)
+            throws IOException {
+        watchPlatePictureService.pictureVersionUpdate(picOldVersion,picNewVersion,environment);
+        return CommonResponse.ok();
+    }
+
+
+
+
+
+
     /**
      * 获取表盘配置信息
      * @return 返回配置信息
