@@ -126,7 +126,7 @@
         AND
             platform = #{periodEntity.platform,jdbcType=VARCHAR}
         AND
-            app_id = #{pageEntity.appId,jdbcType=VARCHAR}
+            app_id = #{periodEntity.appId,jdbcType=VARCHAR}
         <![CDATA[
         AND
              STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
