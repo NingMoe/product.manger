@@ -5,40 +5,41 @@ $(document).ready(function () {
 });
 
 /**
- * 绘制版本分布图
+ * 绘制balance信息
  */
-$(function drawLineChart() {
-    let object = {};
-    object.platform = 'android';
-    object.dateType = 'app_version';
-    object.appId = "balance";
-    let startTime = new Date();
-    let endTime = new Date();
-    startTime.setDate(startTime.getDate() - 31);
-    endTime.setDate(endTime.getDate() - 1);
-    object.startTime = startTime.format("yyyy-MM-dd");
-    object.endTime = endTime.format("yyyy-MM-dd");
-    networkRequest(object, "appVersion", "斐讯健康版本活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
+$(function drawBalanceLineChart() {
+    drawLineChart("balance", "app_version", "balanceAppVersion", "斐讯健康版本活跃情况(Android)");
+    drawLineChart("balance", "channel", "balanceAppChanel", "斐讯健康版本活跃情况(Android)");
 });
 
 /**
- * 绘制渠道分布图
+ * 绘制运动信息
  */
-$(function drawLineChart() {
+$(function drawLinkLineChart() {
+    drawLineChart("147759445162119", "app_version", "LinkAppVersion", "斐讯运动版本活跃情况(Android)");
+    drawLineChart("147759445162119", "channel", "LinkAppChanel", "斐讯运动版本活跃情况(Android)");
+});
+
+/**
+ * 绘制版本分布图
+ * @param appId app类型
+ * @param dataType 数据类型
+ * @param divId 组件id
+ * @param title 标题
+ */
+function drawLineChart(appId, dataType, divId, title) {
     let object = {};
     object.platform = 'android';
-    object.dateType = 'channel';
-    object.appId = "balance";
+    object.dateType = dataType;
+    object.appId = appId;
     let startTime = new Date();
     let endTime = new Date();
     startTime.setDate(startTime.getDate() - 31);
     endTime.setDate(endTime.getDate() - 1);
     object.startTime = startTime.format("yyyy-MM-dd");
     object.endTime = endTime.format("yyyy-MM-dd");
-    object.startTime = startTime.format("yyyy-MM-dd");
-    object.endTime = endTime.format("yyyy-MM-dd");
-    networkRequest(object, "appChanel", "斐讯健康渠道活跃情况(Android)", "数据来源：www.phicomm.com", "活跃量", startTime);
-});
+    networkRequest(object, divId, title, "数据来源：www.phicomm.com", "活跃量", startTime);
+}
 
 /**
  * 因为用的都是同一个url，所以摘出来

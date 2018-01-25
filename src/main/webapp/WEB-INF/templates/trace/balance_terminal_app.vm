@@ -2,13 +2,25 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
-                <div id="appVersion" style="width: 96%;height: 500px;margin-left: 2%">
+                <div id="balanceAppVersion" style="width: 96%;height: 500px;margin-left: 2%">
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="box box-primary">
-                <div id="appChanel" style="width: 96%;height: 500px;margin-left: 2%">
+                <div id="balanceAppChanel" style="width: 96%;height: 500px;margin-left: 2%">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div id="LinkAppVersion" style="width: 96%;height: 500px;margin-left: 2%">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div id="LinkAppChanel" style="width: 96%;height: 500px;margin-left: 2%">
                 </div>
             </div>
         </div>
