@@ -156,10 +156,12 @@ function getAll() {
     $("#appIdSelected").val("");
     $("#deviceTypeSelected").val("");
     $("#versionSelected").val("");
+    $("#deviceTypeSelected").find("option:not(:first)").remove();
+    $("#versionSelected").find("option:not(:first)").remove();
     $("#phoneNumberSelected").val("");
     $("#timeRangeSelected").val("");
     $("#keyWordsSelected").val("");
-    $("#pageId" + currentPage)[0].className = "";
+    //$("#pageId" + currentPage)[0].className = "";
     currentPage = 1;
     $("#parentDiv").empty();
     fetchFeedback(currentPage);
@@ -272,44 +274,42 @@ function getSearchFeedback(n) {
         startTime = "2016-08-16";
         endTime = "2020-11-20";
     }
-    if (appIdSelected !== "" || timeRange !== "" || phoneNumberSelected !== "" || keyWordsSelected !== "") {
-        isAll = false;
-        let baseUrl = $("#baseUrl").val();
-        $("#parentDiv").empty();
-        $.ajax({
-            type: "POST",
-            url: baseUrl + "/feedback/page/list/filter",
-            dataType: "json",
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({
-                "appId": appIdSelected,
-                "deviceType": deviceTypeSelected,
-                "softVersion": versionSelected,
-                "phoneNumber": phoneNumberSelected,
-                "page": n,
-                "startTime": startTime,
-                "endTime": endTime,
-                "fuzzySearchObject": keyWordsSelected
-            }),
-            error: function (req, status, err) {
-                alert('Failed reason: ' + err);
-            }, success: function (data) {
-                let result = data.data;
-                pageFilterNum = result.totalCount % 5 === 0 ? parseInt(result.totalCount / 5) : parseInt(result.totalCount / 5) + 1;
-                if (result !== null && result.feedbackWithUserInfos !== null && result.feedbackWithUserInfos.length !== 0) {
-                    for (let i = 0; i < result.feedbackWithUserInfos.length; i++) {
-                        loadItem(result.feedbackWithUserInfos[i]);
-                    }
-                    paging(pageFilterNum);
-                    $("#pageId" + n)[0].className = "active";
-                } else {
-                    $("#parentDiv").empty();
-                    $("#paging").empty();
+    isAll = false;
+    let baseUrl = $("#baseUrl").val();
+    $("#parentDiv").empty();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/feedback/page/list/filter",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({
+            "appId": appIdSelected,
+            "deviceType": deviceTypeSelected,
+            "softVersion": versionSelected,
+            "phoneNumber": phoneNumberSelected,
+            "page": n,
+            "startTime": startTime,
+            "endTime": endTime,
+            "fuzzySearchObject": keyWordsSelected
+        }),
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let result = data.data;
+            pageFilterNum = result.totalCount % 5 === 0 ? parseInt(result.totalCount / 5) : parseInt(result.totalCount / 5) + 1;
+            if (result !== null && result.feedbackWithUserInfos !== null && result.feedbackWithUserInfos.length !== 0) {
+                for (let i = 0; i < result.feedbackWithUserInfos.length; i++) {
+                    loadItem(result.feedbackWithUserInfos[i]);
                 }
-                //getPermissionList();
+                paging(pageFilterNum);
+                $("#pageId" + n)[0].className = "active";
+            } else {
+                $("#parentDiv").empty();
+                $("#paging").empty();
             }
-        });
-    }
+            //getPermissionList();
+        }
+    });
 }
 
 /**
