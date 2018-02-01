@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by xiang.zhang on 2017/9/7.
+ * @author xiang.zhang
  */
 @Repository
 public interface WatchPlatePictureUploadMapper {
@@ -23,15 +24,23 @@ public interface WatchPlatePictureUploadMapper {
 
 
     /**
-     * 重新上传覆盖版本下所有图片信息
-     * @param picVerison
+     * 删除图片信息
+     * @param data 图片信息
      */
-     void watchPlatePictureDelete(@Param("picVerison") String picVerison);
+     void watchPlatePictureDelete(@Param("data") List<WatchPlatePictureUpload> data);
 
     /**
-     * 获取表盘图片列表
+     * 图片版本查找所有图片信息
+     * @param picOldVersion 旧的版本号
+     * @return 返回所有图片信息
+     */
+     List<WatchPlatePictureUpload> watchPlatePictureFind(@Param("picOldVersion") String picOldVersion);
+
+
+    /**
+     * 获取表盘列表
      * @return
      */
-     List<WatchPlatePictureUpload> watchPlatePictureList();
+    List<WatchPlatePictureUpload> watchPlatePictureList();
 
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.phicomm.product.manger.dao.WatchPlatePictureUploadMapper">
 
-    <insert id="watchPlatePictureUpload"
+    <insert id="watchPlatePictureUpload" useGeneratedKeys="true" keyProperty="watchPlatePictureUpload.id"
             parameterType="com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload">
         INSERT INTO
             watch_plate_picture_upload(
@@ -29,6 +29,7 @@
 
     <select id="watchPlatePictureList" resultType="com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload">
         SELECT
+        id,
         pic_version AS picVersion,
         pic_resolution AS picResolution,
         pic_id      AS picId,
@@ -51,12 +52,30 @@
         pic_id = #{watchPlatePictureUpload.picId, jdbcType=INTEGER}
     </update>
 
-<delete  id="watchPlatePictureDelete" parameterType="java.lang.String">
-    DELETE
-    FROM
-    watch_plate_picture_upload
-    WHERE
-     pic_version=#{picVerison, jdbcType=VARCHAR}
-</delete>
+    <delete id="watchPlatePictureDelete"
+            parameterType="com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload">
+        DELETE
+        FROM
+        watch_plate_picture_upload
+        WHERE
+        id IN
+        <foreach collection="data" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </delete>
 
+    <select id="watchPlatePictureFind" resultType="com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload">
+      SELECT
+        pic_version AS picVersion,
+        pic_resolution AS picResolution,
+        pic_id      AS picId,
+        pic_chi_name AS picChiName,
+        pic_eng_name AS picEngName,
+        pic_url     AS picUrl,
+        pic_status  AS picStatus
+      FROM
+      watch_plate_picture_upload
+      WHERE
+      pic_version = #{picOldVersion}
+    </select>
 </mapper>

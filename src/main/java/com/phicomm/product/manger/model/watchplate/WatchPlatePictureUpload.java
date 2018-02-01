@@ -11,7 +11,6 @@ import java.util.Date;
  */
 public class WatchPlatePictureUpload {
 
-    @JsonIgnore
     private Integer id;
 
     private Integer picId;

@@ -32,8 +32,6 @@ public class BalanceStatisticService {
 
     private LianbiActiveMapper lianbiActiveMapper;
 
-    private UserInfoMapper userInfoMapper;
-
     private UserCacheImpl userCache;
 
     private BalanceCronStatisticMapper balanceCronStatisticMapper;
@@ -42,19 +40,16 @@ public class BalanceStatisticService {
     public BalanceStatisticService(BalanceUserManagerMapper balanceUserManagerMapper,
                                    BalanceStatusMapper balanceStatusMapper,
                                    LianbiActiveMapper lianbiActiveMapper,
-                                   UserInfoMapper userInfoMapper,
                                    UserCacheImpl userCache,
                                    BalanceCronStatisticMapper balanceCronStatisticMapper) {
         this.balanceUserManagerMapper = balanceUserManagerMapper;
         this.balanceStatusMapper = balanceStatusMapper;
         this.lianbiActiveMapper = lianbiActiveMapper;
-        this.userInfoMapper = userInfoMapper;
         this.userCache = userCache;
         this.balanceCronStatisticMapper = balanceCronStatisticMapper;
         Assert.notNull(this.balanceUserManagerMapper);
         Assert.notNull(this.balanceStatusMapper);
         Assert.notNull(this.lianbiActiveMapper);
-        Assert.notNull(this.userInfoMapper);
         Assert.notNull(this.userCache);
         Assert.notNull(this.balanceCronStatisticMapper);
     }
@@ -222,7 +217,7 @@ public class BalanceStatisticService {
         }
         if (activated) {
             if (!Strings.isNullOrEmpty(country)) {
-                if (country.equalsIgnoreCase("Reserved Address")) {
+                if ("Reserved Address".equalsIgnoreCase(country)) {
                     return "保留地址";
                 }
                 builder.append(country);

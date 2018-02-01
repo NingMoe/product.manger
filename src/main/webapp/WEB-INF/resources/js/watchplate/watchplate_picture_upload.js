@@ -3,6 +3,7 @@ function uploadFileToServer() {
     var url = baseUrl + "/watchplate/picture/upload/file";
     var formData = new FormData($("#uploadPictureForm")[0]);
     formData.append("environment",$("#environment").val());
+    console.log(formData);
     $.ajax({
         type: "POST",
         url: url,
@@ -84,6 +85,7 @@ function uploadPicture()
         return;
     }
     uploadFileToServer();
+     alert("上传成功");
     document.getElementById("uploadPictureForm").reset();
     $("#pictureList tbody tr").remove();
 }

@@ -9,6 +9,8 @@ public class BaseSearchEntity {
 
     private String dateType;
 
+    private String appId;
+
     public String getPlatform() {
         return platform;
     }
@@ -25,11 +27,20 @@ public class BaseSearchEntity {
         this.dateType = dateType;
     }
 
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
     @Override
     public String toString() {
         return "BaseSearchEntity{" +
                 "platform='" + platform + '\'' +
                 ", dateType='" + dateType + '\'' +
+                ", appId='" + appId + '\'' +
                 '}';
     }
 }

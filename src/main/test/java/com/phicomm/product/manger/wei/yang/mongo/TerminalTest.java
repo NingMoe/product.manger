@@ -20,11 +20,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -127,10 +125,12 @@ public class TerminalTest {
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         Document project = new Document("createTime", time)
+                .append("appId", "$equipmentTerminalInfo.appInfo.appId")
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
                 .append("compareObject", "$equipmentTerminalInfo.appInfo.channel");
         Document match = new Document("timestamp", new Document("$lt", new SimpleDateFormat("yyyy-MM-dd").parse(yesterday.toString()).getTime()));
         Document group = new Document("_id", new Document("platform", "$platform")
+                .append("appId", "$appId")
                 .append("createTime", "$createTime")
                 .append("compareObject", "$compareObject"))
                 .append("count", new Document("$sum", 1));

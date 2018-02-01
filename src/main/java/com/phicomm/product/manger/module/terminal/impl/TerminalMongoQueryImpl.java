@@ -45,6 +45,8 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
 
     private static final String COLLECTION_NAME = "equipment_terminal_detail_trace";
 
+    private static final String APP_ID = "equipmentTerminalInfo.appInfo.appId";
+
     private static final String GROUP_DATE_TIME_KEY = "createDate";
 
     private MongoTemplate mongoTemplate;
@@ -83,9 +85,11 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         Document match = new Document("timestamp", new Document("$lte", obtainMidNightTimestamp()));
         Document project = new Document("createTime", time)
-                .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
+                .append("appId", String.format("$%s", APP_ID))
+                .append("platform", String.format("$%s", GROUP_PLATFORM_KEY))
                 .append("compareObject", String.format("$%s", key));
         Document group = new Document("_id", new Document("platform", "$platform")
+                .append("appId", "$appId")
                 .append("createTime", "$createTime")
                 .append("compareObject", "$compareObject"))
                 .append("count", new Document("$sum", 1));
@@ -117,7 +121,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return map类型数据
      */
     public List<TerminalCommonEntity> historyGroup(String compareObjectKey) {
-        GroupByResults<BasicDBObject> results = groupQuery(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY);
+        GroupByResults<BasicDBObject> results = groupQuery(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY, APP_ID);
         return parseData(results, compareObjectKey);
     }
 
@@ -128,7 +132,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      */
     public List<TerminalCommonEntity> yesterdayGroup(String compareObjectKey) {
         GroupByResults<BasicDBObject> results =
-                groupYesterdayData(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY);
+                groupYesterdayData(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY, APP_ID);
         return parseData(results, compareObjectKey);
     }
 
@@ -152,6 +156,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
             terminalCommonEntity.setCompareObject((String) map.get(compareObjectKey));
             terminalCommonEntity.setCount(((Double) map.get("count")).intValue());
             terminalCommonEntity.setCreateTime((String) map.get(GROUP_DATE_TIME_KEY));
+            terminalCommonEntity.setAppId((String) map.get(APP_ID));
             terminalCommonEntities.add(terminalCommonEntity);
         }
         return terminalCommonEntities
@@ -177,6 +182,7 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
             entity.setCompareObject((String) body.get("compareObject"));
             entity.setPlatform((String) body.get("platform"));
             entity.setCreateTime((String) body.get("createTime"));
+            entity.setAppId((String) body.get("appId"));
             result.add(entity);
         });
         return result.stream()

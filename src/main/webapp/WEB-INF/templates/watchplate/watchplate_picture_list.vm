@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
 <link rel="stylesheet" href="$baseUrl/resources/css/datatables/datatables.css">
+<link rel="stylesheet" href="$baseUrl/resources/select2/select2.min.css">
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +8,15 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">图片列表</h3>
                 </div>
-                <div class="box-body">
+                <div class="form-group">
+                    <label for="environment"><font style="color: red">*</font>表盘列表环境</label>
+                    <select id="environment" class="form-control">
+                        <option value=""></option>
+                        <option value="local">本地</option>
+                        <option value="test">测试</option>
+                        <option value="prod">生产</option>
+                    </select>
+                </div>
                     <table id="pictureList" class="table table-bordered table-striped">
                         <thead>
                         <tr>
@@ -19,10 +28,29 @@
                             <th>创建时间</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
                     </table>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary" onclick="pictureDelete()">删除</button>
                 </div>
+                </div>
+
+            <table id="pictureVersionUpdateList" class="table table-bordered table-striped">
+                <thead>
+                <div class="form-group">
+                    <label for="picOldVersion"><font style="color: red">*</font>图片旧版本</label>
+                    <input type="text" class="form-control" id="picOldVersion" name="picOldVersion" placeholder="图片对应旧版本">
+                </div>
+                <div class="form-group">
+                    <label for="picNewVersion"><font style="color: red">*</font>图片新版本</label>
+                    <input type="text" class="form-control" id="picNewVersion" name="picNewVersion" placeholder="图片对应新版本">
+                </div>
+                </thead>
+            </table>
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary" onclick="pictureVersionUpdate()">更新</button>
+            </div>
+        </div>
+
             </div>
         </div>
     </div>
@@ -32,3 +60,4 @@
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/watchplate/watchplate_picture_list.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>

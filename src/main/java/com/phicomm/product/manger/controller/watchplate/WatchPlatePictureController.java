@@ -1,10 +1,9 @@
 package com.phicomm.product.manger.controller.watchplate;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.exception.DataFormatException;
-import com.phicomm.product.manger.exception.UploadFileException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
+import com.phicomm.product.manger.model.watchplate.WatchPlatePictureDeleteBean;
 import com.phicomm.product.manger.model.watchplate.WatchPlatePictureUpload;
 import com.phicomm.product.manger.service.WatchPlatePictureService;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by xiang.zhang on 2017/9/6.
+ * @author xiang.zhang
  */
 @Controller
 public class WatchPlatePictureController {
@@ -43,8 +43,6 @@ public class WatchPlatePictureController {
      * @param picResolution 图片分辨率
      * @param environment   应用环境
      * @return 图片上传成功
-     * @throws DataFormatException 数据格式错误
-     * @throws UploadFileException 上传失败
      */
     @RequestMapping(value = "watchplate/picture/upload/file", method = RequestMethod.POST)
     @ApiOperation("图片上传接口")
@@ -61,28 +59,66 @@ public class WatchPlatePictureController {
                                         @RequestParam("picVersion") String picVersion,
                                         @RequestParam("picResolution") String[] picResolution,
                                         @RequestParam("environment") String environment)
-            throws DataFormatException, UploadFileException, IOException {
+            throws IOException {
         watchPlatePictureService.pictureUploadNumber(file, picId, picChiName, picEngName, picVersion, picResolution, environment);
         return CommonResponse.ok();
     }
 
     /**
      * 获取表盘图片列表
-     *
      * @return 返回图片信息详情
      */
     @RequestMapping(value = "watchplate/picture/list/page", method = RequestMethod.POST)
     @ApiOperation("获取图片列表")
     @ResponseBody
     @FunctionPoint(value = "common")
-    public Response<List<WatchPlatePictureUpload>> watchPlatePictureList() {
-        List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList();
+    public Response<List<WatchPlatePictureUpload>> watchPlatePictureList(@RequestParam("environment") String environment)
+    throws IOException{
+        List<WatchPlatePictureUpload> watchPlatePictureList = watchPlatePictureService.watchPlatePictureList(environment);
         return new Response<List<WatchPlatePictureUpload>>().setData(watchPlatePictureList);
     }
 
     /**
+     * 删除表盘信息
+     * @param
+     */
+    @RequestMapping(value = "watchplate/picture/list/delete", method = RequestMethod.POST)
+    @ApiOperation("删除图片信息")
+    @ResponseBody
+    @FunctionPoint(value = "common")
+    public CommonResponse watchPlatePictureListDelete(@RequestBody WatchPlatePictureDeleteBean data)
+            throws IOException{
+        System.out.println("delete图片列表"+data);
+        if(data.getData().size()<=0){
+            return CommonResponse.error();
+        }
+        watchPlatePictureService.pictureListDelete(data);
+        return CommonResponse.ok();
+    }
+
+    @RequestMapping(value = "watchplate/picture/version/update", method = RequestMethod.POST)
+    @ApiOperation("图片版本更新接口")
+    @ResponseBody
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
+            @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class)
+    })
+    @FunctionPoint(value = "common")
+    public CommonResponse pictureUpload(@RequestParam("picOldVersion") String picOldVersion,
+                                        @RequestParam("picNewVersion") String picNewVersion,
+                                        @RequestParam("environment") String environment)
+            throws IOException {
+        watchPlatePictureService.pictureVersionUpdate(picOldVersion,picNewVersion,environment);
+        return CommonResponse.ok();
+    }
+
+
+
+
+
+
+    /**
      * 获取表盘配置信息
-     *
      * @return 返回配置信息
      */
     @RequestMapping(value = "watchplate/upload/config/get", method = RequestMethod.POST, produces = "application/json")

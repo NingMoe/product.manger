@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 public class DateTest {
 
     @Test
-    public void test(){
-        LocalDateTime dateTime=LocalDateTime.now().minusDays(1);
+    public void test() {
+        LocalDateTime dateTime = LocalDateTime.now().minusDays(1);
         System.out.println(dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         LocalDate time = LocalDate.parse("2014-12-22", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
