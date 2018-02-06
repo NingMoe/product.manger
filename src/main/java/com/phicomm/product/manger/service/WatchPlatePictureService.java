@@ -144,6 +144,56 @@ public class WatchPlatePictureService {
         }
     }
 
+    /**
+     * 更新表盘版本
+     * @param picOldVersion 旧的版本号
+     * @param picNewVersion 新的版本号
+     * @param environment 环境选择
+     */
+    public void pictureVersionUpdate(String picOldVersion,String picNewVersion, String environment) throws IOException {
+      selectDatabase(environment);
+      List<WatchPlatePictureUpload> watchPlatePictureList = new LinkedList<>();
+      List<WatchPlatePictureUpload> pictureUploadLists =  watchPlatePictureUploadMapper.watchPlatePictureFind(picOldVersion);
+
+        for(WatchPlatePictureUpload watchPlatePictureUpload:pictureUploadLists){
+            Date now = new Date();
+            watchPlatePictureUpload.setCreateTime(now);
+            watchPlatePictureUpload.setUpdateTime(now);
+            watchPlatePictureUpload.setPicVersion(picNewVersion);
+
+            watchPlatePictureUploadMapper.watchPlatePictureUpload(watchPlatePictureUpload);
+
+            System.out.println(watchPlatePictureUpload);
+
+            watchPlatePictureList.add(watchPlatePictureUpload);
+
+            System.out.println(watchPlatePictureList);
+        }
+        String param = watchPlatePictureParamConfigMapper.getWatchPlateConfig();
+        JSONObject jsonObject = JSON.parseObject(param);
+        String callbackUrl = "";
+        switch (environment) {
+            case "local":
+                callbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.watchplate.localCallback")) + "/insert";
+                break;
+            case "test":
+                callbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.watchplate.testCallback")) + "/insert";
+                break;
+            case "prod":
+                callbackUrl = String.valueOf(JSONPath.eval(jsonObject, "$.watchplate.prodCallback")) + "/insert";
+                break;
+            default:
+                break;
+        }
+        String dataList = JSON.toJSONStringWithDateFormat(watchPlatePictureList, "yyyy-MM-dd HH:mm:ss");
+        try {
+            HttpsUtil.post(callbackUrl, dataList, Charsets.UTF_8.name());
+        } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+            logger.info(ExceptionUtil.getErrorMessage(e));
+        }
+    }
+
+
 
     /**
      * 获取表盘配置信息

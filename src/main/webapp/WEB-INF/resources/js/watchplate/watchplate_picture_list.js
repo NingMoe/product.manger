@@ -81,10 +81,53 @@ function pictureDelete(){
             "environment":$("#environment").val(),
             "data":datas
         })
-
     });
 }
+function isNotEmpty(str) {
+    if (!str) {
+        return false;
+    }
+    if (str.length == 0 || str.trim() == '') {
+        return false;
+    }
+    return true;
+}
 
+function pictureVersionUpdate() {
+    var picOldVersion = $("#picOldVersion").val();
+    var picNewVersion = $("#picNewVersion").val();
+    console.log(picOldVersion);
+    console.log(picNewVersion);
+    console.log($("#environment").val());
+    if(!isNotEmpty($("#picOldVersion").val())){
+        alert("请填写旧版本");
+        return;
+    }
+    if(!isNotEmpty($("#picNewVersion").val())){
+        alert("请填写新版本");
+        return;
+    }
 
+    if(!isNotEmpty($("#environment").val())){
+        alert("请选择环境");
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: $("#baseUrl").val() + "/watchplate/picture/version/update",
+        dataType: "json",
+        data: {picOldVersion:picOldVersion,
+               picNewVersion:picNewVersion,
+               environment:$("#environment").val()
+        },
+             success:function () {
+                 alert("更新成功！");
+                 $("#picOldVersion").val("");
+                 $("#picNewVersion").val("");
+    }
+
+    });
+
+}
 
 

@@ -85,6 +85,7 @@ function uploadPicture()
         return;
     }
     uploadFileToServer();
+     alert("上传成功");
     document.getElementById("uploadPictureForm").reset();
     $("#pictureList tbody tr").remove();
 }
