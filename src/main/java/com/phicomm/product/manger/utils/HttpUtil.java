@@ -24,7 +24,6 @@ import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.Set;
@@ -119,12 +118,10 @@ public class HttpUtil {
      * @param auths  授权字段
      * @return 请求结果
      * @throws IOException              io异常
-     * @throws NoSuchAlgorithmException 算法不支持
-     * @throws KeyManagementException   keyManager错误
      */
     @SuppressWarnings("unused")
     public static String openUrlWithAuth(String url, String method, JSONObject params, String ctype, JSONObject auths)
-            throws IOException, NoSuchAlgorithmException, KeyManagementException {
+            throws IOException {
         InputStream inputStream;
         HttpURLConnection httpURLConnection;
         if (RequestType.GET.getKeyName().equalsIgnoreCase(method)) {
@@ -206,12 +203,10 @@ public class HttpUtil {
      * @param ctype  content-type
      * @param auths  授权
      * @return 链接
-     * @throws NoSuchAlgorithmException 算法不支持
      * @throws IOException              io异常
-     * @throws KeyManagementException   keyManager异常
      */
     private static HttpURLConnection getUrlConnectionWithAuth(String url, String method, String ctype, JSONObject auths)
-            throws NoSuchAlgorithmException, IOException, KeyManagementException {
+            throws IOException {
         HttpURLConnection httpURLConnection = getUrlConnection(url, method, ctype);
         if (auths == null) {
             return httpURLConnection;
@@ -280,6 +275,7 @@ public class HttpUtil {
     /**
      * 获取同一账号中的用户信息
      */
+    @SuppressWarnings("unchecked")
     public static Map<String, String> getAccountUserInfo() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attributes.getRequest().getSession();
@@ -297,11 +293,11 @@ public class HttpUtil {
         }
 
         @Override
-        public void checkClientTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
+        public void checkClientTrusted(X509Certificate[] cert, String oauthType) {
         }
 
         @Override
-        public void checkServerTrusted(X509Certificate[] cert, String oauthType) throws CertificateException {
+        public void checkServerTrusted(X509Certificate[] cert, String oauthType) {
         }
     }
 }
