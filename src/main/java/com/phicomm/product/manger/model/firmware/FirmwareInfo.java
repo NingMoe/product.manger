@@ -38,6 +38,8 @@ public class FirmwareInfo {
 
     private String url;
 
+    private String differentPartUrls;
+
     private String description;
 
     private boolean forceUpgrade;
@@ -140,6 +142,14 @@ public class FirmwareInfo {
         this.url = url == null ? null : url.trim();
     }
 
+    public String getDifferentPartUrls() {
+        return differentPartUrls;
+    }
+
+    public void setDifferentPartUrls(String differentPartUrls) {
+        this.differentPartUrls = differentPartUrls;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -197,6 +207,7 @@ public class FirmwareInfo {
                 ", size=" + size +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
+                ", differentPartUrls='" + differentPartUrls + '\'' +
                 ", description='" + description + '\'' +
                 ", forceUpgrade=" + forceUpgrade +
                 ", fotaForceUpgrade=" + fotaForceUpgrade +

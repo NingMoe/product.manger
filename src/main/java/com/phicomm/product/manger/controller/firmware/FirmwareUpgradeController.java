@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * 固件文件上传
@@ -62,14 +63,15 @@ public class FirmwareUpgradeController {
                                                           @RequestParam("forceUpgrade") boolean forceUpgrade,
                                                           @RequestParam("fotaForceUpgrade") boolean fotaForceUpgrade,
                                                           @RequestParam("environment") String environment,
-                                                          @RequestPart("file") MultipartFile file,
+                                                          @RequestParam("file") MultipartFile file,
+                                                          @RequestParam("differentPartFiles") List<MultipartFile> files,
                                                           @RequestParam("description") String description,
                                                           @RequestParam("appPlatform") String appPlatform,
                                                           @RequestParam(value = "appVersionCodeAndroid", required = false) String appVersionCodeAndroid,
                                                           @RequestParam(value = "appVersionCodeIos", required = false) String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         firmwareUpgradeService.whichPlatform(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
         return CommonResponse.ok();
     }
 

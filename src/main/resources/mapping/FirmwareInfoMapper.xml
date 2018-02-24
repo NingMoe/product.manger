@@ -24,7 +24,7 @@
         version_code, environment,
         gnss_version, md5,
         hardware_code, `enable`,
-        create_time, url,
+        create_time, url, different_part_urls,
         description, app_platform,
         app_version_code, size,
         is_force_upgrade, is_fota_force_upgrade
@@ -34,10 +34,10 @@
         #{firmwareInfo.versionCode,jdbcType=VARCHAR}, #{firmwareInfo.environment,jdbcType=VARCHAR},
         #{firmwareInfo.gnssVersion,jdbcType=INTEGER}, #{firmwareInfo.md5,jdbcType=VARCHAR},
         #{firmwareInfo.hardwareCode,jdbcType=VARCHAR}, #{firmwareInfo.enable,jdbcType=INTEGER},
-        now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.description,jdbcType=LONGVARCHAR},
-        #{firmwareInfo.appPlatform,jdbcType=VARCHAR}, #{firmwareInfo.appVersionCode,jdbcType=VARCHAR},
-        #{firmwareInfo.size,jdbcType=FLOAT},#{firmwareInfo.forceUpgrade,jdbcType=INTEGER},
-        #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER}
+        now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.differentPartUrls,jdbcType=LONGVARCHAR},
+        #{firmwareInfo.description,jdbcType=LONGVARCHAR}, #{firmwareInfo.appPlatform,jdbcType=VARCHAR},
+        #{firmwareInfo.appVersionCode,jdbcType=VARCHAR}, #{firmwareInfo.size,jdbcType=FLOAT},
+        #{firmwareInfo.forceUpgrade,jdbcType=INTEGER}, #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER}
         )
     </insert>
 

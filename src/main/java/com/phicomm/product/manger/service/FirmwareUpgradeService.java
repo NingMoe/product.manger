@@ -66,6 +66,7 @@ public class FirmwareUpgradeService {
                               boolean forceUpgrade,
                               boolean fotaForceUpgrade,
                               MultipartFile file,
+                              List<MultipartFile> files,
                               String description,
                               String appPlatform,
                               String appVersionCodeAndroid,
@@ -73,11 +74,11 @@ public class FirmwareUpgradeService {
         if (!Strings.isNullOrEmpty(appPlatform)) {
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment,gnssVersion, forceUpgrade,fotaForceUpgrade, file, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos);
             } else if (appPlatforms.length == 1 && ANDROID.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade,fotaForceUpgrade, file, description, ANDROID, appVersionCodeAndroid, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, null);
             } else if (appPlatforms.length == 1 && IOS.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,forceUpgrade,fotaForceUpgrade, file, description, IOS, appVersionCodeIos, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, IOS, appVersionCodeIos, null);
             }
         }
 
@@ -94,6 +95,7 @@ public class FirmwareUpgradeService {
                                                  boolean forceUpgrade,
                                                  boolean fotaForceUpgrade,
                                                  MultipartFile file,
+                                                 List<MultipartFile> files,
                                                  String description,
                                                  String appPlatform,
                                                  String appVersionCode,
@@ -102,6 +104,7 @@ public class FirmwareUpgradeService {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
                 environment, gnssVersion, file, description, appPlatform, appVersionCode);
+        String differentPartUrls = getDifferentPartUrls(files);
         String[] appVersions = appVersionCode.trim().replaceAll(" ", "").replaceAll("，", ",").split(",");
         // 上传文件
         Map<String, String> result = FileUtil.uploadFileToHermes(file);
@@ -119,6 +122,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setFotaForceUpgrade(fotaForceUpgrade);
         firmwareInfo.setEnable(1);
         firmwareInfo.setUrl(downloadUrl);
+        firmwareInfo.setDifferentPartUrls(differentPartUrls);
         firmwareInfo.setMd5(md5);
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
@@ -181,9 +185,9 @@ public class FirmwareUpgradeService {
             throw new DataFormatException();
         }
         FirmwareInfo firmwareInfo = new FirmwareInfo();
-        if (file==null || file.isEmpty()){
+        if (file == null || file.isEmpty()) {
             firmwareInfo = firmwareInfoMapper.getFirmwareInfo(Integer.parseInt(id));
-        }else {
+        } else {
             // 上传文件
             Map<String, String> result = FileUtil.uploadFileToHermes(file);
             String downloadUrl = result.get("url");
@@ -222,12 +226,12 @@ public class FirmwareUpgradeService {
                          String environment,
                          String versionCode,
                          String appPlatform,
-                         String appVersionCode) throws FirmwareTriggerFailException{
+                         String appVersionCode) throws FirmwareTriggerFailException {
         FirmwareEnvironmentEnum firmwareEnvironmentEnum = "test".equals(environment) ?
                 FirmwareEnvironmentEnum.TEST : FirmwareEnvironmentEnum.PROD;
         FirmwareInfo firmwareInfo = firmwareInfoMapper.getFirmwareDetail(firmwareType,
                 hardwareCode, environment, versionCode, appPlatform, appVersionCode);
-        logger.info(firmwareType+"     "+hardwareCode+"     "+environment+"     "+versionCode+"     "+appPlatform+"     "+appVersionCode);
+        logger.info(firmwareType + "     " + hardwareCode + "     " + environment + "     " + versionCode + "     " + appPlatform + "     " + appVersionCode);
         logger.info(firmwareInfo);
         String param = firmwareTriggerParamConfigMapper.getFirmwareConfig();
         FirmwareUpgradeContext firmwareUpgradeContext = new FirmwareUpgradeContext(firmwareType,
@@ -423,6 +427,28 @@ public class FirmwareUpgradeService {
         // 触发升级
         trigger(firmwareInfo.getFirmwareType(), firmwareInfo.getHardwareCode(), firmwareInfo.getEnvironment(), firmwareInfo.getVersionCode(), firmwareInfo.getAppPlatform(), appVersionCode);
 
+    }
+
+    /**
+     * 获取差分包url
+     *
+     * @return 差分包url
+     */
+    private String getDifferentPartUrls(List<MultipartFile> files) throws UploadFileException {
+        String urls;
+        Map<String, String> map = Maps.newHashMap();
+        if (1 == files.size() && 0 == files.get(0).getSize()) {
+            logger.info("没有上传差分包");
+            return null;
+        } else {
+            for (MultipartFile file : files) {
+                Map<String, String> result = FileUtil.uploadFileToHermes(file);
+                String downloadUrl = result.get("url");
+                map.put(file.getOriginalFilename(), downloadUrl);
+            }
+        }
+        urls = JSONObject.toJSONString(map);
+        return urls;
     }
 
 

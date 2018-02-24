@@ -86,6 +86,12 @@
                             <p class="help-block">例如：W1_A0_V1.00_A00_0615_WB.zip</p>
                         </div>
                         <div class="form-group">
+                            <label for="differentPartFiles">差分包上传</label>
+                            <input type="file" name="differentPartFiles" id="differentPartFiles" multiple="multiple"
+                                   class="form-control" style="border-radius: 4px">
+                            <p class="help-block">注意：此处只针对W2(W1可以忽略)，若没有差分包，则不要上传任何文件</p>
+                        </div>
+                        <div class="form-group">
                             <label for="description">说明</label>
                             <textarea id="description" name="description" form="form" class="form-control"></textarea>
                         </div>

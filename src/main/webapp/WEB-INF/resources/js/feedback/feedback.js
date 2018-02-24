@@ -633,6 +633,7 @@ function loadFeedback(itemData) {
             }
             src = src + ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
         }
+
         if (images !== null) {
             for (let j = 0; j < images.length; j++) {
                 src = src + `<a href=${images[j]} class='fresco' data-fresco-group=${dialog[i].dialogId} >

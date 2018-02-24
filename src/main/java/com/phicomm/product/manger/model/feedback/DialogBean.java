@@ -32,6 +32,10 @@ public class DialogBean {
 
     private List dialogPictures;
 
+    private String evaluation;
+
+    private String evaluationStar;
+
     public String getUserId() {
         return userId;
     }
@@ -104,6 +108,22 @@ public class DialogBean {
         this.dialogPictures = dialogPictures;
     }
 
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public String getEvaluationStar() {
+        return evaluationStar;
+    }
+
+    public void setEvaluationStar(String evaluationStar) {
+        this.evaluationStar = evaluationStar;
+    }
+
     @Override
     public String toString() {
         return "DialogBean{" +
@@ -116,6 +136,8 @@ public class DialogBean {
                 ", dialogText='" + dialogText + '\'' +
                 ", dialogPicture='" + dialogPicture + '\'' +
                 ", dialogPictures=" + dialogPictures +
+                ", evaluation='" + evaluation + '\'' +
+                ", evaluationStar='" + evaluationStar + '\'' +
                 '}';
     }
 }
