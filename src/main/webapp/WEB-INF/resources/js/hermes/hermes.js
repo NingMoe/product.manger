@@ -26,7 +26,7 @@ function uploadFileToServer() {
             $("#tableSha256").html(data.data.sha256);
             $("#tableHttpsFile").html(data.data.fileHttpsUrl);
             $("#tableHttpsImage").html(data.data.imageHttpsUrl);
-            $("#tableHttpFile").html(data.data.imageHttpUrl);
+            $("#tableHttpFile").html(data.data.fileHttpUrl);
             $("#tableHttpImage").html(data.data.imageHttpUrl);
             $("#tableInnerFile").html(data.data.fileHttpInnerUrl);
         }

@@ -43,9 +43,9 @@
             app_id = #{periodEntity.appId,jdbcType=VARCHAR}
         AND
         <![CDATA[
-            STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
+            STR_TO_DATE(create_date,'%Y-%m-%d') >=  DATE_FORMAT(#{periodEntity.startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
         AND
-            STR_TO_DATE(create_date,'%Y-%m-%d')  < #{periodEntity.endTime,jdbcType=TIMESTAMP}
+            STR_TO_DATE(create_date,'%Y-%m-%d')  < DATE_FORMAT(#{periodEntity.endTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
         ]]>
         ORDER BY create_date DESC
     </select>
@@ -129,9 +129,9 @@
             app_id = #{periodEntity.appId,jdbcType=VARCHAR}
         <![CDATA[
         AND
-             STR_TO_DATE(create_date,'%Y-%m-%d') >=  #{periodEntity.startTime,jdbcType=TIMESTAMP}
+             STR_TO_DATE(create_date,'%Y-%m-%d') >=  DATE_FORMAT(#{periodEntity.startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
         AND
-            STR_TO_DATE(create_date,'%Y-%m-%d')  <= #{periodEntity.endTime,jdbcType=TIMESTAMP}
+            STR_TO_DATE(create_date,'%Y-%m-%d')  <= DATE_FORMAT(#{periodEntity.endTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
         ]]>
     </select>
 </mapper>
