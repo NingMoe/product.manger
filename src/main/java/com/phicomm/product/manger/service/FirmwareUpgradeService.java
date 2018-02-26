@@ -444,7 +444,8 @@ public class FirmwareUpgradeService {
             for (MultipartFile file : files) {
                 Map<String, String> result = FileUtil.uploadFileToHermes(file);
                 String downloadUrl = result.get("url");
-                map.put(file.getOriginalFilename(), downloadUrl + "," + file.getSize());
+                String md5 = result.get("md5");
+                map.put(file.getOriginalFilename(), downloadUrl + "," + file.getSize() + "," + md5);
             }
         }
         urls = JSONObject.toJSONString(map);
