@@ -5,6 +5,7 @@ let pageFilterNum = 0;
 let currentPage = 1;
 let terminalInfo = "";
 let isAll = true;
+let isEvaluate = false;
 /**
  * 初始化  显示10条信息
  */
@@ -377,7 +378,7 @@ function paging(Num) {
         $("#paging").append("<li><a href='javascript:void(0)'>...</a></li>");
     }
     $("#paging").append("<li id='next'><a href='javascript:void(0)' onclick='next();'>&gt;</a></li><li id='end'><a href='javascript:void(0)' onclick='end();'>&gt;&gt;</a></li>");
-    $("#paging").append("<li style='margin-left: 10px'><input style='width: 40px' type='number' size='5' id='goToPageNum' value='"+currentPage+"'/></li><li>/" + Num + "</li>");
+    $("#paging").append("<li style='margin-left: 10px'><input style='width: 40px' type='number' size='5' id='goToPageNum' value='" + currentPage + "'/></li><li>/" + Num + "</li>");
     $("#paging").append("<li><button class='btn' onclick='goTo()'>跳页</button></li>");
 }
 
@@ -539,7 +540,7 @@ function fetchFeedback(n) {
 function loadItem(itemData) {
     let src = `<li class="item" id="childDiv" style="padding-right: 20px;padding-left: 20px">` +
         loadUserHeader(itemData.dialogBeans[0].imageUrl) + loadUserId(itemData.dialogBeans[0].userId) + loadUsername(itemData.dialogBeans[0].username) +
-        loadPhoneDetail(itemData.phoneNumber,itemData.systemVersion) + loadAppInfo(itemData.platform, itemData.appVersion, itemData.mac) + loadFeedback(itemData);
+        loadPhoneDetail(itemData.phoneNumber, itemData.systemVersion) + loadAppInfo(itemData.platform, itemData.appVersion, itemData.mac) + loadFeedback(itemData);
     const parser = new DOMParser();
     const el = parser.parseFromString(src, "text/html");
     const element = el.getElementById("childDiv");
@@ -561,12 +562,12 @@ function loadUsername(username) {
 /**
  * 加载电话号码
  */
-function loadPhoneDetail(phoneNumber,systemVersion) {
+function loadPhoneDetail(phoneNumber, systemVersion) {
     let version;
-    if (systemVersion.indexOf("_unknown")!==-1){
-        version=systemVersion.substring(0,systemVersion.indexOf("_unknown"));
-    }else {
-        version=systemVersion;
+    if (systemVersion.indexOf("_unknown") !== -1) {
+        version = systemVersion.substring(0, systemVersion.indexOf("_unknown"));
+    } else {
+        version = systemVersion;
     }
     return `<span style="margin-top: 15px" class="product-description">` + "手机号：" + phoneNumber + `&nbsp;&nbsp;&nbsp;
     系统型号：` + version + `</span>`;
@@ -576,9 +577,9 @@ function loadPhoneDetail(phoneNumber,systemVersion) {
  * 获取手机系统及APP版本号
  */
 function loadAppInfo(platform, appVersion, mac) {
-    if(null !== mac){
+    if (null !== mac) {
         return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `&nbsp;&nbsp;&nbsp;MAC地址：` + mac + `</span>`;
-    }else{
+    } else {
         return `<span style="margin-top: 15px" class="product-description">` + "手机系统：" + platform + `&nbsp;&nbsp;&nbsp;版本号：` + appVersion + `</span>`;
     }
 }
@@ -627,13 +628,14 @@ function loadFeedback(itemData) {
         if ("b2c" === dialog[i].dialogType) {
             src = src + `<div style="float: left;margin-top: 15px"><img src=${headImage} style="width: 30px;height: 30px " alt='img'/></a></div>`;
             src = src + ` <div class="row" style="margin-left: 50px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
+            isEvaluate = null !== dialog[i].evaluation;
         } else {
             if (i !== 0) {
                 src = src + `<div class="product-img" style="float: left;margin-top: 15px;margin-left: -60px;"><img src=${headImage} alt='img'/></a></div>`;
             }
             src = src + ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].dialogText}</p><div id='page'><div class='demonstrations'>`;
+            isEvaluate = false;
         }
-
         if (images !== null) {
             for (let j = 0; j < images.length; j++) {
                 src = src + `<a href=${images[j]} class='fresco' data-fresco-group=${dialog[i].dialogId} >
@@ -653,7 +655,14 @@ function loadFeedback(itemData) {
                 `<span class="identity" style="margin-left: 10px"><a style="color: red" href="javascript:void(0)" name =` + i + ` onclick="deleteReplay(this, this.name);">删除</a></span></div>`;
         }
         src = src + `<div><span style="height:1px;width:515px;background-color: #ECF0F5;display: inline-block;"></span></div>`;
+        if (isEvaluate) {
+            src = src + `<div class="product-img" style="float: left;margin-top: 15px;margin-left: -60px;"><img src=${dialog[0].imageUrl} alt='img'/></a></div>` +
+                ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].evaluation}</p><div id='page'><div class='demonstrations'>` +
+                `</div></div></div>` + `<div style="margin-top: 15px;color: #9999A6;"><span hidden id="dialogId">${dialog[i].dialogId}</span><span>提交于：${dialog[i].createTime}</span></div>` +
+                `<div><span style="height:1px;width:515px;background-color: #ECF0F5;display: inline-block;"></span></div>`;
+        }
     }
+
     if (dialog.length > 2) {
         src = src + `</div>`;
         let iconMore = "iconMore" + dialog[0].sessionId;
@@ -845,7 +854,7 @@ function preview(file, num) {
                         break;
                     }
                 }
-            }
+            };
             reader.readAsDataURL(file.files[0]);
         }
     }
