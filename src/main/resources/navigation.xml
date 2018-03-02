@@ -745,6 +745,38 @@
     </navigation>
 
     <navigation>
+        <id>wristband_report</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>手环手表 激活与使用情况报告</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/wristband_report/page</url>
+            <sub-directories>
+                <name>wristband_report</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>wristbandStatisticCount</id>
+        <title>
+            <title-name>统计</title-name>
+            <title-description>手环手表销售数量统计</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/wristband/statistic/count/page</url>
+            <sub-directories>
+                <name>WristbandStatisticCount</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>traceUserActivity</id>
         <title>
             <title-name>用户活跃度</title-name>

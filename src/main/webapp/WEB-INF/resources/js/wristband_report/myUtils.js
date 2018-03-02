@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    $("#balance-statistic-1").addClass("active");
-    $("#balance-statistic-2").addClass("active");
+    $("#trace-sport-node").addClass("active");
+    $("#trace-sport-menu-node").addClass("active");
+    $("#user-activity-trace-sport-node1").addClass("active");
 });
 
 /**

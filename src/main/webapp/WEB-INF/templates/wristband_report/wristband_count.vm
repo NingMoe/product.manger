@@ -1,0 +1,30 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div id ="mac-year-chart">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div id ="mac-month-chart">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/chartjs/Chart.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/oldie.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/wristtband_count.js?v=$uuid"></script>

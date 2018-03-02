@@ -50,7 +50,7 @@
                         <div class="form-group col-md-1" style="margin-left: 50px">
                             <div>
                                 <button type="button" class="btn btn-primary pull-right phicomm_button_go"
-                                        onclick="addedKKeys()">
+                                        onclick="addWristBandKKeys()">
                                     提交
                                 </button>
                             </div>
@@ -80,34 +80,34 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-4 control-label"><h4>总使用量</h4></label>
-                        <div class="col-sm-6">
-                            <label class="form-control" name="s7DataUsageCountAll">0</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-4 control-label"><h4>总激活量</h4></label>
-                        <div class="col-sm-6">
-                            <label class="form-control" name="s7ActivationAll">0</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量</h4></label>
-                        <div class="col-sm-6">
-                            <label class="form-control" name="s7LianbiKKeysCountAll">0</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量</h4></label>
-                        <div class="col-sm-6">
-                            <label class="form-control" name="s7WanjiaKKeysCountAll">0</label>
-                        </div>
-                    </div>
-                </div>
+##                <div class="row">
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>总使用量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7DataUsageCountAll">0</label>
+##                        </div>
+##                    </div>
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>总激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7ActivationAll">0</label>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="row">
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7LianbiKKeysCountAll">0</label>
+##                        </div>
+##                    </div>
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7WanjiaKKeysCountAll">0</label>
+##                        </div>
+##                    </div>
+##                </div>
 
             ##                今日详情
                 <div class="row">
@@ -161,51 +161,51 @@
             </div>
         </div>
     ##************************************图表一
-        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-primary">
-                            <h3 class="box-title">二、手环手表新增使用量</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                    ##手环手表设备新增使用量(每天)
-                        <div class="box box-primary">
-                            <div id="S7UsageCountschart1"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    ##        -----------------------------------------
-        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box box-primary">
-                        <div class="box-body">
-                        ##手环手表设备新增使用量(每月)
-                            <div id="S7UsageCountschart2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="box box-primary">
-                        <div class="box-body">
-                        ##手环手表设备各地区使用量
-                            <div id="S7SalesLocationchart3"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-xs-12">
+##                        <div class="box box-primary">
+##                            <h3 class="box-title">二、手环手表新增使用量</h3>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-md-12">
+##                    ##手环手表设备新增使用量(每天)
+##                        <div class="box box-primary">
+##                            <div id="S7UsageCountschart1"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##    ##        -----------------------------------------
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="row">
+##                <div class="col-md-6">
+##                    <div class="box box-primary">
+##                        <div class="box-body">
+##                        ##手环手表设备新增使用量(每月)
+##                            <div id="S7UsageCountschart2"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="col-md-6">
+##                    <div class="box box-primary">
+##                        <div class="box-body">
+##                        ##手环手表设备各地区使用量
+##                            <div id="S7SalesLocationchart3"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
 
 
     ##************************************图表二
@@ -267,21 +267,21 @@
             </div>
         </div>
 
-    ##    ---------------------------
-
-        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-primary">
-                        ##手环手表K码新增激活量(每天)与使用量对比
-                            <div id="S7KKeysCountsChart4"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+##    ##    ---------------------------
+##
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-xs-12">
+##                        <div class="box box-primary">
+##                        ##手环手表K码新增激活量(每天)与使用量对比
+##                            <div id="S7KKeysCountsChart4"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##    </div>
 </section>
 
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
