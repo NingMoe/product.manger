@@ -1,6 +1,5 @@
 package com.phicomm.product.manger.service;
 
-import com.google.common.collect.Lists;
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
@@ -45,12 +44,9 @@ public class OtaServerService {
      */
     public List<HostAndPort> updateTrigger(BalanceOtaStatus balanceOtaStatus) throws IOException {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
-        List<BalanceServerAddressBean> addressBeans = Lists.newArrayList();
+        List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
-        /*addressBeans = otaServerAddressMapper.obtainServerAddress();*/
-        BalanceServerAddressBean addressBean = new BalanceServerAddressBean();
-        addressBean.setHostAndPort("114.141.173.27:16816");
-        addressBeans.add(addressBean);
+        addressBeans = otaServerAddressMapper.obtainServerAddress();
         if (addressBeans.isEmpty()) {
             return new ArrayList<>();
         }
