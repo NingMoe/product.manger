@@ -8,6 +8,16 @@
                 <form role="form" enctype="multipart/form-data" id="uploadFile">
                     <div class="box-body">
                         <div class="form-group">
+                            <label for="environment">产品型号(S7/S7PE/S9)</label>
+                            <select class="form-control select2" style="width: 100%;" id="production"
+                                    name="production">
+                                <option selected="selected"></option>
+                                <option>S7</option>
+                                <option>S9</option>
+                                <option>S7pe</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="version">固件版本号</label>
                             <input type="number" class="form-control" id="version" name="version" placeholder="version">
                         </div>
@@ -21,8 +31,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="file">File input</label>
-                            <input type="file" id="file" name="file">
+                            <label for="aFile">File input</label>
+                            <input type="file" id="aFile" name="aFile">
                             <p class="help-block">例如：OTA_0202_20170420.hex</p>
                         </div>
                     </div>

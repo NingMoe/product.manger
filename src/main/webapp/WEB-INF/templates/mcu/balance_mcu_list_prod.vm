@@ -12,6 +12,7 @@
                         <thead>
                         <tr>
                             <th>id</th>
+                            <th>产品型号</th>
                             <th>固件版本</th>
                             <th>版本类型</th>
                             <th>版本状态</th>

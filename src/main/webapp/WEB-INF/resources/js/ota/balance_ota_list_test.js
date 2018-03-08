@@ -55,7 +55,8 @@ $(document).ready(function () {
             dataType: "JSON",
             url: baseUrl + "/balance/ota/list/json",
             data: {
-                "environment": "test"
+                "environment": "test",
+                "firmwareType": "wifi"
             }
         },
         columns: [
@@ -65,6 +66,7 @@ $(document).ready(function () {
                 "data": null,
                 "defaultContent": ''
             },
+            {data: "production"},
             {data: "softwareVersion"},
             {data: "testing"},
             {data: "enable"},
@@ -99,11 +101,11 @@ $(document).ready(function () {
      */
     otaVersionListDiv.on('dblclick', 'td', function () {
         const lineNumber = $(this).parent().find('td').index($(this)[0]);
-        if ((lineNumber === 2 || lineNumber === 3 ) && (firstClick || firstClickVersion === $(this).parent().find('td').eq(1).text())) {
-            if (lineNumber === 2) {
-                selectNewValue(this, 2);
-            } else {
+        if ((lineNumber === 3 || lineNumber === 4) && (firstClick || firstClickVersion === $(this).parent().find('td').eq(1).text())) {
+            if (lineNumber === 3) {
                 selectNewValue(this, 3);
+            } else {
+                selectNewValue(this, 4);
             }
         }
     });
@@ -120,7 +122,7 @@ function selectNewValue(node, columnNumber) {
     let oldVal;
     $(node).text('');
     remove(node);
-    if (columnNumber === 2) {
+    if (columnNumber === 3) {
         $(node).append(testEle);
         selector = $("#testSelector");
     } else {
@@ -135,7 +137,7 @@ function selectNewValue(node, columnNumber) {
         $(this).closest('td').text(oldVal);
     });
     if (document.getElementById('updateVersionBtn') === null) {
-        $(node).parent().find('td').eq(5).append(modifyBtn);
+        $(node).parent().find('td').eq(6).append(modifyBtn);
     }
     firstClick = false;
     firstClickVersion = $(node).parent().find('td').eq(1).text();
@@ -146,11 +148,12 @@ function selectNewValue(node, columnNumber) {
  * @param node 节点
  */
 function upgradeVersionList(node) {
-    const version = node.parentNode.parentNode.children[1].innerText;
-    const testing = node.parentNode.parentNode.children[2].innerText === '公开版' ? 0 : 1;
-    const enable = node.parentNode.parentNode.children[3].innerText === '可用' ? 1 : 0;
+    const production = node.parentNode.parentNode.children[1].innerText;
+    const version = node.parentNode.parentNode.children[2].innerText;
+    const testing = node.parentNode.parentNode.children[3].innerText === '公开版' ? 0 : 1;
+    const enable = node.parentNode.parentNode.children[4].innerText === '可用' ? 1 : 0;
     if (confirm("确定要修改该版本的状态？")) {
-        let result = modifyVersionStatus(version, testing, enable);
+        let result = modifyVersionStatus(production, version, testing, enable);
         if ('success' === result) {
             remove(document.getElementById('updateVersionBtn').parentNode);
             firstClick = true;
@@ -164,8 +167,9 @@ function upgradeVersionList(node) {
  * @param version 版本号
  * @param testing 是否为测试版
  * @param enable 是否可用
+ * @param production 产品型号
  */
-function modifyVersionStatus(version, testing, enable) {
+function modifyVersionStatus(production, version, testing, enable) {
     const baseUrl = $("#baseUrl").val();
     let result = 'fail:' + 'please try again.';
     $.ajax({
@@ -176,6 +180,8 @@ function modifyVersionStatus(version, testing, enable) {
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify({
             "environment": 'test',
+            "firmwareType": "wifi",
+            "production": production,
             "version": version,
             "testing": testing,
             "enable": enable
@@ -212,6 +218,10 @@ function format(d) {
             <tr>
                 <td>ID:</td>
                 <td>${d.id}</td>
+            </tr>
+             <tr>
+                <td>产品型号:</td>
+                <td>${d.production}</td>
             </tr>
             <tr>
                 <td>固件版本:</td>

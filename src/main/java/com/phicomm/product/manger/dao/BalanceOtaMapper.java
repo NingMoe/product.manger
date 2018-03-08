@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Ota
- * Created by wei.yang on 2017/7/10.
+ * Ota版本信息处理
+ *
+ * @author wei.yang on 2017/7/10.
  */
 @Repository
 public interface BalanceOtaMapper {
@@ -18,6 +19,7 @@ public interface BalanceOtaMapper {
      * 上传ota版本信息：返回插入的条数
      *
      * @param balanceOtaInfo 版本信息
+     * @return 影响行数
      */
     int uploadOtaMessage(@Param("balanceOtaInfo") BalanceOtaInfo balanceOtaInfo);
 
@@ -25,9 +27,8 @@ public interface BalanceOtaMapper {
      * 更新版本状态
      *
      * @param balanceOtaStatus 版本状态
-     * @return 影响行数
      */
-    int updateOtaStatus(@Param("balanceOtaStatus") BalanceOtaStatus balanceOtaStatus);
+    void updateOtaStatus(@Param("balanceOtaStatus") BalanceOtaStatus balanceOtaStatus);
 
     /**
      * 清理其他版本状态
@@ -39,7 +40,8 @@ public interface BalanceOtaMapper {
     /**
      * 获取版本列表
      *
+     * @param firmwareType 固件类型
      * @return 版本列表信息
      */
-    List<BalanceOtaInfo> fetchOtaList();
+    List<BalanceOtaInfo> fetchOtaList(@Param("firmwareType") String firmwareType);
 }

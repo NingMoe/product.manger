@@ -2,7 +2,6 @@ package com.phicomm.product.manger.service;
 
 import com.google.common.base.Strings;
 import com.phicomm.product.manger.dao.BalanceOtaMapper;
-import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.model.ota.BalanceOtaInfo;
 import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
@@ -11,6 +10,7 @@ import com.phicomm.product.manger.utils.CRC16Util;
 import com.phicomm.product.manger.utils.EnvironmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.HostAndPort;
@@ -25,6 +25,8 @@ import java.util.List;
  */
 @Service
 public class BalanceOtaService {
+
+    private static final String WIFI = "wifi";
 
     private BalanceOtaMapper balanceOtaMapper;
 
@@ -47,31 +49,43 @@ public class BalanceOtaService {
     /**
      * 上传Ota版本信息，默认environment为test
      *
-     * @param aFile       a版本
-     * @param bFile       b版本
-     * @param version     版本号
-     * @param environment 环境
+     * @param aFile   a版本
+     * @param bFile   b版本
+     * @param version 版本号
+     * @param env     环境
      * @return ota信息
      * @throws IOException         io异常
      * @throws DataFormatException 数据格式异常
      */
-    public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile, MultipartFile bFile, int version, String environment)
+    public BalanceOtaInfo uploadOtaMessage(MultipartFile aFile,
+                                           MultipartFile bFile,
+                                           int version,
+                                           String env,
+                                           String production,
+                                           String firmwareType)
             throws IOException, DataFormatException {
-        checkOtaParamFormat(aFile, bFile, version);
+        checkOtaParamFormat(aFile, bFile, version, firmwareType);
         BalanceOtaInfo balanceOtaInfo = new BalanceOtaInfo();
         int aFileCrc = CRC16Util.calcCrc16(aFile.getBytes(), 0, aFile.getBytes().length);
-        int bFieCrc = CRC16Util.calcCrc16(bFile.getBytes(), 0, bFile.getBytes().length);
         String aFileUrl = (String) hermesService.uploadFile(aFile).get("fileHttpUrl");
-        String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpUrl");
-        if (Strings.isNullOrEmpty(aFileUrl) || Strings.isNullOrEmpty(bFileUrl)) {
+        if (Strings.isNullOrEmpty(aFileUrl)) {
             throw new IOException();
         }
+        if (firmwareType.equalsIgnoreCase(WIFI)) {
+            int bFieCrc = CRC16Util.calcCrc16(bFile.getBytes(), 0, bFile.getBytes().length);
+            String bFileUrl = (String) hermesService.uploadFile(bFile).get("fileHttpUrl");
+            if (Strings.isNullOrEmpty(bFileUrl)) {
+                throw new IOException();
+            }
+            balanceOtaInfo.setbVersionFileUrl(bFileUrl);
+            balanceOtaInfo.setbVersionCrc(bFieCrc);
+        }
         balanceOtaInfo.setaVersionCrc(aFileCrc);
-        balanceOtaInfo.setbVersionCrc(bFieCrc);
         balanceOtaInfo.setaVersionFileUrl(aFileUrl);
-        balanceOtaInfo.setbVersionFileUrl(bFileUrl);
         balanceOtaInfo.setSoftwareVersion(version);
-        EnvironmentUtil.selectEnvironment(environment);
+        balanceOtaInfo.setFirmwareType(firmwareType);
+        balanceOtaInfo.setProduction(production.toLowerCase());
+        EnvironmentUtil.selectEnvironment(env);
         int effectLine = balanceOtaMapper.uploadOtaMessage(balanceOtaInfo);
         CustomerContextHolder.clearDataSource();
         if (effectLine != 0) {
@@ -86,6 +100,7 @@ public class BalanceOtaService {
      * @param balanceOtaStatus 版本状态信息
      * @throws DataFormatException 数据格式异常
      */
+    @Transactional(rollbackFor = Throwable.class)
     public void updateBalanceOtaStatus(BalanceOtaStatus balanceOtaStatus) throws DataFormatException {
         checkOtaStatusParamFormat(balanceOtaStatus);
         String environment = balanceOtaStatus.getEnvironment();
@@ -109,8 +124,7 @@ public class BalanceOtaService {
     public List<HostAndPort> updateStatusAndTrigger(BalanceOtaStatus balanceOtaStatus) throws DataFormatException,
             IOException {
         updateBalanceOtaStatus(balanceOtaStatus);
-        String environment = balanceOtaStatus.getEnvironment();
-        return otaServerService.updateTrigger(TriggerTypeEnum.OTA, environment);
+        return otaServerService.updateTrigger(balanceOtaStatus);
     }
 
     /**
@@ -119,10 +133,10 @@ public class BalanceOtaService {
      * @param environment 环境，分为测试环境和生产环境
      * @return 信息列表
      */
-    public List<BalanceOtaInfo> fetchOtaList(String environment) {
+    public List<BalanceOtaInfo> fetchOtaList(String environment, String firmwareType) {
         List<BalanceOtaInfo> balanceOtaInfoList;
         EnvironmentUtil.selectEnvironment(environment);
-        balanceOtaInfoList = balanceOtaMapper.fetchOtaList();
+        balanceOtaInfoList = balanceOtaMapper.fetchOtaList(firmwareType);
         CustomerContextHolder.clearDataSource();
         return balanceOtaInfoList;
     }
@@ -130,11 +144,12 @@ public class BalanceOtaService {
     /**
      * 获取JSONObject格式的结果
      *
-     * @param environment 环境
+     * @param firmwareType 固件类型
+     * @param environment  环境
      * @return 版本列表
      */
-    public List<BalanceOtaInfo> fetchOtaVersionList(String environment) {
-        return fetchOtaList(environment);
+    public List<BalanceOtaInfo> fetchOtaVersionList(String environment, String firmwareType) {
+        return fetchOtaList(environment, firmwareType);
     }
 
     /**
@@ -145,8 +160,12 @@ public class BalanceOtaService {
      * @param version 版本号
      * @throws DataFormatException 数据格式异常
      */
-    private void checkOtaParamFormat(MultipartFile aFile, MultipartFile bFile, int version) throws DataFormatException {
-        if (aFile.isEmpty() || bFile.isEmpty() || version <= 0) {
+    private void checkOtaParamFormat(MultipartFile aFile, MultipartFile bFile, int version, String firmwareType)
+            throws DataFormatException {
+        if (aFile.isEmpty() || version <= 0) {
+            throw new DataFormatException();
+        }
+        if (WIFI.equalsIgnoreCase(firmwareType) && bFile.isEmpty()) {
             throw new DataFormatException();
         }
     }

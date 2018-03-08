@@ -2,9 +2,14 @@ package com.phicomm.product.manger.model.ota;
 
 /**
  * 核心信息
- * Created by wei.yang on 2017/7/11.
+ *
+ * @author wei.yang on 2017/7/11.
  */
 public class BalanceOtaStatus {
+
+    private String firmwareType;
+
+    private String production;
 
     private String environment;
 
@@ -13,6 +18,22 @@ public class BalanceOtaStatus {
     private int testing;
 
     private int enable;
+
+    public String getFirmwareType() {
+        return firmwareType;
+    }
+
+    public void setFirmwareType(String firmwareType) {
+        this.firmwareType = firmwareType;
+    }
+
+    public String getProduction() {
+        return production;
+    }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
 
     public String getEnvironment() {
         return environment;
@@ -49,7 +70,9 @@ public class BalanceOtaStatus {
     @Override
     public String toString() {
         return "BalanceOtaStatus{" +
-                "environment='" + environment + '\'' +
+                "firmwareType='" + firmwareType + '\'' +
+                ", production='" + production + '\'' +
+                ", environment='" + environment + '\'' +
                 ", version=" + version +
                 ", testing=" + testing +
                 ", enable=" + enable +

@@ -11,9 +11,10 @@ $(document).ready(function () {
 function uploadFile() {
     const baseUrl = $("#baseUrl").val();
     let formData = new FormData($("#uploadFile")[0]);
+    formData.append("firmwareType", "mcu");
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/mcu/upload",
+        url: baseUrl + "/balance/ota/upload",
         data: formData,
         contentType: false,
         processData: false,

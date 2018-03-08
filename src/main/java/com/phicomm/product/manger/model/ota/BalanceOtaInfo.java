@@ -8,6 +8,10 @@ public class BalanceOtaInfo {
 
     private int id;
 
+    private String production;
+
+    private String firmwareType;
+
     private int softwareVersion;
 
     private String aVersionFileUrl;
@@ -30,6 +34,22 @@ public class BalanceOtaInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getProduction() {
+        return production;
+    }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
+
+    public String getFirmwareType() {
+        return firmwareType;
+    }
+
+    public void setFirmwareType(String firmwareType) {
+        this.firmwareType = firmwareType;
     }
 
     public int getSoftwareVersion() {
@@ -100,6 +120,8 @@ public class BalanceOtaInfo {
     public String toString() {
         return "BalanceOtaInfo{" +
                 "id=" + id +
+                ", production='" + production + '\'' +
+                ", firmwareType='" + firmwareType + '\'' +
                 ", softwareVersion=" + softwareVersion +
                 ", aVersionFileUrl='" + aVersionFileUrl + '\'' +
                 ", aVersionCrc=" + aVersionCrc +
