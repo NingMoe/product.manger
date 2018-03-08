@@ -51,12 +51,8 @@ public class UpdateTrigger {
         }
         byte[] closeData = OtaDataMaker.getCloseSocketData();
         obtainResponse(inputStream, outputStream, closeData);
-        if (outputStream != null) {
-            outputStream.close();
-        }
-        if (inputStream != null) {
-            inputStream.close();
-        }
+        outputStream.close();
+        inputStream.close();
         socket.close();
         return null;
     }
