@@ -16,82 +16,82 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpSession;
 
 /**
- * mcu页面
+ * blu页面
  *
  * @author wei.yang on 2017/7/17.
  */
 @Controller
-public class BalanceMcuPageController {
+public class BalanceBluPageController {
 
     private NavigationManger navigationManger;
 
     @Autowired
-    public BalanceMcuPageController(NavigationManger navigationManger) {
+    public BalanceBluPageController(NavigationManger navigationManger) {
         this.navigationManger = navigationManger;
         Assert.notNull(this.navigationManger);
     }
 
     /**
-     * 电子秤MCU升级
+     * 电子秤Blu升级
      */
-    @RequestMapping(value = "balance/mcu", method = RequestMethod.GET)
-    @ApiIgnore("电子秤MCU升级")
+    @RequestMapping(value = "balance/blu", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Blu升级")
     @FunctionPoint(value = "common")
     public ModelAndView showBalanceOtaPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "mcu/balance_mcu.vm");
+        modelAndView.getModel().put("context", "blu/balance_blu.vm");
         modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMcu"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceBlu"));
         return modelAndView;
     }
 
     /**
-     * 电子秤MCU固件列表
+     * 电子秤Blu固件列表
      */
-    @RequestMapping(value = "balance/mcu/list/test", method = RequestMethod.GET)
-    @ApiIgnore("电子秤MCU升级")
+    @RequestMapping(value = "balance/blu/list/test", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Blu升级")
     @FunctionPoint(value = "common")
     public ModelAndView showTestBalanceOtaStatusPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "mcu/balance_mcu_list_test.vm");
+        modelAndView.getModel().put("context", "blu/balance_blu_list_test.vm");
         modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMcuList"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceBluList"));
         return modelAndView;
     }
 
     /**
-     * 电子秤MCU固件列表
+     * 电子秤Blu固件列表
      */
-    @RequestMapping(value = "balance/mcu/list/prod", method = RequestMethod.GET)
-    @ApiIgnore("电子秤MCU升级")
+    @RequestMapping(value = "balance/blu/list/prod", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Blu升级")
     @FunctionPoint(value = "common")
     public ModelAndView showProdBalanceOtaStatusPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "mcu/balance_mcu_list_prod.vm");
+        modelAndView.getModel().put("context", "blu/balance_blu_list_prod.vm");
         modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMcuList"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceBluList"));
         return modelAndView;
     }
 
     /**
-     * 电子秤MCU服务器地址管理
+     * 电子秤Blu服务器地址管理
      */
-    @RequestMapping(value = "balance/mcu/mac/manage", method = RequestMethod.GET)
-    @ApiIgnore("电子秤MCU升级")
+    @RequestMapping(value = "balance/blu/mac/manage", method = RequestMethod.GET)
+    @ApiIgnore("电子秤Blu升级")
     @FunctionPoint(value = "common")
     public ModelAndView balanceOtaMacManage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("framework/main_layout");
         AdminUserInfo adminUserInfo = (AdminUserInfo) session.getAttribute(SessionKeyEnum.USER_INFO.getKeyName());
-        modelAndView.getModel().put("context", "mcu/balance_mcu_mac.vm");
+        modelAndView.getModel().put("context", "blu/balance_blu_mac.vm");
         modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceMcuMac"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("balanceBluMac"));
         return modelAndView;
     }
 }

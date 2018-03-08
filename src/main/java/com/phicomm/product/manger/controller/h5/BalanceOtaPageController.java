@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * ota page
- * Created by wei.yang on 2017/7/10.
+ *
+ * @author wei.yang on 2017/7/10.
  */
 @Controller
 public class BalanceOtaPageController {
