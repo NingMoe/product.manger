@@ -8,6 +8,8 @@
             count(1) AS `number`
         FROM
             device_location_info
+        WHERE
+            device_type = 'balance'
         GROUP BY
             LEFT (province, 2)
     </select>
@@ -17,6 +19,8 @@
             count(1)
         FROM
             device_location_info
+        WHERE
+            device_type = 'balance'
     </select>
 
     <select id="getCurrentDateBalanceLocation" resultType="com.phicomm.product.manger.model.statistic.BalanceLocation">
@@ -27,6 +31,8 @@
             device_location_info
         WHERE
             create_time > #{currentDate,jdbcType=VARCHAR}
+        AND
+            device_type = 'balance'
         GROUP BY
             LEFT (province, 2)
     </select>
@@ -60,6 +66,8 @@
                 DATE_FORMAT(create_time, '%Y-%m-%d') AS createDay
             FROM
                 device_location_info
+            WHERE
+                device_type = 'balance'
             )b
         WHERE
             DATE_FORMAT(createDay, '%Y-%m') > DATE_FORMAT(
@@ -100,6 +108,8 @@
                         ) AS province
                     FROM
                         device_location_info
+                    WHERE
+                        device_type = 'balance'
                     HAVING
                         dayTime >= DATE_FORMAT(
                             DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
