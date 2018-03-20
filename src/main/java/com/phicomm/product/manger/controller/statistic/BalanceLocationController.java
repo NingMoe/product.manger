@@ -20,8 +20,8 @@ import java.util.Map;
 
 /**
  * 获取地区分布的统计
- * <p>
- * Created by yufei.liu on 2017/6/25.
+ *
+ * @author yufei.liu on 2017/6/25.
  */
 @Controller
 public class BalanceLocationController {
@@ -44,7 +44,6 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
     @PublicInterface
     public Response<BalanceLocationStatistic> getBalanceLocationStatistic() {
         BalanceLocationStatistic balanceLocationStatistic = balanceLocationService.getBalanceLocationStatistic();
@@ -61,7 +60,6 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
     @PublicInterface
     public Response<BalanceSaleNumber> getBalanceSaleNumber() {
         BalanceSaleNumber balanceSaleNumber = balanceLocationService.getBalanceSaleNumber();
@@ -80,7 +78,6 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
     @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByMonth(@RequestParam int month,
                                                                      @RequestParam String type,
@@ -101,7 +98,6 @@ public class BalanceLocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
-//    @FunctionPoint("common")
     @PublicInterface
     public Response<Map<String, Integer>> obtainLocationCountByDay(@RequestParam int day,
                                                                    @RequestParam String type,
@@ -111,23 +107,16 @@ public class BalanceLocationController {
     }
 
 
-    @RequestMapping(
-            value = "/balance/location/30days",
-            method = RequestMethod.POST,
-            produces = "application/json"
-    )
+    @RequestMapping(value = "/balance/location/30days", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation("30天统计位置信息")
     @PublicInterface
-    public Response<Map<String, Integer>> obtainLocaionCount30Days() {
+    public Response<Map<String, Integer>> obtainLocationCount30Days() {
         Map<String, Integer> locationInfo = balanceLocationService.obtainLocationCount30Days();
         return new Response<Map<String, Integer>>().setData(locationInfo);
     }
 
-    @RequestMapping(
-            value = "/balance/location/12months",
-            method = RequestMethod.POST,
-            produces = "application/json"
+    @RequestMapping(value = "/balance/location/12months", method = RequestMethod.POST, produces = "application/json"
     )
     @ResponseBody
     @ApiOperation("12个月统计位置信息")
