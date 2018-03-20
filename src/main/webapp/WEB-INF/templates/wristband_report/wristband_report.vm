@@ -1,0 +1,296 @@
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/fresco/fresco.css"/>
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/css/feedback/feedback.css">
+
+<style>
+    #parentDiv li {
+        margin-top: 5px;
+    }
+</style>
+<section class="content">
+
+#*
+* 填写需要输入的信息
+* *#
+    <div class="phicomm_content_div">
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="row">
+                        <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                            <h4 style="margin-left: 2%">合作商手环手表激活数量填写(台)</h4>
+                        </div>
+                        <hr style="border:2 dashed #987cb9;color: #449d44; margin-top: 0px;margin-bottom: 20px"
+                            width="100%"
+                        />
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="activationDate" class="col-sm-4 control-label">日期</label>
+                            <div class="col-sm-8">
+                                <input class="form-control pull-right" type="date" id="activationDate"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lianbiActivationCount" class="col-sm-5 control-label">联璧激活数量</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="lianbi" value="0"
+                                       oninput="checkNum('lianbi',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="wanjiaActivationCount" class="col-sm-5 control-label">万家金服激活数量</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control pull-right" id="wanjia" value="0"
+                                       oninput="checkNum('wanjia',this.value)"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1" style="margin-left: 50px">
+                            <div>
+                                <button type="button" class="btn btn-primary pull-right phicomm_button_go"
+                                        onclick="addWristBandKKeys()">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+    ##      报告总结部分
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+            <div class="box-body">
+                <div class="row">
+                    <div style=" width:100%; text-align:left; margin-left:15px; margin-right:30px;">
+                        <h3 style="text-align:center;" id="reportTitle">生产环境手环手表统计报告
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <h3 class="box-title">一、总体概况</h3>（单位为：台）
+                        </div>
+                    </div>
+                </div>
+
+##                <div class="row">
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>总使用量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7DataUsageCountAll">0</label>
+##                        </div>
+##                    </div>
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>总激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7ActivationAll">0</label>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="row">
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7LianbiKKeysCountAll">0</label>
+##                        </div>
+##                    </div>
+##                    <div class="form-group col-md-6">
+##                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量</h4></label>
+##                        <div class="col-sm-6">
+##                            <label class="form-control" name="s7WanjiaKKeysCountAll">0</label>
+##                        </div>
+##                    </div>
+##                </div>
+
+            ##                今日详情
+                <div class="row">
+                    <hr style="height: 1px;width:96%;background-color:#62a7bc; margin-top: 0px;margin-bottom: 20px;padding: 0 10px"/>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 ">
+                        <label class="col-sm-4 control-label"><h4>选择日期</h4></label>
+                        <div class="col-sm-6">
+                            <input class="form-control pull-right" type="date" id="reportDate">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="col-sm-10">
+                            <button type="button" style="margin-top: 10px" class="btn btn-primary pull-right phicomm_button_go"
+                                    onclick="getReport()">
+                                获取该天详情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>活跃用户(人)</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7ActiveToday">0</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>激活数量(台)</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7ActivationToday">0</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>联璧激活量(台)</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7LianbiKKeysCountToday">0</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="activationDate" class="col-sm-4 control-label"><h4>万家激活量(台)</h4></label>
+                        <div class="col-sm-6">
+                            <label class="form-control" name="s7WanjiaKKeysCountToday">0</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ##************************************图表一
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-xs-12">
+##                        <div class="box box-primary">
+##                            <h3 class="box-title">二、手环手表新增使用量</h3>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-md-12">
+##                    ##手环手表设备新增使用量(每天)
+##                        <div class="box box-primary">
+##                            <div id="S7UsageCountschart1"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##    ##        -----------------------------------------
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="row">
+##                <div class="col-md-6">
+##                    <div class="box box-primary">
+##                        <div class="box-body">
+##                        ##手环手表设备新增使用量(每月)
+##                            <div id="S7UsageCountschart2"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##                <div class="col-md-6">
+##                    <div class="box box-primary">
+##                        <div class="box-body">
+##                        ##手环手表设备各地区使用量
+##                            <div id="S7SalesLocationchart3"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+
+
+    ##************************************图表二
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <h3 class="box-title">三、手环手表新增K码激活统计</h3>
+                        </div>
+                        <div class="stats-body">
+                            <ul style=" width:100%;background: rgba(208,208,208,0.99)  ;text-align:left;">
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;累计新增K码总激活量<label
+                                        name="s7ActivationAll">111</label>台。</h4>
+                                </li>
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联璧累计新增K码激活总量<label
+                                        name="s7LianbiKKeysCountAll">111</label>台。</h4>
+                                </li>
+                                <li><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万家金服累计新增K码激活总量<label
+                                        name="s7WanjiaKKeysCountAll">111</label>台。</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                        ##手环手表K码新增激活量(每天)
+                            <div id="S7KKeysCountsChart1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    ##    ---------------------------
+        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                        ##手环手表K码新增激活量与使用量对比(每天)
+                            <div id="S7KKeysCountsChart3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div id="S7KKeysCountsChart2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+##    ##    ---------------------------
+##
+##        <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+##            <div class="box-body">
+##                <div class="row">
+##                    <div class="col-xs-12">
+##                        <div class="box box-primary">
+##                        ##手环手表K码新增激活量(每天)与使用量对比
+##                            <div id="S7KKeysCountsChart4"></div>
+##                        </div>
+##                    </div>
+##                </div>
+##            </div>
+##        </div>
+##    </div>
+</section>
+
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/fresco/fresco.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/myUtils.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/wristband_report.js?v=$uuid"></script>
+

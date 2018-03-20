@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.WristbandReportMapper">
+
+    <!--将联璧，万家每日激活手环手表数量添加到数据库中，通过date的唯一性约束，使得数据存在则更新，不存在则插入-->
+    <insert id="addedActivationNum">
+        REPLACE INTO phisport_activation_count (date, lianbi, wanjia)
+        VALUES
+        (DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d'),
+        #{lianbi,jdbcType=BIGINT},
+        #{wanjia,jdbcType=BIGINT})
+    </insert>
+
+    <!--获取当前月份内各个厂家每天激活数据量-->
+    <select id="getActivationNumThisMonth" resultType="java.util.HashMap">
+        SELECT
+        date,
+        sum(lianbi) AS lianbi,
+        sum(wanjia) AS wanjia
+        FROM phisport_activation_count
+        WHERE
+        DATE_FORMAT(date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')
+    </select>
+
+    <!--更新月份统计表,通过month的唯一性约束，使得数据存在则更新，不存在则插入-->
+    <insert id="upDateActivationMonthNum">
+        REPLACE INTO phisport_activation_count_month (month,lianbi,wanjia)
+        VALUES (
+        DATE_FORMAT(#{month,jdbcType=VARCHAR},'%Y-%m'),
+        #{lianbi,jdbcType=BIGINT},
+        #{wanjia,jdbcType=BIGINT}
+        )
+    </insert>
+
+
+    <!--获取某天各个厂家激活状况-->
+    <select id="getActivationStatisticDay" resultType="java.util.HashMap">
+        SELECT date,lianbi,wanjia
+        FROM phisport_activation_count
+        WHERE
+        DATE_FORMAT(date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d')
+    </select>
+
+    <!--获取累计新增K码激活量和联璧，万家两厂家新增K码激活总量-->
+    <select id="getActivationNum" resultType="java.util.HashMap">
+        SELECT
+            sum(lianbi) AS lianbi,
+            sum(wanjia) AS wanjia
+        FROM
+            phisport_activation_count_month
+    </select>
+
+
+    <!--获取最近30天的激活情况统计（每个厂商激活数量）-->
+    <select id="getActivationNumEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取最近N月的激活情况统计-->
+    <select id="getActivationNumMonth" resultType="java.util.HashMap">
+        SELECT
+            month,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count_month
+        ORDER BY
+            month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

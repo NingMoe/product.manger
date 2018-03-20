@@ -641,6 +641,8 @@ function loadFeedback(itemData) {
                 src = src + `<a href=${images[j]} class='fresco' data-fresco-group=${dialog[i].dialogId} >
                    <img src=${images[j]} style="width: 80px;height: 80px " alt='img'/></a>`;
             }
+
+
         }
         src = src + `</div></div></div>`;
         if (0 === i) {
@@ -657,7 +659,7 @@ function loadFeedback(itemData) {
         src = src + `<div><span style="height:1px;width:515px;background-color: #ECF0F5;display: inline-block;"></span></div>`;
         if (isEvaluate) {
             src = src + `<div class="product-img" style="float: left;margin-top: 15px;margin-left: -60px;"><img src=${dialog[0].imageUrl} alt='img'/></a></div>` +
-                ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px">${dialog[i].evaluation}</p><div id='page'><div class='demonstrations'>` +
+                ` <div class="row" style="margin-left: 0px;margin-right: 630px"><p style="word-wrap: break-word;margin-top: 15px"><span style="color: #9999A6;">评价了此回复：</span>${dialog[i].evaluation}</p><div id='page'><div class='demonstrations'>` +
                 `</div></div></div>` + `<div style="margin-top: 15px;color: #9999A6;"><span hidden id="dialogId">${dialog[i].dialogId}</span><span>提交于：${dialog[i].createTime}</span></div>` +
                 `<div><span style="height:1px;width:515px;background-color: #ECF0F5;display: inline-block;"></span></div>`;
         }

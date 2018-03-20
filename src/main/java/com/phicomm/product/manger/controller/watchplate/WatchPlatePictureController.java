@@ -88,7 +88,6 @@ public class WatchPlatePictureController {
     @FunctionPoint(value = "common")
     public CommonResponse watchPlatePictureListDelete(@RequestBody WatchPlatePictureDeleteBean data)
             throws IOException{
-        System.out.println("delete图片列表"+data);
         if(data.getData().size()<=0){
             return CommonResponse.error();
         }
@@ -111,10 +110,6 @@ public class WatchPlatePictureController {
         watchPlatePictureService.pictureVersionUpdate(picOldVersion,picNewVersion,environment);
         return CommonResponse.ok();
     }
-
-
-
-
 
 
     /**

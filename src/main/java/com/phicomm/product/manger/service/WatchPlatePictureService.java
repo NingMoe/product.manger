@@ -96,12 +96,14 @@ public class WatchPlatePictureService {
             default:
                 break;
         }
+        System.out.println(callbackUrl);
         String data = JSON.toJSONStringWithDateFormat(watchPlatePictureList, "yyyy-MM-dd HH:mm:ss");
         try {
             HttpsUtil.post(callbackUrl, data, Charsets.UTF_8.name());
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
         }
+        CustomerContextHolder.clearDataSource();
     }
 
     /**
@@ -110,7 +112,9 @@ public class WatchPlatePictureService {
      */
     public List<WatchPlatePictureUpload> watchPlatePictureList(String environment) {
         selectDatabase(environment);
-        return watchPlatePictureUploadMapper.watchPlatePictureList();
+        List<WatchPlatePictureUpload> list = watchPlatePictureUploadMapper.watchPlatePictureList();
+        CustomerContextHolder.clearDataSource();
+        return list;
     }
 
     /**
@@ -142,6 +146,7 @@ public class WatchPlatePictureService {
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
         }
+        CustomerContextHolder.clearDataSource();
     }
 
     /**
@@ -185,12 +190,14 @@ public class WatchPlatePictureService {
             default:
                 break;
         }
+        System.out.println(callbackUrl);
         String dataList = JSON.toJSONStringWithDateFormat(watchPlatePictureList, "yyyy-MM-dd HH:mm:ss");
         try {
             HttpsUtil.post(callbackUrl, dataList, Charsets.UTF_8.name());
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             logger.info(ExceptionUtil.getErrorMessage(e));
         }
+        CustomerContextHolder.clearDataSource();
     }
 
 
@@ -211,6 +218,7 @@ public class WatchPlatePictureService {
     public void setWatchPlateConfig(String configuration) {
         watchPlatePictureParamConfigMapper.clean();
         watchPlatePictureParamConfigMapper.insert(configuration);
+        CustomerContextHolder.clearDataSource();
     }
 
     /**
@@ -233,6 +241,7 @@ public class WatchPlatePictureService {
                 break;
         }
     }
+
 
 
 }
