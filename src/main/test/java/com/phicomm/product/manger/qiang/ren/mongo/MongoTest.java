@@ -1,7 +1,6 @@
 package com.phicomm.product.manger.qiang.ren.mongo;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.mongodb.*;
 import com.mongodb.client.AggregateIterable;
@@ -9,8 +8,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import com.phicomm.product.manger.model.terminal.TerminalCommonEntity;
-import com.phicomm.product.manger.utils.MongoDbUtil;
 import org.bson.Document;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -23,15 +20,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-
-import static com.mongodb.client.model.Indexes.ascending;
-import static com.mongodb.client.model.Sorts.orderBy;
 
 /**
  * mongodb test
@@ -68,7 +60,7 @@ public class MongoTest {
 
         System.out.println("记录总数："+collection.count());
 
-        System.out.println("77记录总数："+collection.count(Filters.eq("timestamp", 77)));
+        /*System.out.println("77记录总数："+collection.count(Filters.eq("timestamp", 77)));
 
         Document myDoc = collection.find().first();
         System.out.println("第一个记录："+myDoc.toJson());
@@ -78,7 +70,7 @@ public class MongoTest {
 
         Block<Document> printBlock = document -> System.out.println(document.toJson());
         //collection.find(Filters.gt("timestamp", 100)).forEach(printBlock);
-        collection.find(Filters.and(Filters.gt("timestamp", 0), Filters.lte("timestamp", 100))).forEach(printBlock);
+        collection.find(Filters.and(Filters.gt("timestamp", 0), Filters.lte("timestamp", 100))).forEach(printBlock);*/
     }
 
     @Test
@@ -157,5 +149,54 @@ public class MongoTest {
     public void test(){
         System.out.println(LocalDate.now().toString("yyyy-MM-dd"));
         System.out.println(new SimpleDateFormat("HH").format(new Date()));
+    }
+
+    /**
+     * 通过activityId和时间戳统计活动点击量（PV）
+     * db.getCollection('discovery_activity_trace').find({"activityId":"free_experience","timestamp":{"$lt":1521129600000,"$gt":1521043200000}}).count()
+     */
+    @Test
+    public void getPVData() {
+        String activityId = "free_experience";
+        //开始时间
+        long timestamp1 = 1521302400000L;
+        //结束时间
+        long timestamp2 = 1521388800000L;
+        int i = 0;
+        MongoCollection<Document> collection = linkTest("discovery_activity_trace");
+        Document match = new Document("activityId", activityId).append("timestamp", new Document("$lt",timestamp2).append("$gt", timestamp1));
+        Document group = new Document("_id", new Document("userId", "$userId"))
+                .append("count", new Document("$sum", 1));
+        AggregateIterable<Document> aggregate = collection
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group)));
+        for (Document document:aggregate) {
+            Object val = document.get("count").toString();
+            i += Integer.valueOf(val.toString());
+        }
+        System.out.println("PV:"+i);
+    }
+
+    /**
+     * 通过activityId和时间戳统计活动点击量（UV）
+     * db.getCollection('discovery_activity_trace').find({"activityId":"free_experience","timestamp":{"$lt":1521129600000,"$gt":1521043200000}}).count()
+     */
+    @Test
+    public void getUVData() {
+        String activityId = "free_experience";
+        //开始时间
+        long timestamp1 = 1521216000000L;
+        //结束时间
+        long timestamp2 = 1521302400000L;
+        int i = 0;
+        MongoCollection<Document> collection = linkTest("discovery_activity_trace");
+        Document match = new Document("activityId", activityId).append("timestamp", new Document("$lt",timestamp2).append("$gt", timestamp1));
+        Document group = new Document("_id", new Document("userId", "$userId"))
+                .append("count", new Document("$sum", 1));
+        AggregateIterable<Document> aggregate = collection
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$group", group)));
+        for (Document document:aggregate) {
+            i ++;
+        }
+        System.out.println("UV:"+i);
     }
 }
