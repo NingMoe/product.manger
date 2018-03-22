@@ -63,6 +63,7 @@ $(document).ready(function () {
      */
     $("#submit").click(function () {
         let environment = $("#environment").val() === '生产环境' ? 'prod' : 'test';
+        let production = $("#production").val();
         $.ajax({
             type: "POST",
             url: baseUrl + "/balance/test/mac",
@@ -70,7 +71,8 @@ $(document).ready(function () {
             data: {
                 "macList": $("#macList").val(),
                 "environment": environment,
-                "macType": "ota"
+                "production": production,
+                "firmwareType": "wifi"
             },
             error: function (req, status, err) {
                 console.log('Failed reason: ' + err);

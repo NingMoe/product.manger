@@ -117,7 +117,7 @@ public class HttpUtil {
      * @param ctype  content-type
      * @param auths  授权字段
      * @return 请求结果
-     * @throws IOException              io异常
+     * @throws IOException io异常
      */
     @SuppressWarnings("unused")
     public static String openUrlWithAuth(String url, String method, JSONObject params, String ctype, JSONObject auths)
@@ -203,7 +203,7 @@ public class HttpUtil {
      * @param ctype  content-type
      * @param auths  授权
      * @return 链接
-     * @throws IOException              io异常
+     * @throws IOException io异常
      */
     private static HttpURLConnection getUrlConnectionWithAuth(String url, String method, String ctype, JSONObject auths)
             throws IOException {

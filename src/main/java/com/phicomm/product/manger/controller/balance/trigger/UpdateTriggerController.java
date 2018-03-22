@@ -1,7 +1,6 @@
 package com.phicomm.product.manger.controller.balance.trigger;
 
 import com.phicomm.product.manger.annotation.FunctionPoint;
-import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.model.common.Response;
 import com.phicomm.product.manger.service.OtaServerService;
 import io.swagger.annotations.Api;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.HostAndPort;
 
@@ -21,8 +19,8 @@ import java.util.List;
 
 /**
  * 触发Ota升级
- * <p>
- * Created by wei.yang on 2017/6/8.
+ *
+ * @author wei.yang on 2017/6/8.
  */
 @Controller
 @Api(value = "通知服务器更新缓存", description = "通知服务器去更新本地缓存")
@@ -49,7 +47,8 @@ public class UpdateTriggerController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<List<HostAndPort>> updateTrigger(@RequestParam(required = false) String environment) throws IOException {
-        return new Response<List<HostAndPort>>().setData(otaServerService.updateTrigger(TriggerTypeEnum.OTA, environment));
+    public Response<List<HostAndPort>> updateTrigger()
+            throws IOException {
+        return new Response<List<HostAndPort>>().setData(otaServerService.triggerAll());
     }
 }

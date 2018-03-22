@@ -25,11 +25,11 @@ let firstClick = true;
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
-    $("#balance_ota_menu_node").addClass("active");
-    $("#balance_ota_list_prod_node").addClass("active");
+    $("#balance_blu_menu_node").addClass("active");
+    $("#balance_blu_list_prod_node").addClass("active");
     const baseUrl = $("#baseUrl").val();
 
-    const table = $("#otaVersionList").DataTable({
+    const table = $("#bluVersionList").DataTable({
         paging: true,
         searching: true,
         ordering: true,
@@ -56,7 +56,7 @@ $(document).ready(function () {
             url: baseUrl + "/balance/ota/list/json",
             data: {
                 "environment": "prod",
-                "firmwareType": "wifi"
+                "firmwareType": "blu"
             }
         },
         columns: [
@@ -78,7 +78,7 @@ $(document).ready(function () {
             }
         ]
     });
-    const otaVersionListDiv = $(`#otaVersionList`).find("tbody");
+    const otaVersionListDiv = $(`#bluVersionList`).find("tbody");
 
     /**
      * 下滑展示详情
@@ -148,12 +148,11 @@ function selectNewValue(node, columnNumber) {
  * @param node 节点
  */
 function upgradeVersionList(node) {
-    const production = node.parentNode.parentNode.children[1].innerText;
     const version = node.parentNode.parentNode.children[2].innerText;
     const testing = node.parentNode.parentNode.children[3].innerText === '公开版' ? 0 : 1;
     const enable = node.parentNode.parentNode.children[4].innerText === '可用' ? 1 : 0;
     if (confirm("确定要修改该版本的状态？")) {
-        let result = modifyVersionStatus(production, version, testing, enable);
+        let result = modifyVersionStatus(version, testing, enable);
         if ('success' === result) {
             remove(document.getElementById('updateVersionBtn').parentNode);
             firstClick = true;
@@ -167,9 +166,8 @@ function upgradeVersionList(node) {
  * @param version 版本号
  * @param testing 是否为测试版
  * @param enable 是否可用
- * @param production 产品型号
  */
-function modifyVersionStatus(production, version, testing, enable) {
+function modifyVersionStatus(version, testing, enable) {
     const baseUrl = $("#baseUrl").val();
     let result = 'fail:' + 'please try again.';
     $.ajax({
@@ -180,8 +178,8 @@ function modifyVersionStatus(production, version, testing, enable) {
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify({
             "environment": 'prod',
-            "firmwareType": "wifi",
-            "production": production,
+            "firmwareType": "blu",
+            "production": "s9",
             "version": version,
             "testing": testing,
             "enable": enable
@@ -228,19 +226,11 @@ function format(d) {
                 <td>${d.softwareVersion}</td>
             </tr>
             <tr>
-                <td>A类型文件下载链接:</td>
+                <td>文件下载链接:</td>
                 <td><a href="${d.aVersionFileUrl}">${d.aVersionFileUrl}</a></td>
             </tr><tr>
-                <td>A类型文件CRC:</td>
+                <td>文件CRC:</td>
                 <td>${d.aVersionCrc}</td>
-            </tr>
-            <tr>
-                <td>B类型文件下载链接:</td>
-                <td><a href="${d.bVersionFileUrl}">${d.bVersionFileUrl}</a></td>
-            </tr>
-            <tr>
-                <td>B类型文件CRC:</td>
-                <td>${d.bVersionCrc}</td>
             </tr>
             <tr>
                 <td>版本类型:</td>

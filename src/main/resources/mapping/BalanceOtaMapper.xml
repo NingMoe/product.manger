@@ -3,7 +3,9 @@
 <mapper namespace="com.phicomm.product.manger.dao.BalanceOtaMapper">
 
     <insert id="uploadOtaMessage" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaInfo">
-        INSERT INTO balance_ota_info (
+        INSERT INTO balance_firmware_info (
+            production,
+            firmware_type,
             software_version,
             a_version_file_url,
             a_version_crc,
@@ -11,6 +13,8 @@
             b_version_crc
         )
         VALUES(
+        #{balanceOtaInfo.production,jdbcType=VARCHAR},
+        #{balanceOtaInfo.firmwareType,jdbcType=VARCHAR},
         #{balanceOtaInfo.softwareVersion,jdbcType=INTEGER},
         #{balanceOtaInfo.aVersionFileUrl,jdbcType=VARCHAR},
         #{balanceOtaInfo.aVersionCrc,jdbcType=INTEGER},
@@ -21,29 +25,38 @@
 
     <update id="updateOtaStatus" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaStatus">
         UPDATE
-            balance_ota_info
+            balance_firmware_info
         SET
             testing = #{balanceOtaStatus.testing,jdbcType=INTEGER},
             `enable` = #{balanceOtaStatus.enable,jdbcType=INTEGER}
         WHERE
             software_version = #{balanceOtaStatus.version,jdbcType=INTEGER}
+        AND
+            firmware_type = #{balanceOtaStatus.firmwareType,jdbcType=VARCHAR}
+        AND
+            production = #{balanceOtaStatus.production,jdbcType=VARCHAR}
     </update>
 
     <update id="cleanOtaStatus" parameterType="com.phicomm.product.manger.model.ota.BalanceOtaStatus">
         UPDATE
-            balance_ota_info
+            balance_firmware_info
         SET
             `enable` = #{balanceOtaStatus.enable,jdbcType=INTEGER}
         WHERE
             software_version != #{balanceOtaStatus.version,jdbcType=INTEGER}
         AND
             testing = #{balanceOtaStatus.testing,jdbcType=INTEGER}
+        AND
+            firmware_type = #{balanceOtaStatus.firmwareType,jdbcType=VARCHAR}
+        AND
+            production = #{balanceOtaStatus.production,jdbcType=VARCHAR}
     </update>
 
-    <select id="fetchOtaList" resultType="com.phicomm.product.manger.model.ota.BalanceOtaInfo">
-        (
+    <select id="fetchOtaList" resultType="com.phicomm.product.manger.model.ota.BalanceOtaInfo"
+            parameterType="java.lang.String">
             SELECT
                 id AS id,
+                production AS production,
                 software_version AS softwareVersion,
                 a_version_file_url AS aVersionFileUrl,
                 a_version_crc AS aVersionCrc,
@@ -64,39 +77,9 @@
             "不可用"
         ) AS `enable`
         FROM
-            balance_ota_info
+            balance_firmware_info
         WHERE
-            `enable` = 1
-        )
-        UNION
-            (
-                SELECT
-                    id AS id,
-                    software_version AS softwareVersion,
-                    a_version_file_url AS aVersionFileUrl,
-                    a_version_crc AS aVersionCrc,
-                    b_version_file_url AS bVersionFileUrl,
-                    b_version_crc AS bVersionCrc,
-                    DATE_FORMAT(
-                        create_time,
-                        '%Y-%m-%d %H:%i:%s'
-                    ) AS createTime,
-
-                IF (
-                    testing = 1,
-                    "测试版",
-                    "公开版"
-                ) AS testing,
-            IF (
-                `enable` = 1,
-                "可用",
-                "不可用"
-            ) AS `enable`
-            FROM
-                balance_ota_info
-            WHERE
-                `enable` != 1
-            LIMIT 198
-            )
+            `firmware_type` = #{firmwareType,jdbcType=VARCHAR}
+        ORDER BY `enable` DESC
     </select>
 </mapper>

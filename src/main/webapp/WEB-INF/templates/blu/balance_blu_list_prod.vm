@@ -5,10 +5,10 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">生产环境体脂秤MCU列表</h3>
+                    <h3 class="box-title">S9生产环境体脂秤蓝牙固件列表</h3>
                 </div>
                 <div class="box-body">
-                    <table id="mcuVersionList" class="table table-bordered table-striped">
+                    <table id="bluVersionList" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>id</th>
@@ -31,4 +31,4 @@
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/mcu/balance_mcu_list_prod.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/blu/balance_blu_list_prod.js?v=$uuid"></script>

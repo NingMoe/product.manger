@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
-    $("#balance_ota_menu_node").addClass("active");
-    $("#balance_ota_upload_node").addClass("active");
+    $("#balance_blu_menu_node").addClass("active");
+    $("#balance_blu_upload_node").addClass("active");
 });
 
 /**
@@ -11,7 +11,8 @@ $(document).ready(function () {
 function uploadFile() {
     const baseUrl = $("#baseUrl").val();
     let formData = new FormData($("#uploadFile")[0]);
-    formData.append("firmwareType", "wifi");
+    formData.append("firmwareType", "blu");
+    formData.append("production", "s9");
     $.ajax({
         type: "POST",
         url: baseUrl + "/balance/ota/upload",

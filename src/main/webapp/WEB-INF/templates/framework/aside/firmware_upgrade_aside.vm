@@ -83,6 +83,40 @@
                 </li>
             </ul>
         </li>
+
+        <li id="balance_blu_menu_node">
+            <a href="pages/widgets.html">
+                <i class="fa fa-th"></i>
+                <span>体脂秤蓝牙升级</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green">blu</small>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li id="balance_blu_upload_node"><a href="$baseUrl/balance/blu"><i class="fa fa-toggle-up"></i>
+                    Blu文件上传</a></li>
+                <li id="balance_mcu_list_test_node">
+                    <a href="$baseUrl/balance/blu/list/test"><i class="fa fa-list"></i>
+                        <span>Blu固件列表</span>
+                        <span class="pull-right-container">
+                                <small class="label pull-right bg-green">test</small>
+                        </span>
+                    </a>
+                </li>
+                <li id="balance_blu_list_prod_node">
+                    <a href="$baseUrl/balance/blu/list/prod"><i class="fa fa-list"></i>
+                        <span>Blu固件列表</span>
+                        <span class="pull-right-container">
+                            <small class="label pull-right bg-red-active">prod</small>
+                        </span>
+                    </a>
+                </li>
+                <li id="balance_blu_mac_node">
+                    <a href="$baseUrl/balance/blu/mac/manage"><i class="fa fa-empire"></i> 添加测试MAC</a>
+                </li>
+            </ul>
+        </li>
+
         <li id="firmware-upgrade-wristband-li-node">
             <a href="pages/widgets.html">
                 <i class="fa fa-soundcloud"></i>

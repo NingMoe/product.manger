@@ -1,16 +1,15 @@
 package com.phicomm.product.manger.service;
 
 import com.phicomm.product.manger.dao.OtaServerAddressMapper;
-import com.phicomm.product.manger.enumeration.TriggerTypeEnum;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.ServerAddressExistException;
 import com.phicomm.product.manger.exception.ServerAddressNotExistException;
+import com.phicomm.product.manger.model.ota.BalanceOtaStatus;
 import com.phicomm.product.manger.model.server.BalanceOtaServerDetailBean;
 import com.phicomm.product.manger.model.server.BalanceServerAddressBean;
 import com.phicomm.product.manger.model.server.BalanceServerBean;
 import com.phicomm.product.manger.module.dds.CustomerContextHolder;
 import com.phicomm.product.manger.module.ota.UpdateTrigger;
-import com.phicomm.product.manger.utils.EnvironmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.HostAndPort;
@@ -24,7 +23,8 @@ import java.util.stream.Collectors;
 
 /**
  * 处理Ota服务器地址
- * Created by wei.yang on 2017/6/8.
+ *
+ * @author wei.yang on 2017/6/8.
  */
 @Service
 public class OtaServerService {
@@ -42,11 +42,10 @@ public class OtaServerService {
      * @return 触发失败的主机
      * @throws IOException IO异常
      */
-    public List<HostAndPort> updateTrigger(TriggerTypeEnum triggerTypeEnum, String environment) throws IOException {
+    public List<HostAndPort> updateTrigger(BalanceOtaStatus balanceOtaStatus) throws IOException {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
         List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
-        EnvironmentUtil.selectEnvironment(environment);
         addressBeans = otaServerAddressMapper.obtainServerAddress();
         if (addressBeans.isEmpty()) {
             return new ArrayList<>();
@@ -54,7 +53,32 @@ public class OtaServerService {
         UpdateTrigger trigger = new UpdateTrigger();
         for (BalanceServerAddressBean balanceServerAddressBean : addressBeans) {
             hostAndPort = trigger.balanceUpdateTrigger(HostAndPort.parseString(balanceServerAddressBean.getHostAndPort()),
-                    triggerTypeEnum);
+                    balanceOtaStatus);
+            if (hostAndPort != null) {
+                hostAndPortList.add(hostAndPort);
+            }
+        }
+        CustomerContextHolder.clearDataSource();
+        return hostAndPortList.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+    }
+
+    /**
+     * 全部刷新
+     *
+     * @return 触发失败的主机
+     * @throws IOException io异常
+     */
+    public List<HostAndPort> triggerAll() throws IOException {
+        List<HostAndPort> hostAndPortList = new ArrayList<>();
+        List<BalanceServerAddressBean> addressBeans;
+        HostAndPort hostAndPort;
+        addressBeans = otaServerAddressMapper.obtainServerAddress();
+        if (addressBeans.isEmpty()) {
+            return new ArrayList<>();
+        }
+        UpdateTrigger trigger = new UpdateTrigger();
+        for (BalanceServerAddressBean balanceServerAddressBean : addressBeans) {
+            hostAndPort = trigger.triggerAll(HostAndPort.parseString(balanceServerAddressBean.getHostAndPort()));
             if (hostAndPort != null) {
                 hostAndPortList.add(hostAndPort);
             }

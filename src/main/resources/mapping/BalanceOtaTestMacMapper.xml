@@ -3,18 +3,26 @@
 <mapper namespace="com.phicomm.product.manger.dao.BalanceOtaTestMacMapper">
 
     <insert id="insertBatch" parameterType="java.util.List">
-        INSERT IGNORE INTO balance_ota_test_mac_info(
-            mac
+        INSERT IGNORE INTO balance_firmware_test_mac_info(
+            mac,
+            production,
+            firmware_type
         )VALUES
         <foreach collection="macList" item="item" index="index" separator=",">
             (
-              #{item,jdbcType=VARCHAR}
+                #{item,jdbcType=VARCHAR},
+                #{production,jdbcType=VARCHAR},
+                #{firmwareType,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
 
     <delete id="cleanMac">
         DELETE FROM
-            balance_ota_test_mac_info
+            balance_firmware_test_mac_info
+        WHERE
+            production = #{production,jdbcType=VARCHAR}
+        AND
+            firmware_type = #{firmwareType,jdbcType=VARCHAR}
     </delete>
 </mapper>

@@ -24,7 +24,8 @@ import java.util.List;
 
 /**
  * 需要通知的Ota服务器地址
- * Created by wei.yang on 2017/6/8.
+ *
+ * @author wei.yang on 2017/6/8.
  */
 @Controller
 @Api(value = "触发Ota固件更新的地址操作", description = "Ota固件升级的地址操作")

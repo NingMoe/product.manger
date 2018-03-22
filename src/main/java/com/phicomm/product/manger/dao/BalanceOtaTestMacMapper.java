@@ -15,13 +15,20 @@ public interface BalanceOtaTestMacMapper {
     /**
      * 批量插入测试mac
      *
-     * @param macList mac列表
-     * @return 影响行数
+     * @param macList      mac列表
+     * @param firmwareType 固件类型
+     * @param production   产品型号
      */
-    int insertBatch(@Param("macList") List macList);
+    void insertBatch(@Param("macList") List macList,
+                    @Param("production") String production,
+                    @Param("firmwareType") String firmwareType);
 
     /**
      * 清除mac
+     *
+     * @param firmwareType 固件类型
+     * @param production   产品型号
      */
-    void cleanMac();
+    void cleanMac(@Param("production") String production,
+                  @Param("firmwareType") String firmwareType);
 }

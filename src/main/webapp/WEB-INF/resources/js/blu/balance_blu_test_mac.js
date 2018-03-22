@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $("#firmware-upgrade-node").addClass("active");
     $("#firmware-upgrade-menu-node").addClass("active");
-    $("#balance_mcu_menu_node").addClass("active");
-    $("#balance_mcu_mac_node").addClass("active");
+    $("#balance_blu_menu_node").addClass("active");
+    $("#balance_blu_mac_node").addClass("active");
 
     const baseUrl = $("#baseUrl").val();
     let count = 0;
@@ -63,7 +63,6 @@ $(document).ready(function () {
      */
     $("#submit").click(function () {
         let environment = $("#environment").val() === '生产环境' ? 'prod' : 'test';
-        let production = $("#production").val();
         $.ajax({
             type: "POST",
             url: baseUrl + "/balance/test/mac",
@@ -71,8 +70,8 @@ $(document).ready(function () {
             data: {
                 "macList": $("#macList").val(),
                 "environment": environment,
-                "production": production,
-                "firmwareType": "mcu"
+                "production": "s9",
+                "firmwareType": "blu"
             },
             error: function (req, status, err) {
                 console.log('Failed reason: ' + err);

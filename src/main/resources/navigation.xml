@@ -457,6 +457,54 @@
     </navigation>
 
     <navigation>
+        <id>balanceBlu</id>
+        <title>
+            <title-name>体脂秤Blu升级</title-name>
+            <title-description>Blu升级</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/blu</url>
+            <sub-directories>
+                <name>balanceBlu</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceBluList</id>
+        <title>
+            <title-name>体脂秤Blu固件列表</title-name>
+            <title-description>Blu固件列表</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/blu/list</url>
+            <sub-directories>
+                <name>balanceBluList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>balanceBluMac</id>
+        <title>
+            <title-name>体脂秤Blu测试Mac管理</title-name>
+            <title-description>Blu管理</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/balance/blu/mac/manage</url>
+            <sub-directories>
+                <name>balanceBluMac</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>advertisementHealthAdd</id>
         <title>
             <title-name>广告（健康）上传</title-name>

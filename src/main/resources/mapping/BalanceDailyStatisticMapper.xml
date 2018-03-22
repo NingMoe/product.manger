@@ -6,7 +6,7 @@
             index:
             performance: good
             check-time:2017-11-22
-            从原始测量表中获取24小时统计信息，用于写入到表balance_measue_24_hour_counts中
+            从原始测量表中获取24小时统计信息，用于写入到表balance_measure_24_hour_counts中
      -->
     <select id="getBalanceStatistic24HourDisplay"
             resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
@@ -23,7 +23,7 @@
             index:
             performance: good
             check-time:2017-11-22
-            从原始测量表balance_measure_info中获取24小时统计信息，用于写入到表balance_measue_24_hour_counts中
+            从原始测量表balance_measure_info中获取24小时统计信息，用于写入到表balance_measure_24_hour_counts中
      -->
     <select id="getBalanceStatistic24HourDisplaySpecialTable"
             resultType="com.phicomm.product.manger.model.statistic.BalanceAsHourModel">
