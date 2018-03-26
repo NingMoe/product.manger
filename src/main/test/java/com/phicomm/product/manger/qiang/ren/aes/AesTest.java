@@ -11,7 +11,7 @@ public class AesTest {
 
     @Test
     public void encryptTest(){
-        System.out.println(AesUtil.encrypt("88888"));
+        System.out.println(AesUtil.encrypt("012342222244444444444445555555555666666666").length());
     }
 
     @Test
@@ -21,6 +21,7 @@ public class AesTest {
 
     @Test
     public void test(){
-        System.out.println(123456);
+        Long l = 12345654321L;
+        System.out.println(l.toString());
     }
 }
