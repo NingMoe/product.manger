@@ -19,6 +19,7 @@
                 <entry value-ref="localDataSource" key="localDataSource"/>
                 <entry value-ref="prodDataSource" key="prodDataSource"/>
                 <entry value-ref="testDataSource" key="testDataSource"/>
+                <entry value-ref="testOverseaDataSource" key="testOverseaDataSource"/>
             </map>
         </property>
         <property name="defaultTargetDataSource" ref="localDataSource"/>

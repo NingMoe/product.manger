@@ -19,6 +19,11 @@ public class CustomerContextHolder {
      */
     private static final String PROD_DATA_SOURCE = "prodDataSource";
 
+    /**
+     * {smart_hardware_oversea库} 海外测试环境的数据库
+     */
+    private static final String TEST_OVERSEA_DATA_SOURCE = "testOverseaDataSource";
+
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
     /**
@@ -51,6 +56,13 @@ public class CustomerContextHolder {
      */
     public static void selectTestDataSource() {
         contextHolder.set(TEST_DATA_SOURCE);
+    }
+
+    /**
+     * {smart_hardware_oversea库} 海外版测试环境数据源
+     */
+    public static void selectTestOverseaDataSource() {
+        contextHolder.set(TEST_OVERSEA_DATA_SOURCE);
     }
 
     /**
