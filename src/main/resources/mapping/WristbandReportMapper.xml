@@ -4,39 +4,50 @@
 
     <!--将联璧，万家每日激活手环手表数量添加到数据库中，通过date的唯一性约束，使得数据存在则更新，不存在则插入-->
     <insert id="addedActivationNum">
-        REPLACE INTO phisport_activation_count (date, lianbi, wanjia)
+        REPLACE INTO phisport_activation_count (date, lianbi, wanjia,type)
         VALUES
         (DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d'),
         #{lianbi,jdbcType=BIGINT},
-        #{wanjia,jdbcType=BIGINT})
+        #{wanjia,jdbcType=BIGINT},
+        #{type,jdbcType=VARCHAR}
+        )
     </insert>
 
     <!--获取当前月份内各个厂家每天激活数据量-->
     <select id="getActivationNumThisMonth" resultType="java.util.HashMap">
         SELECT
-        date,
-        sum(lianbi) AS lianbi,
-        sum(wanjia) AS wanjia
-        FROM phisport_activation_count
+            date,
+            sum(lianbi) AS lianbi,
+            sum(wanjia) AS wanjia,
+            type
+        FROM
+            phisport_activation_count
         WHERE
-        DATE_FORMAT(date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')
+            DATE_FORMAT(date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')
+        AND
+           type = #{type,jdbcType=VARCHAR}
     </select>
 
     <!--更新月份统计表,通过month的唯一性约束，使得数据存在则更新，不存在则插入-->
     <insert id="upDateActivationMonthNum">
-        REPLACE INTO phisport_activation_count_month (month,lianbi,wanjia)
+        REPLACE INTO phisport_activation_count_month (month,lianbi,wanjia,type)
         VALUES (
         DATE_FORMAT(#{month,jdbcType=VARCHAR},'%Y-%m'),
         #{lianbi,jdbcType=BIGINT},
-        #{wanjia,jdbcType=BIGINT}
+        #{wanjia,jdbcType=BIGINT},
+        #{type,jdbcType=VARCHAR}
         )
     </insert>
 
 
     <!--获取某天各个厂家激活状况-->
     <select id="getActivationStatisticDay" resultType="java.util.HashMap">
-        SELECT date,lianbi,wanjia
-        FROM phisport_activation_count
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
         WHERE
         DATE_FORMAT(date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=VARCHAR},'%Y-%m-%d')
     </select>
@@ -64,19 +75,323 @@
         LIMIT #{num,jdbcType=INTEGER}
     </select>
 
+    <select id="getW1ActivationNumEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
+        WHERE
+            type = 'w1'
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
 
-    <!--获取最近N月的激活情况统计-->
+    <select id="getW1PActivationNumEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
+        WHERE
+            type = 'w1p'
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <select id="getW2ActivationNumEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
+        WHERE
+            type = 'w2'
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="getW2PActivationNumEveryDay" resultType="java.util.HashMap">
+        SELECT
+            date,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count
+        WHERE
+            type = 'w2p'
+        ORDER BY
+            date DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+
+    <!--获取最近N月的所有运动设备的激活情况统计-->
     <select id="getActivationNumMonth" resultType="java.util.HashMap">
+        SELECT
+            month,
+            sum(lianbi) AS lianbi,
+            sum(wanjia) AS wanjia
+        FROM
+            phisport_activation_count_month
+        GROUP BY
+            month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取最近N月的W1激活情况统计-->
+    <select id="getW1ActivationNumMonth" resultType="java.util.HashMap">
         SELECT
             month,
             lianbi,
             wanjia
         FROM
             phisport_activation_count_month
+        WHERE
+            type = 'w1'
         ORDER BY
             month DESC
         LIMIT #{num,jdbcType=INTEGER}
     </select>
 
+    <!--获取最近N月的W1P激活情况统计-->
+    <select id="getW1PActivationNumMonth" resultType="java.util.HashMap">
+        SELECT
+            month,
+            lianbi,
+            wanjia
+        FROM
+            phisport_activation_count_month
+        WHERE
+            type = 'w1p'
+        ORDER BY
+            month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
 
+    <!--获取最近N月的W2激活情况统计-->
+    <select id="getW2ActivationNumMonth" resultType="java.util.HashMap">
+        SELECT
+             month,
+             lianbi,
+             wanjia
+        FROM
+             phisport_activation_count_month
+        WHERE
+             type = 'w2'
+        ORDER BY
+             month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <!--获取最近N月的W2P激活情况统计-->
+    <select id="getW2PActivationNumMonth" resultType="java.util.HashMap">
+        SELECT
+             month,
+             lianbi,
+             wanjia
+        FROM
+             phisport_activation_count_month
+        WHERE
+             type = 'w2p'
+        ORDER BY
+             month DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="getNumByMonth" resultType="com.phicomm.product.manger.model.statistic.CountBean">
+        <![CDATA[
+
+        SELECT
+            DATE_FORMAT(dayTime, '%Y-%m') AS generateTime,
+            SUM(dayCount) AS generateCount
+        FROM
+        (
+        SELECT
+            DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+            COUNT(1) AS dayCount,
+            type AS type
+        FROM
+            `wristband`
+        GROUP BY
+            dayTime
+        HAVING
+            dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+            ) b
+        WHERE type = #{type}
+        GROUP BY
+            generateTime
+        HAVING
+            generateTime > DATE_FORMAT(
+            DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
+            '%Y-%m'
+            )
+        ORDER BY
+            generateTime DESC
+
+        ]]>
+    </select>
+
+    <select id="getTotalNumByMonth" resultType="com.phicomm.product.manger.model.statistic.CountBean">
+        <![CDATA[
+
+        SELECT
+            DATE_FORMAT(dayTime, '%Y-%m') AS generateTime,
+            SUM(dayCount) AS generateCount
+        FROM
+        (
+        SELECT
+            DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+            COUNT(1) AS dayCount
+        FROM
+            `wristband`
+        GROUP BY
+            dayTime
+        HAVING
+            dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+            ) b
+        GROUP BY
+            generateTime
+        HAVING
+            generateTime > DATE_FORMAT(
+            DATE_ADD(NOW(), INTERVAL - #{month,jdbcType=INTEGER} MONTH),
+            '%Y-%m'
+            )
+        ORDER BY
+            generateTime DESC
+
+        ]]>
+    </select>
+
+    <select id="getNumByDay" resultType="com.phicomm.product.manger.model.statistic.CountBean"
+            parameterType="java.lang.Integer">
+        <![CDATA[
+
+        SELECT
+            DATE_FORMAT(create_time, '%y-%m-%d') AS generateTime,
+            COUNT(1) AS generateCount
+        FROM
+            `wristband`
+        GROUP BY
+            generateTime
+        HAVING
+            generateTime >= DATE_FORMAT(
+            DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
+            '%y-%m-%d'
+            )
+        AND
+            generateTime<DATE_FORMAT(NOW(),'%y-%m-%d')
+        ORDER BY
+            generateTime DESC
+
+        ]]>
+    </select>
+
+
+    <select id="getLocationNumByDay" resultType="com.phicomm.product.manger.model.statistic.LocationCountBean">
+        <![CDATA[
+
+            SELECT
+                province AS province,
+                COUNT(1) AS generateCount
+            FROM
+                (
+                    SELECT
+                        DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+                        IF (
+                            POSITION('自治区' IN province)>0,
+                            LEFT (
+                                province,
+                                LOCATE('自治区', province) - 1
+                            ),
+                            province
+                        ) AS province,
+                        device_type AS device_type
+                    FROM
+                        device_location_info
+                    HAVING
+                        dayTime >= DATE_FORMAT(
+                            DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
+                            '%Y-%m-%d'
+                        )
+                    AND dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+                ) b
+            WHERE
+                LENGTH(province) > 0
+            AND province <> 'no_location'
+            AND province <> 'Reserved Address'
+            AND device_type = #{type}
+            GROUP BY
+                LEFT (province, 2)
+            ORDER BY
+                generateCount DESC
+            LIMIT #{pageSize,jdbcType=INTEGER}
+
+        ]]>
+    </select>
+
+    <select id="getTotalLocationNumByDay" resultType="com.phicomm.product.manger.model.statistic.LocationCountBean">
+        <![CDATA[
+
+            SELECT
+                province AS province,
+                COUNT(1) AS generateCount
+            FROM
+                (
+                    SELECT
+                        DATE_FORMAT(create_time, '%Y-%m-%d') AS dayTime,
+                        IF (
+                            POSITION('自治区' IN province)>0,
+                            LEFT (
+                                province,
+                                LOCATE('自治区', province) - 1
+                            ),
+                            province
+                        ) AS province,
+                        device_type AS device_type
+                    FROM
+                        device_location_info
+                    HAVING
+                        dayTime >= DATE_FORMAT(
+                            DATE_ADD(NOW(), INTERVAL - #{day,jdbcType=INTEGER} DAY),
+                            '%Y-%m-%d'
+                        )
+                    AND dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
+                ) b
+            WHERE
+                LENGTH(province) > 0
+            AND province <> 'no_location'
+            AND province <> 'Reserved Address'
+            AND device_type in ('w1','w2','w1p','w2p')
+            GROUP BY
+                LEFT (province, 2)
+            ORDER BY
+                generateCount DESC
+            LIMIT #{pageSize,jdbcType=INTEGER}
+
+        ]]>
+    </select>
+
+
+    <!--最近N天每天激活总量-->
+    <select id="getActivationStatisticByDay" resultType="java.util.HashMap">
+        SELECT
+        DATE_FORMAT(date,'%y-%m-%d') AS date,
+        SUM(lianbi+wanjia) AS counts
+        FROM
+        phisport_activation_count
+        GROUP BY
+        date
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
 </mapper>

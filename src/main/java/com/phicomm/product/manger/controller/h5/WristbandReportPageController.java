@@ -44,9 +44,9 @@ public class WristbandReportPageController {
     }
 
     /**
-     * 电子秤数量统计
+     * 手环手表数量统计
      */
-    @RequestMapping(value = "wristband/statistic/count/page", method = RequestMethod.GET)
+    @RequestMapping(value = "wristband/type/count/page", method = RequestMethod.GET)
     @ApiIgnore("首页展示")
     @FunctionPoint(value = "common")
     public ModelAndView showBalanceStatisticCount(HttpSession session) {
@@ -55,7 +55,7 @@ public class WristbandReportPageController {
         modelAndView.getModel().put("context", "wristband_report/wristband_count.vm");
         modelAndView.getModelMap().put("uuid", VelocityUtil.getUUID());
         modelAndView.getModelMap().put("adminUserInfo", adminUserInfo);
-        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandStatisticCount"));
+        modelAndView.getModelMap().put("navigation", navigationManger.getNavigationModel("wristbandTypeCount"));
         return modelAndView;
     }
 

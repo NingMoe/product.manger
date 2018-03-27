@@ -1,23 +1,23 @@
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/fresco/fresco.css"/>
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="$!baseUrl/resources/css/feedback/feedback.css">
+
 <section class="content">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div id ="mac-year-chart">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div id ="mac-month-chart">
+    <div class="box box-solid phicomm_content_box" style="margin-bottom: -10px;margin-top: 20px">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                    ##手环手表K码新增激活量(每天)
+                        <div id="S7KKeysCountsChart1type"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/chartjs/Chart.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
@@ -27,4 +27,12 @@
 <script type="text/javascript" src="$baseUrl/resources/highchart/series-label.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/js/phicomm_utils/drawChartUtil.js?v=$uuid"></script>
 <script type="text/javascript" src="$baseUrl/resources/fastclick/fastclick.min.js"></script>
-<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/wristtband_count.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/myUtils.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/wristband_report/wristband_count.js?v=$uuid"></script>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/fresco/fresco.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/moment/moment.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/exporting.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/highchart/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.full.min.js"></script>
