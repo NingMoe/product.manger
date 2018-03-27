@@ -12,7 +12,7 @@
         </li>
         <li id="user-activity-trace-sport-node1"><a href="$baseUrl/wristband_report/page"><i class="fa fa-meh-o"></i>手环手表激活与使用数据报告</a>
         </li>
+##        <li id="user-activity-trace-sport-node2"><a href="$baseUrl/wristband/type/count/page"><i class="fa fa-bar-chart"></i> 统计不同设备类型的激活</a></li>
 
-        <li><a href="$baseUrl/wristband/statistic/count/page"><i class="fa fa-bar-chart"></i> 手环手表销售数量统计</a></li>
     </ul>
 </li>

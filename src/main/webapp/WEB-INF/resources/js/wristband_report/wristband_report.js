@@ -16,7 +16,7 @@ $(function obtainMacInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/day",
+        url: baseUrl + "/wristband/reports/number/day",
         dataType: "json",
         data: {
             "day": 30,
@@ -46,17 +46,17 @@ $(function obtainMacInfoByDay() {
     })
 });
 /**
- * 获取过去12个月的mac统计信息
+ * 获取过去12个月的w1的使用的统计信息
  */
 $(function obtainMacYearData() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/month",
+        url: baseUrl + "/wristband/reports/number/month",
         dataType: "json",
         data: {
             "month": 12,
-            "type": "mac"
+            "type": "w1"
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -73,7 +73,7 @@ $(function obtainMacYearData() {
             console.log("labels:" + labels);
             console.log("datas:" + datas);
             var json = column();
-            json.title.text = '手环手表每月新增使用量(最近12个月）';
+            json.title.text = 'w1每月新增使用量(最近12个月）';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
             json.legend.enabled = false;
@@ -86,19 +86,184 @@ $(function obtainMacYearData() {
         }
     })
 });
+/**
+ * 获取过去12个月的w1p的使用的统计信息
+ */
+$(function obtainMacYearData() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/number/month",
+        dataType: "json",
+        data: {
+            "month": 12,
+            "type": "w1p"
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("datas:" + datas);
+            var json = column();
+            json.title.text = 'w1p每月新增使用量(最近12个月）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7UsageCountschart2a").highcharts(json);
+            var sum = 0;
+            for (var i = 0; i < datas.length; i++) {
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll", formatNum(sum));
+        }
+    })
+});
+/**
+ * 获取过去12个月的w2的使用的统计信息
+ */
+$(function obtainMacYearData() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/number/month",
+        dataType: "json",
+        data: {
+            "month": 12,
+            "type": "w2"
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("datas:" + datas);
+            var json = column();
+            json.title.text = 'w2每月新增使用量(最近12个月）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7UsageCountschart2b").highcharts(json);
+            var sum = 0;
+            for (var i = 0; i < datas.length; i++) {
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll", formatNum(sum));
+        }
+    })
+});
 
 /**
- * 获取位置统计信息（30天），并作图。
+ * 获取过去12个月的w2p的使用的统计信息
+ */
+$(function obtainMacYearData() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/number/month",
+        dataType: "json",
+        data: {
+            "month": 12,
+            "type": "w2p"
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("datas:" + datas);
+            var json = column();
+            json.title.text = 'w2p每月新增使用量(最近12个月）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7UsageCountschart2c").highcharts(json);
+            var sum = 0;
+            for (var i = 0; i < datas.length; i++) {
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll", formatNum(sum));
+        }
+    })
+});
+
+
+/**
+ * 获取过去12个月的运动设备的使用的统计信息
+ */
+$(function obtainMacYearData() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/total/number/month",
+        dataType: "json",
+        data: {
+            "month": 12,
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            console.log("data:" + data.data);
+            console.log("labels:" + labels);
+            console.log("datas:" + datas);
+            var json = column();
+            json.title.text = '运动设备每月新增使用量(最近12个月）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7UsageCountschart2total").highcharts(json);
+            var sum = 0;
+            for (var i = 0; i < datas.length; i++) {
+                sum += datas[i];
+            }
+            updateElementsValuesByName("s7DataUsageCountAll", formatNum(sum));
+        }
+    })
+});
+
+/**
+ * 获取运动产品地区统计信息（30天），并作图。
  */
 $(function obtainLocationInfoByDay() {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/location/day",
+        url: baseUrl + "/wristband/reports/total/location/day",
         dataType: "json",
         data: {
             "day": 30,
-            "type": "balance",
             "pageSize": 15
         },
         error: function (req, status, err) {
@@ -113,11 +278,149 @@ $(function obtainLocationInfoByDay() {
                 }
             }
             var json = column();
-            json.title.text = '手环手表各地区新增使用量（最近30天）';
+            json.title.text = '运动设备各地区新增使用量（最近30天）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7SalesLocationchart3total").highcharts(json);
+        }
+    })
+});
+
+/**
+ * 获取w1地区统计信息（30天），并作图。
+ */
+$(function obtainLocationInfoByDay() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/location/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "w1",
+            "pageSize": 15
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            var json = column();
+            json.title.text = 'w1各地区新增使用量（最近30天）';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
             json.legend.enabled = false;
             $("#S7SalesLocationchart3").highcharts(json);
+        }
+    })
+});
+
+/**
+ * 获取w1p地区统计信息（30天），并作图。
+ */
+$(function obtainLocationInfoByDay() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/location/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "w1p",
+            "pageSize": 15
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            var json = column();
+            json.title.text = 'w1p各地区新增使用量（最近30天）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7SalesLocationchart4").highcharts(json);
+        }
+    })
+});
+/**
+ * 获取w2地区统计信息（30天），并作图。
+ */
+$(function obtainLocationInfoByDay() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/location/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "w2",
+            "pageSize": 15
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            var json = column();
+            json.title.text = 'w2各地区新增使用量（最近30天）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7SalesLocationchart5").highcharts(json);
+        }
+    })
+});
+/**
+ * 获取w2p地区统计信息（30天），并作图。
+ */
+$(function obtainLocationInfoByDay() {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/location/day",
+        dataType: "json",
+        data: {
+            "day": 30,
+            "type": "w2p",
+            "pageSize": 15
+        },
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let labels = [];
+            let datas = [];
+            for (let key in data.data) {
+                if (data.data.hasOwnProperty(key)) {
+                    labels.push(key);
+                    datas.push(data.data[key]);
+                }
+            }
+            var json = column();
+            json.title.text = 'w2各地区新增使用量（最近30天）';
+            json.series[0].data = datas;
+            json.xAxis.categories = labels;
+            json.legend.enabled = false;
+            $("#S7SalesLocationchart5a").highcharts(json);
         }
     })
 });
@@ -199,7 +502,7 @@ function column() {
 
 
 /**
- * 获取不同合作商激活的最近30天激活的K码数量
+ * 获取不同合作商激活的所有设备的最近30天激活的K码数量
  */
 $(function () {
     const baseUrl = $("#baseUrl").val();
@@ -232,8 +535,145 @@ $(function () {
     })
 });
 
+
 /**
- * 获取不同合作商激活的每个月激活的K码数量
+ * 获取不同合作商激活的最近30天激活的K码数量(W1）
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W1/ActivationNumberDay",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["date"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+
+            }
+            var json1 = drawChart();
+            json1.title.text = 'W1的K码新增激活量（最近30天）';
+            json1.series[1].data = wanjia;
+            json1.series[1].name = 'w1万家金服K码激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = 'w1联璧K码激活量';
+            $("#S7KKeysCountsChart1typeOfW1").highcharts(json1);
+        }
+    })
+});
+/**
+ * 获取不同合作商激活的最近30天激活的K码数量(W1P）
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W1P/ActivationNumberDay",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["date"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+
+            }
+            var json1 = drawChart();
+            json1.title.text = 'W1P的K码新增激活量（最近30天）';
+            json1.series[1].data = wanjia;
+            json1.series[1].name = 'w1p万家金服K码激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = 'w1p联璧K码激活量';
+            $("#S7KKeysCountsChart1typeOfW1P").highcharts(json1);
+        }
+    })
+});
+
+/**
+ * 获取不同合作商激活的最近30天激活的K码数量(W2）
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W2/ActivationNumberDay",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["date"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+
+            }
+            var json1 = drawChart();
+            json1.title.text = 'W2 K码新增激活量（最近30天）';
+            json1.series[1].data = wanjia;
+            json1.series[1].name = 'w2万家金服K码激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = 'w2联璧K码激活量';
+            $("#S7KKeysCountsChart1typeOfW2").highcharts(json1);
+        }
+    })
+});
+
+/**
+ * 获取不同合作商激活的最近30天激活的K码数量(W2P）
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W2P/ActivationNumberDay",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["date"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+
+            }
+            var json1 = drawChart();
+            json1.title.text = 'W2P K码新增激活量（最近30天）';
+            json1.series[1].data = wanjia;
+            json1.series[1].name = 'w2p万家金服K码激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = 'w2p联璧K码激活量';
+            $("#S7KKeysCountsChart1typeOfW2P").highcharts(json1);
+        }
+    })
+});
+
+
+/**
+ * 获取所有运动设备在不同合作商激活的每个月激活的K码数量
  */
 $(function () {
     const baseUrl = $("#baseUrl").val();
@@ -291,6 +731,247 @@ $(function () {
     })
 });
 
+
+/**
+ * 获取W1在不同合作商激活的每个月激活的K码数量
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W1/GetActivationNumberMonth",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            let sum = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["month"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
+            }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
+            var json1 = column();
+            json1.title.text = 'W1 K码新增激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            json1.series[0].type = 'spline';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2W1", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'W1 K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码总激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3W1", json2);
+        }
+    })
+});
+
+
+/**
+ * 获取W1P在不同合作商激活的每个月激活的K码数量
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W1P/GetActivationNumberMonth",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            let sum = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["month"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
+            }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
+            var json1 = column();
+            json1.title.text = 'W1P K码新增激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            json1.series[0].type = 'spline';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2W1P", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'W1P K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码总激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3W1P", json2);
+        }
+    })
+});
+
+/**
+ * 获取W2在不同合作商激活的每个月激活的K码数量
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W2/GetActivationNumberMonth",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            let sum = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["month"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
+            }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
+            var json1 = column();
+            json1.title.text = 'W2 K码新增激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            json1.series[0].type = 'spline';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2W2", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'W2 K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码总激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3W2", json2);
+        }
+    })
+});
+
+
+/**
+ * 获取W2P在不同合作商激活的每个月激活的K码数量
+ */
+$(function () {
+    const baseUrl = $("#baseUrl").val();
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/wristband/reports/W2P/GetActivationNumberMonth",
+        dataType: "json",
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (rtValue) {
+            let dates = [];
+            let lianbi = [];
+            let wanjia = [];
+            let sum = [];
+            console.info(rtValue.data);
+            for (var i = rtValue.data.length - 1; i >= 0; i--) {
+                dates.push(rtValue.data[i]["month"]);
+                lianbi.push(rtValue.data[i]["lianbi"]);
+                wanjia.push(rtValue.data[i]["wanjia"]);
+                sum.push(rtValue.data[i]["lianbi"] + rtValue.data[i]["wanjia"]);
+            }
+            var plotOptions = {
+                series: {
+                    animation: {
+                        duration: 3000
+                    }
+                }
+            };
+            var json1 = column();
+            json1.title.text = 'W2P K码新增激活量';
+            json1.xAxis.categories = dates;
+            json1.series[0].data = lianbi;
+            json1.series[0].name = '联璧K码激活量';
+            json1.series[0].type = 'spline';
+            json1.plotOptions = plotOptions;
+            var chart = new Highcharts.Chart("S7KKeysCountsChart2W2P", json1);
+            chart.addSeries({
+                data: wanjia, name: '万家金服K码激活量', dataLabels: {
+                    enabled: true,
+                    shadow: false,
+                    allowOverlap: true
+                },
+                type: 'spline'
+            });
+
+            var json2 = column();
+            json2.title.text = 'W2P K码新增激活量';
+            json2.series[0].data = sum;
+            json2.series[0].name = 'K码总激活量';
+            json2.xAxis.categories = dates;
+            json2.series[0].type = 'spline';
+            json2.plotOptions = plotOptions;
+            new Highcharts.Chart("S7KKeysCountsChart3W2P", json2);
+        }
+    })
+});
+
+
+
 /**
  * 激活量和使用量对比
  */
@@ -299,7 +980,7 @@ $(function () {
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
-        url: baseUrl + "/balance/statistic/day",
+        url: baseUrl + "/wristband/reports/number/day",
         dataType: "json",
         data: {
             "day": 30,
@@ -316,7 +997,7 @@ $(function () {
 
     $.ajax({
         type: "POST",
-        url: baseUrl + "/s7/reports/ActivationAllCountDay",
+        url: baseUrl + "/wristband/reports/ActivationAllCountDay",
         dataType: "json",
         data: {
             "days": 30
@@ -505,11 +1186,15 @@ function addWristBandKKeys() {
     var date = document.getElementById("activationDate").value;
     var lianbi = document.getElementById("lianbi").value;
     var wanjia = document.getElementById("wanjia").value;
+    var type = document.getElementById("type").value;
+
     if (lianbi === "0" && wanjia === "0") {
         return alert("数量不应该是0");
     }
     console.log("date:" + date);
     console.log("lianbi = " + lianbi + ",wanjia=" + wanjia);
+    console.log("type ="+type)
+
     const baseUrl = $("#baseUrl").val();
     $.ajax({
         type: "POST",
@@ -518,8 +1203,8 @@ function addWristBandKKeys() {
         data: {
             "date": date,
             "lianbi": lianbi,
-            "wanjia": wanjia
-
+            "wanjia": wanjia,
+            "type":type
         },
         error: function (req, status, err) {
             alert('Failed reason: ' + err);
@@ -568,7 +1253,7 @@ function updateElementsValuesByName(elementNames, value) {
 }
 
 /**
- * 当前日期下的S7使用量和总使用量
+ * 当前日期下的手环手表使用量和总使用量
  * @param thisDate 日期 格式为yyyy-mm-dd
  */
 function getThisDateUsage(thisDate) {
@@ -576,7 +1261,7 @@ function getThisDateUsage(thisDate) {
 }
 
 /**
- * 当前日期下S7的激活量
+ * 当前日期下手环手表的激活量
  * @param date 日期 格式为yyyy-mm-dd
  */
 function getThisDateActivation(date) {
