@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 @Service
 public class OtaServerService {
 
+    private static final int MAX_PROT_NUM = 65535;
+
     private OtaServerAddressMapper otaServerAddressMapper;
 
     @Autowired
@@ -46,6 +48,7 @@ public class OtaServerService {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
         List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
+        selectDB(balanceOtaStatus.getEnvironment());
         addressBeans = otaServerAddressMapper.obtainServerAddress();
         if (addressBeans.isEmpty()) {
             return new ArrayList<>();
@@ -65,13 +68,15 @@ public class OtaServerService {
     /**
      * 全部刷新
      *
+     * @param environment 环境
      * @return 触发失败的主机
      * @throws IOException io异常
      */
-    public List<HostAndPort> triggerAll() throws IOException {
+    public List<HostAndPort> triggerAll(String environment) throws IOException {
         List<HostAndPort> hostAndPortList = new ArrayList<>();
         List<BalanceServerAddressBean> addressBeans;
         HostAndPort hostAndPort;
+        selectDB(environment);
         addressBeans = otaServerAddressMapper.obtainServerAddress();
         if (addressBeans.isEmpty()) {
             return new ArrayList<>();
@@ -159,8 +164,28 @@ public class OtaServerService {
             throw new DataFormatException();
         }
         int port = hostAndPort.getPort();
-        if (port >= 65535 || port <= 0) {
+        if (port >= MAX_PROT_NUM || port <= 0) {
             throw new DataFormatException();
         }
+    }
+
+    /**
+     * 选择环境
+     *
+     * @param environment 环境
+     */
+    private void selectDB(String environment) {
+        switch (environment) {
+            case "test":
+                CustomerContextHolder.selectTestDataSource();
+                break;
+            case "prod":
+                CustomerContextHolder.selectProdDataSource();
+                break;
+            default:
+                CustomerContextHolder.selectTestDataSource();
+                break;
+        }
+
     }
 }

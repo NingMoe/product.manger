@@ -47,8 +47,8 @@ public class UpdateTriggerController {
             @ApiResponse(code = 0, message = "正常情况", response = Response.class)
     })
     @FunctionPoint("common")
-    public Response<List<HostAndPort>> updateTrigger()
+    public Response<List<HostAndPort>> updateTrigger(String environment)
             throws IOException {
-        return new Response<List<HostAndPort>>().setData(otaServerService.triggerAll());
+        return new Response<List<HostAndPort>>().setData(otaServerService.triggerAll(environment));
     }
 }
