@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 
 /**
- * 获取过去30天的mac统计信息
+ * 获取过去30天的运动设备统计信息
  */
 $(function obtainMacInfoByDay() {
     const baseUrl = $("#baseUrl").val();
@@ -416,7 +416,7 @@ $(function obtainLocationInfoByDay() {
                 }
             }
             var json = column();
-            json.title.text = 'w2各地区新增使用量（最近30天）';
+            json.title.text = 'w2p各地区新增使用量（最近30天）';
             json.series[0].data = datas;
             json.xAxis.categories = labels;
             json.legend.enabled = false;
