@@ -97,6 +97,10 @@ public class WatchPlatePictureService {
                 break;
         }
         System.out.println(callbackUrl);
+
+
+
+
         String data = JSON.toJSONStringWithDateFormat(watchPlatePictureList, "yyyy-MM-dd HH:mm:ss");
         try {
             HttpsUtil.post(callbackUrl, data, Charsets.UTF_8.name());
