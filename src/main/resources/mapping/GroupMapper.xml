@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.product.manger.dao.GroupMapper">
+
+    <insert id="groupAdd"
+            parameterType="com.phicomm.product.manger.model.group.GroupInfo">
+        INSERT INTO
+        group_info(
+            `name`,
+            `type`,
+            description,
+            create_time,
+            update_time
+        )
+        VALUES(
+            #{groupInfo.name, jdbcType=VARCHAR},
+            #{groupInfo.type, jdbcType=VARCHAR},
+            #{groupInfo.description, jdbcType=VARCHAR},
+            NOW(),
+            NOW()
+        );
+    </insert>
+
+    <select id="groupList"
+            resultType="com.phicomm.product.manger.model.group.GroupInfo">
+        SELECT
+            id AS id,
+            `name` AS name,
+            `type` AS type,
+            member_number AS memberNumber,
+            description AS description,
+            create_time AS createTime,
+            update_time AS updateTime
+        FROM
+            group_info;
+    </select>
+
+    <delete id="groupDelete" parameterType="java.lang.Long">
+        DELETE FROM
+            group_info
+        WHERE
+            id = #{id,jdbcType=BIGINT};
+    </delete>
+
+    <update id="groupUpdate" parameterType="com.phicomm.product.manger.model.group.GroupInfo">
+        UPDATE group_info SET
+            `name` = #{groupInfo.name, jdbcType=VARCHAR},
+            `type` = #{groupInfo.type, jdbcType=VARCHAR},
+            description = #{groupInfo.description, jdbcType=VARCHAR},
+            update_time = NOW()
+        WHERE
+            id = #{groupInfo.id, jdbcType=BIGINT}
+    </update>
+
+    <update id="addMemberCount" parameterType="java.lang.Long">
+        UPDATE group_info SET
+            member_number = member_number + 1,
+            update_time = NOW()
+        WHERE
+            id = #{groupId, jdbcType=BIGINT}
+    </update>
+
+    <update id="subtractMemberCount" parameterType="java.lang.Long">
+        UPDATE group_info SET
+            member_number = member_number - 1,
+            update_time = NOW()
+        WHERE
+            id = #{groupId, jdbcType=BIGINT}
+    </update>
+
+    <insert id="groupUserAdd"
+            parameterType="com.phicomm.product.manger.model.group.GroupUser">
+        INSERT INTO group_user(
+            `group_id`,
+            `user_id`,
+            description,
+            create_time,
+            update_time
+            )
+        VALUES(
+            #{groupUser.groupId, jdbcType=BIGINT},
+            #{groupUser.userId, jdbcType=VARCHAR},
+            #{groupUser.description, jdbcType=VARCHAR},
+            NOW(),
+            NOW()
+            );
+    </insert>
+
+    <select id="groupUserList"
+            resultType="com.phicomm.product.manger.model.group.GroupUser">
+        SELECT
+            id AS id,
+            group_id AS groupId,
+            user_id AS userid,
+            description AS description,
+            create_time AS createTime,
+            update_time AS updateTime
+        FROM
+            group_user;
+    </select>
+
+    <delete id="groupUserDelete">
+        DELETE FROM
+            group_user
+        WHERE
+            group_id = #{groupId,jdbcType=BIGINT}
+            AND user_id = #{userId, jdbcType=VARCHAR};
+    </delete>
+
+    <delete id="groupUserDelete2">
+        DELETE FROM
+            group_user
+        WHERE
+            group_id = #{groupId,jdbcType=BIGINT};
+    </delete>
+
+    <select id="getUserId"
+            resultType="java.lang.String">
+        SELECT
+            user_id
+        FROM
+            user_info
+        WHERE
+            phone_number = #{phoneNumber, jdbcType=VARCHAR};
+    </select>
+
+    <select id="isExistGroup"
+            resultType="java.lang.Boolean">
+        SELECT
+            COUNT(1)
+        FROM
+            group_info
+        WHERE
+            name = #{name, jdbcType=VARCHAR}
+            AND `type` = #{type, jdbcType=VARCHAR};
+    </select>
+
+</mapper>

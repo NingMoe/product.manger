@@ -66,12 +66,14 @@ public class FirmwareUpgradeController {
                                                           @RequestParam("file") MultipartFile file,
                                                           @RequestParam("differentPartFiles") List<MultipartFile> files,
                                                           @RequestParam("description") String description,
+                                                          @RequestParam("groupSelected") long groupSelected,
                                                           @RequestParam("appPlatform") String appPlatform,
                                                           @RequestParam(value = "appVersionCodeAndroid", required = false) String appVersionCodeAndroid,
                                                           @RequestParam(value = "appVersionCodeIos", required = false) String appVersionCodeIos)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         firmwareUpgradeService.whichPlatform(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, appPlatform, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description,
+                appPlatform, appVersionCodeAndroid, appVersionCodeIos, groupSelected);
         return CommonResponse.ok();
     }
 
@@ -102,13 +104,15 @@ public class FirmwareUpgradeController {
                                                              @RequestParam("environment") String environment,
                                                              @RequestPart("file") MultipartFile file,
                                                              @RequestParam(value = "description", required = false) String description,
+                                                             @RequestParam("groupSelected") long groupSelected,
                                                              @RequestParam("appPlatform") String appPlatform,
                                                              @RequestParam("appVersionCode") String appVersionCode,
                                                              @RequestParam("id") String id,
                                                              @RequestParam("enable") String enable)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         firmwareUpgradeService.firmwareUpgradeWristbandFileUpdate(firmwareType, hardwareVersion,
-                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, description, appPlatform, appVersionCode, id, enable);
+                firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, description, appPlatform,
+                appVersionCode, id, enable, groupSelected);
         return CommonResponse.ok();
     }
 

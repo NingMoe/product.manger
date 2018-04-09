@@ -33,6 +33,8 @@ public class FirmwareInfo {
 
     private Float size;
 
+    private long groupSelected;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -76,6 +78,14 @@ public class FirmwareInfo {
 
     public void setSize(Float size) {
         this.size = size;
+    }
+
+    public long getGroupSelected() {
+        return groupSelected;
+    }
+
+    public void setGroupSelected(long groupSelected) {
+        this.groupSelected = groupSelected;
     }
 
     public String getFirmwareType() {
@@ -205,6 +215,7 @@ public class FirmwareInfo {
                 ", md5='" + md5 + '\'' +
                 ", enable=" + enable +
                 ", size=" + size +
+                ", groupSelected='" + groupSelected + '\'' +
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
                 ", differentPartUrls='" + differentPartUrls + '\'' +

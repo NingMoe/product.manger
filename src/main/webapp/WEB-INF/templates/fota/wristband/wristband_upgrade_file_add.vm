@@ -92,6 +92,12 @@
                             <p class="help-block">注意：此处只针对W2(W1可以忽略)，若没有差分包，则不要上传任何文件</p>
                         </div>
                         <div class="form-group">
+                            <label for="groupSelected">灰度发布组</label>
+                            <select id="groupSelected" class="form-control" name="groupSelected" style="width: 100%;">
+                                <option value=0>全部</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="description">说明</label>
                             <textarea id="description" name="description" form="form" class="form-control"></textarea>
                         </div>

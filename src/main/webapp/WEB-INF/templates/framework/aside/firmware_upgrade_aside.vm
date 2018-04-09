@@ -149,5 +149,26 @@
                     配置管理</a></li>
             </ul>
         </li>
+
+        <li id="group_menu_node">
+            <a href="pages/widgets.html">
+                <i class="fa fa-soundcloud"></i>
+                <span>灰度发布</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green">group</small>
+                </span>
+            </a>
+            <ul class="treeview-menu" id="group-manager-menu-node">
+                <li id="group-add">
+                    <a href="$baseUrl/group/add"><i class="fa fa-toggle-up"></i>创建组</a>
+                </li>
+                <li id="group-list">
+                    <a href="$baseUrl/group/list"><i class="fa fa-list"></i>
+                        <span>组管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
 </li>

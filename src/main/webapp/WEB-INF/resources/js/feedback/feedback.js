@@ -198,8 +198,6 @@ function getDeviceType() {
                     terminalInfo = "";
                     $("#deviceTypeSelected").find("option:not(:first)").remove();
                 }
-
-
             }
         });
     } else {

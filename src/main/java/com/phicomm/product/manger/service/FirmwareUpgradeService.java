@@ -70,15 +70,20 @@ public class FirmwareUpgradeService {
                               String description,
                               String appPlatform,
                               String appVersionCodeAndroid,
-                              String appVersionCodeIos) throws UploadFileException, VersionHasExistException, DataFormatException, FirmwareTriggerFailException {
+                              String appVersionCodeIos,
+                              long groupSelected) throws UploadFileException, VersionHasExistException,
+            DataFormatException, FirmwareTriggerFailException {
         if (!Strings.isNullOrEmpty(appPlatform)) {
             String[] appPlatforms = appPlatform.split(",");
             if (appPlatforms.length == 2) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,
+                        forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, appVersionCodeIos, groupSelected);
             } else if (appPlatforms.length == 1 && ANDROID.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,
+                        forceUpgrade, fotaForceUpgrade, file, files, description, ANDROID, appVersionCodeAndroid, null, groupSelected);
             } else if (appPlatforms.length == 1 && IOS.equals(appPlatforms[0])) {
-                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion, forceUpgrade, fotaForceUpgrade, file, files, description, IOS, appVersionCodeIos, null);
+                firmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion, environment, gnssVersion,
+                        forceUpgrade, fotaForceUpgrade, file, files, description, IOS, appVersionCodeIos, null, groupSelected);
             }
         }
 
@@ -99,7 +104,8 @@ public class FirmwareUpgradeService {
                                                  String description,
                                                  String appPlatform,
                                                  String appVersionCode,
-                                                 String appVersionCodeIos)
+                                                 String appVersionCodeIos,
+                                                 long groupSelected)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         // 校验参数
         checkFirmwareUpgradeWristbandFileAdd(firmwareType, hardwareVersion, firmwareVersion,
@@ -127,6 +133,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setSize(size);
+        firmwareInfo.setGroupSelected(groupSelected);
         for (String appVersion : appVersions) {
             if (!Strings.isNullOrEmpty(appVersion)) {
                 firmwareInfo.setAppVersionCode(appVersion);
@@ -173,7 +180,8 @@ public class FirmwareUpgradeService {
                                                    String appPlatform,
                                                    String appVersionCode,
                                                    String id,
-                                                   String enableString)
+                                                   String enableString,
+                                                   long groupSelected)
             throws DataFormatException, UploadFileException, VersionHasExistException, FirmwareTriggerFailException {
         if (Strings.isNullOrEmpty(firmwareType)
                 || Strings.isNullOrEmpty(hardwareVersion)
@@ -212,6 +220,7 @@ public class FirmwareUpgradeService {
         firmwareInfo.setDescription(Strings.nullToEmpty(description).trim());
         firmwareInfo.setAppPlatform(appPlatform);
         firmwareInfo.setAppVersionCode(appVersionCode);
+        firmwareInfo.setGroupSelected(groupSelected);
         logger.info(firmwareInfo);
         firmwareInfoMapper.update(firmwareInfo);
         // 触发升级

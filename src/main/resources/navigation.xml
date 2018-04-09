@@ -233,6 +233,38 @@
     </navigation>
 
     <navigation>
+        <id>groupAdd</id>
+        <title>
+            <title-name>创建组</title-name>
+            <title-description>创建组</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/group/add</url>
+            <sub-directories>
+                <name>groupAdd</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
+        <id>groupList</id>
+        <title>
+            <title-name>管理组</title-name>
+            <title-description>管理组</title-description>
+        </title>
+        <directory>
+            <icon>fa fa-dashboard</icon>
+            <name>Home</name>
+            <url>$baseUrl/group/list</url>
+            <sub-directories>
+                <name>groupList</name>
+            </sub-directories>
+        </directory>
+    </navigation>
+
+    <navigation>
         <id>wristbandUpgradeForProdList</id>
         <title>
             <title-name>手环固件列表</title-name>

@@ -27,7 +27,8 @@
         create_time, url, different_part_urls,
         description, app_platform,
         app_version_code, size,
-        is_force_upgrade, is_fota_force_upgrade
+        is_force_upgrade, is_fota_force_upgrade,
+        group_id
         )
         VALUES (
         #{firmwareInfo.firmwareType,jdbcType=VARCHAR}, #{firmwareInfo.version,jdbcType=VARCHAR},
@@ -37,7 +38,8 @@
         now(), #{firmwareInfo.url,jdbcType=LONGVARCHAR}, #{firmwareInfo.differentPartUrls,jdbcType=LONGVARCHAR},
         #{firmwareInfo.description,jdbcType=LONGVARCHAR}, #{firmwareInfo.appPlatform,jdbcType=VARCHAR},
         #{firmwareInfo.appVersionCode,jdbcType=VARCHAR}, #{firmwareInfo.size,jdbcType=FLOAT},
-        #{firmwareInfo.forceUpgrade,jdbcType=INTEGER}, #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER}
+        #{firmwareInfo.forceUpgrade,jdbcType=INTEGER}, #{firmwareInfo.fotaForceUpgrade,jdbcType=INTEGER},
+        #{firmwareInfo.groupSelected,jdbcType=INTEGER}
         )
     </insert>
 
@@ -57,7 +59,8 @@
         hardware_code = #{firmwareInfo.hardwareCode,jdbcType=VARCHAR},
         url = #{firmwareInfo.url,jdbcType=LONGVARCHAR},
         description = #{firmwareInfo.description,jdbcType=LONGVARCHAR},
-        size = #{firmwareInfo.size,jdbcType=FLOAT}
+        `size` = #{firmwareInfo.size,jdbcType=FLOAT},
+        group_id = #{firmwareInfo.groupSelected,jdbcType=INTEGER}
         WHERE
         id = #{firmwareInfo.id,jdbcType=INTEGER}
     </update>
@@ -100,7 +103,8 @@
         create_time AS createTime,
         description AS description,
         is_force_upgrade AS forceUpgrade,
-        is_fota_force_upgrade AS fotaForceUpgrade
+        is_fota_force_upgrade AS fotaForceUpgrade,
+        group_id AS groupSelected
         FROM
         firmware_info
         WHERE
@@ -156,7 +160,8 @@
             create_time AS createTime,
             description AS description,
             md5 AS md5,
-            size AS size
+            `size` AS `size`,
+            group_id AS groupSelected
         FROM
             firmware_info
         WHERE

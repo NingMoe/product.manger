@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="$baseUrl/resources/select2/select2.min.css">
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">创建组</h3>
+                </div>
+                <form id="groupForm" role="form" enctype="multipart/form-data">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="groupName">组名字</label>
+                            <input type="text" class="form-control" id="groupName" name="groupName"
+                                   style="border-radius: 4px"
+                                   placeholder="请填写组名字">
+                        </div>
+                        <div class="form-group">
+                            <label for="groupType">组类型</label>
+                            <select id="groupType" class="form-control" name="groupType" style="width: 100%;">
+                                <option value='test' selected>test</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">备注</label>
+                            <textarea id="description" name="description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-primary" id="submit">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/select2/select2.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/group/group_add.js?v=$uuid"></script>

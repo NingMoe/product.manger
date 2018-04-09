@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="$baseUrl/resources/datatable/dataTables.bootstrap.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/fota/wristband_upgrade_test_list.css">
+<link rel="stylesheet" href="$baseUrl/resources/css/fota/wristband.css" >
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">组列表</h3>
+                </div>
+                <div class="box-body">
+                    <table id="groupList" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>操作</th>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>用户数量</th>
+                                <th>备注</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="groupModalLabel">编辑</h4>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="updateGroup">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="id" name="id" style="border-radius: 4px" placeholder="ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">名称</label>
+                            <input type="text" class="form-control" id="name" name="name" style="border-radius: 4px" placeholder="名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">类型</label>
+                            <select id="type" class="form-control" name="type" style="width: 100%;">t
+                                <option value="test">test</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">说明</label>
+                            <textarea name="description" id="description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                        <button type="button" id="btn_submit" class="btn btn-primary" onclick="updateGroup();">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="userModalLabel">添加</h4>
+                </div>
+                <form role="form" enctype="multipart/form-data" id="addUser">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="groupId" name="groupId" style="border-radius: 4px">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">电话号码</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" style="border-radius: 4px" placeholder="电话号码">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">说明</label>
+                            <textarea name="description" id="description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                        <button type="button" id="btn_submit" class="btn btn-primary" onclick="saveUser();">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/datatable/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="$baseUrl/resources/js/group/group_list.js?v=$uuid"></script>

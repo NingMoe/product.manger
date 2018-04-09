@@ -46,6 +46,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception25;
     private static JSONObject exception26;
     private static JSONObject exception27;
+    private static JSONObject exception28;
 
     static {
         exception1001 = new JSONObject();
@@ -213,6 +214,12 @@ public class ExceptionHandlerController {
         exception27 = new JSONObject();
         exception27.put("status", 27);
         exception27.put("description", "terminal statistic type not support.");
+    }
+
+    static {
+        exception28 = new JSONObject();
+        exception28.put("status", 28);
+        exception28.put("description", "group has exist exception.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -435,5 +442,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(TerminalStatisticTypeNotSupportException.class)
     public ModelAndView processTerminalStatisticTypeNotSupportException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception27);
+    }
+
+    /**
+     * 组存在异常
+     */
+    @ExceptionHandler(GroupHasExistException.class)
+    public ModelAndView processGroupHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception28);
     }
 }

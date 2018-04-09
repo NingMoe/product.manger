@@ -18,6 +18,42 @@ $(document).ready(function () {
         placeholder: "选择固件应用环境",
         multiple: false
     });
+    $.ajax({
+        type: "POST",
+        url: $("#baseUrl").val() + "/group/list",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8',
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let result = data.data;
+            $("#groupSelected").find("option:not(:first)").remove();
+            terminalInfo = result;
+            for (let i=0;i< result.length;i++) {
+                $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+            }
+        }
+    });
+    /*$("#groupSelected").click(function(){
+        const baseUrl = $("#baseUrl").val();
+        $.ajax({
+            type: "POST",
+            url: $("#baseUrl").val() + "/group/list",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            error: function (req, status, err) {
+                alert('Failed reason: ' + err);
+            }, success: function (data) {
+                let result = data.data;
+                $("#groupSelected").find("option:not(:selected)").remove();
+                //$("#groupSelected").empty();
+                terminalInfo = result;
+                for (let i=0;i< result.length && $("#groupSelected").find("option:selected").val()!==result[i].id;i++) {
+                    $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                }
+            }
+        });
+    });*/
     $("#appPlatform").change(function () {
         var platForms = $("#appPlatform").val();
         if (platForms !== null && 1 === platForms.length && "android" === platForms[0] && "none" === $("#appIos").css("display") && "none" === $("#appAndroid").css("display")) {
