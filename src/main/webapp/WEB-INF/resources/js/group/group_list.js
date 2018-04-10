@@ -70,8 +70,9 @@ function editGroup(node) {
 }
 
 function updateGroup() {
-    var baseUrl = $("#baseUrl").val();
-    var formData = new FormData($("#updateGroup")[0]);
+    $("#type").removeAttr("disabled");
+    let baseUrl = $("#baseUrl").val();
+    let formData = new FormData($("#updateGroup")[0]);
     $.ajax({
         type: "POST",
         url: baseUrl + "/group/update",
