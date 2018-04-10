@@ -30,12 +30,13 @@ $(document).ready(function () {
             $("#groupSelected").find("option:not(:first)").remove();
             terminalInfo = result;
             for (let i=0;i< result.length;i++) {
-                $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                if (result[i].type === $("#environment").val()){
+                    $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                }
             }
         }
     });
-    /*$("#groupSelected").click(function(){
-        const baseUrl = $("#baseUrl").val();
+    $("#environment").change(function () {
         $.ajax({
             type: "POST",
             url: $("#baseUrl").val() + "/group/list",
@@ -45,15 +46,16 @@ $(document).ready(function () {
                 alert('Failed reason: ' + err);
             }, success: function (data) {
                 let result = data.data;
-                $("#groupSelected").find("option:not(:selected)").remove();
-                //$("#groupSelected").empty();
+                $("#groupSelected").find("option:not(:first)").remove();
                 terminalInfo = result;
-                for (let i=0;i< result.length && $("#groupSelected").find("option:selected").val()!==result[i].id;i++) {
-                    $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                for (let i=0;i< result.length;i++) {
+                    if (result[i].type === $("#environment").val()){
+                        $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                    }
                 }
             }
         });
-    });*/
+    });
     $("#appPlatform").change(function () {
         var platForms = $("#appPlatform").val();
         if (platForms !== null && 1 === platForms.length && "android" === platForms[0] && "none" === $("#appIos").css("display") && "none" === $("#appAndroid").css("display")) {

@@ -30,6 +30,10 @@ import java.util.Map;
 public class GroupService {
 
     private static final Logger logger = Logger.getLogger(GroupService.class);
+    
+    private static final String TEST = "test";
+
+    private static final String PROD = "prod";
 
     private GroupMapper groupMapper;
 
@@ -113,11 +117,11 @@ public class GroupService {
     /**
      * 组添加用户
      */
-    public void groupUserAdd(long groupId, String phoneNumber, String description) throws DataFormatException, UserNotFoundException {
-        if (Strings.isNullOrEmpty(phoneNumber) || Strings.isNullOrEmpty(description)) {
+    public void groupUserAdd(long groupId, String type, String phoneNumber, String description) throws DataFormatException, UserNotFoundException {
+        if (Strings.isNullOrEmpty(type) || Strings.isNullOrEmpty(phoneNumber) || Strings.isNullOrEmpty(description)) {
             throw new DataFormatException();
         }
-        String userId = getUserId(phoneNumber);
+        String userId = getUserId(type, phoneNumber);
         if (Strings.isNullOrEmpty(userId)) {
             throw new UserNotFoundException();
         }
@@ -158,11 +162,17 @@ public class GroupService {
      * @param phoneNumber 电话号码
      * @return 用户id
      */
-    private String getUserId(String phoneNumber) {
-        String userId;
-        CustomerContextHolder.selectProdDataSource();
-        userId = groupMapper.getUserId(phoneNumber);
-        CustomerContextHolder.clearDataSource();
+    private String getUserId(String type, String phoneNumber) {
+        String userId = null;
+        if (TEST.equals(type)){
+            CustomerContextHolder.selectTestDataSource();
+            userId = groupMapper.getUserId(phoneNumber);
+            CustomerContextHolder.clearDataSource();
+        }else if (PROD.equals(type)){
+            CustomerContextHolder.selectProdDataSource();
+            userId = groupMapper.getUserId(phoneNumber);
+            CustomerContextHolder.clearDataSource();
+        }
         return userId;
     }
 }

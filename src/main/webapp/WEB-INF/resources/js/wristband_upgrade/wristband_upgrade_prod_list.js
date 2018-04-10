@@ -46,6 +46,27 @@ function activate(node) {
     });
 }
 
+$("#environment").change(function () {
+    $.ajax({
+        type: "POST",
+        url: $("#baseUrl").val() + "/group/list",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8',
+        error: function (req, status, err) {
+            alert('Failed reason: ' + err);
+        }, success: function (data) {
+            let result = data.data;
+            $("#groupSelected").find("option:not(:first)").remove();
+            terminalInfo = result;
+            for (let i=0;i< result.length;i++) {
+                if (result[i].type === $("#environment").val()){
+                    $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                }
+            }
+        }
+    });
+});
+
 function editWristband(node) {
     $("#wristbandProdModalLabel").text("编辑");
     var id = node.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].innerText;
@@ -72,7 +93,7 @@ function editWristband(node) {
             let result = data.data;
             $("#groupSelected").find("option:not(:first)").remove();
             terminalInfo = result;
-            for (let i=0;i< result.length;i++) {
+            for (let i=0;i< result.length && result[i].type==='prod';i++) {
                 if(groupSelected === result[i].id){
                     $("#groupSelected").append("<option selected value=" + result[i].id + ">" + result[i].name + "</option>");
                 }else{

@@ -125,10 +125,11 @@ public class GroupController {
     })
     @FunctionPoint(value = "common")
     public CommonResponse groupUserAdd(@RequestParam("groupId") long groupId,
+                                       @RequestParam("groupType") String type,
                                        @RequestParam("phoneNumber") String phoneNumber,
                                        @RequestParam("description") String description)
             throws DataFormatException, UserNotFoundException {
-        groupService.groupUserAdd(groupId, phoneNumber, description);
+        groupService.groupUserAdd(groupId, type, phoneNumber, description);
         return CommonResponse.ok();
     }
 

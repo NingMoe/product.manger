@@ -24,8 +24,10 @@
 
 function addUser(node) {
     $("#groupUserModalLabel").text("添加");
-    var index = node.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.previousElementSibling.childNodes[1].innerText;
+    let index = node.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.previousElementSibling.childNodes[1].innerText;
+    let type = node.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.previousElementSibling.childNodes[3].innerText;
     $("#groupId").val(index);
+    $("#groupType").val(type);
     $('#userModal').modal();
 }
 

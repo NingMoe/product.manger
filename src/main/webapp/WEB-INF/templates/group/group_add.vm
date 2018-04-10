@@ -17,7 +17,8 @@
                         <div class="form-group">
                             <label for="groupType">组类型</label>
                             <select id="groupType" class="form-control" name="groupType" style="width: 100%;">
-                                <option value='test' selected>test</option>
+                                <option value='test'>test</option>
+                                <option value='prod'>prod</option>
                             </select>
                         </div>
                         <div class="form-group">

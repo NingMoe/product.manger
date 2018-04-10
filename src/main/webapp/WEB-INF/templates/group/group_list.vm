@@ -50,6 +50,7 @@
                             <label for="type">类型</label>
                             <select id="type" class="form-control" name="type" style="width: 100%;">t
                                 <option value="test">test</option>
+                                <option value="prod">prod</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -77,6 +78,9 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <input type="hidden" class="form-control" id="groupId" name="groupId" style="border-radius: 4px">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="groupType" name="groupType" style="border-radius: 4px">
                         </div>
                         <div class="form-group">
                             <label for="phoneNumber">电话号码</label>
