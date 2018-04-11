@@ -88,7 +88,7 @@ public class TerminalTest {
         GroupOperation groupOperation = Aggregation
                 .group("platform", "$compareObject", "createTime")
                 .count().as("count");
-        AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
+            AggregationResults<BasicDBObject> basicDBObjects = mongoTemplate
                 .aggregate(TypedAggregation.newAggregation(
                         projectionOperation,
                         groupOperation

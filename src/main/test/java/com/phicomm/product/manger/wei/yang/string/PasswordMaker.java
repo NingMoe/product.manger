@@ -14,7 +14,7 @@ public class PasswordMaker {
 
     @Test
     public void maker() {
-        System.out.println(StringMaker.maker(16));
+        System.out.println(StringMaker.maker(32).toLowerCase());
         Document time = MongoDbUtil.timeFormat("%Y-%m-%d", "timestamp");
         Document project = new Document("date", time)
                 .append("platform", "$equipmentTerminalInfo.systemInfo.platform")
