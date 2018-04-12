@@ -96,7 +96,8 @@
             create_time AS createTime,
             update_time AS updateTime
         FROM
-            group_user;
+            group_user
+        WHERE group_id = #{groupId,jdbcType=BIGINT};
     </select>
 
     <delete id="groupUserDelete">
