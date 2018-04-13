@@ -93,11 +93,13 @@ function editWristband(node) {
             let result = data.data;
             $("#groupSelected").find("option:not(:first)").remove();
             terminalInfo = result;
-            for (let i=0;i< result.length && result[i].type==='test';i++) {
-                if(groupSelected === result[i].id){
-                    $("#groupSelected").append("<option selected value=" + result[i].id + ">" + result[i].name + "</option>");
-                }else{
-                    $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+            for (let i=0;i< result.length;i++) {
+                if (result[i].type==='test'){
+                    if(groupSelected === result[i].id){
+                        $("#groupSelected").append("<option selected value=" + result[i].id + ">" + result[i].name + "</option>");
+                    }else{
+                        $("#groupSelected").append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                    }
                 }
             }
         }
