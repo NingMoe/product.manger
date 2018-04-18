@@ -230,7 +230,6 @@
             dayTime < DATE_FORMAT(NOW(), '%Y-%m-%d')
             ) b
         WHERE type = #{type}
-        and first_binding = 1
         GROUP BY
             generateTime
         HAVING
