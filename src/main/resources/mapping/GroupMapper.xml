@@ -36,10 +36,16 @@
     </select>
 
     <delete id="groupDelete" parameterType="java.lang.Long">
-        DELETE FROM
-            group_info
-        WHERE
-            id = #{id,jdbcType=BIGINT};
+        BEGIN;
+            DELETE FROM
+                group_user
+            WHERE
+                group_id = #{id,jdbcType=BIGINT};
+            DELETE FROM
+                group_info
+            WHERE
+                id = #{id,jdbcType=BIGINT};
+        COMMIT;
     </delete>
 
     <update id="groupUpdate" parameterType="com.phicomm.product.manger.model.group.GroupInfo">
@@ -52,38 +58,31 @@
             id = #{groupInfo.id, jdbcType=BIGINT}
     </update>
 
-    <update id="addMemberCount" parameterType="java.lang.Long">
-        UPDATE group_info SET
-            member_number = member_number + 1,
-            update_time = NOW()
-        WHERE
-            id = #{groupId, jdbcType=BIGINT}
-    </update>
-
-    <update id="subtractMemberCount" parameterType="java.lang.Long">
-        UPDATE group_info SET
-            member_number = member_number - 1,
-            update_time = NOW()
-        WHERE
-            id = #{groupId, jdbcType=BIGINT}
-    </update>
-
     <insert id="groupUserAdd"
             parameterType="com.phicomm.product.manger.model.group.GroupUser">
-        INSERT INTO group_user(
-            `group_id`,
-            `user_id`,
-            description,
-            create_time,
-            update_time
-            )
-        VALUES(
-            #{groupUser.groupId, jdbcType=BIGINT},
-            #{groupUser.userId, jdbcType=VARCHAR},
-            #{groupUser.description, jdbcType=VARCHAR},
-            NOW(),
-            NOW()
-            );
+        BEGIN;
+            INSERT INTO group_user(
+                `group_id`,
+                `user_id`,
+                phone_number,
+                description,
+                create_time,
+                update_time
+                )
+            VALUES(
+                #{groupUser.groupId, jdbcType=BIGINT},
+                #{groupUser.userId, jdbcType=VARCHAR},
+                #{groupUser.phoneNumber, jdbcType=VARCHAR},
+                #{groupUser.description, jdbcType=VARCHAR},
+                NOW(),
+                NOW()
+                );
+            UPDATE group_info SET
+                member_number = member_number + 1,
+                update_time = NOW()
+            WHERE
+                id = #{groupUser.groupId, jdbcType=BIGINT};
+        COMMIT;
     </insert>
 
     <select id="groupUserList"
@@ -92,6 +91,7 @@
             id AS id,
             group_id AS groupId,
             user_id AS userid,
+            phone_number AS phoneNumber,
             description AS description,
             create_time AS createTime,
             update_time AS updateTime
@@ -101,18 +101,18 @@
     </select>
 
     <delete id="groupUserDelete">
-        DELETE FROM
-            group_user
-        WHERE
-            group_id = #{groupId,jdbcType=BIGINT}
-            AND user_id = #{userId, jdbcType=VARCHAR};
-    </delete>
-
-    <delete id="groupUserDelete2">
-        DELETE FROM
-            group_user
-        WHERE
-            group_id = #{groupId,jdbcType=BIGINT};
+        BEGIN;
+            DELETE FROM
+                group_user
+            WHERE
+                group_id = #{groupId,jdbcType=BIGINT}
+                AND user_id = #{userId, jdbcType=VARCHAR};
+            UPDATE group_info SET
+                member_number = member_number - 1,
+                update_time = NOW()
+            WHERE
+                id = #{groupId, jdbcType=BIGINT};
+        COMMIT;
     </delete>
 
     <select id="getUserId"
@@ -134,6 +134,17 @@
         WHERE
             name = #{name, jdbcType=VARCHAR}
             AND `type` = #{type, jdbcType=VARCHAR};
+    </select>
+
+    <select id="isExistGroupUser"
+            resultType="java.lang.Boolean">
+        SELECT
+            COUNT(1)
+        FROM
+            group_user
+        WHERE
+            group_id = #{groupId, jdbcType=BIGINT}
+            AND user_id = #{userId, jdbcType=VARCHAR};
     </select>
 
 </mapper>

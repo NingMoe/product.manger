@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.phicomm.product.manger.annotation.FunctionPoint;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.GroupHasExistException;
+import com.phicomm.product.manger.exception.GroupUserHasExistException;
 import com.phicomm.product.manger.exception.UserNotFoundException;
 import com.phicomm.product.manger.model.common.CommonResponse;
 import com.phicomm.product.manger.model.common.Response;
@@ -117,14 +118,15 @@ public class GroupController {
     @ApiResponses(value = {
             @ApiResponse(code = 0, message = "正常情况", response = CommonResponse.class),
             @ApiResponse(code = 2, message = "数据格式错误", response = CommonResponse.class),
-            @ApiResponse(code = 17, message = "没有该用户", response = CommonResponse.class)
+            @ApiResponse(code = 17, message = "没有该用户", response = CommonResponse.class),
+            @ApiResponse(code = 29, message = "该组内已经存在该用户", response = CommonResponse.class)
     })
     @FunctionPoint(value = "common")
     public CommonResponse groupUserAdd(@RequestParam("groupId") long groupId,
                                        @RequestParam("groupType") String type,
                                        @RequestParam("phoneNumber") String phoneNumber,
                                        @RequestParam("description") String description)
-            throws DataFormatException, UserNotFoundException {
+            throws DataFormatException, UserNotFoundException, GroupUserHasExistException {
         groupService.groupUserAdd(groupId, type, phoneNumber, description);
         return CommonResponse.ok();
     }
@@ -132,7 +134,7 @@ public class GroupController {
     /**
      * 获取一个组内所有用户
      */
-    @RequestMapping(value = "group/user/list", method = RequestMethod.POST,
+    @RequestMapping(value = "group/user/list", method = {RequestMethod.POST, RequestMethod.GET},
             produces = "application/json")
     @ApiOperation("获取一个组内所有用户")
     @ResponseBody
@@ -148,7 +150,7 @@ public class GroupController {
     /**
      * 删除组内一个用户
      */
-    @RequestMapping(value = "group/user/delete", method = RequestMethod.POST,
+    @RequestMapping(value = "group/user/delete", method = {RequestMethod.POST, RequestMethod.GET},
             produces = "application/json")
     @ApiOperation("删除组内一个用户")
     @ResponseBody
@@ -161,6 +163,5 @@ public class GroupController {
         groupService.groupUserDelete(groupId, userId);
         return CommonResponse.ok();
     }
-
 
 }

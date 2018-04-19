@@ -46,20 +46,15 @@ public interface GroupMapper {
     void groupUpdate(@Param("groupInfo") GroupInfo groupInfo);
 
     /**
-     * member_number + 1
-     */
-    void addMemberCount(@Param("groupId") long groupId);
-
-    /**
-     * member_number - 1
-     */
-    void subtractMemberCount(@Param("groupId") long groupId);
-
-    /**
      * 组添加用户
      * @param groupUser 组&用户信息
      */
     int groupUserAdd(@Param("groupUser") GroupUser groupUser);
+
+    /**
+     * 该组内是否已经存在该用户
+     */
+    boolean isExistGroupUser(@Param("groupId") long groupId, @Param("userId") String userId);
 
     /**
      * 获取一个组内所有用户
@@ -71,11 +66,6 @@ public interface GroupMapper {
      * 删除组内一个用户
      */
     int groupUserDelete(@Param("groupId") long groupId, @Param("userId") String userId);
-
-    /**
-     * 删除组内所有用户
-     */
-    int groupUserDelete2(@Param("groupId") long groupId);
 
     /**
      * 通过电话号码获取用户id

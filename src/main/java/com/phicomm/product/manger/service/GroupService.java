@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.phicomm.product.manger.dao.GroupMapper;
 import com.phicomm.product.manger.exception.DataFormatException;
 import com.phicomm.product.manger.exception.GroupHasExistException;
+import com.phicomm.product.manger.exception.GroupUserHasExistException;
 import com.phicomm.product.manger.exception.UserNotFoundException;
 import com.phicomm.product.manger.model.group.GroupInfo;
 import com.phicomm.product.manger.model.group.GroupUser;
@@ -94,7 +95,7 @@ public class GroupService {
      */
     public void groupDelete(long id) {
         logger.info(String.format("id=%s", id));
-        groupMapper.groupUserDelete2(id);
+        //groupMapper.groupUserDelete2(id);
         groupMapper.groupDelete(id);
     }
 
@@ -117,7 +118,8 @@ public class GroupService {
     /**
      * 组添加用户
      */
-    public void groupUserAdd(long groupId, String type, String phoneNumber, String description) throws DataFormatException, UserNotFoundException {
+    public void groupUserAdd(long groupId, String type, String phoneNumber, String description) throws DataFormatException,
+            UserNotFoundException, GroupUserHasExistException {
         if (Strings.isNullOrEmpty(type) || Strings.isNullOrEmpty(phoneNumber) || Strings.isNullOrEmpty(description)) {
             throw new DataFormatException();
         }
@@ -125,15 +127,16 @@ public class GroupService {
         if (Strings.isNullOrEmpty(userId)) {
             throw new UserNotFoundException();
         }
+        if (groupMapper.isExistGroupUser(groupId, userId)){
+            throw new GroupUserHasExistException();
+        }
         logger.info(String.format("groupId=%s,phoneNumber=%s,description=%s", groupId, phoneNumber, description));
         GroupUser groupUser = new GroupUser();
         groupUser.setGroupId(groupId);
         groupUser.setUserId(userId);
+        groupUser.setPhoneNumber(phoneNumber);
         groupUser.setDescription(description);
-        int n = groupMapper.groupUserAdd(groupUser);
-        if (1 == n) {
-            groupMapper.addMemberCount(groupId);
-        }
+        groupMapper.groupUserAdd(groupUser);
     }
 
     /**
@@ -150,10 +153,7 @@ public class GroupService {
      */
     public void groupUserDelete(long groupId, String userId) {
         logger.info(String.format("groupId=%s, userId=%s", groupId, userId));
-        int n = groupMapper.groupUserDelete(groupId, userId);
-        if (1 == n) {
-            groupMapper.subtractMemberCount(groupId);
-        }
+        groupMapper.groupUserDelete(groupId, userId);
     }
 
     /**

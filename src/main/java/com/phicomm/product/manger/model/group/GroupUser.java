@@ -18,6 +18,8 @@ public class GroupUser {
 
     private String userId;
 
+    private String phoneNumber;
+
     private String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -50,6 +52,14 @@ public class GroupUser {
         this.userId = userId;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -80,6 +90,7 @@ public class GroupUser {
                 "id=" + id +
                 ", groupId=" + groupId +
                 ", userId='" + userId + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", description='" + description + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +

@@ -99,6 +99,33 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="groupUserModal" tabindex="-1" role="dialog" aria-labelledby="groupUserModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="groupUserModalLabel">用户列表</h4>
+                </div>
+                <div class="box-body">
+                    <table id="groupUserList" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>删除</th>
+                            <th>组ID</th>
+                            <th>用户ID</th>
+                            <th>电话</th>
+                            <th>备注</th>
+                            <th>创建时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <script type="text/javascript" src="$baseUrl/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="$baseUrl/resources/datatable/jquery.dataTables.min.js"></script>

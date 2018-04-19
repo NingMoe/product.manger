@@ -47,6 +47,7 @@ public class ExceptionHandlerController {
     private static JSONObject exception26;
     private static JSONObject exception27;
     private static JSONObject exception28;
+    private static JSONObject exception29;
 
     static {
         exception1001 = new JSONObject();
@@ -220,6 +221,12 @@ public class ExceptionHandlerController {
         exception28 = new JSONObject();
         exception28.put("status", 28);
         exception28.put("description", "group has exist exception.");
+    }
+
+    static {
+        exception29 = new JSONObject();
+        exception29.put("status", 29);
+        exception29.put("description", "this group has exist this user exception.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -445,10 +452,18 @@ public class ExceptionHandlerController {
     }
 
     /**
-     * 组存在异常
+     * 组已存在异常
      */
     @ExceptionHandler(GroupHasExistException.class)
     public ModelAndView processGroupHasExistException() {
         return new ModelAndView(new MappingJackson2JsonView(), exception28);
+    }
+
+    /**
+     * 该组已存在该用户异常
+     */
+    @ExceptionHandler(GroupUserHasExistException.class)
+    public ModelAndView processGroupUserHasExistException() {
+        return new ModelAndView(new MappingJackson2JsonView(), exception29);
     }
 }
