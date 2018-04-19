@@ -131,9 +131,21 @@ public class TerminalMongoQueryImpl implements MongoQueryFactory {
      * @return map类型数据
      */
     public List<TerminalCommonEntity> yesterdayGroup(String compareObjectKey) {
-        GroupByResults<BasicDBObject> results =
-                groupYesterdayData(GROUP_PLATFORM_KEY, compareObjectKey, GROUP_DATE_TIME_KEY, APP_ID);
-        return parseData(results, compareObjectKey);
+        MongoCollection<Document> collection = mongoTemplate.getCollection(COLLECTION_NAME);
+        Document match = new Document(GROUP_DATE_TIME_KEY, new Document("$eq", obtainYesterday()));
+        Document project = new Document("createTime", String.format("$%s", GROUP_DATE_TIME_KEY))
+                .append("appId", String.format("$%s", APP_ID))
+                .append("platform", String.format("$%s", GROUP_PLATFORM_KEY))
+                .append("compareObject", String.format("$%s", compareObjectKey));
+        Document group = new Document("_id", new Document("platform", "$platform")
+                .append("appId", "$appId")
+                .append("createTime", "$createTime")
+                .append("compareObject", "$compareObject"))
+                .append("count", new Document("$sum", 1));
+        AggregateIterable<Document> result = collection
+                .aggregate(Arrays.asList(new Document("$match", match), new Document("$project", project),
+                        new Document("$group", group)));
+        return parseDocData(result);
     }
 
     /**

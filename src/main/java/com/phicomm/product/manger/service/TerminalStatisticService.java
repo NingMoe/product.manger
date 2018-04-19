@@ -12,6 +12,7 @@ import com.phicomm.product.manger.exception.TerminalStatisticTypeNotSupportExcep
 import com.phicomm.product.manger.model.terminal.*;
 import com.phicomm.product.manger.module.terminal.impl.TerminalMongoQueryImpl;
 import org.apache.log4j.Logger;
+import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -204,6 +205,7 @@ public class TerminalStatisticService {
     /**
      * 数据同步：同步数据
      */
+    @SuppressWarnings("unused")
     public void syncAllData() {
         for (TerminalDataTypeEnum dataTypeEnum : TerminalDataTypeEnum.values()) {
             List<TerminalCommonEntity> terminalCommonEntities = mongoQuery.historyGroup(dataTypeEnum.getMongoKey());

@@ -212,6 +212,14 @@ function getDeviceType() {
 function getDeviceName(data) {
     if ("balance" === data) {
         return "斐讯智能体脂秤S7/S7P";
+    } else if ("s7" === data) {
+        return "斐讯智能体脂秤S7/S7P";
+    } else if ("s7pe" === data) {
+        return "斐讯智能体脂秤S7 PE";
+    } else if ("s9" === data) {
+        return "斐讯智能体脂秤S9";
+    } else if ("ld-563" === data) {
+        return "斐讯智能血压计";
     } else if ("bloodPressureMeter" === data) {
         return "斐讯智能血压计";
     } else if ("w1" === data) {
@@ -220,6 +228,7 @@ function getDeviceName(data) {
         return "斐讯智能运动手表W2";
     }
 }
+
 /**
  * 联动获取版本号
  */
@@ -596,7 +605,15 @@ function translateDeviceType(deviceType) {
     switch (deviceType) {
         case "balance":
             return "斐讯智能体脂秤S7/S7P";
+        case "s7":
+            return "斐讯智能体脂秤S7/S7P";
+        case "s7pe":
+            return "斐讯智能体脂秤S7 PE";
+        case "s9":
+            return "斐讯智能体脂秤S9";
         case "bloodPressureMeter":
+            return "斐讯智能血压计";
+        case "ld-563":
             return "斐讯智能血压计";
         case "w1":
             return "斐讯智能运动手环W1";

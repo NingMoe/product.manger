@@ -223,6 +223,7 @@
             type AS type
         FROM
             `wristband`
+        WHERE first_binding = 1
         GROUP BY
             dayTime
         HAVING
@@ -255,6 +256,7 @@
             COUNT(1) AS dayCount
         FROM
             `wristband`
+        WHERE first_binding = 1
         GROUP BY
             dayTime
         HAVING
@@ -282,6 +284,7 @@
             COUNT(1) AS generateCount
         FROM
             `wristband`
+        WHERE first_binding = 1
         GROUP BY
             generateTime
         HAVING

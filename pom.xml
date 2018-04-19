@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven_compiler_plugin_version>3.1</maven_compiler_plugin_version>
         <spring.version>4.2.5.RELEASE</spring.version>
-        <mongodb.version>2.0.1.RELEASE</mongodb.version>
+        <mongodb.version>2.0.6.RELEASE</mongodb.version>
         <java_source_version>1.8</java_source_version>
         <java_target_version>1.8</java_target_version>
         <file_encoding>UTF-8</file_encoding>
